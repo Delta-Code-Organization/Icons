@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="IconsDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="IconsDBEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Screens" EntityType="IconsDBModel.Screen" />
+    <EntitySet Name="Suppliers" EntityType="IconsDBModel.Supplier" />
+    <EntitySet Name="UserAccesses" EntityType="IconsDBModel.UserAccess" />
+    <EntitySet Name="Users" EntityType="IconsDBModel.User" />
+    <AssociationSet Name="FK_UserAccess_Screens" Association="IconsDBModel.FK_UserAccess_Screens">
+      <End Role="Screen" EntitySet="Screens" />
+      <End Role="UserAccess" EntitySet="UserAccesses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserAccess_Users" Association="IconsDBModel.FK_UserAccess_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserAccess" EntitySet="UserAccesses" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Screen">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ScreenURL" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Title" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="GroupName" Type="Binary" MaxLength="200" FixedLength="false" />
+    <NavigationProperty Name="UserAccesses" Relationship="IconsDBModel.FK_UserAccess_Screens" FromRole="Screen" ToRole="UserAccess" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Phone" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="Mobile" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="City" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+    <Property Name="District" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+    <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="UserAccess">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="ScreenID" Type="Int32" />
+    <NavigationProperty Name="Screen" Relationship="IconsDBModel.FK_UserAccess_Screens" FromRole="UserAccess" ToRole="Screen" />
+    <NavigationProperty Name="User" Relationship="IconsDBModel.FK_UserAccess_Users" FromRole="UserAccess" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+    <Property Name="Password" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+    <Property Name="Status" Type="Int32" />
+    <NavigationProperty Name="UserAccesses" Relationship="IconsDBModel.FK_UserAccess_Users" FromRole="User" ToRole="UserAccess" />
+  </EntityType>
+  <Association Name="FK_UserAccess_Screens">
+    <End Type="IconsDBModel.Screen" Role="Screen" Multiplicity="0..1" />
+    <End Type="IconsDBModel.UserAccess" Role="UserAccess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Screen">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserAccess">
+        <PropertyRef Name="ScreenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserAccess_Users">
+    <End Type="IconsDBModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="IconsDBModel.UserAccess" Role="UserAccess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserAccess">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

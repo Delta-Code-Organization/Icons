@@ -1,0 +1,19 @@
+﻿.Arabic {
+    float:right;
+}
+
+.ArabicAlign {
+    text-align:right;
+}
+
+.ArabicDir {
+    direction:rtl;
+}
+
+.parsley-error-list {
+    direction:rtl;
+}
+
+.HandPointer {
+    cursor:pointer;
+}

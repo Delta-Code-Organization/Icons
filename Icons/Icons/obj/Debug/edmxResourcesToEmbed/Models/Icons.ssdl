@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="IconsDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="IconsDBModelStoreContainer">
+    <EntitySet Name="Screens" EntityType="IconsDBModel.Store.Screens" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Suppliers" EntityType="IconsDBModel.Store.Suppliers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserAccess" EntityType="IconsDBModel.Store.UserAccess" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="IconsDBModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_UserAccess_Screens" Association="IconsDBModel.Store.FK_UserAccess_Screens">
+      <End Role="Screens" EntitySet="Screens" />
+      <End Role="UserAccess" EntitySet="UserAccess" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserAccess_Users" Association="IconsDBModel.Store.FK_UserAccess_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserAccess" EntitySet="UserAccess" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Screens">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ScreenURL" Type="nvarchar(max)" />
+    <Property Name="Title" Type="nvarchar" MaxLength="100" />
+    <Property Name="GroupName" Type="varbinary" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Suppliers">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="20" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="City" Type="nvarchar" MaxLength="25" />
+    <Property Name="District" Type="nvarchar" MaxLength="25" />
+    <Property Name="Notes" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="UserAccess">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="ScreenID" Type="int" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="nvarchar" MaxLength="25" />
+    <Property Name="Password" Type="nvarchar" MaxLength="25" />
+    <Property Name="Status" Type="int" />
+  </EntityType>
+  <Association Name="FK_UserAccess_Screens">
+    <End Role="Screens" Type="IconsDBModel.Store.Screens" Multiplicity="0..1" />
+    <End Role="UserAccess" Type="IconsDBModel.Store.UserAccess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Screens">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserAccess">
+        <PropertyRef Name="ScreenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserAccess_Users">
+    <End Role="Users" Type="IconsDBModel.Store.Users" Multiplicity="0..1" />
+    <End Role="UserAccess" Type="IconsDBModel.Store.UserAccess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserAccess">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
