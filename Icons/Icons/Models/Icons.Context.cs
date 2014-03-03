@@ -13,10 +13,10 @@ namespace Icons.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class IconsDBEntities : DbContext
+    public partial class MaksoudDBEntities : DbContext
     {
-        public IconsDBEntities()
-            : base("name=IconsDBEntities")
+        public MaksoudDBEntities()
+            : base("name=MaksoudDBEntities")
         {
         }
     
@@ -25,6 +25,8 @@ namespace Icons.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectUnit> ProjectUnits { get; set; }
         public DbSet<Screen> Screens { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<UserAccess> UserAccesses { get; set; }

@@ -111,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -131,10 +132,17 @@
       <DependentUpon>Icons.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Project.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProjectUnit.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Returner.cs" />
     <Compile Include="Models\Screen.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ScreenModel.cs" />
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
@@ -1983,6 +1991,7 @@
     <Content Include="content\js\skycons\index.html" />
     <Content Include="content\js\skycons\skycons.js" />
     <Content Include="Global.asax" />
+    <Content Include="scripts\User.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2376,6 +2385,12 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <EntityDeploy Include="Models\Icons.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Icons.Designer.cs</LastGenOutput>
@@ -2397,7 +2412,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="Views\User\CreateUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\SearchUsers.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

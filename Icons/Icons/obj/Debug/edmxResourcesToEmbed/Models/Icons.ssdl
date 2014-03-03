@@ -1,19 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="IconsDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="IconsDBModelStoreContainer">
-    <EntitySet Name="Screens" EntityType="IconsDBModel.Store.Screens" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Suppliers" EntityType="IconsDBModel.Store.Suppliers" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="UserAccess" EntityType="IconsDBModel.Store.UserAccess" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Users" EntityType="IconsDBModel.Store.Users" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_UserAccess_Screens" Association="IconsDBModel.Store.FK_UserAccess_Screens">
+<Schema Namespace="MaksoudDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MaksoudDBModelStoreContainer">
+    <EntitySet Name="Projects" EntityType="MaksoudDBModel.Store.Projects" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectUnits" EntityType="MaksoudDBModel.Store.ProjectUnits" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Screens" EntityType="MaksoudDBModel.Store.Screens" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Suppliers" EntityType="MaksoudDBModel.Store.Suppliers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserAccess" EntityType="MaksoudDBModel.Store.UserAccess" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="MaksoudDBModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_UserAccess_Screens" Association="MaksoudDBModel.Store.FK_UserAccess_Screens">
       <End Role="Screens" EntitySet="Screens" />
       <End Role="UserAccess" EntitySet="UserAccess" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserAccess_Users" Association="IconsDBModel.Store.FK_UserAccess_Users">
+    <AssociationSet Name="FK_UserAccess_Users" Association="MaksoudDBModel.Store.FK_UserAccess_Users">
       <End Role="Users" EntitySet="Users" />
       <End Role="UserAccess" EntitySet="UserAccess" />
     </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Projects">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="ProjectName" Type="nvarchar(max)" />
+    <Property Name="ProjectAddress" Type="nvarchar(max)" />
+    <Property Name="LandSpace" Type="float" />
+    <Property Name="FirstViewLength" Type="float" />
+    <Property Name="SecondViewLength" Type="float" />
+    <Property Name="ThirdViewLength" Type="float" />
+    <Property Name="ForthViewLength" Type="float" />
+    <Property Name="CreationDate" Type="datetime" />
+    <Property Name="FloorsCount" Type="int" />
+    <Property Name="ExpectedCost" Type="float" />
+    <Property Name="OwnershipPercentage" Type="float" />
+  </EntityType>
+  <EntityType Name="ProjectUnits">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="ProjectID" Type="int" />
+    <Property Name="UnitSpace" Type="float" />
+    <Property Name="UnitType" Type="int" />
+    <Property Name="FloorNumber" Type="int" />
+    <Property Name="ExpectedPrice" Type="float" />
+    <Property Name="Finishing" Type="int" />
+    <Property Name="Notes" Type="nvarchar(max)" />
+    <Property Name="Owner" Type="int" />
+  </EntityType>
   <EntityType Name="Screens">
     <Key>
       <PropertyRef Name="ID" />
@@ -21,7 +54,7 @@
     <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ScreenURL" Type="nvarchar(max)" />
     <Property Name="Title" Type="nvarchar" MaxLength="100" />
-    <Property Name="GroupName" Type="varbinary" MaxLength="200" />
+    <Property Name="GroupName" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Suppliers">
     <Key>
@@ -54,8 +87,8 @@
     <Property Name="Status" Type="int" />
   </EntityType>
   <Association Name="FK_UserAccess_Screens">
-    <End Role="Screens" Type="IconsDBModel.Store.Screens" Multiplicity="0..1" />
-    <End Role="UserAccess" Type="IconsDBModel.Store.UserAccess" Multiplicity="*" />
+    <End Role="Screens" Type="MaksoudDBModel.Store.Screens" Multiplicity="0..1" />
+    <End Role="UserAccess" Type="MaksoudDBModel.Store.UserAccess" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Screens">
         <PropertyRef Name="ID" />
@@ -66,8 +99,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_UserAccess_Users">
-    <End Role="Users" Type="IconsDBModel.Store.Users" Multiplicity="0..1" />
-    <End Role="UserAccess" Type="IconsDBModel.Store.UserAccess" Multiplicity="*" />
+    <End Role="Users" Type="MaksoudDBModel.Store.Users" Multiplicity="0..1" />
+    <End Role="UserAccess" Type="MaksoudDBModel.Store.UserAccess" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
         <PropertyRef Name="ID" />

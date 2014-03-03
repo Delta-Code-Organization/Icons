@@ -1,8 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="IconsDBModelStoreContainer" CdmEntityContainer="IconsDBEntities">
+  <EntityContainerMapping StorageEntityContainer="MaksoudDBModelStoreContainer" CdmEntityContainer="MaksoudDBEntities">
+    <EntitySetMapping Name="Projects">
+      <EntityTypeMapping TypeName="MaksoudDBModel.Project">
+        <MappingFragment StoreEntitySet="Projects">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="ProjectAddress" ColumnName="ProjectAddress" />
+          <ScalarProperty Name="LandSpace" ColumnName="LandSpace" />
+          <ScalarProperty Name="FirstViewLength" ColumnName="FirstViewLength" />
+          <ScalarProperty Name="SecondViewLength" ColumnName="SecondViewLength" />
+          <ScalarProperty Name="ThirdViewLength" ColumnName="ThirdViewLength" />
+          <ScalarProperty Name="ForthViewLength" ColumnName="ForthViewLength" />
+          <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+          <ScalarProperty Name="FloorsCount" ColumnName="FloorsCount" />
+          <ScalarProperty Name="ExpectedCost" ColumnName="ExpectedCost" />
+          <ScalarProperty Name="OwnershipPercentage" ColumnName="OwnershipPercentage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectUnits">
+      <EntityTypeMapping TypeName="MaksoudDBModel.ProjectUnit">
+        <MappingFragment StoreEntitySet="ProjectUnits">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="UnitSpace" ColumnName="UnitSpace" />
+          <ScalarProperty Name="UnitType" ColumnName="UnitType" />
+          <ScalarProperty Name="FloorNumber" ColumnName="FloorNumber" />
+          <ScalarProperty Name="ExpectedPrice" ColumnName="ExpectedPrice" />
+          <ScalarProperty Name="Finishing" ColumnName="Finishing" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Screens">
-      <EntityTypeMapping TypeName="IconsDBModel.Screen">
+      <EntityTypeMapping TypeName="MaksoudDBModel.Screen">
         <MappingFragment StoreEntitySet="Screens">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="ScreenURL" ColumnName="ScreenURL" />
@@ -12,7 +45,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Suppliers">
-      <EntityTypeMapping TypeName="IconsDBModel.Supplier">
+      <EntityTypeMapping TypeName="MaksoudDBModel.Supplier">
         <MappingFragment StoreEntitySet="Suppliers">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -26,7 +59,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserAccesses">
-      <EntityTypeMapping TypeName="IconsDBModel.UserAccess">
+      <EntityTypeMapping TypeName="MaksoudDBModel.UserAccess">
         <MappingFragment StoreEntitySet="UserAccess">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -35,7 +68,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="IconsDBModel.User">
+      <EntityTypeMapping TypeName="MaksoudDBModel.User">
         <MappingFragment StoreEntitySet="Users">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Username" ColumnName="Username" />

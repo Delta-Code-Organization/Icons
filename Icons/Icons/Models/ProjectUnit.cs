@@ -12,18 +12,16 @@ namespace Icons.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Screen
+    public partial class ProjectUnit
     {
-        public Screen()
-        {
-            this.UserAccesses = new HashSet<UserAccess>();
-        }
-    
-        public int ID { get; set; }
-        public string ScreenURL { get; set; }
-        public string Title { get; set; }
-        public string GroupName { get; set; }
-    
-        public virtual ICollection<UserAccess> UserAccesses { get; set; }
+        public int Id { get; set; }
+        public Nullable<int> ProjectID { get; set; }
+        public Nullable<double> UnitSpace { get; set; }
+        public Nullable<int> UnitType { get; set; }
+        public Nullable<int> FloorNumber { get; set; }
+        public Nullable<double> ExpectedPrice { get; set; }
+        public Nullable<int> Finishing { get; set; }
+        public string Notes { get; set; }
+        public Nullable<int> Owner { get; set; }
     }
 }

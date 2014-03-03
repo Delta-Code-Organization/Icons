@@ -8,16 +8,16 @@ namespace Icons.Models
     public partial class User
     {
         #region Context
-        IconsDBEntities db = new IconsDBEntities();
+        MaksoudDBEntities db = new MaksoudDBEntities();
         #endregion
 
         public Returner Login()
         {
-            if (db.Users.Any(p=>p.Username == this.Username && p.Password == this.Password))
+            if (db.Users.Any(p => p.Username == this.Username && p.Password == this.Password))
             {
                 var User = db.Users.Where(p => p.Username == this.Username && p.Password == this.Password).SingleOrDefault();
-                return new Returner 
-                { 
+                return new Returner
+                {
                     Data = User,
                     Message = Message.Success_Login
                 };
@@ -29,6 +29,58 @@ namespace Icons.Models
                     Message = Message.Username_or_password_is_wrong
                 };
             }
+        }
+
+        public Returner CreateAccount(List<UserAccess> LOUA)
+        {
+            if (db.Users.Any(p => p.Username == this.Username))
+            {
+                return new Returner
+                {
+                    Message = Message.Username_Already_Exists
+                };
+            }
+            else
+            {
+                db.Users.Add(this);
+                db.SaveChanges();
+                var U = db.Users.Where(P => P.Username == this.Username).SingleOrDefault();
+                U.UserAccesses = LOUA;
+                db.SaveChanges();
+                return new Returner
+                {
+                    Message = Message.Account_created_successfully
+                };
+            }
+        }
+
+        public Returner GetAll()
+        {
+            return new Returner
+            {
+                Data = (from U in db.Users
+                        select U).ToList()
+            };
+        }
+
+        public Returner GetByID()
+        {
+            return new Returner
+            {
+                Data = (from U in db.Users
+                        where ID == this.ID
+                        select U).SingleOrDefault()
+            };
+        }
+
+        public Returner RemoveUser()
+        {
+            var U = db.Users.Where(p => p.ID == this.ID).SingleOrDefault();
+            U.Status = 0;
+            db.SaveChanges();
+            return new Returner { 
+                Message = Message.User_Deleted_Successfully
+            };
         }
     }
 }

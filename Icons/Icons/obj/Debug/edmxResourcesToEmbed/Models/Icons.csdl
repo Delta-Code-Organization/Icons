@@ -1,19 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="IconsDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityContainer Name="IconsDBEntities" p1:LazyLoadingEnabled="true">
-    <EntitySet Name="Screens" EntityType="IconsDBModel.Screen" />
-    <EntitySet Name="Suppliers" EntityType="IconsDBModel.Supplier" />
-    <EntitySet Name="UserAccesses" EntityType="IconsDBModel.UserAccess" />
-    <EntitySet Name="Users" EntityType="IconsDBModel.User" />
-    <AssociationSet Name="FK_UserAccess_Screens" Association="IconsDBModel.FK_UserAccess_Screens">
-      <End Role="Screen" EntitySet="Screens" />
+<Schema Namespace="MaksoudDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MaksoudDBEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Projects" EntityType="MaksoudDBModel.Project" />
+    <EntitySet Name="ProjectUnits" EntityType="MaksoudDBModel.ProjectUnit" />
+    <EntitySet Name="Screens" EntityType="MaksoudDBModel.Screen" />
+    <EntitySet Name="Suppliers" EntityType="MaksoudDBModel.Supplier" />
+    <EntitySet Name="UserAccesses" EntityType="MaksoudDBModel.UserAccess" />
+    <EntitySet Name="Users" EntityType="MaksoudDBModel.User" />
+    <AssociationSet Name="FK_UserAccess_Screens" Association="MaksoudDBModel.FK_UserAccess_Screens">
+      <End Role="Screens" EntitySet="Screens" />
       <End Role="UserAccess" EntitySet="UserAccesses" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserAccess_Users" Association="IconsDBModel.FK_UserAccess_Users">
-      <End Role="User" EntitySet="Users" />
+    <AssociationSet Name="FK_UserAccess_Users" Association="MaksoudDBModel.FK_UserAccess_Users">
+      <End Role="Users" EntitySet="Users" />
       <End Role="UserAccess" EntitySet="UserAccesses" />
     </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="ProjectName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="ProjectAddress" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="LandSpace" Type="Double" />
+    <Property Name="FirstViewLength" Type="Double" />
+    <Property Name="SecondViewLength" Type="Double" />
+    <Property Name="ThirdViewLength" Type="Double" />
+    <Property Name="ForthViewLength" Type="Double" />
+    <Property Name="CreationDate" Type="DateTime" Precision="3" />
+    <Property Name="FloorsCount" Type="Int32" />
+    <Property Name="ExpectedCost" Type="Double" />
+    <Property Name="OwnershipPercentage" Type="Double" />
+  </EntityType>
+  <EntityType Name="ProjectUnit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="ProjectID" Type="Int32" />
+    <Property Name="UnitSpace" Type="Double" />
+    <Property Name="UnitType" Type="Int32" />
+    <Property Name="FloorNumber" Type="Int32" />
+    <Property Name="ExpectedPrice" Type="Double" />
+    <Property Name="Finishing" Type="Int32" />
+    <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Owner" Type="Int32" />
+  </EntityType>
   <EntityType Name="Screen">
     <Key>
       <PropertyRef Name="ID" />
@@ -21,8 +54,8 @@
     <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
     <Property Name="ScreenURL" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Title" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
-    <Property Name="GroupName" Type="Binary" MaxLength="200" FixedLength="false" />
-    <NavigationProperty Name="UserAccesses" Relationship="IconsDBModel.FK_UserAccess_Screens" FromRole="Screen" ToRole="UserAccess" />
+    <Property Name="GroupName" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="UserAccesses" Relationship="MaksoudDBModel.FK_UserAccess_Screens" FromRole="Screens" ToRole="UserAccess" />
   </EntityType>
   <EntityType Name="Supplier">
     <Key>
@@ -44,8 +77,8 @@
     <Property Name="ID" Type="Int32" Nullable="false" />
     <Property Name="UserID" Type="Int32" />
     <Property Name="ScreenID" Type="Int32" />
-    <NavigationProperty Name="Screen" Relationship="IconsDBModel.FK_UserAccess_Screens" FromRole="UserAccess" ToRole="Screen" />
-    <NavigationProperty Name="User" Relationship="IconsDBModel.FK_UserAccess_Users" FromRole="UserAccess" ToRole="User" />
+    <NavigationProperty Name="Screen" Relationship="MaksoudDBModel.FK_UserAccess_Screens" FromRole="UserAccess" ToRole="Screens" />
+    <NavigationProperty Name="User" Relationship="MaksoudDBModel.FK_UserAccess_Users" FromRole="UserAccess" ToRole="Users" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -55,13 +88,13 @@
     <Property Name="Username" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
     <Property Name="Password" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
     <Property Name="Status" Type="Int32" />
-    <NavigationProperty Name="UserAccesses" Relationship="IconsDBModel.FK_UserAccess_Users" FromRole="User" ToRole="UserAccess" />
+    <NavigationProperty Name="UserAccesses" Relationship="MaksoudDBModel.FK_UserAccess_Users" FromRole="Users" ToRole="UserAccess" />
   </EntityType>
   <Association Name="FK_UserAccess_Screens">
-    <End Type="IconsDBModel.Screen" Role="Screen" Multiplicity="0..1" />
-    <End Type="IconsDBModel.UserAccess" Role="UserAccess" Multiplicity="*" />
+    <End Role="Screens" Type="MaksoudDBModel.Screen" Multiplicity="0..1" />
+    <End Role="UserAccess" Type="MaksoudDBModel.UserAccess" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Screen">
+      <Principal Role="Screens">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="UserAccess">
@@ -70,10 +103,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_UserAccess_Users">
-    <End Type="IconsDBModel.User" Role="User" Multiplicity="0..1" />
-    <End Type="IconsDBModel.UserAccess" Role="UserAccess" Multiplicity="*" />
+    <End Role="Users" Type="MaksoudDBModel.User" Multiplicity="0..1" />
+    <End Role="UserAccess" Type="MaksoudDBModel.UserAccess" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="User">
+      <Principal Role="Users">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="UserAccess">
