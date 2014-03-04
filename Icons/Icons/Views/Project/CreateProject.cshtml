@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "CreateProject";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+}
+
+<script src="~/scripts/Project.js"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">اضافة مشروع جديد</h3>
+            </div>
+            <div class="content">
+                <form id="ProjCreate" class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="block-flat" style="border: none;">
+                            <div class="content">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الرابع</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input id="mobile" name="mobile" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-error-message="يجب ادخال رقم الموبايل" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align:center;">تاريخ الإنشاء</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input style="direction:ltr;" id="city" name="city" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال المدينة" size="16" value="" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="border:none;">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">عدد الادوار</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input style="direction:ltr;" id="district" name="district" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال اسم الحي" size="16" value="" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="border:none;">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">التكلفة المتوقعة</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input style="direction:ltr;" id="district" name="district" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال اسم الحي" size="16" value="" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">نسبة الملكية</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input style="direction:ltr;" id="district" name="district" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال اسم الحي" size="16" value="" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="block-flat" style="border: none;">
+                            <div class="content">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">الاسم</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input class="form-control parsley-validated parsley-error" id="name" name="name" parsley-trigger="change" required="" parsley-error-message="يجب ادخال الاسم" type="text" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">عنوان المشروع</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input class="form-control parsley-validated parsley-error" id="address" name="address" parsley-trigger="change" required="" parsley-error-message="يجب ادخال العنوان" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">المساحة</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input id="phone" name="phone" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-error-message="يجب ادخال رقم الهاتف" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الأول</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input id="mobile" name="mobile" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-error-message="يجب ادخال رقم الموبايل" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الثاني</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input id="mobile" name="mobile" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-error-message="يجب ادخال رقم الموبايل" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الثالث</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input id="mobile" name="mobile" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-error-message="يجب ادخال رقم الموبايل" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">حفظ</button>
+                            <button type="button" onclick="Cancel()" class="btn btn-default">الغاء</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="resultmsg" style="text-align:center;color:blue;"><label id="result"></label></div>
+            </div>
+        </div>
+    </div>
+</div>

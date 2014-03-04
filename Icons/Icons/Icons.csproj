@@ -111,6 +111,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -146,6 +148,7 @@
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SupplierModel.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
@@ -1991,6 +1994,8 @@
     <Content Include="content\js\skycons\index.html" />
     <Content Include="content\js\skycons\skycons.js" />
     <Content Include="Global.asax" />
+    <Content Include="scripts\Project.js" />
+    <Content Include="scripts\Supplier.js" />
     <Content Include="scripts\User.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -2416,6 +2421,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\User\SearchUsers.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Supplier\CreateSupplier.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Supplier\SuppliersSearch.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Project\CreateProject.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

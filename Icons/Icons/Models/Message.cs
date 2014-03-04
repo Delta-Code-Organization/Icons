@@ -11,6 +11,8 @@ namespace Icons.Models
         Username_or_password_is_wrong = 1,
         Username_Already_Exists = 2,
         Account_created_successfully = 3,
-        User_Deleted_Successfully = 4
+        User_Deleted_Successfully = 4,
+        Supplier_created_successfully = 5,
+        Supplier_deleted_successfully = 6
     }
 }
