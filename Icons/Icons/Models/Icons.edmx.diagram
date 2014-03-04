@@ -4,15 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="98bcf944aa3a40ac9cc15dd4d814a790" Name="Diagram1">
-        <EntityTypeShape EntityType="MaksoudDBModel.Project" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.ProjectUnit" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+      <Diagram DiagramId="b8645b445eda46aab910ee9ec53bda9f" Name="Diagram1">
+        <EntityTypeShape EntityType="MaksoudDBModel.Project" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.ProjectUnit" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MaksoudDBModel.Screen" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.Supplier" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.UserAccess" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.User" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <AssociationConnector Association="MaksoudDBModel.FK_UserAccess_Screens" ManuallyRouted="false" />
-        <AssociationConnector Association="MaksoudDBModel.FK_UserAccess_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Supplier" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.User" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="MaksoudDBModel.UserAccess" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

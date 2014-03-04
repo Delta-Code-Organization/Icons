@@ -76,11 +76,11 @@
         </EntityType>
         <EntityType Name="UserAccess">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="ScreenID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="UserID" Type="int" />
-          <Property Name="ScreenID" Type="int" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="ScreenID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -92,7 +92,7 @@
           <Property Name="Status" Type="int" />
         </EntityType>
         <Association Name="FK_UserAccess_Screens">
-          <End Role="Screens" Type="MaksoudDBModel.Store.Screens" Multiplicity="0..1" />
+          <End Role="Screens" Type="MaksoudDBModel.Store.Screens" Multiplicity="1" />
           <End Role="UserAccess" Type="MaksoudDBModel.Store.UserAccess" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Screens">
@@ -104,7 +104,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserAccess_Users">
-          <End Role="Users" Type="MaksoudDBModel.Store.Users" Multiplicity="0..1" />
+          <End Role="Users" Type="MaksoudDBModel.Store.Users" Multiplicity="1" />
           <End Role="UserAccess" Type="MaksoudDBModel.Store.UserAccess" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -125,15 +125,10 @@
           <EntitySet Name="ProjectUnits" EntityType="MaksoudDBModel.ProjectUnit" />
           <EntitySet Name="Screens" EntityType="MaksoudDBModel.Screen" />
           <EntitySet Name="Suppliers" EntityType="MaksoudDBModel.Supplier" />
-          <EntitySet Name="UserAccesses" EntityType="MaksoudDBModel.UserAccess" />
           <EntitySet Name="Users" EntityType="MaksoudDBModel.User" />
-          <AssociationSet Name="FK_UserAccess_Screens" Association="MaksoudDBModel.FK_UserAccess_Screens">
+          <AssociationSet Name="UserAccess" Association="MaksoudDBModel.UserAccess">
             <End Role="Screens" EntitySet="Screens" />
-            <End Role="UserAccess" EntitySet="UserAccesses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserAccess_Users" Association="MaksoudDBModel.FK_UserAccess_Users">
             <End Role="Users" EntitySet="Users" />
-            <End Role="UserAccess" EntitySet="UserAccesses" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Project">
@@ -175,7 +170,7 @@
           <Property Name="ScreenURL" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Title" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
           <Property Name="GroupName" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="UserAccesses" Relationship="MaksoudDBModel.FK_UserAccess_Screens" FromRole="Screens" ToRole="UserAccess" />
+          <NavigationProperty Name="Users" Relationship="MaksoudDBModel.UserAccess" FromRole="Screens" ToRole="Users" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -190,16 +185,6 @@
           <Property Name="District" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
           <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
         </EntityType>
-        <EntityType Name="UserAccess">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="ScreenID" Type="Int32" />
-          <NavigationProperty Name="Screen" Relationship="MaksoudDBModel.FK_UserAccess_Screens" FromRole="UserAccess" ToRole="Screens" />
-          <NavigationProperty Name="User" Relationship="MaksoudDBModel.FK_UserAccess_Users" FromRole="UserAccess" ToRole="Users" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="ID" />
@@ -208,31 +193,11 @@
           <Property Name="Username" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
           <Property Name="Password" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
           <Property Name="Status" Type="Int32" />
-          <NavigationProperty Name="UserAccesses" Relationship="MaksoudDBModel.FK_UserAccess_Users" FromRole="Users" ToRole="UserAccess" />
+          <NavigationProperty Name="Screens" Relationship="MaksoudDBModel.UserAccess" FromRole="Users" ToRole="Screens" />
         </EntityType>
-        <Association Name="FK_UserAccess_Screens">
-          <End Role="Screens" Type="MaksoudDBModel.Screen" Multiplicity="0..1" />
-          <End Role="UserAccess" Type="MaksoudDBModel.UserAccess" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Screens">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserAccess">
-              <PropertyRef Name="ScreenID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserAccess_Users">
-          <End Role="Users" Type="MaksoudDBModel.User" Multiplicity="0..1" />
-          <End Role="UserAccess" Type="MaksoudDBModel.UserAccess" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserAccess">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="UserAccess">
+          <End Role="Screens" Type="MaksoudDBModel.Screen" Multiplicity="*" />
+          <End Role="Users" Type="MaksoudDBModel.User" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -297,15 +262,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserAccesses">
-            <EntityTypeMapping TypeName="MaksoudDBModel.UserAccess">
-              <MappingFragment StoreEntitySet="UserAccess">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ScreenID" ColumnName="ScreenID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="MaksoudDBModel.User">
               <MappingFragment StoreEntitySet="Users">
@@ -316,6 +272,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="UserAccess" TypeName="MaksoudDBModel.UserAccess" StoreEntitySet="UserAccess">
+            <EndProperty Name="Screens">
+              <ScalarProperty Name="ID" ColumnName="ScreenID" />
+            </EndProperty>
+            <EndProperty Name="Users">
+              <ScalarProperty Name="ID" ColumnName="UserID" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -29,7 +29,6 @@ namespace Icons.Models
         public DbSet<ProjectUnit> ProjectUnits { get; set; }
         public DbSet<Screen> Screens { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<UserAccess> UserAccesses { get; set; }
         public DbSet<User> Users { get; set; }
     }
 }

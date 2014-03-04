@@ -35,6 +35,11 @@ namespace Icons.Controllers
             }
         }
 
+        public void Logout()
+        {
+            Session.Clear();
+        }
+
         public ActionResult CreateUser()
         {
             List<Screen> LOS = new List<Screen>();
@@ -57,11 +62,11 @@ namespace Icons.Controllers
             A.Status = 1;
             A.Username = name;
             string[] Access = per.Split('#');
-            List<UserAccess> LOUA = new List<UserAccess>();
+            List<Screen> LOUA = new List<Screen>();
             foreach (string AP in Access)
             {
-                UserAccess UA = new UserAccess();
-                UA.ScreenID = int.Parse(AP);
+                Screen UA = new Screen();
+                UA.ID = int.Parse(AP);
                 LOUA.Add(UA);
             }
             Returner R = A.CreateAccount(LOUA);
@@ -87,6 +92,64 @@ namespace Icons.Controllers
             U.ID = id;
             U.RemoveUser();
             return "true";
+        }
+
+        public ActionResult EditUser(int? id)
+        {
+            if (id == null)
+            {
+                if (Session["User"] != null)
+                {
+                    return RedirectToAction("SearchUsers", "User");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            List<Screen> LOS = new List<Screen>();
+            LOS = new Screen().GetScreens().Data as List<Screen>;
+            List<string> GroupNames = new List<string>();
+            foreach (Screen item in LOS)
+            {
+                GroupNames.Add(item.GroupName);
+            }
+            ViewBag.Screens = LOS;
+            ViewBag.Groups = GroupNames;
+            User U = new User { ID = (int)id }.GetByID().Data as User;
+            ViewBag.U = U;
+            ViewBag.UserPer = U.Screens;
+            TempData["UID"] = (int)id;
+            TempData.Keep();
+            return View();
+        }
+
+        public string UpdateUser(string name, string pass, string per)
+        {
+            string[] Access = per.Split('#');
+            List<Screen> LOUA = new List<Screen>();
+            foreach (string AP in Access)
+            {
+                Screen UA = new Screen();
+                UA.ID = int.Parse(AP);
+                LOUA.Add(UA);
+            }
+            Returner R = new User
+            {
+                ID = (int)TempData["UID"],
+                Username = name,
+                Password = pass
+            }.Update(LOUA);
+            if (R.Message == Message.Username_Already_Exists)
+            {
+                TempData.Keep();
+                return "false";
+            }
+            else
+            {
+                TempData.Keep();
+                return "true";
+            }
         }
     }
 }

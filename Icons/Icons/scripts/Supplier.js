@@ -25,6 +25,33 @@
         }
         return false;
     });
+
+    $('#SubEdit').submit(function (event) {
+        if ($(this).parsley('validate')) {
+            $.gritter.removeAll();
+            $.ajax({
+                type: 'post',
+                url: '/Supplier/EditSupplier',
+                data: $(this).serialize(),
+                success: function (data) {
+                    if (data == "true") {
+                        $.gritter.add({
+                            title: '! نجاح العملية',
+                            text: ". تم تعديل بيانات المورد بنجاح",
+                            image: '/content/images/user-icon.png',
+                            class_name: 'clean',
+                            time: '120000'
+                        });
+                    }
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            });
+            return false;
+        }
+        return false;
+    });
 });
 
 function Remove(id)

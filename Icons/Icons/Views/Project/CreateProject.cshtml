@@ -3,103 +3,173 @@
     Layout = "~/Views/shared/MasterPage.cshtml";
 }
 
+<script src="~/content/js/fuelux/loader.min.js"></script>
 <script src="~/scripts/Project.js"></script>
+
+<script>
+    $(document).ready(function () {
+        App.wizard();
+    });
+</script>
 
 <div class="row">
     <div class="col-md-12">
-        <div class="block-flat">
-            <div class="header">
-                <h3 class="ArabicAlign">اضافة مشروع جديد</h3>
-            </div>
-            <div class="content">
-                <form id="ProjCreate" class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
-                    <div class="col-sm-6 col-md-6 col-lg-6">
-                        <div class="block-flat" style="border: none;">
-                            <div class="content">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الرابع</label>
-                                    <div class="col-sm-6 Arabic">
-                                        <input id="mobile" name="mobile" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-error-message="يجب ادخال رقم الموبايل" type="text">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label Arabic" style="text-align:center;">تاريخ الإنشاء</label>
-                                    <div class="col-sm-6 Arabic">
-                                        <input style="direction:ltr;" id="city" name="city" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال المدينة" size="16" value="" type="text">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="border:none;">
-                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">عدد الادوار</label>
-                                    <div class="col-sm-6 Arabic">
-                                        <input style="direction:ltr;" id="district" name="district" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال اسم الحي" size="16" value="" type="text">
-                                    </div>
-                                </div>
-                                <div class="form-group" style="border:none;">
-                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">التكلفة المتوقعة</label>
-                                    <div class="col-sm-6 Arabic">
-                                        <input style="direction:ltr;" id="district" name="district" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال اسم الحي" size="16" value="" type="text">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">نسبة الملكية</label>
-                                    <div class="col-sm-6 Arabic">
-                                        <input style="direction:ltr;" id="district" name="district" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال اسم الحي" size="16" value="" type="text">
-                                    </div>
-                                </div>
+        @*<div class="block-flat">*@
+        <div class="cl-mcont">
+            <div class="row wizard-row">
+                <div class="col-md-12 fuelux">
+                    <div class="block-wizard">
+                        <div id="wizard1" class="wizard wizard-ux">
+                            <ul class="steps">
+                                <li data-target="#step1" class="active">الخطوة الاولي<span class="chevron"></span></li>
+                                <li data-target="#step2">الخطوة الثانية<span class="chevron"></span></li>
+                                <li data-target="#step3">الخطوة الثالثة<span class="chevron"></span></li>
+                            </ul>
+                            <div class="actions">
+                                <button type="button" class="btn btn-xs btn-prev btn-default"><i class="icon-arrow-left"></i>السابق</button>
+                                <button type="button" class="btn btn-xs btn-next btn-default" data-last="Finish">التالي<i class="icon-arrow-right"></i></button>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-6">
-                        <div class="block-flat" style="border: none;">
-                            <div class="content">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">الاسم</label>
+                        <div class="step-content">
+                            <form class="form-horizontal group-border-dashed" action="#" data-parsley-namespace="data-parsley-" data-parsley-validate novalidate>
+                                <div class="step-pane active" id="step1">
+                                    <div class="form-group no-padding">
+                                        <div class="col-sm-12">
+                                            <h3 class="hthin" style="width:100%; text-align:right;">انشاء مشروع جديد</h3>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">اسم المشروع</label>
                                     <div class="col-sm-6 Arabic">
                                         <input class="form-control parsley-validated parsley-error" id="name" name="name" parsley-trigger="change" required="" parsley-error-message="يجب ادخال الاسم" type="text" />
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">عنوان المشروع</label>
-                                    <div class="col-sm-6 Arabic">
-                                        <input class="form-control parsley-validated parsley-error" id="address" name="address" parsley-trigger="change" required="" parsley-error-message="يجب ادخال العنوان" type="text">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">E-Mail</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" placeholder="User E-Mail">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Password</label>
+                                        <div class="col-sm-6">
+                                            <input type="password" class="form-control" placeholder="Enter your password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Verify Password</label>
+                                        <div class="col-sm-6">
+                                            <input type="password" class="form-control" placeholder="Enter your password again">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button class="btn btn-default">الغاء</button>
+                                            <button data-wizard="#wizard1" class="btn btn-primary wizard-next">الخطوة التالية <i class="fa fa-caret-right"></i></button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">المساحة</label>
-                                    <div class="col-sm-6 Arabic">
-                                        <input id="phone" name="phone" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-error-message="يجب ادخال رقم الهاتف" type="text">
+                                <div class="step-pane" id="step2">
+                                    <div class="form-group no-padding">
+                                        <div class="col-sm-7">
+                                            <h3 class="hthin">Notifications</h3>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-7">
+                                            <label class="control-label">E-Mail Notifications</label>
+                                            <p>This option allow you to recieve email notifications by us.</p>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="switch switch-small">
+                                                <input name="op1" type="checkbox" checked />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-7">
+                                            <label class="control-label">Phone Notifications</label>
+                                            <p>Allow us to send phone notifications to your cell phone.</p>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="switch switch-small">
+                                                <input name="op1" type="checkbox" checked />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-7">
+                                            <label class="control-label">Global Notifications</label>
+                                            <p>Allow us to send notifications to your dashboard.</p>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="switch switch-small">
+                                                <input name="op1" type="checkbox" checked />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <button data-wizard="#wizard1" class="btn btn-default wizard-previous"><i class="fa fa-caret-left"></i>السابق</button>
+                                            <button data-wizard="#wizard1" class="btn btn-primary wizard-next">الخطوة التالية <i class="fa fa-caret-right"></i></button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الأول</label>
-                                    <div class="col-sm-6 Arabic">
-                                        <input id="mobile" name="mobile" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-error-message="يجب ادخال رقم الموبايل" type="text">
+                                <div class="step-pane" id="step3">
+                                    <div class="form-group no-padding">
+                                        <div class="col-sm-7">
+                                            <h3 class="hthin">Configuration</h3>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label class="control-label">Buy Credits: <span id="credits">$0</span></label>
+                                            <p>This option allow you to buy an amount of credits.</p>
+
+                                            <input id="credit_slider" type="text" class="bslider form-control" value="0" />
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label class="control-label">Change Plan</label>
+                                            <p>Change your plan many times as you want.</p>
+                                            <select class="select2">
+                                                <optgroup label="Personal">
+                                                    <option value="p1">Basic</option>
+                                                    <option value="p2">Medium</option>
+                                                </optgroup>
+                                                <optgroup label="Company">
+                                                    <option value="p3">Standard</option>
+                                                    <option value="p4">Silver</option>
+                                                    <option value="p5">Gold</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label class="control-label">Payment Rate: <span id="rate">0%</span></label>
+                                            <p>Choose your payment rate to calculate how much money you will recieve.</p>
+
+                                            <input id="rate_slider" data-slider-min="0" data-slider-max="100" type="text" class="bslider form-control" value="0" />
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label class="control-label">Keywords</label>
+                                            <p>Write your keywords to do a successful CEO with web search engines.</p>
+                                            <input class="tags" type="hidden" value="brown,blue,green" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <button data-wizard="#wizard1" class="btn btn-default wizard-previous"><i class="fa fa-caret-left"></i>السابق</button>
+                                            <button data-wizard="#wizard1" class="btn btn-success wizard-next"><i class="fa fa-check"></i>انشاء المشروع</button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الثاني</label>
-                                    <div class="col-sm-6 Arabic">
-                                        <input id="mobile" name="mobile" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-error-message="يجب ادخال رقم الموبايل" type="text">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الثالث</label>
-                                    <div class="col-sm-6 Arabic">
-                                        <input id="mobile" name="mobile" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-error-message="يجب ادخال رقم الموبايل" type="text">
-                                    </div>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">حفظ</button>
-                            <button type="button" onclick="Cancel()" class="btn btn-default">الغاء</button>
-                        </div>
-                    </div>
-                </form>
-                <div class="resultmsg" style="text-align:center;color:blue;"><label id="result"></label></div>
+                </div>
             </div>
         </div>
+        @*</div>*@
     </div>
 </div>

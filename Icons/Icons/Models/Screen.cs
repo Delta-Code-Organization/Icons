@@ -16,7 +16,7 @@ namespace Icons.Models
     {
         public Screen()
         {
-            this.UserAccesses = new HashSet<UserAccess>();
+            this.Users = new HashSet<User>();
         }
     
         public int ID { get; set; }
@@ -24,6 +24,6 @@ namespace Icons.Models
         public string Title { get; set; }
         public string GroupName { get; set; }
     
-        public virtual ICollection<UserAccess> UserAccesses { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

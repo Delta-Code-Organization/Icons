@@ -19,6 +19,11 @@
                         <thead>
                             <tr style="direction: rtl;">
                                 <th style="text-align: center;">اسم المورد</th>
+                                <th style="text-align: center;">العنوان</th>
+                                <th style="text-align: center;">رقم الهاتف</th>
+                                <th style="text-align: center;">رقم الموبايل</th>
+                                <th style="text-align: center;">المدينة</th>
+                                <th style="text-align: center;">الحي</th>
                                 <th style="text-align: center;"></th>
                             </tr>
                         </thead>
@@ -29,20 +34,25 @@
                                 <tr class="odd gradeX" id="@y.ID">
 
                                     <td>@y.Name</td>
-                                    <td class="center">
+                                    <td>@y.Address</td>
+                                    <td>@y.Phone</td>
+                                    <td>@y.Mobile</td>
+                                    <td>@y.City</td>
+                                    <td>@y.District</td>
+                                    <td class="center" style="text-align:center;">
                                         <div class="btn-group">
-                                            <button class="btn btn-default btn-xs" type="button">Actions</button>
+                                            <button class="btn btn-default btn-xs" type="button">الإجرائات</button>
                                             <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">
                                                 <span class="caret"></span>
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <ul role="menu" class="dropdown-menu">
                                                 <li>
-                                                    <a href="/User/EditUser/@y.ID">Edit</a>
+                                                    <a href="/Supplier/EditSupplier/@y.ID">تعديل</a>
                                                 </li>
                                                 <li class="divider"></li>
                                                 <li>
-                                                    <a onclick="Remove(@y.ID)">Remove</a>
+                                                    <a onclick="Remove(@y.ID)">حذف</a>
                                                 </li>
                                             </ul>
                                         </div>

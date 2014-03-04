@@ -58,15 +58,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="UserAccesses">
-      <EntityTypeMapping TypeName="MaksoudDBModel.UserAccess">
-        <MappingFragment StoreEntitySet="UserAccess">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="ScreenID" ColumnName="ScreenID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="MaksoudDBModel.User">
         <MappingFragment StoreEntitySet="Users">
@@ -77,5 +68,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="UserAccess" TypeName="MaksoudDBModel.UserAccess" StoreEntitySet="UserAccess">
+      <EndProperty Name="Screens">
+        <ScalarProperty Name="ID" ColumnName="ScreenID" />
+      </EndProperty>
+      <EndProperty Name="Users">
+        <ScalarProperty Name="ID" ColumnName="UserID" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

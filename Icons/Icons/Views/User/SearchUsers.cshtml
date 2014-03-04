@@ -11,14 +11,14 @@
     <div class="col-md-12">
         <div class="block-flat">
             <div class="header">
-                <h3 style="text-align: right;">بحث العملاء</h3>
+                <h3 style="text-align: right;">بحث المستخدمين</h3>
             </div>
             <div class="content" style="direction: rtl;">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="datatable">
                         <thead>
                             <tr style="direction: rtl;">
-                                <th style="text-align: center;">اسم المستخدم</th>
+                                <th style="text-align: center; width:70%;">اسم المستخدم</th>
                                 <th style="text-align: center;"></th>
                             </tr>
                         </thead>
@@ -29,20 +29,20 @@
                                 <tr class="odd gradeX" id="@y.ID">
 
                                     <td>@y.Username</td>
-                                    <td class="center">
+                                    <td class="center" style="text-align:center;">
                                         <div class="btn-group">
-                                            <button class="btn btn-default btn-xs" type="button">Actions</button>
+                                            <button class="btn btn-default btn-xs" type="button">الإجرائات</button>
                                             <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">
                                                 <span class="caret"></span>
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <ul role="menu" class="dropdown-menu">
                                                 <li>
-                                                    <a href="/User/EditUser/@y.ID">Edit</a>
+                                                    <a href="/User/EditUser/@y.ID">تعديل</a>
                                                 </li>
                                                 <li class="divider"></li>
                                                 <li>
-                                                    <a onclick="Remove(@y.ID)">Remove</a>
+                                                    <a onclick="Remove(@y.ID)">حذف</a>
                                                 </li>
                                             </ul>
                                         </div>

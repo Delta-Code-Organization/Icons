@@ -13,6 +13,8 @@ namespace Icons.Models
         Account_created_successfully = 3,
         User_Deleted_Successfully = 4,
         Supplier_created_successfully = 5,
-        Supplier_deleted_successfully = 6
+        Supplier_deleted_successfully = 6,
+        User_updated_successfully = 7,
+        Supplier_updated_successfully = 8
     }
 }

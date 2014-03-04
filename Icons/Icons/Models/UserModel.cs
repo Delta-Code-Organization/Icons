@@ -13,7 +13,7 @@ namespace Icons.Models
 
         public Returner Login()
         {
-            if (db.Users.Any(p => p.Username == this.Username && p.Password == this.Password))
+            if (db.Users.Any(p => p.Username == this.Username && p.Password == this.Password && p.Status == 1))
             {
                 var User = db.Users.Where(p => p.Username == this.Username && p.Password == this.Password).SingleOrDefault();
                 return new Returner
@@ -31,7 +31,7 @@ namespace Icons.Models
             }
         }
 
-        public Returner CreateAccount(List<UserAccess> LOUA)
+        public Returner CreateAccount(List<Screen> LOUA)
         {
             if (db.Users.Any(p => p.Username == this.Username))
             {
@@ -45,7 +45,15 @@ namespace Icons.Models
                 db.Users.Add(this);
                 db.SaveChanges();
                 var U = db.Users.Where(P => P.Username == this.Username).SingleOrDefault();
-                U.UserAccesses = LOUA;
+                List<Screen> LOSTAP = new List<Screen>();
+                foreach (Screen item in LOUA)
+                {
+                    LOSTAP.Add(db.Screens.Where(p => p.ID == item.ID).SingleOrDefault());
+                }
+                foreach (Screen item in LOSTAP)
+                {
+                    U.Screens.Add(item);
+                }
                 db.SaveChanges();
                 return new Returner
                 {
@@ -59,6 +67,7 @@ namespace Icons.Models
             return new Returner
             {
                 Data = (from U in db.Users
+                        where U.Status == 1
                         select U).ToList()
             };
         }
@@ -68,7 +77,7 @@ namespace Icons.Models
             return new Returner
             {
                 Data = (from U in db.Users
-                        where ID == this.ID
+                        where U.ID == this.ID
                         select U).SingleOrDefault()
             };
         }
@@ -78,9 +87,33 @@ namespace Icons.Models
             var U = db.Users.Where(p => p.ID == this.ID).SingleOrDefault();
             U.Status = 0;
             db.SaveChanges();
-            return new Returner { 
+            return new Returner
+            {
                 Message = Message.User_Deleted_Successfully
             };
+        }
+
+        public Returner Update(List<Screen> LOS)
+        {
+            var U = db.Users.Where(p => p.ID == this.ID).SingleOrDefault();
+            if (db.Users.Any(p=>p.Username == this.Username && p.ID != U.ID && p.Status == 1))
+            {
+                return new Returner
+                {
+                    Message = Message.Username_Already_Exists
+                };
+            }
+            else
+            {
+                U.Password = this.Password;
+                U.Screens = LOS;
+                U.Username = this.Username;
+                db.SaveChanges();
+                return new Returner
+                {
+                    Message = Message.User_updated_successfully
+                };
+            }
         }
     }
 }

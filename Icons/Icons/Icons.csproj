@@ -152,9 +152,6 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UserAccess.cs">
-      <DependentUpon>Icons.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -2396,6 +2393,21 @@
     <Content Include="Views\User\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\User\CreateUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\SearchUsers.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Supplier\CreateSupplier.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Supplier\SuppliersSearch.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Project\CreateProject.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <EntityDeploy Include="Models\Icons.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Icons.Designer.cs</LastGenOutput>
@@ -2417,19 +2429,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\CreateUser.cshtml" />
+    <Content Include="Views\User\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\SearchUsers.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Supplier\CreateSupplier.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Supplier\SuppliersSearch.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Project\CreateProject.cshtml" />
+    <Content Include="Views\Supplier\EditSupplier.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
