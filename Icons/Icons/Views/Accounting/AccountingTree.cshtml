@@ -2,7 +2,7 @@
     ViewBag.Title = "الشجره المحاسبيه";
     Layout = "~/Views/shared/MasterPage.cshtml";
 }
-
+<script src="~/scripts/AccTree.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         //initialize the javascript
@@ -11,6 +11,12 @@
     });
     function SerializeIt() {
         App.nestableLists();
+    }
+    function AddToTree() {
+        $('#ol1').append('<li class="dd-item" data-id="0" data-name="' + $('#accname').val() + '">\
+                          <div class="dd-handle">' + $('#accname').val() + '</div>\
+                          </li>');
+        $('#ol1').val('');
     }
   </script>
 
@@ -22,7 +28,7 @@
                 <p class="ArabicAlign">اي تغيير في هذه الشجره بعد التشغيل الاولي للبرنامج قد يتسبب في تغيير الحسابات , برجاء عدم التغيير</p>
             </div>
             <div class="content">
-                <form id="SubCreate" class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+                <form id="SaveForm" class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
                     <div class="col-sm-6 col-md-6 col-lg-6">
                         <div class="block-flat" style="border: none; direction: rtl;">
                             <div class="block-flat">
@@ -31,17 +37,17 @@
                                 </div>
                                 <div class="content">
                                     <div class="dd" id="list1">
-                                        <ol class="dd-list">
-                                            <li class="dd-item" data-id="1">
+                                        <ol id="ol1" class="dd-list">
+                                            <li class="dd-item" data-id="1" data-name="اصول">
                                                 <div class="dd-handle">اصول</div>
                                             </li>
-                                            <li class="dd-item" data-id="2">
+                                            <li class="dd-item" data-id="2" data-name="خصوم">
                                                 <div class="dd-handle">خصوم</div>
                                             </li>
-                                            <li class="dd-item" data-id="3">
+                                            <li class="dd-item" data-id="3" data-name="مبيعات">
                                                 <div class="dd-handle">مبيعات</div>
                                             </li>
-                                            <li class="dd-item" data-id="4">
+                                            <li class="dd-item" data-id="4" data-name="مصروفات">
                                                 <div class="dd-handle">مصروفات</div>
                                             </li>
                                         </ol>
@@ -58,7 +64,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label Arabic" style="text-align: center;">اسم الحساب</label>
                             <div class="col-sm-6 Arabic">
-                                <input class="form-control parsley-validated parsley-error" id="aname" name="aname" parsley-trigger="change" required="" parsley-minlength="2" parsley-minlength-message="اسم المستخدم يجب ان يكون حرفان علي الاقل" parsley-required-message="يجب ادخال اسم المستخدم" type="text" />
+                                <input class="form-control parsley-validated parsley-error" id="accname" name="aname" parsley-trigger="change"  parsley-minlength="2" parsley-minlength-message="اسم المستخدم يجب ان يكون حرفان علي الاقل" parsley-required-message="يجب ادخال اسم المستخدم" type="text" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -69,8 +75,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">حفظ</button>
-                            <button type="button" onclick="SerializeIt()" class="btn btn-default">الغاء</button>
+                            <button type="submit" class="btn btn-primary">حفظ التعديلات على الشجره</button>
                         </div>
                     </div>
                 </form>
