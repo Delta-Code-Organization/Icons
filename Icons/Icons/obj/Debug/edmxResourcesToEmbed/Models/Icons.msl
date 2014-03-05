@@ -1,6 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="MaksoudDBModelStoreContainer" CdmEntityContainer="MaksoudDBEntities">
+    <EntitySetMapping Name="AccountingTrees">
+      <EntityTypeMapping TypeName="MaksoudDBModel.AccountingTree">
+        <MappingFragment StoreEntitySet="AccountingTree">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NodeName" ColumnName="NodeName" />
+          <ScalarProperty Name="Parent" ColumnName="Parent" />
+          <ScalarProperty Name="CanDelete" ColumnName="CanDelete" />
+          <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+          <ScalarProperty Name="IsPayment" ColumnName="IsPayment" />
+          <ScalarProperty Name="IsReceivable" ColumnName="IsReceivable" />
+          <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
+          <ScalarProperty Name="KeyAccountID" ColumnName="KeyAccountID" />
+          <ScalarProperty Name="AccountingCode" ColumnName="AccountingCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FinancialTransactions">
+      <EntityTypeMapping TypeName="MaksoudDBModel.FinancialTransaction">
+        <MappingFragment StoreEntitySet="FinancialTransactions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+          <ScalarProperty Name="FromAccount" ColumnName="FromAccount" />
+          <ScalarProperty Name="ToAccount" ColumnName="ToAccount" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Statement" ColumnName="Statement" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="ReferanceDocumentNumber" ColumnName="ReferanceDocumentNumber" />
+          <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Projects">
       <EntityTypeMapping TypeName="MaksoudDBModel.Project">
         <MappingFragment StoreEntitySet="Projects">
@@ -16,6 +47,7 @@
           <ScalarProperty Name="FloorsCount" ColumnName="FloorsCount" />
           <ScalarProperty Name="ExpectedCost" ColumnName="ExpectedCost" />
           <ScalarProperty Name="OwnershipPercentage" ColumnName="OwnershipPercentage" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -31,6 +63,7 @@
           <ScalarProperty Name="Finishing" ColumnName="Finishing" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="AccountingID" ColumnName="AccountingID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -55,6 +88,7 @@
           <ScalarProperty Name="City" ColumnName="City" />
           <ScalarProperty Name="District" ColumnName="District" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="AccountingID" ColumnName="AccountingID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

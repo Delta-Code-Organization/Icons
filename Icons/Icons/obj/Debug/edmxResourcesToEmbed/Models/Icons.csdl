@@ -1,46 +1,89 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MaksoudDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="MaksoudDBEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="AccountingTrees" EntityType="MaksoudDBModel.AccountingTree" />
+    <EntitySet Name="FinancialTransactions" EntityType="MaksoudDBModel.FinancialTransaction" />
     <EntitySet Name="Projects" EntityType="MaksoudDBModel.Project" />
     <EntitySet Name="ProjectUnits" EntityType="MaksoudDBModel.ProjectUnit" />
     <EntitySet Name="Screens" EntityType="MaksoudDBModel.Screen" />
     <EntitySet Name="Suppliers" EntityType="MaksoudDBModel.Supplier" />
     <EntitySet Name="Users" EntityType="MaksoudDBModel.User" />
-    <AssociationSet Name="UserAccess" Association="MaksoudDBModel.UserAccess">
-      <End Role="Screens" EntitySet="Screens" />
-      <End Role="Users" EntitySet="Users" />
-    </AssociationSet>
-    <EntitySet Name="AccountingTrees" EntityType="MaksoudDBModel.AccountingTree" />
-    <EntitySet Name="FinancialTransactions" EntityType="MaksoudDBModel.FinancialTransaction" />
     <AssociationSet Name="FK_AccountingTree_AccTree" Association="MaksoudDBModel.FK_AccountingTree_AccTree">
       <End Role="AccountingTree" EntitySet="AccountingTrees" />
       <End Role="AccountingTree1" EntitySet="AccountingTrees" />
     </AssociationSet>
     <AssociationSet Name="FK_FinancialTransactions_AccTree" Association="MaksoudDBModel.FK_FinancialTransactions_AccTree">
       <End Role="AccountingTree" EntitySet="AccountingTrees" />
-      <End Role="FinancialTransaction" EntitySet="FinancialTransactions" />
+      <End Role="FinancialTransactions" EntitySet="FinancialTransactions" />
     </AssociationSet>
     <AssociationSet Name="FK_FinancialTransactions_AccTree2" Association="MaksoudDBModel.FK_FinancialTransactions_AccTree2">
       <End Role="AccountingTree" EntitySet="AccountingTrees" />
-      <End Role="FinancialTransaction" EntitySet="FinancialTransactions" />
+      <End Role="FinancialTransactions" EntitySet="FinancialTransactions" />
     </AssociationSet>
     <AssociationSet Name="FK_Projects_AccountingTree" Association="MaksoudDBModel.FK_Projects_AccountingTree">
       <End Role="AccountingTree" EntitySet="AccountingTrees" />
-      <End Role="Project" EntitySet="Projects" />
+      <End Role="Projects" EntitySet="Projects" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectUnits_AccountingTree" Association="MaksoudDBModel.FK_ProjectUnits_AccountingTree">
       <End Role="AccountingTree" EntitySet="AccountingTrees" />
-      <End Role="ProjectUnit" EntitySet="ProjectUnits" />
+      <End Role="ProjectUnits" EntitySet="ProjectUnits" />
     </AssociationSet>
     <AssociationSet Name="FK_Suppliers_ToAccountingTree" Association="MaksoudDBModel.FK_Suppliers_ToAccountingTree">
       <End Role="AccountingTree" EntitySet="AccountingTrees" />
-      <End Role="Supplier" EntitySet="Suppliers" />
+      <End Role="Suppliers" EntitySet="Suppliers" />
     </AssociationSet>
     <AssociationSet Name="FK_FinancialTransactions_Users" Association="MaksoudDBModel.FK_FinancialTransactions_Users">
-      <End Role="User" EntitySet="Users" />
-      <End Role="FinancialTransaction" EntitySet="FinancialTransactions" />
+      <End Role="Users" EntitySet="Users" />
+      <End Role="FinancialTransactions" EntitySet="FinancialTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectUnits_Projects" Association="MaksoudDBModel.FK_ProjectUnits_Projects">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="ProjectUnits" EntitySet="ProjectUnits" />
+    </AssociationSet>
+    <AssociationSet Name="UserAccess" Association="MaksoudDBModel.UserAccess">
+      <End Role="Screens" EntitySet="Screens" />
+      <End Role="Users" EntitySet="Users" />
     </AssociationSet>
   </EntityContainer>
+  <EntityType Name="AccountingTree">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="NodeName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Parent" Type="Int32" />
+    <Property Name="CanDelete" Type="Boolean" />
+    <Property Name="IsClosed" Type="Boolean" />
+    <Property Name="IsPayment" Type="Boolean" />
+    <Property Name="IsReceivable" Type="Boolean" />
+    <Property Name="CurrentBalance" Type="Double" />
+    <Property Name="KeyAccountID" Type="Int32" />
+    <Property Name="AccountingCode" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="AccountingTree1" Relationship="MaksoudDBModel.FK_AccountingTree_AccTree" FromRole="AccountingTree" ToRole="AccountingTree1" />
+    <NavigationProperty Name="AccountingTree2" Relationship="MaksoudDBModel.FK_AccountingTree_AccTree" FromRole="AccountingTree1" ToRole="AccountingTree" />
+    <NavigationProperty Name="FinancialTransactions" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree" FromRole="AccountingTree" ToRole="FinancialTransactions" />
+    <NavigationProperty Name="FinancialTransactions1" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree2" FromRole="AccountingTree" ToRole="FinancialTransactions" />
+    <NavigationProperty Name="Projects" Relationship="MaksoudDBModel.FK_Projects_AccountingTree" FromRole="AccountingTree" ToRole="Projects" />
+    <NavigationProperty Name="ProjectUnits" Relationship="MaksoudDBModel.FK_ProjectUnits_AccountingTree" FromRole="AccountingTree" ToRole="ProjectUnits" />
+    <NavigationProperty Name="Suppliers" Relationship="MaksoudDBModel.FK_Suppliers_ToAccountingTree" FromRole="AccountingTree" ToRole="Suppliers" />
+  </EntityType>
+  <EntityType Name="FinancialTransaction">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="TransactionDate" Type="DateTime" Precision="3" />
+    <Property Name="FromAccount" Type="Int32" />
+    <Property Name="ToAccount" Type="Int32" />
+    <Property Name="Amount" Type="Double" />
+    <Property Name="Statement" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="ReferanceDocumentNumber" Type="Int32" />
+    <Property Name="LastEditBy" Type="Int32" />
+    <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree" FromRole="FinancialTransactions" ToRole="AccountingTree" />
+    <NavigationProperty Name="AccountingTree1" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree2" FromRole="FinancialTransactions" ToRole="AccountingTree" />
+    <NavigationProperty Name="User" Relationship="MaksoudDBModel.FK_FinancialTransactions_Users" FromRole="FinancialTransactions" ToRole="Users" />
+  </EntityType>
   <EntityType Name="Project">
     <Key>
       <PropertyRef Name="Id" />
@@ -57,8 +100,9 @@
     <Property Name="FloorsCount" Type="Int32" />
     <Property Name="ExpectedCost" Type="Double" />
     <Property Name="OwnershipPercentage" Type="Double" />
-    <Property Type="Int32" Name="AccountID" />
-    <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_Projects_AccountingTree" FromRole="Project" ToRole="AccountingTree" />
+    <Property Name="AccountID" Type="Int32" />
+    <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_Projects_AccountingTree" FromRole="Projects" ToRole="AccountingTree" />
+    <NavigationProperty Name="ProjectUnits" Relationship="MaksoudDBModel.FK_ProjectUnits_Projects" FromRole="Projects" ToRole="ProjectUnits" />
   </EntityType>
   <EntityType Name="ProjectUnit">
     <Key>
@@ -73,8 +117,9 @@
     <Property Name="Finishing" Type="Int32" />
     <Property Name="Notes" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
     <Property Name="Owner" Type="Int32" />
-    <Property Type="Int32" Name="AccountingID" />
-    <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_ProjectUnits_AccountingTree" FromRole="ProjectUnit" ToRole="AccountingTree" />
+    <Property Name="AccountingID" Type="Int32" />
+    <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_ProjectUnits_AccountingTree" FromRole="ProjectUnits" ToRole="AccountingTree" />
+    <NavigationProperty Name="Project" Relationship="MaksoudDBModel.FK_ProjectUnits_Projects" FromRole="ProjectUnits" ToRole="Projects" />
   </EntityType>
   <EntityType Name="Screen">
     <Key>
@@ -98,8 +143,8 @@
     <Property Name="City" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
     <Property Name="District" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
     <Property Name="Notes" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
-    <Property Type="Int32" Name="AccountingID" />
-    <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_Suppliers_ToAccountingTree" FromRole="Supplier" ToRole="AccountingTree" />
+    <Property Name="AccountingID" Type="Int32" />
+    <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_Suppliers_ToAccountingTree" FromRole="Suppliers" ToRole="AccountingTree" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -109,55 +154,12 @@
     <Property Name="Username" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
     <Property Name="Password" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
     <Property Name="Status" Type="Int32" />
+    <NavigationProperty Name="FinancialTransactions" Relationship="MaksoudDBModel.FK_FinancialTransactions_Users" FromRole="Users" ToRole="FinancialTransactions" />
     <NavigationProperty Name="Screens" Relationship="MaksoudDBModel.UserAccess" FromRole="Users" ToRole="Screens" />
-    <NavigationProperty Name="FinancialTransactions" Relationship="MaksoudDBModel.FK_FinancialTransactions_Users" FromRole="User" ToRole="FinancialTransaction" />
-  </EntityType>
-  <Association Name="UserAccess">
-    <End Role="Screens" Type="MaksoudDBModel.Screen" Multiplicity="*" />
-    <End Role="Users" Type="MaksoudDBModel.User" Multiplicity="*" />
-  </Association>
-  <EntityType Name="AccountingTree">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Type="Int32" Name="Id" Nullable="false" />
-    <Property Type="String" Name="NodeName" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Type="Int32" Name="Parent" />
-    <Property Type="Boolean" Name="CanDelete" />
-    <Property Type="Boolean" Name="IsClosed" />
-    <Property Type="Boolean" Name="IsPayment" />
-    <Property Type="Boolean" Name="IsReceivable" />
-    <Property Type="Double" Name="CurrentBalance" />
-    <Property Type="Int32" Name="KeyAccountID" />
-    <Property Type="String" Name="AccountingCode" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="AccountingTree1" Relationship="MaksoudDBModel.FK_AccountingTree_AccTree" FromRole="AccountingTree" ToRole="AccountingTree1" />
-    <NavigationProperty Name="AccountingTree2" Relationship="MaksoudDBModel.FK_AccountingTree_AccTree" FromRole="AccountingTree1" ToRole="AccountingTree" />
-    <NavigationProperty Name="FinancialTransactions" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree" FromRole="AccountingTree" ToRole="FinancialTransaction" />
-    <NavigationProperty Name="FinancialTransactions1" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree2" FromRole="AccountingTree" ToRole="FinancialTransaction" />
-    <NavigationProperty Name="Projects" Relationship="MaksoudDBModel.FK_Projects_AccountingTree" FromRole="AccountingTree" ToRole="Project" />
-    <NavigationProperty Name="ProjectUnits" Relationship="MaksoudDBModel.FK_ProjectUnits_AccountingTree" FromRole="AccountingTree" ToRole="ProjectUnit" />
-    <NavigationProperty Name="Suppliers" Relationship="MaksoudDBModel.FK_Suppliers_ToAccountingTree" FromRole="AccountingTree" ToRole="Supplier" />
-  </EntityType>
-  <EntityType Name="FinancialTransaction">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Type="Int32" Name="Id" Nullable="false" />
-    <Property Type="DateTime" Name="TransactionDate" Precision="3" />
-    <Property Type="Int32" Name="FromAccount" />
-    <Property Type="Int32" Name="ToAccount" />
-    <Property Type="Double" Name="Amount" />
-    <Property Type="String" Name="Statement" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="String" Name="Notes" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Type="Int32" Name="ReferanceDocumentNumber" />
-    <Property Type="Int32" Name="LastEditBy" />
-    <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree" FromRole="FinancialTransaction" ToRole="AccountingTree" />
-    <NavigationProperty Name="AccountingTree1" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree2" FromRole="FinancialTransaction" ToRole="AccountingTree" />
-    <NavigationProperty Name="User" Relationship="MaksoudDBModel.FK_FinancialTransactions_Users" FromRole="FinancialTransaction" ToRole="User" />
   </EntityType>
   <Association Name="FK_AccountingTree_AccTree">
-    <End Type="MaksoudDBModel.AccountingTree" Role="AccountingTree" Multiplicity="0..1" />
-    <End Type="MaksoudDBModel.AccountingTree" Role="AccountingTree1" Multiplicity="*" />
+    <End Role="AccountingTree" Type="MaksoudDBModel.AccountingTree" Multiplicity="0..1" />
+    <End Role="AccountingTree1" Type="MaksoudDBModel.AccountingTree" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AccountingTree">
         <PropertyRef Name="Id" />
@@ -168,75 +170,91 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_FinancialTransactions_AccTree">
-    <End Type="MaksoudDBModel.AccountingTree" Role="AccountingTree" Multiplicity="0..1" />
-    <End Type="MaksoudDBModel.FinancialTransaction" Role="FinancialTransaction" Multiplicity="*" />
+    <End Role="AccountingTree" Type="MaksoudDBModel.AccountingTree" Multiplicity="0..1" />
+    <End Role="FinancialTransactions" Type="MaksoudDBModel.FinancialTransaction" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AccountingTree">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="FinancialTransaction">
+      <Dependent Role="FinancialTransactions">
         <PropertyRef Name="FromAccount" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_FinancialTransactions_AccTree2">
-    <End Type="MaksoudDBModel.AccountingTree" Role="AccountingTree" Multiplicity="0..1" />
-    <End Type="MaksoudDBModel.FinancialTransaction" Role="FinancialTransaction" Multiplicity="*" />
+    <End Role="AccountingTree" Type="MaksoudDBModel.AccountingTree" Multiplicity="0..1" />
+    <End Role="FinancialTransactions" Type="MaksoudDBModel.FinancialTransaction" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AccountingTree">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="FinancialTransaction">
+      <Dependent Role="FinancialTransactions">
         <PropertyRef Name="ToAccount" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Projects_AccountingTree">
-    <End Type="MaksoudDBModel.AccountingTree" Role="AccountingTree" Multiplicity="0..1" />
-    <End Type="MaksoudDBModel.Project" Role="Project" Multiplicity="*" />
+    <End Role="AccountingTree" Type="MaksoudDBModel.AccountingTree" Multiplicity="0..1" />
+    <End Role="Projects" Type="MaksoudDBModel.Project" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AccountingTree">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Project">
+      <Dependent Role="Projects">
         <PropertyRef Name="AccountID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProjectUnits_AccountingTree">
-    <End Type="MaksoudDBModel.AccountingTree" Role="AccountingTree" Multiplicity="0..1" />
-    <End Type="MaksoudDBModel.ProjectUnit" Role="ProjectUnit" Multiplicity="*" />
+    <End Role="AccountingTree" Type="MaksoudDBModel.AccountingTree" Multiplicity="0..1" />
+    <End Role="ProjectUnits" Type="MaksoudDBModel.ProjectUnit" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AccountingTree">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="ProjectUnit">
+      <Dependent Role="ProjectUnits">
         <PropertyRef Name="AccountingID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Suppliers_ToAccountingTree">
-    <End Type="MaksoudDBModel.AccountingTree" Role="AccountingTree" Multiplicity="0..1" />
-    <End Type="MaksoudDBModel.Supplier" Role="Supplier" Multiplicity="*" />
+    <End Role="AccountingTree" Type="MaksoudDBModel.AccountingTree" Multiplicity="0..1" />
+    <End Role="Suppliers" Type="MaksoudDBModel.Supplier" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AccountingTree">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Supplier">
+      <Dependent Role="Suppliers">
         <PropertyRef Name="AccountingID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_FinancialTransactions_Users">
-    <End Type="MaksoudDBModel.User" Role="User" Multiplicity="0..1" />
-    <End Type="MaksoudDBModel.FinancialTransaction" Role="FinancialTransaction" Multiplicity="*" />
+    <End Role="Users" Type="MaksoudDBModel.User" Multiplicity="0..1" />
+    <End Role="FinancialTransactions" Type="MaksoudDBModel.FinancialTransaction" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="User">
+      <Principal Role="Users">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="FinancialTransaction">
+      <Dependent Role="FinancialTransactions">
         <PropertyRef Name="LastEditBy" />
       </Dependent>
     </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectUnits_Projects">
+    <End Role="Projects" Type="MaksoudDBModel.Project" Multiplicity="0..1" />
+    <End Role="ProjectUnits" Type="MaksoudDBModel.ProjectUnit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProjectUnits">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserAccess">
+    <End Role="Screens" Type="MaksoudDBModel.Screen" Multiplicity="*" />
+    <End Role="Users" Type="MaksoudDBModel.User" Multiplicity="*" />
   </Association>
 </Schema>

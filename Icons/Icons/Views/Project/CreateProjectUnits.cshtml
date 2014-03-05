@@ -1,0 +1,283 @@
+﻿@{
+    ViewBag.Title = "CreateProjectUnits";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+    Project P = ViewBag.P;
+}
+
+@using Icons.Models;
+
+<script src="~/scripts/Project.js"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">بيانات المشروع</h3>
+            </div>
+            <div class="content">
+                <table class="no-border hover" style="direction: rtl;">
+                    <tbody class="no-border-y">
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>اسم المشروع</td>
+                            <td>@P.ProjectName</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>عنوان المشروع</td>
+                            <td>@P.ProjectAddress</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>المساحة</td>
+                            <td>@P.LandSpace</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>تاريخ الإنشاء</td>
+                            <td>@P.CreationDate</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>المنظر الأول</td>
+                            <td>@P.FirstViewLength</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>المنظر الثاني</td>
+                            <td>@P.SecondViewLength</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>المنظر الثالث</td>
+                            <td>@P.ThirdViewLength</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>المنظر الرابع</td>
+                            <td>@P.ForthViewLength</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>عدد الأدوار</td>
+                            <td>@P.FloorsCount</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>التكلفة المتوقعة</td>
+                            <td>@P.ExpectedCost</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>نسبة الملكية</td>
+                            <td>@P.OwnershipPercentage</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">إضافة وحدة</h3>
+            </div>
+            <div class="content">
+                <form class="form-horizontal group-border-dashed" id="AddUnit" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">السعر المتوقع</label>
+                            <div class="col-sm-6 Arabic">
+                                <input class="form-control parsley-validated parsley-error" id="price" name="price" parsley-trigger="change" required="" parsley-error-message="يجب ادخال السعر المتوقع" type="text" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">التشطيب</label>
+                            <div class="col-sm-6 Arabic">
+                                <select class="select2" name="finish">
+                                    <optgroup label="التشطيب">
+                                        @{
+                                            int Count1 = 1;
+                                            foreach (string item in ViewBag.F)
+                                            {
+                                            <option value="@Count1">@item.Replace("_", " ")</option>
+                                                Count1++;
+                                            }
+ }
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">ملاحظات</label>
+                            <div class="col-sm-6 Arabic">
+                                <textarea id="custnotes" name="notes" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">نوع الوحدة</label>
+                            <div class="col-sm-6 Arabic">
+                                <select name="type" class="select2">
+                                    <optgroup label="الأنواع">
+                                        @{
+                                            int Count = 1;
+                                            foreach (string item in ViewBag.T)
+                                            {
+                                            <option value="@Count">@item.Replace("_", " ")</option>
+                                                Count++;
+                                            }
+ }
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">مساحة الوحدة</label>
+                            <div class="col-sm-6 Arabic">
+                                <input class="form-control parsley-validated parsley-error" id="space" name="space" parsley-trigger="change" required="" parsley-error-message="يجب ادخال مساحة الوحدة" type="text" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">عدد الأدوار</label>
+                            <div class="col-sm-6 Arabic">
+                                <input class="form-control parsley-validated parsley-error" id="floors" name="floors" parsley-trigger="change" required="" parsley-error-message="يجب ادخال عدد الأدوار" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">انشاء الوحدة</button>
+                            <button type="button" class="btn btn-default">الغاء</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="resultmsg" style="text-align: center; color: blue;">
+                    <label id="result"></label>
+                </div>
+            </div>
+        </div>
+        <div class="block-flat">
+            <div class="header">
+                <h3 style="width: 100%; text-align: right;">وحدات المشروع</h3>
+            </div>
+            <div class="content">
+                <table style="direction: rtl;">
+                    <thead>
+                        <tr>
+                            <th style="width: 14.2%; text-align: center;">نوع الوحدة</th>
+                            <th style="width: 14.2%; text-align: center;">مساحة الوحدة</th>
+                            <th style="width: 14.2%; text-align: center;">عدد الأدوار</th>
+                            <th style="width: 14.2%; text-align: center;">السعر المتوقع</th>
+                            <th style="width: 14.2%; text-align: center;">التشطيب</th>
+                            <th style="width: 14.2%; text-align: center;">ملاحظات</th>
+                            <th style="width: 14.2%; text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (ProjectUnit item in ViewBag.PU)
+                            {
+                                string Type = Enum.GetName(typeof(UnitTypes), item.UnitType);
+                                string Finishing = Enum.GetName(typeof(Finishing), item.Finishing);
+                            <tr id="DetailRow@(item.Id)">
+                                <td style="width: 14.2%; text-align: center;">@Type.Replace("_", " ")</td>
+                                <td style="width: 14.2%; text-align: center;">@item.UnitSpace</td>
+                                <td style="width: 14.2%; text-align: center;">@item.FloorNumber</td>
+                                <td style="width: 14.2%; text-align: center;">@item.ExpectedPrice</td>
+                                <td style="width: 14.2%; text-align: center;">@Finishing.Replace("_", " ")</td>
+                                <td style="width: 14.2%; text-align: center;">@item.Notes</td>
+                                <td style="width: 14.2%; text-align: center;">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default">الإجرائات</button>
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a data-toggle="modal" data-target="#mod-info" onclick="FillFields(@item.Id)">تعديل</a></li>
+                                            <li><a href="javascript:RemoveUnit(@item.Id);">حذف</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+ }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div aria-hidden="true" style="display: none;" class="modal fade" id="mod-info" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 900px;">
+            <form class="form-horizontal group-border-dashed" id="EditUnit" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+                <div class="modal-header">
+                    <button type="button" class="close" id="ClosePopBtn" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">السعر المتوقع</label>
+                            <div class="col-sm-6 Arabic">
+                                <input class="form-control parsley-validated parsley-error" id="Pprice" name="Pprice" parsley-trigger="change" required="" parsley-error-message="يجب ادخال السعر المتوقع" type="text" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">التشطيب</label>
+                            <div class="col-sm-6 Arabic">
+                                <select class="form-control" id="Pfinish" name="Pfinish">
+                                        @{
+                                            int Count4 = 1;
+                                            foreach (string item in ViewBag.F)
+                                            {
+                                            <option value="@Count4">@item.Replace("_", " ")</option>
+                                                Count4++;
+                                            }
+                                            }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">ملاحظات</label>
+                            <div class="col-sm-6 Arabic">
+                                <textarea id="Pnotes" name="Pnotes" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <input type="hidden" id="PUnitID" name="PUnitID" value="" />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">نوع الوحدة</label>
+                            <div class="col-sm-6 Arabic">
+                                <select id="Ptype" name="Ptype" class="form-control">
+                                        @{
+                                            int Count3 = 1;
+                                            foreach (string item in ViewBag.T)
+                                            {
+                                            <option value="@Count3">@item.Replace("_", " ")</option>
+                                                Count3++;
+                                            }
+ }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">مساحة الوحدة</label>
+                            <div class="col-sm-6 Arabic">
+                                <input class="form-control parsley-validated parsley-error" id="Pspace" name="Pspace" parsley-trigger="change" required="" parsley-error-message="يجب ادخال مساحة الوحدة" type="text" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">عدد الأدوار</label>
+                            <div class="col-sm-6 Arabic">
+                                <input class="form-control parsley-validated parsley-error" id="Pfloors" name="Pfloors" parsley-trigger="change" required="" parsley-error-message="يجب ادخال عدد الأدوار" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="background-color: #fff; border: none;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">الغاء</button>
+                    <button type="submit" class="btn btn-primary">تعديل</button>
+                </div>
+                <div class="resultmsg" style="text-align:center;color:blue;"><label id="result1"></label></div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

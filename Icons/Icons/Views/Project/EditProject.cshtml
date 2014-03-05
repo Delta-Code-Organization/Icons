@@ -1,7 +1,10 @@
 ﻿@{
-    ViewBag.Title = "CreateProject";
+    ViewBag.Title = "EditProject";
     Layout = "~/Views/shared/MasterPage.cshtml";
+    Project P = ViewBag.P;
 }
+
+@using Icons.Models;
 
 <script src="~/content/js/fuelux/loader.min.js"></script>
 <script src="~/scripts/Project.js"></script>
@@ -31,7 +34,7 @@
                             </div>
                         </div>
                         <div class="step-content">
-                            <form id="ProjCreate" class="form-horizontal group-border-dashed" action="#" novalidate="" parsley-validate="">
+                            <form id="ProjEdit" class="form-horizontal group-border-dashed" action="#" novalidate="" parsley-validate="">
                                 <div class="step-pane active" id="step1">
                                     <div class="form-group no-padding">
                                         <div class="col-sm-12">
@@ -41,27 +44,27 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">اسم المشروع</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" id="name" name="name" parsley-trigger="change" required="" parsley-error-message="يجب ادخال اسم المشروع" type="text" />
+                                            <input class="form-control parsley-validated parsley-error" value="@P.ProjectName" id="name" name="name" parsley-trigger="change" required="" parsley-error-message="يجب ادخال اسم المشروع" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">عنوان المشروع</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" id="address" name="address" parsley-trigger="change" required="" parsley-error-message="يجب ادخال عنوان المشروع" type="text" />
+                                            <input class="form-control parsley-validated parsley-error" value="@P.ProjectAddress" id="address" name="address" parsley-trigger="change" required="" parsley-error-message="يجب ادخال عنوان المشروع" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">المساحة</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" id="space" name="space" parsley-trigger="change" required="" parsley-error-message="يجب ادخال مساحة المشروع" type="text" />
+                                            <input class="form-control parsley-validated parsley-error" id="space" name="space" value="@P.LandSpace" parsley-trigger="change" required="" parsley-error-message="يجب ادخال مساحة المشروع" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                    <label class="col-sm-3 control-label Arabic" style="text-align:center;">تاريخ الإنشاء</label>
-                                    <div class="col-sm-6 Arabic">
-                                        <input style="direction:ltr;" data-mask="datetime" id="date" name="date" class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ الإنشاء" size="16" value="" type="text">
+                                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">تاريخ الإنشاء</label>
+                                        <div class="col-sm-6 Arabic">
+                                            <input style="direction:ltr;" data-mask="datetime" id="date" name="date" value="@P.CreationDate" class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ الإنشاء" size="16" type="text">
+                                        </div>
                                     </div>
-                                </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
                                             <button class="btn btn-default">الغاء</button>
@@ -78,25 +81,25 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الأول</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" id="first" name="first" parsley-trigger="change" required="" parsley-error-message="يجب ادخال المنظر الأول" type="text" />
+                                            <input class="form-control parsley-validated parsley-error" id="first" value="@P.FirstViewLength" name="first" parsley-trigger="change" required="" parsley-error-message="يجب ادخال المنظر الأول" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الثاني</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" id="second" name="second" parsley-trigger="change" required="" parsley-error-message="يجب ادخال المنظر الثاني" type="text" />
+                                            <input class="form-control parsley-validated parsley-error" id="second" value="@P.SecondViewLength" name="second" parsley-trigger="change" required="" parsley-error-message="يجب ادخال المنظر الثاني" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الثالث</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" id="third" name="third" parsley-trigger="change" required="" parsley-error-message="يجب ادخال المنظر الثالث" type="text" />
+                                            <input class="form-control parsley-validated parsley-error" id="third" value="@P.ThirdViewLength" name="third" parsley-trigger="change" required="" parsley-error-message="يجب ادخال المنظر الثالث" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الرابع</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" id="forth" name="forth" parsley-trigger="change" required="" parsley-error-message="يجب ادخال المنظر الرابع" type="text" />
+                                            <input class="form-control parsley-validated parsley-error" id="forth" value="@P.ForthViewLength" name="forth" parsley-trigger="change" required="" parsley-error-message="يجب ادخال المنظر الرابع" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -115,25 +118,25 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">عدد الأدوار</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" id="floors" name="floors" parsley-trigger="change" required="" parsley-error-message="يجب ادخال عدد الأدوار" type="text" />
+                                            <input class="form-control parsley-validated parsley-error" id="floors" value="@P.FloorsCount" name="floors" parsley-trigger="change" required="" parsley-error-message="يجب ادخال عدد الأدوار" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">التكلفة المتوقعة</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" id="cost" name="cost" parsley-trigger="change" required="" parsley-error-message="يجب ادخال التكلفة المتوقعة للمشروع" type="text" />
+                                            <input class="form-control parsley-validated parsley-error" id="cost" name="cost" value="@P.ExpectedCost" parsley-trigger="change" required="" parsley-error-message="يجب ادخال التكلفة المتوقعة للمشروع" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">نسبة الملكية</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" id="per" name="per" parsley-trigger="change" required="" parsley-error-message="يجب ادخال نسبة الملكية" type="text" />
+                                            <input class="form-control parsley-validated parsley-error" id="per" name="per" value="@P.OwnershipPercentage" parsley-trigger="change" required="" parsley-error-message="يجب ادخال نسبة الملكية" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-12">
                                             <button data-wizard="#wizard1" class="btn btn-default wizard-previous"><i class="fa fa-caret-left"></i>السابق</button>
-                                            <button data-wizard="#wizard1" class="btn btn-success wizard-next" onclick="SubmitForm()"><i class="fa fa-check"></i>انشاء المشروع</button>
+                                            <button data-wizard="#wizard1" class="btn btn-success wizard-next" onclick="EditFormSubmit()"><i class="fa fa-check"></i>حفظ</button>
                                         </div>
                                     </div>
                                 </div>

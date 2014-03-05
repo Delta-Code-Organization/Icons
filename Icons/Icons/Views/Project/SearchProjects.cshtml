@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "SearchProjects";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+}
+
+@using Icons.Models;
+
+<script src="~/scripts/Project.js"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="block-flat">
+            <div class="header">
+                <h3 style="text-align: right;">بحث المشاريع</h3>
+            </div>
+            <div class="content" style="direction: rtl;">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="datatable">
+                        <thead>
+                            <tr style="direction: rtl;">
+                                <th style="text-align: center;">اسم المشروع</th>
+                                <th style="text-align: center;">العنوان</th>
+                                <th style="text-align: center;">المساحة</th>
+                                <th style="text-align: center;">تاريخ الانشاء</th>
+                                <th style="text-align: center;">عدد الادوار</th>
+                                <th style="text-align: center;">التكلفة المتوقعة</th>
+                                <th style="text-align: center;">نسبة الملكية</th>
+                                <th style="text-align: center;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (Project y in ViewBag.P)
+                                {
+                                <tr class="odd gradeX" id="@y.Id">
+
+                                    <td>@y.ProjectName</td>
+                                    <td>@y.ProjectAddress</td>
+                                    <td>@y.LandSpace</td>
+                                    <td>@y.CreationDate</td>
+                                    <td>@y.FloorsCount</td>
+                                    <td>@y.ExpectedCost</td>
+                                    <td>@y.OwnershipPercentage</td>
+                                    <td class="center" style="text-align:center;">
+                                        <div class="btn-group">
+                                            <button class="btn btn-default btn-xs" type="button">الإجرائات</button>
+                                            <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul role="menu" class="dropdown-menu">
+                                                <li>
+                                                    <a href="/Supplier/EditSupplier/@y.Id">تعديل</a>
+                                                </li>
+                                                <li class="divider"></li>
+                                                <li>
+                                                    <a onclick="Remove(@y.Id)">حذف</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        App.init();
+        App.dataTables();
+    });
+
+    @*var functions = $('<div class="btn-group"><button class="btn btn-default btn-xs" type="button">Actions</button><button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul role="menu" class="dropdown-menu"><li><a href="/Customer/EditCustomer?_ID=@ViewBag.allcustomers.ID">Edit</a></li><li><a href="#">Copy</a></li><li><a href="#">Details</a></li><li class="divider"></li><li><a href="#">Remove</a></li></ul></div>');
+    $("#datatable tbody tr td:last-child").each(function () {
+        $(this).html("");
+        functions.clone().appendTo(this);
+    });*@
+
+    $(document).ready(function () {
+        /* Formating function for row details */
+        function fnFormatDetails(oTable, nTr) {
+            var aData = oTable.fnGetData(nTr);
+            var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+            sOut += '<tr><td>Rendering engine:</td><td>' + aData[1] + ' ' + aData[4] + '</td></tr>';
+            sOut += '<tr><td>Link to source:</td><td>Could provide a link here</td></tr>';
+            sOut += '<tr><td>Extra info:</td><td>And any further details here (images etc)</td></tr>';
+            sOut += '</table>';
+
+            return sOut;
+        }
+
+        /*
+         * Insert a 'details' column to the table
+         */
+        var nCloneTh = document.createElement('th');
+        var nCloneTd = document.createElement('td');
+        nCloneTd.innerHTML = '<img class="toggle-details" src="images/plus.png" />';
+        nCloneTd.className = "center";
+
+        $('#datatable2 thead tr').each(function () {
+            this.insertBefore(nCloneTh, this.childNodes[0]);
+        });
+
+        $('#datatable2 tbody tr').each(function () {
+            this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
+        });
+
+        /*
+         * Initialse DataTables, with no sorting on the 'details' column
+         */
+        var oTable = $('#datatable2').dataTable({
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [0] }
+            ],
+            "aaSorting": [[1, 'asc']]
+        });
+
+        /* Add event listener for opening and closing details
+         * Note that the indicator for showing which row is open is not controlled by DataTables,
+         * rather it is done here
+         */
+        $('#datatable2').delegate('tbody td img', 'click', function () {
+            var nTr = $(this).parents('tr')[0];
+            if (oTable.fnIsOpen(nTr)) {
+                /* This row is already open - close it */
+                this.src = "images/plus.png";
+                oTable.fnClose(nTr);
+            }
+            else {
+                /* Open this row */
+                this.src = "images/minus.png";
+                oTable.fnOpen(nTr, fnFormatDetails(oTable, nTr), 'details');
+            }
+        });
+
+        $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search');
+        $('.dataTables_length select').addClass('form-control');
+    });
+</script>
