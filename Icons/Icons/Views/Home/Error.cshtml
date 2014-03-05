@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "خطــــأ";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+}
+
+<script src="~/content/js/fuelux/loader.min.js"></script>
+<script src="~/scripts/Project.js"></script>
+
+<script>
+    $(document).ready(function () {
+        App.wizard();
+    });
+</script>
+
+<div class="row">
+    <div class="col-md-12">
+        @*<div class="block-flat">*@
+        <div class="cl-mcont">
+            <div class="row wizard-row">
+                <div class="col-md-12 fuelux">
+                    يوجد خطأ ما في النظام , برجاء مراجعة المسؤول بالرساله في الاسفل
+                    <p>@ViewBag.Message</p>
+                </div>
+            </div>
+        </div>
+        @*</div>*@
+    </div>
+</div>

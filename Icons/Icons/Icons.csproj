@@ -121,6 +121,7 @@
     <Compile Include="Models\AccountingTree.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountingTreeModel.cs" />
     <Compile Include="Models\Extention.cs" />
     <Compile Include="Models\FinancialTransaction.cs">
       <DependentUpon>Icons.tt</DependentUpon>
@@ -1999,6 +2000,7 @@
     <Content Include="content\js\skycons\index.html" />
     <Content Include="content\js\skycons\skycons.js" />
     <Content Include="Global.asax" />
+    <Content Include="scripts\AccTree.js" />
     <Content Include="scripts\Project.js" />
     <Content Include="scripts\Supplier.js" />
     <Content Include="scripts\User.js" />

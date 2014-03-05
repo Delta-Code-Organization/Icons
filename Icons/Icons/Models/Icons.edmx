@@ -55,7 +55,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="NodeName" Type="nvarchar" MaxLength="50" />
           <Property Name="Parent" Type="int" />
           <Property Name="CanDelete" Type="bit" />
@@ -70,7 +70,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TransactionDate" Type="datetime" />
           <Property Name="FromAccount" Type="int" />
           <Property Name="ToAccount" Type="int" />

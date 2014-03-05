@@ -30,5 +30,7 @@ namespace Icons.Models
         public DbSet<Screen> Screens { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<AccountingTree> AccountingTrees { get; set; }
+        public DbSet<FinancialTransaction> FinancialTransactions { get; set; }
     }
 }
