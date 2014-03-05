@@ -23,5 +23,8 @@ namespace Icons.Models
         public Nullable<int> Finishing { get; set; }
         public string Notes { get; set; }
         public Nullable<int> Owner { get; set; }
+        public Nullable<int> AccountingID { get; set; }
+    
+        public virtual AccountingTree AccountingTree { get; set; }
     }
 }

@@ -22,5 +22,8 @@ namespace Icons.Models
         public string City { get; set; }
         public string District { get; set; }
         public string Notes { get; set; }
+        public Nullable<int> AccountingID { get; set; }
+    
+        public virtual AccountingTree AccountingTree { get; set; }
     }
 }

@@ -26,5 +26,8 @@ namespace Icons.Models
         public Nullable<int> FloorsCount { get; set; }
         public Nullable<double> ExpectedCost { get; set; }
         public Nullable<double> OwnershipPercentage { get; set; }
+        public Nullable<int> AccountID { get; set; }
+    
+        public virtual AccountingTree AccountingTree { get; set; }
     }
 }

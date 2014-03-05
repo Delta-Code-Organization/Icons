@@ -41,6 +41,7 @@
     <link rel="stylesheet" type="text/css" href="/content/js/jquery.datatables/bootstrap-adapter/css/datatables.css" />
 
     <script src="/content/js/jquery.js"></script>
+    <script type="text/javascript" src="/content/js/behaviour/general.js"></script>
     <script src="/content/js/jquery.select2/select2.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="/content/js/jquery.gritter/js/jquery.gritter.min.js"></script>
     <script src="/content/js/jquery.parsley/parsley.js" type="text/javascript"></script>
@@ -48,7 +49,6 @@
     <script src="/content/js/modernizr.js" type="text/javascript"></script>
     <script type="text/javascript" src="/content/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
     <script src="/content/js/skycons/skycons.js" type="text/javascript"></script>
-    <script type="text/javascript" src="/content/js/behaviour/general.js"></script>
     <script type="text/javascript" src="/content/js/jquery.sparkline/jquery.sparkline.min.js"></script>
     <script type="text/javascript" src="/content/js/jquery.easypiechart/jquery.easy-pie-chart.js"></script>
     <script type="text/javascript" src="/content/js/jquery.nestable/jquery.nestable.js"></script>
@@ -63,14 +63,12 @@
     <script type="text/javascript" src="/content/js/jquery.datatables/jquery.datatables.min.js"></script>
     <script type="text/javascript" src="/content/js/jquery.datatables/bootstrap-adapter/js/datatables.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
-
     <script src="/content/js/behaviour/voice-commands.js"></script>
     <script src="/content/js/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/content/js/jquery.flot/jquery.flot.js"></script>
     <script type="text/javascript" src="/content/js/jquery.flot/jquery.flot.pie.js"></script>
     <script type="text/javascript" src="/content/js/jquery.flot/jquery.flot.resize.js"></script>
     <script type="text/javascript" src="/content/js/jquery.flot/jquery.flot.labels.js"></script>
-
     <script type="text/javascript">
         function Logout() {
             $.ajax({
@@ -100,15 +98,15 @@
                 <ul class="nav navbar-nav navbar-right user-nav">
                     <li class="dropdown profile_menu">
                         @{
-                              string Uname = (Session["User"] as User).Username;
-                              int UID = (Session["User"] as User).ID;
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span>@Uname</span> <b class="caret"></b></a>
+                            string Uname = (Session["User"] as User).Username;
+                            int UID = (Session["User"] as User).ID;
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span>@Uname</span> <b class="caret"></b></a>
                         }
                         <ul class="dropdown-menu">
                             <li><a href="/User/EditUser/@UID" style="text-align:center;">حسابي</a></li>
                             <li class="divider"></li>
-                            <li><a href="javascript:Logout();" style="text-align:center;">تسجيل الخروج</a></li>
+                            <li><a href="javascript:Logout();" style="text-align: center;">تسجيل الخروج</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -125,7 +123,8 @@
                     <div class="content">
                         <div class="side-user">
                             <div class="avatar">
-                                <img src="/content/images/avatar1_50.jpg" alt="Avatar" /></div>
+                                <img src="/content/images/avatar1_50.jpg" alt="Avatar" />
+                            </div>
                             <div class="info">
                                 <a href="#">Jeff Hanneman</a>
                                 <img src="/content/images/state_online.png" alt="Status" />
@@ -205,5 +204,10 @@
             $('.switch-right').css('font-size', '13px');
         });
     </script>
+        <!-- Bootstrap core JavaScript
+  ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="~/content/js/behaviour/voice-commands.js"></script>
+    <script src="~/content/js/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

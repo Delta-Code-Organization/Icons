@@ -11,6 +11,15 @@
         <EntityTypeShape EntityType="MaksoudDBModel.Supplier" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MaksoudDBModel.User" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="MaksoudDBModel.UserAccess" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MaksoudDBModel.AccountingTree" Width="1.5" PointX="5.9636347470635709" PointY="28.435789628157295" />
+        <EntityTypeShape EntityType="MaksoudDBModel.FinancialTransaction" Width="1.5" PointX="6.1408246989086388" PointY="23.505695666887657" />
+        <AssociationConnector Association="MaksoudDBModel.FK_AccountingTree_AccTree" />
+        <AssociationConnector Association="MaksoudDBModel.FK_FinancialTransactions_AccTree" />
+        <AssociationConnector Association="MaksoudDBModel.FK_FinancialTransactions_AccTree2" />
+        <AssociationConnector Association="MaksoudDBModel.FK_Projects_AccountingTree" />
+        <AssociationConnector Association="MaksoudDBModel.FK_ProjectUnits_AccountingTree" />
+        <AssociationConnector Association="MaksoudDBModel.FK_Suppliers_ToAccountingTree" />
+        <AssociationConnector Association="MaksoudDBModel.FK_FinancialTransactions_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -20,5 +20,13 @@ namespace Icons
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            HttpContext ctx = HttpContext.Current;
+            Exception exception = ctx.Server.GetLastError();
+            Session["LastError"] = exception.Message;
+            Response.Redirect("~/Home/ShowError/");
+            ctx.ClearError();
+        }
     }
 }

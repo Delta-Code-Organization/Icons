@@ -15,5 +15,11 @@ namespace Icons.Controllers
         {
             return View();
         }
+        public ActionResult ShowError()
+        {
+            String Error = Session["LastError"].ToString();
+            ViewBag.Message = Error;
+            return View("Error");
+        }
     }
 }
