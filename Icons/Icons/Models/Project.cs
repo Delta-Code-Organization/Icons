@@ -14,6 +14,11 @@ namespace Icons.Models
     
     public partial class Project
     {
+        public Project()
+        {
+            this.ProjectUnits = new HashSet<ProjectUnit>();
+        }
+    
         public int Id { get; set; }
         public string ProjectName { get; set; }
         public string ProjectAddress { get; set; }
@@ -29,5 +34,6 @@ namespace Icons.Models
         public Nullable<int> AccountID { get; set; }
     
         public virtual AccountingTree AccountingTree { get; set; }
+        public virtual ICollection<ProjectUnit> ProjectUnits { get; set; }
     }
 }

@@ -2413,12 +2413,16 @@
     <Content Include="Views\Project\CreateProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\User\EditUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Supplier\EditSupplier.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <EntityDeploy Include="Models\Icons.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Icons.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Models\Icons.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Icons.edmx</DependentUpon>
@@ -2432,14 +2436,6 @@
       <DependentUpon>Icons.edmx</DependentUpon>
       <LastGenOutput>Icons.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\User\EditUser.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Supplier\EditSupplier.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Properties\PublishProfiles\Maksoud.pubxml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Accounting\AccountingTree.cshtml" />

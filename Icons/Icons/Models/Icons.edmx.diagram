@@ -4,22 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b8645b445eda46aab910ee9ec53bda9f" Name="Diagram1">
-        <EntityTypeShape EntityType="MaksoudDBModel.Project" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.ProjectUnit" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.Screen" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.Supplier" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.User" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+      <Diagram DiagramId="bf3e090c41ed4caf9a6762e105b45e55" Name="Diagram1">
+        <EntityTypeShape EntityType="MaksoudDBModel.AccountingTree" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.FinancialTransaction" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Project" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.ProjectUnit" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Screen" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Supplier" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.User" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="MaksoudDBModel.FK_AccountingTree_AccTree" ManuallyRouted="false" />
+        <AssociationConnector Association="MaksoudDBModel.FK_FinancialTransactions_AccTree" ManuallyRouted="false" />
+        <AssociationConnector Association="MaksoudDBModel.FK_FinancialTransactions_AccTree2" ManuallyRouted="false" />
+        <AssociationConnector Association="MaksoudDBModel.FK_Projects_AccountingTree" ManuallyRouted="false" />
+        <AssociationConnector Association="MaksoudDBModel.FK_ProjectUnits_AccountingTree" ManuallyRouted="false" />
+        <AssociationConnector Association="MaksoudDBModel.FK_Suppliers_ToAccountingTree" ManuallyRouted="false" />
+        <AssociationConnector Association="MaksoudDBModel.FK_FinancialTransactions_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="MaksoudDBModel.FK_ProjectUnits_Projects" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.UserAccess" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="MaksoudDBModel.AccountingTree" Width="1.5" PointX="5.9636347470635709" PointY="28.435789628157295" />
-        <EntityTypeShape EntityType="MaksoudDBModel.FinancialTransaction" Width="1.5" PointX="6.1408246989086388" PointY="23.505695666887657" />
-        <AssociationConnector Association="MaksoudDBModel.FK_AccountingTree_AccTree" />
-        <AssociationConnector Association="MaksoudDBModel.FK_FinancialTransactions_AccTree" />
-        <AssociationConnector Association="MaksoudDBModel.FK_FinancialTransactions_AccTree2" />
-        <AssociationConnector Association="MaksoudDBModel.FK_Projects_AccountingTree" />
-        <AssociationConnector Association="MaksoudDBModel.FK_ProjectUnits_AccountingTree" />
-        <AssociationConnector Association="MaksoudDBModel.FK_Suppliers_ToAccountingTree" />
-        <AssociationConnector Association="MaksoudDBModel.FK_FinancialTransactions_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

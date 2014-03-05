@@ -7,6 +7,8 @@
 {
     string GetChilds(AccountingTree Node)
     {
+        foreach(AccountingTree Child in Node.AccountingTree1)
+        {
         string Childs = @"<li class='dd-item' data-name='"+Node.NodeName+"' data-id='"+Node.Id+"'>";
         if (Node.AccountingTree1.Count > 0)
         {
@@ -19,6 +21,7 @@
             Childs += GetChilds(Node);
         }
         Childs += "</li>";
+        }
         return Childs;
     }
 }

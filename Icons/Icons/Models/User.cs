@@ -16,8 +16,8 @@ namespace Icons.Models
     {
         public User()
         {
-            this.Screens = new HashSet<Screen>();
             this.FinancialTransactions = new HashSet<FinancialTransaction>();
+            this.Screens = new HashSet<Screen>();
         }
     
         public int ID { get; set; }
@@ -25,7 +25,7 @@ namespace Icons.Models
         public string Password { get; set; }
         public Nullable<int> Status { get; set; }
     
-        public virtual ICollection<Screen> Screens { get; set; }
         public virtual ICollection<FinancialTransaction> FinancialTransactions { get; set; }
+        public virtual ICollection<Screen> Screens { get; set; }
     }
 }

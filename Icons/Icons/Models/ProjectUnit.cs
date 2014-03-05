@@ -26,5 +26,6 @@ namespace Icons.Models
         public Nullable<int> AccountingID { get; set; }
     
         public virtual AccountingTree AccountingTree { get; set; }
+        public virtual Project Project { get; set; }
     }
 }
