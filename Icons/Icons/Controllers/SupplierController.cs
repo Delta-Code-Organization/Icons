@@ -16,7 +16,10 @@ namespace Icons.Controllers
         {
             return View();
         }
-
+        public ActionResult Invoice()
+        {
+            return View();
+        }
         [HttpPost]
         public string CreateSupplier(FormCollection FC)
         {

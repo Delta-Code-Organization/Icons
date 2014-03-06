@@ -27,9 +27,13 @@ namespace Icons.Models
     
         public DbSet<AccountingTree> AccountingTrees { get; set; }
         public DbSet<FinancialTransaction> FinancialTransactions { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectUnit> ProjectUnits { get; set; }
         public DbSet<Screen> Screens { get; set; }
+        public DbSet<SupplierInvoiceLine> SupplierInvoiceLines { get; set; }
+        public DbSet<SupplierInvoice> SupplierInvoices { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<User> Users { get; set; }
     }

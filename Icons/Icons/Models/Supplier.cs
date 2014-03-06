@@ -14,6 +14,11 @@ namespace Icons.Models
     
     public partial class Supplier
     {
+        public Supplier()
+        {
+            this.SupplierInvoices = new HashSet<SupplierInvoice>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
@@ -25,5 +30,6 @@ namespace Icons.Models
         public Nullable<int> AccountingID { get; set; }
     
         public virtual AccountingTree AccountingTree { get; set; }
+        public virtual ICollection<SupplierInvoice> SupplierInvoices { get; set; }
     }
 }

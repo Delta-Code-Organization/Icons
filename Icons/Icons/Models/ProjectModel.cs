@@ -15,6 +15,15 @@ namespace Icons.Models
         {
             db.Projects.Add(this);
             db.SaveChanges();
+            var ParentAccount = db.AccountingTrees.Where(p => p.KeyAccountID == (int)KeyAccounts.Projects).FirstOrDefault();
+            if (ParentAccount != null)
+            {
+                AccountingTree ProjectNode = new AccountingTree();
+                ProjectNode.NodeName = this.ProjectName;
+                ProjectNode.Parent = ParentAccount.Id;
+                db.AccountingTrees.Add(ProjectNode);
+                db.SaveChanges();
+            }
             return new Returner
             {
                 Message = Message.Project_Created_Successfully

@@ -24,7 +24,7 @@ namespace Icons.Models
         }
         List<TreeNode> _children = new List<TreeNode>();
 
-        internal List<TreeNode> Children
+        public List<TreeNode> children
         {
             get { return _children; }
             set { _children = value; }
@@ -36,49 +36,41 @@ namespace Icons.Models
         #region Context
         MaksoudDBEntities db = new MaksoudDBEntities();
         #endregion
-
-        public bool UpdateTree(List<TreeNode> _Tree)
-        {
-            
+        public bool UpdateTree(List<TreeNode> _Tree,TreeNode Parent = null)
+        { 
             foreach (TreeNode node in _Tree)
             {
-                AccountingTree TreeNode = null;
-                if (db.AccountingTrees.Where(p => p.Id == node.id).Count() == 1)
+                AccountingTree CurrentNode = db.AccountingTrees.Where(p => p.Id == node.id).FirstOrDefault();
+                if (CurrentNode == null)
                 {
-                    TreeNode = db.AccountingTrees.Where(p => p.Id == node.id).First();
-                    TreeNode.Id = node.id;
-                    TreeNode.NodeName = node.name;
+                    CurrentNode = new AccountingTree();
+                    db.AccountingTrees.Add(CurrentNode);
                 }
+                CurrentNode.NodeName = node.name;
+                if (Parent != null)
+                    CurrentNode.Parent = Parent.id;
                 else
+                    CurrentNode.Parent = null;
+                db.SaveChanges();
+                if (node.children.Any())
+                    UpdateTree(node.children,node);
+            }
+            return true;
+        }
+        public bool deleteNode(int id)
+        {
+            AccountingTree node = db.AccountingTrees.Where(p => p.Id == id).FirstOrDefault();
+            if (node != null)
+            {
+                foreach (AccountingTree child in node.AccountingTree1)
                 {
-                    TreeNode = new AccountingTree();
-                    TreeNode.NodeName = node.name;
-                    db.AccountingTrees.Add(TreeNode);
-                    db.SaveChanges();
-                }
-                foreach(TreeNode child in node.Children)
-                {
-                    AccountingTree childNode = null ;
-                    if (db.AccountingTrees.Where(p => p.Id == child.id).Count() == 1)
-                    {
-                        childNode = db.AccountingTrees.Where(p => p.Id == child.id).First();
-                        childNode.Id = child.id;
-                        childNode.Parent = node.id;
-                        childNode.NodeName = child.name;
-                    }
-                    else
-                    {
-                        childNode = new AccountingTree();
-                        childNode.NodeName = child.name;
-                        db.AccountingTrees.Add(childNode);
-                        db.SaveChanges();
-                    }
-                    TreeNode.AccountingTree1.Add(childNode);
+                    db.AccountingTrees.Remove(child);
                 }
                 db.SaveChanges();
-                
+                db.AccountingTrees.Remove(node);
+                db.SaveChanges();
             }
-            return true;            
+            return true;
         }  
     }
 }

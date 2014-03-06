@@ -4,13 +4,17 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MaksoudDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="MaksoudDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="MaksoudDBModelStoreContainer">
           <EntitySet Name="AccountingTree" EntityType="MaksoudDBModel.Store.AccountingTree" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FinancialTransactions" EntityType="MaksoudDBModel.Store.FinancialTransactions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProductCategories" EntityType="MaksoudDBModel.Store.ProductCategories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Products" EntityType="MaksoudDBModel.Store.Products" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Projects" EntityType="MaksoudDBModel.Store.Projects" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProjectUnits" EntityType="MaksoudDBModel.Store.ProjectUnits" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Screens" EntityType="MaksoudDBModel.Store.Screens" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SupplierInvoiceLines" EntityType="MaksoudDBModel.Store.SupplierInvoiceLines" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SupplierInvoices" EntityType="MaksoudDBModel.Store.SupplierInvoices" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Suppliers" EntityType="MaksoudDBModel.Store.Suppliers" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserAccess" EntityType="MaksoudDBModel.Store.UserAccess" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="MaksoudDBModel.Store.Users" store:Type="Tables" Schema="dbo" />
@@ -30,6 +34,22 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="FinancialTransactions" EntitySet="FinancialTransactions" />
           </AssociationSet>
+          <AssociationSet Name="FK_InvoiceLines_Invoices" Association="MaksoudDBModel.Store.FK_InvoiceLines_Invoices">
+            <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
+            <End Role="SupplierInvoiceLines" EntitySet="SupplierInvoiceLines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InvoiceLines_Products" Association="MaksoudDBModel.Store.FK_InvoiceLines_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="SupplierInvoiceLines" EntitySet="SupplierInvoiceLines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_AccountingTree" Association="MaksoudDBModel.Store.FK_Products_AccountingTree">
+            <End Role="AccountingTree" EntitySet="AccountingTree" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Categories" Association="MaksoudDBModel.Store.FK_Products_Categories">
+            <End Role="ProductCategories" EntitySet="ProductCategories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
           <AssociationSet Name="FK_Projects_AccountingTree" Association="MaksoudDBModel.Store.FK_Projects_AccountingTree">
             <End Role="AccountingTree" EntitySet="AccountingTree" />
             <End Role="Projects" EntitySet="Projects" />
@@ -41,6 +61,18 @@
           <AssociationSet Name="FK_ProjectUnits_Projects" Association="MaksoudDBModel.Store.FK_ProjectUnits_Projects">
             <End Role="Projects" EntitySet="Projects" />
             <End Role="ProjectUnits" EntitySet="ProjectUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoices_FinancialTransactions" Association="MaksoudDBModel.Store.FK_SupplierInvoices_FinancialTransactions">
+            <End Role="FinancialTransactions" EntitySet="FinancialTransactions" />
+            <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoices_Suppliers" Association="MaksoudDBModel.Store.FK_SupplierInvoices_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoices_Users" Association="MaksoudDBModel.Store.FK_SupplierInvoices_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
           </AssociationSet>
           <AssociationSet Name="FK_Suppliers_ToAccountingTree" Association="MaksoudDBModel.Store.FK_Suppliers_ToAccountingTree">
             <End Role="AccountingTree" EntitySet="AccountingTree" />
@@ -84,6 +116,27 @@
           <Property Name="ReferanceDocumentNumber" Type="int" />
           <Property Name="LastEditBy" Type="int" />
         </EntityType>
+        <EntityType Name="ProductCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="nvarchar(max)" />
+          <Property Name="AccTreeCode" Type="int" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Category" Type="int" />
+          <Property Name="PurchaseUnit" Type="int" />
+          <Property Name="SalesUnit" Type="int" />
+          <Property Name="PtoSRate" Type="int" />
+          <Property Name="AccountID" Type="int" />
+        </EntityType>
         <EntityType Name="Projects">
           <Key>
             <PropertyRef Name="Id" />
@@ -125,6 +178,32 @@
           <Property Name="ScreenURL" Type="nvarchar" />
           <Property Name="Title" Type="nvarchar" MaxLength="400" />
           <Property Name="GroupName" Type="nvarchar" MaxLength="800" />
+        </EntityType>
+        <EntityType Name="SupplierInvoiceLines">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceId" Type="int" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="Qty" Type="float" />
+          <Property Name="Price" Type="float" />
+          <Property Name="Total" Type="float" />
+        </EntityType>
+        <EntityType Name="SupplierInvoices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierID" Type="int" />
+          <Property Name="InvoiceDate" Type="datetime" />
+          <Property Name="SupplierReferenaceNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="InvoiceAccount" Type="int" />
+          <Property Name="InvoiceTotal" Type="float" />
+          <Property Name="InvoiceDiscount" Type="float" />
+          <Property Name="InvoiceNet" Type="float" />
+          <Property Name="Departed" Type="bit" />
+          <Property Name="LastEditBy" Type="int" />
         </EntityType>
         <EntityType Name="Suppliers">
           <Key>
@@ -205,6 +284,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_InvoiceLines_Invoices">
+          <End Role="SupplierInvoices" Type="MaksoudDBModel.Store.SupplierInvoices" Multiplicity="0..1" />
+          <End Role="SupplierInvoiceLines" Type="MaksoudDBModel.Store.SupplierInvoiceLines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierInvoices">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierInvoiceLines">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InvoiceLines_Products">
+          <End Role="Products" Type="MaksoudDBModel.Store.Products" Multiplicity="0..1" />
+          <End Role="SupplierInvoiceLines" Type="MaksoudDBModel.Store.SupplierInvoiceLines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierInvoiceLines">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_AccountingTree">
+          <End Role="AccountingTree" Type="MaksoudDBModel.Store.AccountingTree" Multiplicity="0..1" />
+          <End Role="Products" Type="MaksoudDBModel.Store.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountingTree">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Categories">
+          <End Role="ProductCategories" Type="MaksoudDBModel.Store.ProductCategories" Multiplicity="0..1" />
+          <End Role="Products" Type="MaksoudDBModel.Store.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Projects_AccountingTree">
           <End Role="AccountingTree" Type="MaksoudDBModel.Store.AccountingTree" Multiplicity="0..1" />
           <End Role="Projects" Type="MaksoudDBModel.Store.Projects" Multiplicity="*" />
@@ -238,6 +365,42 @@
             </Principal>
             <Dependent Role="ProjectUnits">
               <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoices_FinancialTransactions">
+          <End Role="FinancialTransactions" Type="MaksoudDBModel.Store.FinancialTransactions" Multiplicity="0..1" />
+          <End Role="SupplierInvoices" Type="MaksoudDBModel.Store.SupplierInvoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FinancialTransactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierInvoices">
+              <PropertyRef Name="InvoiceAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoices_Suppliers">
+          <End Role="Suppliers" Type="MaksoudDBModel.Store.Suppliers" Multiplicity="0..1" />
+          <End Role="SupplierInvoices" Type="MaksoudDBModel.Store.SupplierInvoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoices">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoices_Users">
+          <End Role="Users" Type="MaksoudDBModel.Store.Users" Multiplicity="0..1" />
+          <End Role="SupplierInvoices" Type="MaksoudDBModel.Store.SupplierInvoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoices">
+              <PropertyRef Name="LastEditBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -277,16 +440,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MaksoudDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="MaksoudDBEntities" p1:LazyLoadingEnabled="true">
           <EntitySet Name="AccountingTrees" EntityType="MaksoudDBModel.AccountingTree" />
           <EntitySet Name="FinancialTransactions" EntityType="MaksoudDBModel.FinancialTransaction" />
+          <EntitySet Name="ProductCategories" EntityType="MaksoudDBModel.ProductCategory" />
+          <EntitySet Name="Products" EntityType="MaksoudDBModel.Product" />
           <EntitySet Name="Projects" EntityType="MaksoudDBModel.Project" />
           <EntitySet Name="ProjectUnits" EntityType="MaksoudDBModel.ProjectUnit" />
           <EntitySet Name="Screens" EntityType="MaksoudDBModel.Screen" />
+          <EntitySet Name="SupplierInvoiceLines" EntityType="MaksoudDBModel.SupplierInvoiceLine" />
+          <EntitySet Name="SupplierInvoices" EntityType="MaksoudDBModel.SupplierInvoice" />
           <EntitySet Name="Suppliers" EntityType="MaksoudDBModel.Supplier" />
           <EntitySet Name="Users" EntityType="MaksoudDBModel.User" />
           <AssociationSet Name="FK_AccountingTree_AccTree" Association="MaksoudDBModel.FK_AccountingTree_AccTree">
@@ -300,6 +468,10 @@
           <AssociationSet Name="FK_FinancialTransactions_AccTree2" Association="MaksoudDBModel.FK_FinancialTransactions_AccTree2">
             <End Role="AccountingTree" EntitySet="AccountingTrees" />
             <End Role="FinancialTransactions" EntitySet="FinancialTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_AccountingTree" Association="MaksoudDBModel.FK_Products_AccountingTree">
+            <End Role="AccountingTree" EntitySet="AccountingTrees" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Projects_AccountingTree" Association="MaksoudDBModel.FK_Projects_AccountingTree">
             <End Role="AccountingTree" EntitySet="AccountingTrees" />
@@ -317,9 +489,33 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="FinancialTransactions" EntitySet="FinancialTransactions" />
           </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoices_FinancialTransactions" Association="MaksoudDBModel.FK_SupplierInvoices_FinancialTransactions">
+            <End Role="FinancialTransactions" EntitySet="FinancialTransactions" />
+            <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Categories" Association="MaksoudDBModel.FK_Products_Categories">
+            <End Role="ProductCategories" EntitySet="ProductCategories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InvoiceLines_Products" Association="MaksoudDBModel.FK_InvoiceLines_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="SupplierInvoiceLines" EntitySet="SupplierInvoiceLines" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProjectUnits_Projects" Association="MaksoudDBModel.FK_ProjectUnits_Projects">
             <End Role="Projects" EntitySet="Projects" />
             <End Role="ProjectUnits" EntitySet="ProjectUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InvoiceLines_Invoices" Association="MaksoudDBModel.FK_InvoiceLines_Invoices">
+            <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
+            <End Role="SupplierInvoiceLines" EntitySet="SupplierInvoiceLines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoices_Suppliers" Association="MaksoudDBModel.FK_SupplierInvoices_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoices_Users" Association="MaksoudDBModel.FK_SupplierInvoices_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
           </AssociationSet>
           <AssociationSet Name="UserAccess" Association="MaksoudDBModel.UserAccess">
             <End Role="Screens" EntitySet="Screens" />
@@ -344,6 +540,7 @@
           <NavigationProperty Name="AccountingTree2" Relationship="MaksoudDBModel.FK_AccountingTree_AccTree" FromRole="AccountingTree1" ToRole="AccountingTree" />
           <NavigationProperty Name="FinancialTransactions" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree" FromRole="AccountingTree" ToRole="FinancialTransactions" />
           <NavigationProperty Name="FinancialTransactions1" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree2" FromRole="AccountingTree" ToRole="FinancialTransactions" />
+          <NavigationProperty Name="Products" Relationship="MaksoudDBModel.FK_Products_AccountingTree" FromRole="AccountingTree" ToRole="Products" />
           <NavigationProperty Name="Projects" Relationship="MaksoudDBModel.FK_Projects_AccountingTree" FromRole="AccountingTree" ToRole="Projects" />
           <NavigationProperty Name="ProjectUnits" Relationship="MaksoudDBModel.FK_ProjectUnits_AccountingTree" FromRole="AccountingTree" ToRole="ProjectUnits" />
           <NavigationProperty Name="Suppliers" Relationship="MaksoudDBModel.FK_Suppliers_ToAccountingTree" FromRole="AccountingTree" ToRole="Suppliers" />
@@ -364,12 +561,38 @@
           <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree" FromRole="FinancialTransactions" ToRole="AccountingTree" />
           <NavigationProperty Name="AccountingTree1" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree2" FromRole="FinancialTransactions" ToRole="AccountingTree" />
           <NavigationProperty Name="User" Relationship="MaksoudDBModel.FK_FinancialTransactions_Users" FromRole="FinancialTransactions" ToRole="Users" />
+          <NavigationProperty Name="SupplierInvoices" Relationship="MaksoudDBModel.FK_SupplierInvoices_FinancialTransactions" FromRole="FinancialTransactions" ToRole="SupplierInvoices" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="AccTreeCode" Type="Int32" />
+          <NavigationProperty Name="Products" Relationship="MaksoudDBModel.FK_Products_Categories" FromRole="ProductCategories" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Category" Type="Int32" />
+          <Property Name="PurchaseUnit" Type="Int32" />
+          <Property Name="SalesUnit" Type="Int32" />
+          <Property Name="PtoSRate" Type="Int32" />
+          <Property Name="AccountID" Type="Int32" />
+          <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_Products_AccountingTree" FromRole="Products" ToRole="AccountingTree" />
+          <NavigationProperty Name="ProductCategory" Relationship="MaksoudDBModel.FK_Products_Categories" FromRole="Products" ToRole="ProductCategories" />
+          <NavigationProperty Name="SupplierInvoiceLines" Relationship="MaksoudDBModel.FK_InvoiceLines_Products" FromRole="Products" ToRole="SupplierInvoiceLines" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="ProjectName" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
           <Property Name="ProjectAddress" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
           <Property Name="LandSpace" Type="Double" />
@@ -389,7 +612,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="ProjectID" Type="Int32" />
           <Property Name="UnitSpace" Type="Double" />
           <Property Name="UnitType" Type="Int32" />
@@ -412,6 +635,38 @@
           <Property Name="GroupName" Type="String" MaxLength="800" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Users" Relationship="MaksoudDBModel.UserAccess" FromRole="Screens" ToRole="Users" />
         </EntityType>
+        <EntityType Name="SupplierInvoiceLine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceId" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="Qty" Type="Double" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="Total" Type="Double" />
+          <NavigationProperty Name="Product" Relationship="MaksoudDBModel.FK_InvoiceLines_Products" FromRole="SupplierInvoiceLines" ToRole="Products" />
+          <NavigationProperty Name="SupplierInvoice" Relationship="MaksoudDBModel.FK_InvoiceLines_Invoices" FromRole="SupplierInvoiceLines" ToRole="SupplierInvoices" />
+        </EntityType>
+        <EntityType Name="SupplierInvoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierID" Type="Int32" />
+          <Property Name="InvoiceDate" Type="DateTime" Precision="3" />
+          <Property Name="SupplierReferenaceNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="InvoiceAccount" Type="Int32" />
+          <Property Name="InvoiceTotal" Type="Double" />
+          <Property Name="InvoiceDiscount" Type="Double" />
+          <Property Name="InvoiceNet" Type="Double" />
+          <Property Name="Departed" Type="Boolean" />
+          <Property Name="LastEditBy" Type="Int32" />
+          <NavigationProperty Name="FinancialTransaction" Relationship="MaksoudDBModel.FK_SupplierInvoices_FinancialTransactions" FromRole="SupplierInvoices" ToRole="FinancialTransactions" />
+          <NavigationProperty Name="SupplierInvoiceLines" Relationship="MaksoudDBModel.FK_InvoiceLines_Invoices" FromRole="SupplierInvoices" ToRole="SupplierInvoiceLines" />
+          <NavigationProperty Name="Supplier" Relationship="MaksoudDBModel.FK_SupplierInvoices_Suppliers" FromRole="SupplierInvoices" ToRole="Suppliers" />
+          <NavigationProperty Name="User" Relationship="MaksoudDBModel.FK_SupplierInvoices_Users" FromRole="SupplierInvoices" ToRole="Users" />
+        </EntityType>
         <EntityType Name="Supplier">
           <Key>
             <PropertyRef Name="ID" />
@@ -426,6 +681,7 @@
           <Property Name="Notes" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
           <Property Name="AccountingID" Type="Int32" />
           <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_Suppliers_ToAccountingTree" FromRole="Suppliers" ToRole="AccountingTree" />
+          <NavigationProperty Name="SupplierInvoices" Relationship="MaksoudDBModel.FK_SupplierInvoices_Suppliers" FromRole="Suppliers" ToRole="SupplierInvoices" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -436,6 +692,7 @@
           <Property Name="Password" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
           <Property Name="Status" Type="Int32" />
           <NavigationProperty Name="FinancialTransactions" Relationship="MaksoudDBModel.FK_FinancialTransactions_Users" FromRole="Users" ToRole="FinancialTransactions" />
+          <NavigationProperty Name="SupplierInvoices" Relationship="MaksoudDBModel.FK_SupplierInvoices_Users" FromRole="Users" ToRole="SupplierInvoices" />
           <NavigationProperty Name="Screens" Relationship="MaksoudDBModel.UserAccess" FromRole="Users" ToRole="Screens" />
         </EntityType>
         <Association Name="FK_AccountingTree_AccTree">
@@ -471,6 +728,18 @@
             </Principal>
             <Dependent Role="FinancialTransactions">
               <PropertyRef Name="ToAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_AccountingTree">
+          <End Role="AccountingTree" Type="MaksoudDBModel.AccountingTree" Multiplicity="0..1" />
+          <End Role="Products" Type="MaksoudDBModel.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountingTree">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="AccountID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -522,6 +791,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SupplierInvoices_FinancialTransactions">
+          <End Role="FinancialTransactions" Type="MaksoudDBModel.FinancialTransaction" Multiplicity="0..1" />
+          <End Role="SupplierInvoices" Type="MaksoudDBModel.SupplierInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FinancialTransactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierInvoices">
+              <PropertyRef Name="InvoiceAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Categories">
+          <End Role="ProductCategories" Type="MaksoudDBModel.ProductCategory" Multiplicity="0..1" />
+          <End Role="Products" Type="MaksoudDBModel.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InvoiceLines_Products">
+          <End Role="Products" Type="MaksoudDBModel.Product" Multiplicity="0..1" />
+          <End Role="SupplierInvoiceLines" Type="MaksoudDBModel.SupplierInvoiceLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierInvoiceLines">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProjectUnits_Projects">
           <End Role="Projects" Type="MaksoudDBModel.Project" Multiplicity="0..1" />
           <End Role="ProjectUnits" Type="MaksoudDBModel.ProjectUnit" Multiplicity="*" />
@@ -531,6 +836,42 @@
             </Principal>
             <Dependent Role="ProjectUnits">
               <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InvoiceLines_Invoices">
+          <End Role="SupplierInvoices" Type="MaksoudDBModel.SupplierInvoice" Multiplicity="0..1" />
+          <End Role="SupplierInvoiceLines" Type="MaksoudDBModel.SupplierInvoiceLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierInvoices">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierInvoiceLines">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoices_Suppliers">
+          <End Role="Suppliers" Type="MaksoudDBModel.Supplier" Multiplicity="0..1" />
+          <End Role="SupplierInvoices" Type="MaksoudDBModel.SupplierInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoices">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoices_Users">
+          <End Role="Users" Type="MaksoudDBModel.User" Multiplicity="0..1" />
+          <End Role="SupplierInvoices" Type="MaksoudDBModel.SupplierInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoices">
+              <PropertyRef Name="LastEditBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -572,6 +913,29 @@
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="ReferanceDocumentNumber" ColumnName="ReferanceDocumentNumber" />
                 <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="MaksoudDBModel.ProductCategory">
+              <MappingFragment StoreEntitySet="ProductCategories">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="AccTreeCode" ColumnName="AccTreeCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="MaksoudDBModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="PurchaseUnit" ColumnName="PurchaseUnit" />
+                <ScalarProperty Name="SalesUnit" ColumnName="SalesUnit" />
+                <ScalarProperty Name="PtoSRate" ColumnName="PtoSRate" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -617,6 +981,34 @@
                 <ScalarProperty Name="ScreenURL" ColumnName="ScreenURL" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierInvoiceLines">
+            <EntityTypeMapping TypeName="MaksoudDBModel.SupplierInvoiceLine">
+              <MappingFragment StoreEntitySet="SupplierInvoiceLines">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierInvoices">
+            <EntityTypeMapping TypeName="MaksoudDBModel.SupplierInvoice">
+              <MappingFragment StoreEntitySet="SupplierInvoices">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="SupplierReferenaceNo" ColumnName="SupplierReferenaceNo" />
+                <ScalarProperty Name="InvoiceAccount" ColumnName="InvoiceAccount" />
+                <ScalarProperty Name="InvoiceTotal" ColumnName="InvoiceTotal" />
+                <ScalarProperty Name="InvoiceDiscount" ColumnName="InvoiceDiscount" />
+                <ScalarProperty Name="InvoiceNet" ColumnName="InvoiceNet" />
+                <ScalarProperty Name="Departed" ColumnName="Departed" />
+                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

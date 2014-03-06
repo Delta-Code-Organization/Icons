@@ -19,6 +19,7 @@ namespace Icons.Models
             this.AccountingTree1 = new HashSet<AccountingTree>();
             this.FinancialTransactions = new HashSet<FinancialTransaction>();
             this.FinancialTransactions1 = new HashSet<FinancialTransaction>();
+            this.Products = new HashSet<Product>();
             this.Projects = new HashSet<Project>();
             this.ProjectUnits = new HashSet<ProjectUnit>();
             this.Suppliers = new HashSet<Supplier>();
@@ -39,6 +40,7 @@ namespace Icons.Models
         public virtual AccountingTree AccountingTree2 { get; set; }
         public virtual ICollection<FinancialTransaction> FinancialTransactions { get; set; }
         public virtual ICollection<FinancialTransaction> FinancialTransactions1 { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<ProjectUnit> ProjectUnits { get; set; }
         public virtual ICollection<Supplier> Suppliers { get; set; }

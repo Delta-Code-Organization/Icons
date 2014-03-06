@@ -17,6 +17,7 @@ namespace Icons.Models
         public User()
         {
             this.FinancialTransactions = new HashSet<FinancialTransaction>();
+            this.SupplierInvoices = new HashSet<SupplierInvoice>();
             this.Screens = new HashSet<Screen>();
         }
     
@@ -26,6 +27,7 @@ namespace Icons.Models
         public Nullable<int> Status { get; set; }
     
         public virtual ICollection<FinancialTransaction> FinancialTransactions { get; set; }
+        public virtual ICollection<SupplierInvoice> SupplierInvoices { get; set; }
         public virtual ICollection<Screen> Screens { get; set; }
     }
 }
