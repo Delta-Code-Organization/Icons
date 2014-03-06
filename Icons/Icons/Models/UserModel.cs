@@ -96,7 +96,7 @@ namespace Icons.Models
         public Returner Update(List<Screen> LOS)
         {
             var U = db.Users.Where(p => p.ID == this.ID).SingleOrDefault();
-            if (db.Users.Any(p=>p.Username == this.Username && p.ID != U.ID && p.Status == 1))
+            if (db.Users.Any(p => p.Username == this.Username && p.ID != U.ID && p.Status == 1))
             {
                 return new Returner
                 {
@@ -106,7 +106,20 @@ namespace Icons.Models
             else
             {
                 U.Password = this.Password;
-                U.Screens = LOS;
+                List<Screen> STLO = U.Screens.ToList();
+                foreach (Screen item in STLO)
+                {
+                    U.Screens.Remove(item);
+                }
+                List<Screen> LOSTAP = new List<Screen>();
+                foreach (Screen item in LOS)
+                {
+                    LOSTAP.Add(db.Screens.Where(p => p.ID == item.ID).SingleOrDefault());
+                }
+                foreach (Screen item in LOSTAP)
+                {
+                    U.Screens.Add(item);
+                }
                 U.Username = this.Username;
                 db.SaveChanges();
                 return new Returner

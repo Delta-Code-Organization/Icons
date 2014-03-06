@@ -1,46 +1,46 @@
 ﻿@{
-    ViewBag.Title = "SearchProjects";
+    ViewBag.Title = "SearchProducts";
     Layout = "~/Views/shared/MasterPage.cshtml";
 }
 
 @using Icons.Models;
 
-<script src="~/scripts/Project.js"></script>
+<script src="~/scripts/Product.js"></script>
 
 <div class="row">
     <div class="col-md-12">
         <div class="block-flat">
             <div class="header">
-                <h3 style="text-align: right;">بحث المشاريع</h3>
+                <h3 style="text-align: right;">بحث المنتجات</h3>
             </div>
             <div class="content" style="direction: rtl;">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="datatable">
                         <thead>
                             <tr style="direction: rtl;">
-                                <th style="text-align: center;">اسم المشروع</th>
-                                <th style="text-align: center;">العنوان</th>
-                                <th style="text-align: center;">المساحة</th>
-                                <th style="text-align: center;">تاريخ الانشاء</th>
-                                <th style="text-align: center;">عدد الادوار</th>
-                                <th style="text-align: center;">التكلفة المتوقعة</th>
-                                <th style="text-align: center;">نسبة الملكية</th>
+                                <th style="text-align: center;">اسم المنتج</th>
+                                <th style="text-align: center;">التصنيف</th>
+                                <th style="text-align: center;">وحدة الشراء</th>
+                                <th style="text-align: center;">وحدة البيع</th>
+                                <th style="text-align: center;">نسبة التحويل</th>
+                                <th style="text-align: center;">الوصف</th>
                                 <th style="text-align: center;"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @{
-                                foreach (Project y in ViewBag.P)
+                                foreach (Product y in ViewBag.P)
                                 {
+                                    string PU = Enum.GetName(typeof(PurchaseUnit), y.PurchaseUnit);
+                                    string SU = Enum.GetName(typeof(SalesUnit), y.SalesUnit);
                                 <tr class="odd gradeX" id="@y.Id">
 
-                                    <td>@y.ProjectName</td>
-                                    <td>@y.ProjectAddress</td>
-                                    <td>@y.LandSpace</td>
-                                    <td>@y.CreationDate</td>
-                                    <td>@y.FloorsCount</td>
-                                    <td>@y.ExpectedCost</td>
-                                    <td>@y.OwnershipPercentage</td>
+                                    <td>@y.ProductName</td>
+                                    <td>@y.ProductCategory.CategoryName</td>
+                                    <td>@PU</td>
+                                    <td>@SU</td>
+                                    <td>@y.PtoSRate</td>
+                                    <td>@y.Description</td>
                                     <td class="center" style="text-align:center;">
                                         <div class="btn-group">
                                             <button class="btn btn-default btn-xs" type="button">الإجرائات</button>
@@ -50,15 +50,11 @@
                                             </button>
                                             <ul role="menu" class="dropdown-menu">
                                                 <li>
-                                                    <a href="/Project/EditProject/@y.Id">تعديل</a>
+                                                    <a href="/Product/EditProduct/@y.Id">تعديل</a>
                                                 </li>
                                                 <li class="divider"></li>
                                                 <li>
-                                                    <a href="/Project/createprojectUnits/@y.Id">ادارة وحدات المشروع</a>
-                                                </li>
-                                                <li class="divider"></li>
-                                                <li>
-                                                    <a onclick="Remove(@y.Id)">حذف</a>
+                                                    <a onclick="RemoveProduct(@y.Id)">حذف</a>
                                                 </li>
                                             </ul>
                                         </div>

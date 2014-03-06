@@ -15,6 +15,7 @@ namespace Icons.Models
         Stock=6,
         Imprestes = 7,
         Safes = 8,
-        Banks = 9
+        Banks = 9,
+        Categories = 10
     }
 }

@@ -1,14 +1,12 @@
 ﻿$(document).ready(function () {
     $('#ProjCreate').submit(function (event) {
         if ($(this).parsley('validate')) {
-            alert("A");
             $.gritter.removeAll();
             $.ajax({
                 type: 'post',
                 url: '/Project/CreateProject',
                 data: $(this).serialize(),
                 success: function (data) {
-                    alert("A");
                     if (data == "true") {
                         $.gritter.add({
                             title: '! نجاح العملية',
@@ -48,7 +46,7 @@
                     }
                     setTimeout(function () {
                         location.reload();
-                    }, 4000);
+                    }, 2000);
                 },
                 error: function (data) {
                     alert(data.responseText);
@@ -78,7 +76,7 @@
                     }
                     setTimeout(function () {
                         location.reload();
-                    }, 4000);
+                    }, 2000);
                 },
                 error: function (data) {
                     alert(data.responseText);
@@ -119,7 +117,6 @@
 });
 
 function SubmitForm() {
-    alert("A");
     $('#ProjCreate').submit();
 }
 
@@ -128,38 +125,36 @@ function EditFormSubmit() {
 }
 
 function Remove(id) {
-    $.ajax({
-        url: '/Project/Remove',
-        type: 'post',
-        data: { 'ID': id },
-        success: function (data) {
-            if (confirm("Are you sure ?")) {
+    if (confirm("هل أنت متأكد انك تريد حذف هذا المشروع ؟")) {
+        $.ajax({
+            url: '/Project/Remove',
+            type: 'post',
+            data: { 'ID': id },
+            success: function (data) {
                 $('#' + id).fadeOut(500);
+            },
+            error: function (data) {
+                alert(data.responseText);
             }
-            return false;
-        },
-        error: function (data) {
-            alert(data.responseText);
-        }
-    });
+        });
+    }
 }
 
 function RemoveUnit(id) {
-    $.ajax({
-        url: '/Project/DeleteUnit',
-        type: 'post',
-        data: { 'id': id },
-        success: function (data) {
-            if (confirm("Are you sure ?")) {
+    if (confirm("هل أنت متأكد انك تريد حذف هذة الوحدة ؟")) {
+        $.ajax({
+            url: '/Project/DeleteUnit',
+            type: 'post',
+            data: { 'id': id },
+            success: function (data) {
                 $('#' + id).fadeOut(500);
+                $('#DetailRow' + id).fadeOut(300);
+            },
+            error: function (data) {
+                alert(data.responseText);
             }
-            $('#DetailRow' + id).fadeOut(300);
-            return false;
-        },
-        error: function (data) {
-            alert(data.responseText);
-        }
-    });
+        });
+    }
 }
 
 function FillFields(id) {

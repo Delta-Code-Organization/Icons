@@ -1,69 +1,16 @@
 ﻿$(document).ready(function () {
-    $('#LoginForm').submit(function (event) {
+    $('#CreateCatForm').submit(function (event) {
         if ($(this).parsley('validate')) {
             $.gritter.removeAll();
             $.ajax({
                 type: 'post',
-                url: '/User/Login',
-                data: { 'Username': $('#Username').val(), 'Password': $('#Password').val() },
-                success: function (data) {
-                    if (data == "true") {
-                        window.location.href = "/Home/Index";
-                    }
-                    else {
-                        $.gritter.add({
-                            title: '! فشل العملية',
-                            text: ". الرجاء ادخال اسم مستخدم وكلمة مرور صحيحة",
-                            image: '/content/images/user-icon.png',
-                            class_name: 'clean',
-                            time: '120000'
-                        });
-                        $('#Username').focus();
-                    }
-                },
-                error: function (data) {
-                    alert(data.responseText);
-                }
-            });
-            return false;
-        }
-        return false;
-    });
-
-    $('#UpdateUserData').submit(function (event) {
-        if ($(this).parsley('validate')) {
-            var Permissions = "";
-            var ValidateCheckBoxes = false;
-            $('input[type=checkbox]').each(function () {
-                if ($(this).is(':checked')) {
-                    Permissions += $(this).val() + "#";
-                    ValidateCheckBoxes = true;
-                }
-            });
-            if (ValidateCheckBoxes == false) {
-                alert("الرجاء اختيار صلاحيات للمستخدم");
-                return false;
-            }
-            var strLen = Permissions.length;
-            Permissions = Permissions.slice(0, strLen - 1);
-            $.ajax({
-                type: 'post',
-                url: '/User/UpdateUser',
-                data: { 'name': $('#aname').val(), 'pass': $('#apass').val(), 'per': Permissions },
+                url: '/Product/CreateCategory',
+                data: $(this).serialize(),
                 success: function (data) {
                     if (data == "true") {
                         $.gritter.add({
                             title: '! نجاح العملية',
-                            text: ". تم تعديل بيانات المستخدم بنجاح",
-                            image: '/content/images/user-icon.png',
-                            class_name: 'clean',
-                            time: '120000'
-                        });
-                    }
-                    else {
-                        $.gritter.add({
-                            title: '! فشل العملية',
-                            text: ". اسم المستخدم موجود بالفعل الرجاء اختيار اسم مستخدم اخر",
+                            text: ". تم اضافة التصنيف بنجاح",
                             image: '/content/images/user-icon.png',
                             class_name: 'clean',
                             time: '120000'
@@ -79,31 +26,18 @@
         return false;
     });
 
-    $('#CreateAccForm').submit(function (event) {
+    $('#prodCreate').submit(function (event) {
         if ($(this).parsley('validate')) {
-            var Permissions = "";
-            var ValidateCheckBoxes = false;
-            $('input[type=checkbox]').each(function () {
-                if ($(this).is(':checked')) {
-                    Permissions += $(this).val() + "#";
-                    ValidateCheckBoxes = true;
-                }
-            });
-            if (ValidateCheckBoxes == false) {
-                alert("الرجاء اختيار صلاحيات للمستخدم");
-                return false;
-            }
-            var strLen = Permissions.length;
-            Permissions = Permissions.slice(0, strLen - 1);
+            $.gritter.removeAll();
             $.ajax({
                 type: 'post',
-                url: '/User/AddAccount',
-                data: {'name': $('#aname').val(), 'pass': $('#apass').val(), 'per': Permissions },
+                url: '/Product/CreateProduct',
+                data: $(this).serialize(),
                 success: function (data) {
                     if (data == "true") {
                         $.gritter.add({
                             title: '! نجاح العملية',
-                            text: ". تم اضافة المستخدم بنجاح",
+                            text: ". تم اضافة المنتج بنجاح",
                             image: '/content/images/user-icon.png',
                             class_name: 'clean',
                             time: '120000'
@@ -112,7 +46,60 @@
                     else {
                         $.gritter.add({
                             title: '! فشل العملية',
-                            text: ". اسم المستخدم موجود بالفعل الرجاء اختيار اسم مستخدم اخر",
+                            text: ". المنتج موجود بالفعل",
+                            image: '/content/images/user-icon.png',
+                            class_name: 'clean',
+                            time: '120000'
+                        });
+                    }
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            });
+            return false;
+        }
+        return false;
+    });
+    $('#EditCatForm').submit(function (event) {
+        if ($(this).parsley('validate')) {
+            $.gritter.removeAll();
+            $.ajax({
+                type: 'post',
+                url: '/Product/EditCategory',
+                data: $(this).serialize(),
+                success: function (data) {
+                    if (data == "true") {
+                        $.gritter.add({
+                            title: '! نجاح العملية',
+                            text: ". تم تعديل التصنيف بنجاح",
+                            image: '/content/images/user-icon.png',
+                            class_name: 'clean',
+                            time: '120000'
+                        });
+                    }
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            });
+            return false;
+        }
+        return false;
+    });
+
+    $('#prodEdit').submit(function (event) {
+        if ($(this).parsley('validate')) {
+            $.gritter.removeAll();
+            $.ajax({
+                type: 'post',
+                url: '/Product/EditProduct',
+                data: $(this).serialize(),
+                success: function (data) {
+                    if (data == "true") {
+                        $.gritter.add({
+                            title: '! نجاح العملية',
+                            text: ". تم تعديل المنتج بنجاح",
                             image: '/content/images/user-icon.png',
                             class_name: 'clean',
                             time: '120000'
@@ -129,10 +116,28 @@
     });
 });
 
-function Remove(id) {
-    if (confirm("هل انت متأكد انك تريد حذف هذا المستخدم ؟")) {
+function Remove(id)
+{
+    if (confirm("هل أنت متأكد انك تريد حذف هذا التصنيف ؟")) {
         $.ajax({
-            url: '/User/DeleteUser',
+            url: '/Product/RemoveCategory',
+            type: 'post',
+            data: { 'id': id },
+            success: function (data) {
+                $('#' + id).fadeOut(500);
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        });
+    }
+}
+
+function RemoveProduct(id)
+{
+    if (confirm("هل أنت متأكد انك تريد حذف هذا المنتج ؟")) {
+        $.ajax({
+            url: '/Product/RemoveProduct',
             type: 'post',
             data: { 'id': id },
             success: function (data) {

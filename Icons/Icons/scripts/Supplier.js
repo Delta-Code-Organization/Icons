@@ -56,18 +56,17 @@
 
 function Remove(id)
 {
-    $.ajax({
-        url: '/Supplier/Remove',
-        type: 'post',
-        data: { 'id': id },
-        success: function (data) {
-            if (confirm("Are you sure ?")) {
+    if (confirm("هل انت متأكد انك تريد حذف هذا المورد ؟")) {
+        $.ajax({
+            url: '/Supplier/Remove',
+            type: 'post',
+            data: { 'id': id },
+            success: function (data) {
                 $('#' + id).fadeOut(500);
+            },
+            error: function (data) {
+                alert(data.responseText);
             }
-            return false;
-        },
-        error: function (data) {
-            alert(data.responseText);
-        }
-    });
+        });
+    }
 }

@@ -13,8 +13,6 @@ namespace Icons.Models
 
         public Returner Add()
         {
-            db.Projects.Add(this);
-            db.SaveChanges();
             var ParentAccount = db.AccountingTrees.Where(p => p.KeyAccountID == (int)KeyAccounts.Projects).FirstOrDefault();
             if (ParentAccount != null)
             {
@@ -24,6 +22,10 @@ namespace Icons.Models
                 db.AccountingTrees.Add(ProjectNode);
                 db.SaveChanges();
             }
+            var AccID = db.AccountingTrees.Where(p => p.NodeName == this.ProjectName && p.Parent == ParentAccount.Id).SingleOrDefault();
+            this.AccountID = AccID.Id;
+            db.Projects.Add(this);
+            db.SaveChanges();
             return new Returner
             {
                 Message = Message.Project_Created_Successfully
@@ -61,9 +63,6 @@ namespace Icons.Models
         public Returner Edit()
         {
             var P = db.Projects.Where(p => p.Id == this.Id).SingleOrDefault();
-            P.AccountID = this.AccountID;
-            P.AccountingTree = this.AccountingTree;
-            P.CreationDate = this.CreationDate;
             P.ExpectedCost = this.ExpectedCost;
             P.FirstViewLength = this.FirstViewLength;
             P.FloorsCount = this.FloorsCount;
@@ -74,6 +73,7 @@ namespace Icons.Models
             P.ProjectName = this.ProjectName;
             P.SecondViewLength = this.SecondViewLength;
             P.ThirdViewLength = this.ThirdViewLength;
+            P.CreationDate = this.CreationDate;
             db.SaveChanges();
             return new Returner
             {

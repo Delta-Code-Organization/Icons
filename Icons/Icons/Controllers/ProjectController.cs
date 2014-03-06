@@ -63,6 +63,8 @@ namespace Icons.Controllers
                 }
             }
             ViewBag.P = new Project { Id = (int)id }.GetByID().Data as Project;
+            TempData["ProjID"] = (int)id;
+            TempData.Keep();
             return View();
         }
 
@@ -70,6 +72,7 @@ namespace Icons.Controllers
         public string EditProject(FormCollection FC)
         {
             Project P = new Project();
+            P.Id = (int)TempData["ProjID"];
             P.CreationDate = Convert.ToDateTime(FC["date"]);
             P.ExpectedCost = Convert.ToDouble(FC["cost"]);
             P.FirstViewLength = Convert.ToDouble(FC["first"]);

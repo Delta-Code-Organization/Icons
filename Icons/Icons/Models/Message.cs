@@ -21,6 +21,13 @@ namespace Icons.Models
         Project_Updated_Successfully = 11,
         Unit_Created_Successfully = 12,
         Unit_Delete_Successfully = 13,
-        Unit_Updated_Successfully = 14
+        Unit_Updated_Successfully = 14,
+        Product_Category_Created_Successfully = 15,
+        Product_Category_Deleted_Successfully = 16,
+        Product_Category_Updated_Successfully = 17,
+        Product_Created_Successfully = 18,
+        Product_Update_Successfully = 19,
+        Product_Deleted_Successfully = 20,
+        Product_Name_Already_Exist = 21
     }
 }
