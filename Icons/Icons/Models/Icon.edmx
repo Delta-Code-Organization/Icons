@@ -129,8 +129,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="ProductName" Type="nvarchar(max)" />
-          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Category" Type="int" />
           <Property Name="PurchaseUnit" Type="int" />
           <Property Name="SalesUnit" Type="int" />
@@ -577,8 +577,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="Description" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ProductName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Category" Type="Int32" />
           <Property Name="PurchaseUnit" Type="Int32" />
           <Property Name="SalesUnit" Type="Int32" />

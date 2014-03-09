@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1d1d1398d0794d82996e86c3b35bfcfe" Name="Diagram1">
+      <Diagram DiagramId="cd6579ba2dd649c0bcf844a386cb076c" Name="Diagram1">
         <EntityTypeShape EntityType="MaksoudDBModel.AccountingTree" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MaksoudDBModel.FinancialTransaction" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="MaksoudDBModel.ProductCategory" Width="1.5" PointX="3.75" PointY="4.875" IsExpanded="true" />

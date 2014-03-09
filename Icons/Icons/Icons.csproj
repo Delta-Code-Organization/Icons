@@ -112,6 +112,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -119,63 +120,67 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountingTree.cs">
-      <DependentUpon>IconsDB.tt</DependentUpon>
+      <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountingTreeModel.cs" />
     <Compile Include="Models\Extention.cs" />
     <Compile Include="Models\FinancialTransaction.cs">
-      <DependentUpon>IconsDB.tt</DependentUpon>
+      <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Finishing.cs" />
-    <Compile Include="Models\IconsDB.Context.cs">
+    <Compile Include="Models\Icon.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>IconsDB.Context.tt</DependentUpon>
+      <DependentUpon>Icon.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\IconsDB.cs">
+    <Compile Include="Models\Icon.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>IconsDB.tt</DependentUpon>
+      <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\IconsDB.Designer.cs">
+    <Compile Include="Models\Icon.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>IconsDB.edmx</DependentUpon>
+      <DependentUpon>Icon.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Product.cs">
-      <DependentUpon>IconsDB.tt</DependentUpon>
+      <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductCategory.cs">
-      <DependentUpon>IconsDB.tt</DependentUpon>
+      <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductCategoryModel.cs" />
+    <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\Project.cs">
-      <DependentUpon>IconsDB.tt</DependentUpon>
+      <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\ProjectUnit.cs">
-      <DependentUpon>IconsDB.tt</DependentUpon>
+      <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProjectUnitsModel.cs" />
+    <Compile Include="Models\PurchaseUnit.cs" />
     <Compile Include="Models\Returner.cs" />
+    <Compile Include="Models\SalesUnit.cs" />
     <Compile Include="Models\Screen.cs">
-      <DependentUpon>IconsDB.tt</DependentUpon>
+      <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ScreenModel.cs" />
     <Compile Include="Models\Supplier.cs">
-      <DependentUpon>IconsDB.tt</DependentUpon>
+      <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SupplierInvoice.cs">
-      <DependentUpon>IconsDB.tt</DependentUpon>
+      <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SupplierInvoiceLine.cs">
-      <DependentUpon>IconsDB.tt</DependentUpon>
+      <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SupplierModel.cs" />
     <Compile Include="Models\SystemEnums.cs" />
     <Compile Include="Models\UnitTypes.cs" />
     <Compile Include="Models\User.cs">
-      <DependentUpon>IconsDB.tt</DependentUpon>
+      <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2020,7 +2025,9 @@
     <Content Include="scripts\Project.js" />
     <Content Include="scripts\Supplier.js" />
     <Content Include="scripts\User.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -2435,28 +2442,38 @@
     <Content Include="Views\Supplier\EditSupplier.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Models\IconsDB.edmx">
+    <EntityDeploy Include="Models\Icon.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>IconsDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>Icon.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\IconsDB.Context.tt">
+    <Content Include="Models\Icon.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>IconsDB.edmx</DependentUpon>
-      <LastGenOutput>IconsDB.Context.cs</LastGenOutput>
+      <DependentUpon>Icon.edmx</DependentUpon>
+      <LastGenOutput>Icon.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\IconsDB.edmx.diagram">
-      <DependentUpon>IconsDB.edmx</DependentUpon>
+    <Content Include="Models\Icon.edmx.diagram">
+      <DependentUpon>Icon.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\IconsDB.tt">
+    <Content Include="Models\Icon.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>IconsDB.edmx</DependentUpon>
-      <LastGenOutput>IconsDB.cs</LastGenOutput>
+      <DependentUpon>Icon.edmx</DependentUpon>
+      <LastGenOutput>Icon.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\Icon.pubxml" />
     <None Include="Properties\PublishProfiles\Maksoud.pubxml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Accounting\AccountingTree.cshtml" />
     <Content Include="Views\Accounting\AccountsSetting.cshtml" />
     <Content Include="Views\Supplier\Invoice.cshtml" />
+    <Content Include="Views\Project\CreateProjectUnits.cshtml" />
+    <Content Include="Views\Project\EditProject.cshtml" />
+    <Content Include="Views\Project\SearchProjects.cshtml" />
+    <Content Include="Views\Products\CreateCategory.cshtml" />
+    <Content Include="Views\Products\CreateProduct.cshtml" />
+    <Content Include="Views\Products\EditCategory.cshtml" />
+    <Content Include="Views\Products\EditProduct.cshtml" />
+    <Content Include="Views\Products\SearchCategories.cshtml" />
+    <Content Include="Views\Products\SearchProducts.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

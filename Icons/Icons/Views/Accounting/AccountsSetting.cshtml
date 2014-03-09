@@ -1,0 +1,207 @@
+﻿@{
+    ViewBag.Title = "اعدادات الحسابات";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+}
+@using Icons.Models;
+<script src="~/scripts/AccTree.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">الاعدادات الافتراضيه</h3>
+            </div>
+            <div class="content">
+                <form id="UATS" class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" action="#" style="direction: rtl; border-radius: 0px;">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">حساب مشاريع رئيسي</label>
+                        <div class="col-sm-6 Arabic">
+                            <select id="cmbProjects" class="select2">
+                                <optgroup label="اختار الحساب من هنا">
+                                    @foreach (AccountingTree Node in ViewBag.Nodes)
+                                    {
+                                        if (Node.KeyAccountID == (int)KeyAccounts.Projects)
+                                        { 
+                                        <option selected value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                        else
+                                        {
+                                        <option value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">حساب موردين رئيسي</label>
+                        <div class="col-sm-6 Arabic">
+                            <select id="cmbSuppliers" class="select2">
+                                <optgroup label="اختار الحساب من هنا">
+                                    @foreach (AccountingTree Node in ViewBag.Nodes)
+                                    {
+                                         if (Node.KeyAccountID == (int)KeyAccounts.Suppliers)
+                                        { 
+                                        <option selected value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                        else
+                                        {
+                                        <option value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">حساب عملاء رئيسي</label>
+                        <div class="col-sm-6 Arabic">
+                            <select id="cmbCustomers" class="select2">
+                                <optgroup label="اختار الحساب من هنا">
+                                    @foreach (AccountingTree Node in ViewBag.Nodes)
+                                    {
+                                        if (Node.KeyAccountID == (int)KeyAccounts.Customers)
+                                        { 
+                                        <option selected value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                        else
+                                        {
+                                        <option value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">حساب موظفين رئيسي</label>
+                        <div class="col-sm-6 Arabic">
+                            <select id="cmbEmployee" class="select2">
+                                <optgroup label="اختار الحساب من هنا">
+                                    @foreach (AccountingTree Node in ViewBag.Nodes)
+                                    {
+                                         if (Node.KeyAccountID == (int)KeyAccounts.Employee)
+                                        { 
+                                        <option selected value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                        else
+                                        {
+                                        <option value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">حساب مبيعات رئيسي</label>
+                        <div class="col-sm-6 Arabic">
+                            <select id="cmbSales" class="select2">
+                                <optgroup label="اختار الحساب من هنا">
+                                    @foreach (AccountingTree Node in ViewBag.Nodes)
+                                    {
+                                        if (Node.KeyAccountID == (int)KeyAccounts.Sales)
+                                        { 
+                                        <option selected value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                        else
+                                        {
+                                        <option value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">حساب مخزن رئيسي</label>
+                        <div class="col-sm-6 Arabic">
+                            <select id="cmbStock" class="select2">
+                                <optgroup label="اختار الحساب من هنا">
+                                    @foreach (AccountingTree Node in ViewBag.Nodes)
+                                    {
+                                         if (Node.KeyAccountID == (int)KeyAccounts.Stock)
+                                        { 
+                                        <option selected value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                        else
+                                        {
+                                        <option value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">حساب عهد رئيسي</label>
+                        <div class="col-sm-6 Arabic">
+                            <select id="cmbImprest" class="select2">
+                                <optgroup label="اختار الحساب من هنا">
+                                    @foreach (AccountingTree Node in ViewBag.Nodes)
+                                    {
+                                         if (Node.KeyAccountID == (int)KeyAccounts.Imprestes)
+                                        { 
+                                        <option selected value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                        else
+                                        {
+                                        <option value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">حساب خزائن رئيسي</label>
+                        <div class="col-sm-6 Arabic">
+                            <select id="cmbSafes" class="select2">
+                                <optgroup label="اختار الحساب من هنا">
+                                    @foreach (AccountingTree Node in ViewBag.Nodes)
+                                    {
+                                        if (Node.KeyAccountID == (int)KeyAccounts.Safes)
+                                        { 
+                                        <option selected value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                        else
+                                        {
+                                        <option value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">حساب بنوك رئيسي</label>
+                        <div class="col-sm-6 Arabic">
+                            <select id="cmbBanks" class="select2">
+                                <optgroup label="اختار الحساب من هنا">
+                                    @foreach (AccountingTree Node in ViewBag.Nodes)
+                                    {
+                                         if (Node.KeyAccountID == (int)KeyAccounts.Banks)
+                                        { 
+                                        <option selected value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                        else
+                                        {
+                                        <option value="@Node.Id">@Node.NodeName</option>
+                                        }
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">حفظ الاعدادات</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="resultmsg" style="text-align: center; color: blue;">
+                    <label id="result"></label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
