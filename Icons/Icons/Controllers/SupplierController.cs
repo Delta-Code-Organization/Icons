@@ -16,10 +16,66 @@ namespace Icons.Controllers
         {
             return View();
         }
+
         public ActionResult Invoice()
         {
+            List<Supplier> LOS = new Supplier().GetAll().Data as List<Supplier>;
+            ViewBag.S = LOS;
+            List<Product> LOP = new Product().GetAll().Data as List<Product>;
+            ViewBag.P = LOP;
             return View();
         }
+
+        [HttpPost]
+        public JsonResult AddInvoiceLine(int Prod,int Qty,double Price,double Total)
+        {
+            SupplierInvoiceLine SIL = new SupplierInvoiceLine();
+            SIL.ProductId = Prod;
+            SIL.Qty = Qty;
+            SIL.Price = Price;
+            SIL.Total = Total;
+            return SIL.Add().DataInJSON;
+        }
+
+        [HttpPost]
+        public string RemoveInvoiceLine(int id)
+        {
+            SupplierInvoiceLine SIL = new SupplierInvoiceLine { Id = id };
+            if (SIL.Remove().Message == Message.Invoice_Line_Removed_Successfully)
+            {
+                return "true";
+            }
+            else
+            {
+                return "false";
+            }
+        }
+
+        [HttpPost]
+        public string AddFullInvoice(int ISup, DateTime IDate, string IRef, double IDis, double ITotal, double INet, string LineIds)
+        {
+            SupplierInvoice SI = new SupplierInvoice();
+            SI.Departed = false;
+            SI.InvoiceDate = IDate;
+            SI.InvoiceDiscount = IDis;
+            SI.InvoiceNet = INet;
+            SI.InvoiceTotal = ITotal;
+            SI.LastEditBy = (Session["User"] as User).ID;
+            SI.SupplierID = ISup;
+            SI.SupplierReferenaceNo = IRef;
+            string[] LOSIL = LineIds.Split(',');
+            List<string> LOSILToSend = new List<string>();
+            foreach (string item in LOSIL)
+            {
+                if (item != "0" && item != "" && item != null)
+                {
+                    LOSILToSend.Add(item);
+                }
+            }
+            SI.Add(LOSILToSend);
+            return "true";
+        }
+
         [HttpPost]
         public string CreateSupplier(FormCollection FC)
         {

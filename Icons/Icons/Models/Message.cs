@@ -28,6 +28,12 @@ namespace Icons.Models
         Product_Created_Successfully = 18,
         Product_Update_Successfully = 19,
         Product_Deleted_Successfully = 20,
-        Product_Name_Already_Exist = 21
+        Product_Name_Already_Exist = 21,
+        Invoice_Line_Removed_Successfully = 22,
+        Invoice_Added_Successfully = 23,
+        Customer_Name_Already_Exist = 24,
+        Customer_Created_Successfully = 25,
+        Customer_Updated_Succeessfully = 26,
+        Customer_Deleted_Successfully = 27
     }
 }

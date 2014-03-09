@@ -3,133 +3,160 @@
     Layout = "~/Views/shared/MasterPage.cshtml";
 }
 
-<div class="page-aside Arabic">
-    <div class="fixed Arabic">
-        <div class="content Arabic">
-            <h2 class="Arabic">بيانات الفاتورة</h2>
-            <form role="form" class="Arabic">
-                <div class="form-group Arabic">
-                    <label class="Arabic">المورد</label>
-                    <select class="select2">
-                        <optgroup label="Alaskan/Hawaiian Time Zone">
-                            <option value="AK">Alaska TTTTTTTTTTTTTTTTTTTTTT</option>
-                            <option value="HI">Hawaii</option>
-                        </optgroup>
-                    </select>
+@using Icons.Models;
+
+<script src="~/scripts/SupplierInvoice.js"></script>
+
+<div class="row">
+    <div class="col-md-9" style="padding: 0; padding-left: 15px;">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">تفاصيل الفاتورة</h3>
+            </div>
+            <div class="content">
+                <div class="col-sm-4 col-md-4 col-lg-2 Arabic">
+                    <div class="block-flat">
+                        <div class="header">
+                            <h3 class="visible-sm visible-md">Col 4</h3>
+                            <h3 class="visible-lg">مجموع</h3>
+                            <h3 class="visible-xs">0</h3>
+                        </div>
+                        <div class="content">
+                            <p>
+                                <b id="TotalOfTotal">0</b><span class="hidden-lg"> </span>
+                                <span class="hidden-md hidden-sm hidden-lg"></span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group Arabic">
-                    <label class="Arabic">الى حساب</label>
-                    <select class="select2">
-                        <optgroup label="Alaskan/Hawaiian Time Zone">
-                            <option value="AK">Alaska TTTTTTTTTTTTTTTTTTTTTT</option>
-                            <option value="HI">Hawaii</option>
-                        </optgroup>
-                    </select>
+                <div class="col-sm-4 col-md-4 col-lg-2 Arabic">
+                    <div class="block-flat">
+                        <div class="header">
+                            <h3 class="visible-sm visible-md">Col 4</h3>
+                            <h3 class="visible-lg">خصم</h3>
+                            <h3 class="visible-xs">0</h3>
+                        </div>
+                        <div class="content">
+                            <p>
+                                <b id="DiscountOfDiscount">0</b><span class="hidden-lg"> </span>
+                                <span class="hidden-md hidden-sm hidden-lg"></span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group Arabic">
-                    <label class="Arabic">رقم القاتورة</label>
-                    <input type="number" disabled value="00000" class="form-control">
+                <div class="col-sm-4 col-md-4 col-lg-2 Arabic">
+                    <div class="block-flat">
+                        <div class="header">
+                            <h3 class="visible-sm visible-md">Col 4</h3>
+                            <h3 class="visible-lg">صافي</h3>
+                            <h3 class="visible-xs">0</h3>
+                        </div>
+                        <div class="content">
+                            <p>
+                                <b id="NetOfNet">0</b><span class="hidden-lg"> </span>
+                                <span class="hidden-md hidden-sm hidden-lg"></span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group Arabic">
-                    <label class="Arabic">تاريخ</label>
-                    <input class="form-control datetime" size="16" type="text" value="" />
-                </div>
-                <div class="form-group Arabic">
-                    <label class="Arabic">رقم مرجعي</label>
-                    <input type="number" placeholder="رقم الفاتورة لدى المورد" class="form-control">
-                </div>
-                <button class="btn btn-primary Arabic" type="submit">حفظ الفاتورة</button>
-                <button class="btn btn-default Arabic">الغاء</button>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="container-fluid" id="pcont">
-    <div class="cl-mcont Arabic">
-        <div class="col-lg-12 pull-right Arabic">
-            <div class="block-flat Arabic">
-                <div class="header Arabic">
-                    <h3 class="Arabic">تفاصيل الفاتورة</h3>
-                </div>
-                <div class="content Arabic">
-                    <div class="col-sm-4 col-md-4 col-lg-2 Arabic">
-					<div class="block-flat">
-						<div class="header">							
-							<h3 class="visible-sm visible-md">Col 4</h3>
-							<h3 class="visible-lg">مجموع</h3>
-							<h3 class="visible-xs">1233</h3>
-						</div>
-					<div class="content">
-							<p><b>1225</b><span class="hidden-lg"> </span>
-							<span class="hidden-md hidden-sm hidden-lg"> </span></p>
-						</div>
-					</div>				
-				</div>
-                    <div class="col-sm-4 col-md-4 col-lg-2 Arabic">
-					<div class="block-flat">
-						<div class="header">							
-							<h3 class="visible-sm visible-md">Col 4</h3>
-							<h3 class="visible-lg">خصم</h3>
-							<h3 class="visible-xs">1225</h3>
-						</div>
-						<div class="content">
-							<p><b>1225</b><span class="hidden-lg"> </span>
-							<span class="hidden-md hidden-sm hidden-lg"> </span></p>
-						</div>
-					</div>				
-				</div>
-                    <div class="col-sm-4 col-md-4 col-lg-2 Arabic">
-					<div class="block-flat">
-						<div class="header">							
-							<h3 class="visible-sm visible-md">Col 4</h3>
-							<h3 class="visible-lg">صافي</h3>
-							<h3 class="visible-xs">1221</h3>
-						</div>
-						<div class="content">
-							<p><b>1225</b><span class="hidden-lg"> </span>
-							<span class="hidden-md hidden-sm hidden-lg"> </span></p>
-						</div>
-					</div>				
-				</div>
-                    <table class="no-border" style="direction: rtl">
-                        <thead class="no-border">
-                            <tr>
-                                <th class="text-right">المنتج</th>
-                                <th class="text-right">الكميه</th>
-                                <th class="text-right">السعر</th>
-                                <th class="text-right">الاجمالي</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody class="no-border-x">
-                            <tr>
-                                <td>
-                                    <select class="select2">
-                                        <optgroup label="Alaskan/Hawaiian Time Zone">
-                                            <option value="AK">Alaska TTTTTTTTTTTTTTTTTTTTTT</option>
-                                            <option value="HI">Hawaii</option>
+                <table class="no-border" style="direction: rtl" id="EleTbl">
+                    <thead class="no-border">
+                        <tr>
+                            <th class="text-right">المنتج</th>
+                            <th class="text-right">الكميه</th>
+                            <th class="text-right">السعر</th>
+                            <th class="text-right">الاجمالي</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="no-border-x" id="ProdEle">
+                        <tr id="0">
+                            <td>
+                                <select class="select2" id="prod">
+                                    @{
+                                        List<Product> LOP = ViewBag.P as List<Product>;
+                                        List<ProductCategory> LOPC = new List<ProductCategory>();
+                                        foreach (Product P in LOP)
+                                        {
+                                            LOPC.Add(P.ProductCategory);
+                                        }
+                                        foreach (ProductCategory item in LOPC)
+                                        {
+                                        <optgroup label="@item.CategoryName">
+                                            @{
+                                            foreach (Product Pitem in item.Products)
+                                            {
+                                                <option value="@Pitem.Id">@Pitem.ProductName</option>
+                                            }
+                                            }
                                         </optgroup>
-                                    </select></td>
-                                <td>
-                                    <input type="number" value="00000" class="form-control"></td>
-                                <td>
-                                    <input type="number" value="00000" class="form-control"></td>
-                                <td>
-                                    <input type="number" value="00000" class="form-control"></td>
-                                <td>
-                                    <button class="btn btn-default Arabic">اضافة</button></td>
-                            </tr>
-                            <tr>
-                                <td style="width: 30%;">Blue beer</td>
-                                <td>12</td>
-                                <td class="text-right">$5,230.000</td>
-                                <td class="text-right">$5,230.000</td>
-                                <td>
-                                    <button class="btn btn-danger Arabic">حذف</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                        }
+                                    }
+                                </select></td>
+                            <td>
+                                <input type="number" value="00000" class="form-control" id="qty"></td>
+                            <td>
+                                <input type="number" value="00000" class="form-control" id="price"></td>
+                            <td>
+                                <input type="number" value="00000" class="form-control" id="total"></td>
+                            <td>
+                                <button class="btn btn-default Arabic" onclick="AddInvoiceLine()">اضافة</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-3" style="padding: 0;">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">بيانات الفاتورة</h3>
+            </div>
+            <div class="content">
+                <form class="form-horizontal group-border-dashed" id="SIForm" action="#" style="border-radius: 0px;">
+                    <div class="form-group">
+                        <label class="Arabic">المورد</label>
+                        <select class="select2" name="sup" id="sup">
+                            @{
+                                foreach (Supplier item in ViewBag.S)
+                                {
+                                <option value="@item.ID">@item.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">الى حساب</label>
+                        <select class="select2" name="acc" id="acc">
+                            <optgroup label="Alaskan/Hawaiian Time Zone">
+                                <option value="AK">Alaska TTTTTTTTTTTTTTTTTTTTTT</option>
+                                <option value="HI">Hawaii</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">رقم القاتورة</label>
+                        <input type="number" name="invoicenum" id="invoicenum" disabled value="00000" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">تاريخ</label>
+                        <input class="form-control datetime" name="invoicedate" id="invoicedate" size="16" type="text" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">رقم مرجعي</label>
+                        <input type="number" name="invoiceref" id="invoiceref" placeholder="رقم الفاتورة لدى المورد" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">الخصم</label>
+                        <input type="number" id="Dis" name="Dis" class="form-control" onkeyup="SetDiscount()" />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary Arabic" type="submit">حفظ الفاتورة</button>
+                        <button class="btn btn-default Arabic">الغاء</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
