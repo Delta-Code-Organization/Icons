@@ -34,6 +34,9 @@ namespace Icons.Models
         Customer_Name_Already_Exist = 24,
         Customer_Created_Successfully = 25,
         Customer_Updated_Succeessfully = 26,
-        Customer_Deleted_Successfully = 27
+        Customer_Deleted_Successfully = 27,
+        Employee_Created_Successfully = 28,
+        Employee_Deleted_Successfully = 29,
+        Employee_Updated_Successfully = 30
     }
 }

@@ -73,5 +73,64 @@ namespace Icons.Controllers
             cust.DeleteCusotmer();
             return "تم مسح العميل بنجاح !";
         }
+
+        public ActionResult Invoice()
+        {
+            ViewBag.InvoiceNum = Convert.ToInt32(new CustomerInvoice().InvoiceNumber().Data) + 1;
+            List<Customer> LOS = new Customer().GetAllCutomers().Data as List<Customer>;
+            ViewBag.S = LOS;
+            List<Product> LOP = new Product().GetAll().Data as List<Product>;
+            ViewBag.P = LOP;
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult AddInvoiceLine(int Prod, int Qty, double Price, double Total)
+        {
+            CustomerInvoiceLine SIL = new CustomerInvoiceLine();
+            SIL.ProductId = Prod;
+            SIL.Qty = Qty;
+            SIL.Price = Price;
+            SIL.Total = Total;
+            return SIL.Add().DataInJSON;
+        }
+
+        [HttpPost]
+        public string RemoveInvoiceLine(int id)
+        {
+            CustomerInvoiceLine SIL = new CustomerInvoiceLine { Id = id };
+            if (SIL.Remove().Message == Message.Invoice_Line_Removed_Successfully)
+            {
+                return "true";
+            }
+            else
+            {
+                return "false";
+            }
+        }
+
+        [HttpPost]
+        public string AddFullInvoice(int ISup, DateTime IDate, double IDis, double ITotal, double INet, string LineIds)
+        {
+            CustomerInvoice SI = new CustomerInvoice();
+            SI.Departed = false;
+            SI.InvoiceDate = IDate;
+            SI.InvoiceDiscount = IDis;
+            SI.InvoiceNet = INet;
+            SI.InvoiceTotal = ITotal;
+            SI.LastEditBy = (Session["User"] as User).ID;
+            SI.CustomerID = ISup;
+            string[] LOSIL = LineIds.Split(',');
+            List<string> LOSILToSend = new List<string>();
+            foreach (string item in LOSIL)
+            {
+                if (item != "0" && item != "" && item != null)
+                {
+                    LOSILToSend.Add(item);
+                }
+            }
+            SI.Add(LOSILToSend);
+            return "true";
+        }
     }
 }

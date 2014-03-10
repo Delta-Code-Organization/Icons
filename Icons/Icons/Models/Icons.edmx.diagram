@@ -33,6 +33,14 @@
         <AssociationConnector Association="MaksoudDBModel.FK_SupplierInvoices_Users" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.UserAccess" ManuallyRouted="false" />
         <EntityTypeShape EntityType="MaksoudDBModel.Customer" Width="1.5" PointX="5.875" PointY="17.625" />
+        <EntityTypeShape EntityType="MaksoudDBModel.CustomerInvoiceLine" Width="1.5" PointX="5.875" PointY="21.25" />
+        <EntityTypeShape EntityType="MaksoudDBModel.CustomerInvoice" Width="1.5" PointX="8.5" PointY="21.25" />
+        <AssociationConnector Association="MaksoudDBModel.FK_CustomerInvoices_AccountingTree" />
+        <AssociationConnector Association="MaksoudDBModel.FK_CustomerInvoiceLines_CustomerInvoices" />
+        <AssociationConnector Association="MaksoudDBModel.FK_CustomerInvoices_Customers" />
+        <AssociationConnector Association="MaksoudDBModel.FK_CustomerInvoices_Users" />
+        <AssociationConnector Association="MaksoudDBModel.FK_CustomerInvoiceLines_Products" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Employee" Width="1.5" PointX="10.75" PointY="21" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

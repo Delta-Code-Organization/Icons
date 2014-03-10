@@ -1,52 +1,60 @@
 ﻿@{
-    ViewBag.Title = "SearchCustomers";
+    ViewBag.Title = "SearchEmployees";
     Layout = "~/Views/shared/MasterPage.cshtml";
 }
 
 @using Icons.Models;
-<script src="~/scripts/EditCustomer.js"></script>
+
+<script src="~/scripts/Employee.js"></script>
+
 <div class="row">
     <div class="col-md-12">
         <div class="block-flat">
             <div class="header">
-                <h3 style="text-align: right;">بحث العملاء</h3>
+                <h3 style="text-align: right;">بحث الموظفين</h3>
             </div>
             <div class="content" style="direction: rtl;">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="datatable">
                         <thead>
                             <tr style="direction: rtl;">
-                                <th style="text-align: center;">اسم العميل</th>
+                                <th style="text-align: center;">اسم الموظف</th>
                                 <th style="text-align: center;">العنوان</th>
-                                <th style="text-align: center;">رقم الهاتف</th>
-                                <th style="text-align: center;">تاريخ الميلاد</th>
+                                <th style="text-align: center;">رقم الهاتف الأول</th>
+                                <th style="text-align: center;">رقم الهاتف الثاني</th>
+                                <th style="text-align: center;">الرقم القومي</th>
+                                <th style="text-align: center;">اساسي المرتب</th>
+                                <th style="text-align: center;">عنوان الوظيفة</th>
                                 <th style="text-align: center;"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @{
-                                foreach (var y in ViewBag.allcustomers)
+                                foreach (Employee y in ViewBag.E)
                                 {
-                                <tr class="odd gradeX" id="@y.ID">
+                                <tr class="odd gradeX" id="@y.Id">
 
                                     <td>@y.Name</td>
                                     <td>@y.Address</td>
-                                    <td>@y.Phone</td>
-                                    <td class="center">@(((DateTime)y.BirthDate).ToString("MM/dd/yyyy"))</td>
-                                    <td class="center">
+                                    <td>@y.Phone1</td>
+                                    <td>@y.Phone2</td>
+                                    <td>@y.SSN</td>
+                                    <td>@y.BasicSalary</td>
+                                    <td>@y.Title</td>
+                                    <td class="center" style="text-align:center;">
                                         <div class="btn-group">
-                                            <button class="btn btn-default btn-xs" type="button">Actions</button>
+                                            <button class="btn btn-default btn-xs" type="button">الإجرائات</button>
                                             <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">
                                                 <span class="caret"></span>
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <ul role="menu" class="dropdown-menu">
                                                 <li>
-                                                    <a href="/Customer/EditCustomer?_ID=@y.ID">تعديل</a>
+                                                    <a href="/Employee/EditEmployee/@y.Id">تعديل</a>
                                                 </li>
                                                 <li class="divider"></li>
                                                 <li>
-                                                    <a onclick="Remove(@y.ID)">حذف</a>
+                                                    <a onclick="Remove(@y.Id)">حذف</a>
                                                 </li>
                                             </ul>
                                         </div>

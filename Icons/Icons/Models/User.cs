@@ -19,6 +19,7 @@ namespace Icons.Models
             this.FinancialTransactions = new HashSet<FinancialTransaction>();
             this.SupplierInvoices = new HashSet<SupplierInvoice>();
             this.Screens = new HashSet<Screen>();
+            this.CustomerInvoices = new HashSet<CustomerInvoice>();
         }
     
         public int ID { get; set; }
@@ -29,5 +30,6 @@ namespace Icons.Models
         public virtual ICollection<FinancialTransaction> FinancialTransactions { get; set; }
         public virtual ICollection<SupplierInvoice> SupplierInvoices { get; set; }
         public virtual ICollection<Screen> Screens { get; set; }
+        public virtual ICollection<CustomerInvoice> CustomerInvoices { get; set; }
     }
 }

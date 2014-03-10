@@ -1,7 +1,8 @@
 ﻿$(document).ready(function () {
     $('#LoginForm').submit(function (event) {
         if ($(this).parsley('validate')) {
-            $.gritter.removeAll();
+            $('#LoginBtnSubmit').prop('disabled', true);
+            $('#LoaderImg').css('display','block');
             $.ajax({
                 type: 'post',
                 url: '/User/Login',
@@ -9,14 +10,17 @@
                 success: function (data) {
                     if (data == "true") {
                         window.location.href = "/Home/Index";
+                        $('#LoaderImg').css('display', 'none');
                     }
                     else {
+                        $('#LoginBtnSubmit').prop('disabled', false);
+                        $('#LoaderImg').css('display', 'none');
                         $.gritter.add({
                             title: '! فشل العملية',
                             text: ". الرجاء ادخال اسم مستخدم وكلمة مرور صحيحة",
                             image: '/content/images/user-icon.png',
                             class_name: 'clean',
-                            time: '120000'
+                            time: '3000'
                         });
                         $('#Username').focus();
                     }
@@ -81,6 +85,8 @@
 
     $('#CreateAccForm').submit(function (event) {
         if ($(this).parsley('validate')) {
+            $('#CreateUserBtnSubmit').prop('disabled', true);
+            $('#LoaderImg').css('display', 'block');
             var Permissions = "";
             var ValidateCheckBoxes = false;
             $('input[type=checkbox]').each(function () {
@@ -101,6 +107,8 @@
                 data: {'name': $('#aname').val(), 'pass': $('#apass').val(), 'per': Permissions },
                 success: function (data) {
                     if (data == "true") {
+                        $('#LoginBtnSubmit').prop('disabled', false);
+                        $('#LoaderImg').css('display', 'none');
                         $.gritter.add({
                             title: '! نجاح العملية',
                             text: ". تم اضافة المستخدم بنجاح",
@@ -110,6 +118,8 @@
                         });
                     }
                     else {
+                        $('#LoginBtnSubmit').prop('disabled', false);
+                        $('#LoaderImg').css('display', 'none');
                         $.gritter.add({
                             title: '! فشل العملية',
                             text: ". اسم المستخدم موجود بالفعل الرجاء اختيار اسم مستخدم اخر",
@@ -143,4 +153,9 @@ function Remove(id) {
             }
         });
     }
+}
+
+function EnableBtns()
+{
+    $('#LoginBtnSubmit').prop('disabled', false);
 }

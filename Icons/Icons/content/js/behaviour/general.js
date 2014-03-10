@@ -611,7 +611,7 @@
         $("[data-mask='taxid']").mask("99-9999999");
         $("[data-mask='ssn']").mask("999-99-9999");
         $("[data-mask='product-key']").mask("a*-999-a999");
-        $("[data-mask='percent']").mask("99.99");
+        $("[data-mask='percent']").mask("999.99");
         $("[data-mask='currency']").mask("$999,999,999.99");
         $("[data-mask='mobile']").mask("999-9999-9999");
         $("[data-mask='datetime']").mask("99/99/9999 99:99");
@@ -1692,3 +1692,10 @@ $(function () {
     //$("body").animate({opacity:1,'margin-left':0},500);
     $("body").css({ opacity: 1, 'margin-left': 0 });
 });
+
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode != 46 && (charCode < 48 || charCode > 57)))
+        return false;
+    return true;
+}

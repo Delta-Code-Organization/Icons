@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "EditEmployee";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+    Employee E = ViewBag.E;
+}
+
+@using Icons.Models;
+
+<script src="~/scripts/Employee.js"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">تعديل بيانات الموظف </h3>
+            </div>
+            <div class="content">
+                <form id="EditEmployee" class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="block-flat" style="border: none;">
+                            <div class="content">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">الرقم القومي</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input style="direction: ltr;" id="ssn" name="ssn" onkeypress="return isNumberKey(event)" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال الرقم القومي" size="16" value="@E.SSN" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">تاريخ التعاقد</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input style="direction: ltr;" id="hiringdate" name="hiringdate" class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ التعاقد" size="16" value="@E.HiringDate" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="border: none;">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">اساسي المرتب</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input style="direction: ltr;" id="basicsalary" onkeypress="return isNumberKey(event)" name="basicsalary" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال اساسي المرتب" size="16" value="@E.BasicSalary" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">مدة القبض</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <select class="select2" name="salarytype">
+                                            <optgroup label="مدة القبض">
+                                                @{
+                                                    int Count = 1;
+                                                    foreach (string item in ViewBag.ST)
+                                                    {
+                                                        if (Count == E.SalaryType)
+                                                        {
+                                                            <option selected="selected" value="@Count">@item.Replace("_", " ")</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Count">@item.Replace("_", " ")</option>
+                                                        }
+                                                        Count++;
+                                                    }
+                                                }
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">عنوان الوظيفة</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input value="@E.Title" class="form-control parsley-validated parsley-error" id="title" name="title" parsley-trigger="change" required="" parsley-error-message="يجب ادخال عنوان الوظيفة" type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="block-flat" style="border: none;">
+                            <div class="content">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">اسم الموظف</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input value="@E.Name" class="form-control parsley-validated parsley-error" id="name" name="name" parsley-trigger="change" required="" parsley-error-message="يجب ادخال الاسم" type="text" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">العنوان</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input value="@E.Address" class="form-control parsley-validated parsley-error" id="address" name="address" parsley-trigger="change" required="" parsley-error-message="يجب ادخال العنوان" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">رقم الهاتف الأول</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input value="@E.Phone1" id="phone1" name="phone1" class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" placeholder="999-9999-9999" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال رقم الهاتف" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">رقم الهاتف الثاني</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input value="@E.Phone2" id="phone2" name="phone2" class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" placeholder="999-9999-9999" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال رقم الهاتف" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">تاريخ الميلاد</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input style="direction: ltr;" name="dateofbirth" id="dateofbirth" class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ الميلاد" size="16" value="@E.DateOfBirth" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">حفظ</button>
+                            <button type="button" onclick="Cancel()" class="btn btn-default">الغاء</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="resultmsg" style="text-align: center; color: blue;">
+                    <label id="result"></label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

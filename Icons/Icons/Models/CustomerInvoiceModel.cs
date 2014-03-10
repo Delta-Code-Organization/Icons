@@ -5,24 +5,24 @@ using System.Web;
 
 namespace Icons.Models
 {
-    public partial class SupplierInvoice
+    public partial class CustomerInvoice
     {
         #region Context
         MaksoudDBEntities db = new MaksoudDBEntities();
-        #endregion    
+        #endregion
 
         public Returner Add(List<string> LOSIL)
         {
-            db.SupplierInvoices.Add(this);
+            db.CustomerInvoices.Add(this);
             db.SaveChanges();
             foreach (string item in LOSIL)
             {
                 int CurrentID = Convert.ToInt32(item);
-                var SSS = db.SupplierInvoiceLines.Where(p => p.Id == CurrentID).SingleOrDefault();
+                var SSS = db.CustomerInvoiceLines.Where(p => p.Id == CurrentID).SingleOrDefault();
                 SSS.InvoiceId = this.Id;
                 db.SaveChanges();
             }
-            return new Returner 
+            return new Returner
             {
                 Message = Message.Invoice_Added_Successfully
             };
@@ -30,7 +30,7 @@ namespace Icons.Models
 
         public Returner InvoiceNumber()
         {
-            int MaxID = db.SupplierInvoices.Max(p => p.Id);
+            int MaxID = db.CustomerInvoices.Max(p => p.Id);
             return new Returner
             {
                 Data = MaxID

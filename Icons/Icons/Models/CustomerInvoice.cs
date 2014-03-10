@@ -12,26 +12,26 @@ namespace Icons.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class CustomerInvoice
     {
-        public Product()
+        public CustomerInvoice()
         {
-            this.SupplierInvoiceLines = new HashSet<SupplierInvoiceLine>();
             this.CustomerInvoiceLines = new HashSet<CustomerInvoiceLine>();
         }
     
         public int Id { get; set; }
-        public string ProductName { get; set; }
-        public string Description { get; set; }
-        public Nullable<int> Category { get; set; }
-        public Nullable<int> PurchaseUnit { get; set; }
-        public Nullable<int> SalesUnit { get; set; }
-        public Nullable<int> PtoSRate { get; set; }
-        public Nullable<int> AccountID { get; set; }
+        public Nullable<int> CustomerID { get; set; }
+        public Nullable<System.DateTime> InvoiceDate { get; set; }
+        public Nullable<int> InvoiceAccount { get; set; }
+        public Nullable<double> InvoiceTotal { get; set; }
+        public Nullable<double> InvoiceDiscount { get; set; }
+        public Nullable<double> InvoiceNet { get; set; }
+        public Nullable<bool> Departed { get; set; }
+        public Nullable<int> LastEditBy { get; set; }
     
         public virtual AccountingTree AccountingTree { get; set; }
-        public virtual ProductCategory ProductCategory { get; set; }
-        public virtual ICollection<SupplierInvoiceLine> SupplierInvoiceLines { get; set; }
         public virtual ICollection<CustomerInvoiceLine> CustomerInvoiceLines { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual User User { get; set; }
     }
 }

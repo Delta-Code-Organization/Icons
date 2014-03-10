@@ -1,6 +1,5 @@
 ﻿$(document).ready(function () {
     $('#SubCreate').submit(function (event) {
-        alert('sasasa');
         if ($(this).parsley('validate')) {
             var Name = $('#custname').val();
             var Address = $('#custaddress').val();

@@ -12,20 +12,16 @@ namespace Icons.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Customer
+    public partial class CustomerInvoiceLine
     {
-        public Customer()
-        {
-            this.CustomerInvoices = new HashSet<CustomerInvoice>();
-        }
+        public int Id { get; set; }
+        public Nullable<int> InvoiceId { get; set; }
+        public Nullable<int> ProductId { get; set; }
+        public Nullable<double> Qty { get; set; }
+        public Nullable<double> Price { get; set; }
+        public Nullable<double> Total { get; set; }
     
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public Nullable<System.DateTime> BirthDate { get; set; }
-        public string Notes { get; set; }
-    
-        public virtual ICollection<CustomerInvoice> CustomerInvoices { get; set; }
+        public virtual CustomerInvoice CustomerInvoice { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

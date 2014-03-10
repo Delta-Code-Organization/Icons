@@ -5,7 +5,7 @@
 
 @using Icons.Models;
 
-<script src="~/scripts/SupplierInvoice.js"></script>
+<script src="~/scripts/CustomerInvoice.js"></script>
 
 <div class="row">
     <div class="col-md-9" style="padding: 0; padding-left: 15px;">
@@ -97,7 +97,7 @@
                                 <input type="number" value="00000" onkeypress="return isNumberKey(event)" class="form-control" id="qty"></td>
                             <td>
                                 <input type="number" value="00000" onkeypress="return isNumberKey(event)" class="form-control" id="price"></td>
-                            <td>
+                            <td> 
                                 <input type="number" value="00000" onkeypress="return isNumberKey(event)" class="form-control" id="total"></td>
                             <td>
                                 <button class="btn btn-default Arabic" onclick="AddInvoiceLine()">اضافة</button></td>
@@ -115,12 +115,12 @@
                 <h3 class="ArabicAlign">بيانات الفاتورة</h3>
             </div>
             <div class="content">
-                <form class="form-horizontal group-border-dashed" id="SIForm" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+                <form class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" id="SIForm" action="#" style="border-radius: 0px;">
                     <div class="form-group">
-                        <label class="Arabic">المورد</label>
+                        <label class="Arabic">العميل</label>
                         <select class="select2" name="sup" id="sup">
                             @{
-                                foreach (Supplier item in ViewBag.S)
+                                foreach (Customer item in ViewBag.S)
                                 {
                                 <option value="@item.ID">@item.Name</option>
                                 }
@@ -142,15 +142,11 @@
                     </div>
                     <div class="form-group">
                         <label class="Arabic">تاريخ</label>
-                        <input class="form-control datetime parsley-validated parsley-error" name="invoicedate" id="invoicedate" size="16" type="text" value="" parsley-trigger="change" required="" parsley-required-message="يجب ادخال التاريخ" />
-                    </div>
-                    <div class="form-group">
-                        <label class="Arabic">رقم مرجعي</label>
-                        <input type="number" name="invoiceref" id="invoiceref" onkeypress="return isNumberKey(event)" placeholder="رقم الفاتورة لدى المورد" class="form-control" parsley-trigger="change" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" required="" parsley-required-message="يجب ادخال الرقم المرجعي" />
+                        <input class="form-control datetime" name="invoicedate" id="invoicedate" size="16" type="text" value="" parsley-trigger="change" required="" parsley-required-message="يجب ادخال التاريخ" />
                     </div>
                     <div class="form-group">
                         <label class="Arabic">الخصم</label>
-                        <input type="number" id="Dis" name="Dis" class="form-control" value="0" onkeypress="return isNumberKey(event)" onkeyup="SetDiscount()" parsley-trigger="change" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" required="" parsley-required-message="يجب ادخال الخصم" />
+                        <input type="number" id="Dis" name="Dis" onkeypress="return isNumberKey(event)" class="form-control" value="0" onkeyup="SetDiscount()" parsley-trigger="change" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" required="" parsley-required-message="يجب ادخال الخصم" />
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary Arabic" type="submit">حفظ الفاتورة</button>

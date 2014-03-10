@@ -19,6 +19,7 @@ namespace Icons.Controllers
 
         public ActionResult Invoice()
         {
+            ViewBag.InvoiceNum = Convert.ToInt32(new SupplierInvoice().InvoiceNumber().Data) + 1;
             List<Supplier> LOS = new Supplier().GetAll().Data as List<Supplier>;
             ViewBag.S = LOS;
             List<Product> LOP = new Product().GetAll().Data as List<Product>;

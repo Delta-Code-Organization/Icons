@@ -16,6 +16,8 @@ namespace Icons.Models
         Imprestes = 7,
         Safes = 8,
         Banks = 9,
-        Categories = 10
+        Categories = 10,
+        Benifits = 11,
+        Others = 12
     }
 }

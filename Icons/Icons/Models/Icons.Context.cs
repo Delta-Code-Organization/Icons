@@ -37,5 +37,8 @@ namespace Icons.Models
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<CustomerInvoiceLine> CustomerInvoiceLines { get; set; }
+        public DbSet<CustomerInvoice> CustomerInvoices { get; set; }
+        public DbSet<Employee> Employees { get; set; }
     }
 }
