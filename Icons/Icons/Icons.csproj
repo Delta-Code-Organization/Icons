@@ -111,6 +111,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountingController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
@@ -120,67 +122,98 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountingTree.cs">
-      <DependentUpon>Icon.tt</DependentUpon>
+      <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountingTreeModel.cs" />
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerInvoice.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerInvoiceLine.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerInvoiceLineModel.cs" />
+    <Compile Include="Models\CustomerInvoiceModel.cs" />
+    <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\Employee.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeBenifit.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeBenifitModel.cs" />
+    <Compile Include="Models\EmployeeImprest.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeImprestsModel.cs" />
+    <Compile Include="Models\EmployeeModel.cs" />
+    <Compile Include="Models\EmployeePenalty.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeePenaltyModel.cs" />
     <Compile Include="Models\Extention.cs" />
     <Compile Include="Models\FinancialTransaction.cs">
-      <DependentUpon>Icon.tt</DependentUpon>
+      <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Finishing.cs" />
-    <Compile Include="Models\Icon.Context.cs">
+    <Compile Include="Models\Icons.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Icon.Context.tt</DependentUpon>
+      <DependentUpon>Icons.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Icon.cs">
+    <Compile Include="Models\Icons.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Icon.tt</DependentUpon>
+      <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Icon.Designer.cs">
+    <Compile Include="Models\Icons.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Icon.edmx</DependentUpon>
+      <DependentUpon>Icons.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\SalaryType.cs" />
+    <Compile Include="Models\SupplierInvoiceLineModel.cs" />
+    <Compile Include="Models\SupplierInvoiceModel.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Product.cs">
-      <DependentUpon>Icon.tt</DependentUpon>
+      <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductCategory.cs">
-      <DependentUpon>Icon.tt</DependentUpon>
+      <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductCategoryModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\Project.cs">
-      <DependentUpon>Icon.tt</DependentUpon>
+      <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\ProjectUnit.cs">
-      <DependentUpon>Icon.tt</DependentUpon>
+      <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProjectUnitsModel.cs" />
     <Compile Include="Models\PurchaseUnit.cs" />
     <Compile Include="Models\Returner.cs" />
     <Compile Include="Models\SalesUnit.cs" />
     <Compile Include="Models\Screen.cs">
-      <DependentUpon>Icon.tt</DependentUpon>
+      <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ScreenModel.cs" />
     <Compile Include="Models\Supplier.cs">
-      <DependentUpon>Icon.tt</DependentUpon>
+      <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SupplierInvoice.cs">
-      <DependentUpon>Icon.tt</DependentUpon>
+      <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SupplierInvoiceLine.cs">
-      <DependentUpon>Icon.tt</DependentUpon>
+      <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SupplierModel.cs" />
     <Compile Include="Models\SystemEnums.cs" />
     <Compile Include="Models\UnitTypes.cs" />
     <Compile Include="Models\User.cs">
-      <DependentUpon>Icon.tt</DependentUpon>
+      <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -225,6 +258,8 @@
     <Content Include="content\images\gallery\img6.jpg" />
     <Content Include="content\images\gallery\img7.jpg" />
     <Content Include="content\images\icon-mic.jpg" />
+    <Content Include="content\images\loader_40x40.gif" />
+    <Content Include="content\images\loading_circle_fully_working.gif" />
     <Content Include="content\images\logo.png" />
     <Content Include="content\images\menu-tail-left.png" />
     <Content Include="content\images\mic-icon.png" />
@@ -2022,12 +2057,19 @@
     <Content Include="content\js\skycons\skycons.js" />
     <Content Include="Global.asax" />
     <Content Include="scripts\AccTree.js" />
+    <Content Include="scripts\Benifit.js" />
+    <Content Include="scripts\Customer.js" />
+    <Content Include="scripts\CustomerInvoice.js" />
+    <Content Include="scripts\EditCustomer.js" />
+    <Content Include="scripts\Employee.js" />
+    <Content Include="scripts\Imprest.js" />
+    <Content Include="scripts\Penalty.js" />
+    <Content Include="scripts\Product.js" />
     <Content Include="scripts\Project.js" />
     <Content Include="scripts\Supplier.js" />
+    <Content Include="scripts\SupplierInvoice.js" />
     <Content Include="scripts\User.js" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -2442,38 +2484,47 @@
     <Content Include="Views\Supplier\EditSupplier.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Models\Icon.edmx">
+    <EntityDeploy Include="Models\Icons.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Icon.Designer.cs</LastGenOutput>
+      <LastGenOutput>Icons.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Icon.Context.tt">
+    <Content Include="Models\Icons.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Icon.edmx</DependentUpon>
-      <LastGenOutput>Icon.Context.cs</LastGenOutput>
+      <DependentUpon>Icons.edmx</DependentUpon>
+      <LastGenOutput>Icons.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Icon.edmx.diagram">
-      <DependentUpon>Icon.edmx</DependentUpon>
+    <Content Include="Models\Icons.edmx.diagram">
+      <DependentUpon>Icons.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\Icon.tt">
+    <Content Include="Models\Icons.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Icon.edmx</DependentUpon>
-      <LastGenOutput>Icon.cs</LastGenOutput>
+      <DependentUpon>Icons.edmx</DependentUpon>
+      <LastGenOutput>Icons.cs</LastGenOutput>
     </Content>
-    <None Include="Properties\PublishProfiles\Icon.pubxml" />
     <None Include="Properties\PublishProfiles\Maksoud.pubxml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Accounting\AccountingTree.cshtml" />
     <Content Include="Views\Accounting\AccountsSetting.cshtml" />
     <Content Include="Views\Supplier\Invoice.cshtml" />
+    <Content Include="Views\Product\CreateCategory.cshtml" />
+    <Content Include="Views\Product\SearchCategories.cshtml" />
+    <Content Include="Views\Product\EditCategory.cshtml" />
+    <Content Include="Views\Product\CreateProduct.cshtml" />
     <Content Include="Views\Project\CreateProjectUnits.cshtml" />
     <Content Include="Views\Project\EditProject.cshtml" />
     <Content Include="Views\Project\SearchProjects.cshtml" />
-    <Content Include="Views\Products\CreateCategory.cshtml" />
-    <Content Include="Views\Products\CreateProduct.cshtml" />
-    <Content Include="Views\Products\EditCategory.cshtml" />
-    <Content Include="Views\Products\EditProduct.cshtml" />
-    <Content Include="Views\Products\SearchCategories.cshtml" />
-    <Content Include="Views\Products\SearchProducts.cshtml" />
+    <Content Include="Views\Product\SearchProducts.cshtml" />
+    <Content Include="Views\Product\EditProduct.cshtml" />
+    <Content Include="Views\Customer\CreateCustomer.cshtml" />
+    <Content Include="Views\Customer\EditCustomer.cshtml" />
+    <Content Include="Views\Customer\SearchCustomers.cshtml" />
+    <Content Include="Views\Customer\Invoice.cshtml" />
+    <Content Include="Views\Employee\CreateEmployee.cshtml" />
+    <Content Include="Views\Employee\SearchEmployees.cshtml" />
+    <Content Include="Views\Employee\EditEmployee.cshtml" />
+    <Content Include="Views\Employee\Penalties.cshtml" />
+    <Content Include="Views\Employee\Benifits.cshtml" />
+    <Content Include="Views\Employee\Imprests.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
