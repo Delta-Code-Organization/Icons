@@ -92,5 +92,126 @@ namespace Icons.Controllers
             TempData.Keep();
             return "true";
         }
+
+        public ActionResult Penalties(int? id)
+        {
+            if (id == null)
+            {
+                if (Session["User"] != null)
+                {
+                    return RedirectToAction("SearchUsers", "User");
+                }
+                else
+                {
+                    return RedirectToAction("Login", "User");
+                }
+            }
+            string[] SalaryTypes = Enum.GetNames(typeof(SalaryType));
+            ViewBag.ST = SalaryTypes;
+            ViewBag.E = new Employee { Id = (int)id }.GetByID().Data as Employee;
+            ViewBag.AllP = new EmployeePenalty { EmpID = (int)id }.GetAll().Data as List<EmployeePenalty>;
+            TempData["EmpID"] = (int)id;
+            TempData.Keep();
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult AddPenalty(FormCollection FC)
+        {
+            EmployeePenalty EP = new EmployeePenalty();
+            EP.Date = DateTime.Now;
+            EP.EmpID = (int)TempData["EmpID"];
+            EP.Penalty = Convert.ToDouble(FC["penalty"]);
+            TempData.Keep();
+            return EP.Add().DataInJSON;
+        }
+
+        public string RemovePenalty(int id)
+        {
+            EmployeePenalty EP = new EmployeePenalty();
+            EP.Id = id;
+            EP.Remove();
+            return "true";
+        }
+
+        public ActionResult Benifits(int? id)
+        {
+            if (id == null)
+            {
+                if (Session["User"] != null)
+                {
+                    return RedirectToAction("SearchUsers", "User");
+                }
+                else
+                {
+                    return RedirectToAction("Login", "User");
+                }
+            }
+            string[] SalaryTypes = Enum.GetNames(typeof(SalaryType));
+            ViewBag.ST = SalaryTypes;
+            ViewBag.E = new Employee { Id = (int)id }.GetByID().Data as Employee;
+            ViewBag.AllP = new EmployeeBenifit { EmpID = (int)id }.GetAll().Data as List<EmployeeBenifit>;
+            TempData["EmpID"] = (int)id;
+            TempData.Keep();
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult AddBenifit(FormCollection FC)
+        {
+            EmployeeBenifit EP = new EmployeeBenifit();
+            EP.Date = DateTime.Now;
+            EP.EmpID = (int)TempData["EmpID"];
+            EP.Benifit = Convert.ToDouble(FC["benifit"]);
+            return EP.Add().DataInJSON;
+        }
+
+        public string RemoveBenifit(int id)
+        {
+            EmployeeBenifit EP = new EmployeeBenifit();
+            EP.Id = id;
+            EP.Remove();
+            return "true";
+        }
+
+        public ActionResult Imprests(int? id)
+        {
+            if (id == null)
+            {
+                if (Session["User"] != null)
+                {
+                    return RedirectToAction("SearchUsers", "User");
+                }
+                else
+                {
+                    return RedirectToAction("Login", "User");
+                }
+            }
+            string[] SalaryTypes = Enum.GetNames(typeof(SalaryType));
+            ViewBag.ST = SalaryTypes;
+            ViewBag.E = new Employee { Id = (int)id }.GetByID().Data as Employee;
+            ViewBag.AllP = new EmployeeImprest { EmpID = (int)id }.GetAll().Data as List<EmployeeImprest>;
+            TempData["EmpID"] = (int)id;
+            TempData.Keep();
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult AddImprest(FormCollection FC)
+        {
+            EmployeeImprest EP = new EmployeeImprest();
+            EP.Date = DateTime.Now;
+            EP.EmpID = (int)TempData["EmpID"];
+            EP.Imprest = Convert.ToDouble(FC["imprest"]);
+            return EP.Add().DataInJSON;
+        }
+
+        public string RemoveImprest(int id)
+        {
+            EmployeeImprest EP = new EmployeeImprest();
+            EP.Id = id;
+            EP.Remove();
+            return "true";
+        }
     }
 }

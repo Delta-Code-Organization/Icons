@@ -11,6 +11,9 @@
           <EntitySet Name="CustomerInvoices" EntityType="MaksoudDBModel.Store.CustomerInvoices" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Customers" EntityType="MaksoudDBModel.Store.Customers" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Employee" EntityType="MaksoudDBModel.Store.Employee" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EmployeeBenifits" EntityType="MaksoudDBModel.Store.EmployeeBenifits" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EmployeeImprests" EntityType="MaksoudDBModel.Store.EmployeeImprests" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EmployeePenalties" EntityType="MaksoudDBModel.Store.EmployeePenalties" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FinancialTransactions" EntityType="MaksoudDBModel.Store.FinancialTransactions" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductCategories" EntityType="MaksoudDBModel.Store.ProductCategories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Products" EntityType="MaksoudDBModel.Store.Products" store:Type="Tables" Schema="dbo" />
@@ -45,6 +48,18 @@
           <AssociationSet Name="FK_CustomerInvoices_Users" Association="MaksoudDBModel.Store.FK_CustomerInvoices_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="CustomerInvoices" EntitySet="CustomerInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeBenifits_Employee" Association="MaksoudDBModel.Store.FK_EmployeeBenifits_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeBenifits" EntitySet="EmployeeBenifits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeImprests_Employee" Association="MaksoudDBModel.Store.FK_EmployeeImprests_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeImprests" EntitySet="EmployeeImprests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeePenalties_Employee" Association="MaksoudDBModel.Store.FK_EmployeePenalties_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeePenalties" EntitySet="EmployeePenalties" />
           </AssociationSet>
           <AssociationSet Name="FK_FinancialTransactions_AccTree" Association="MaksoudDBModel.Store.FK_FinancialTransactions_AccTree">
             <End Role="AccountingTree" EntitySet="AccountingTree" />
@@ -181,6 +196,33 @@
           <Property Name="ImprestAccID" Type="int" />
           <Property Name="BenifitAccID" Type="int" />
           <Property Name="PenaltyAccID" Type="int" />
+        </EntityType>
+        <EntityType Name="EmployeeBenifits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EmpID" Type="int" />
+          <Property Name="Benifit" Type="float" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EmployeeImprests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EmpID" Type="int" />
+          <Property Name="Imprest" Type="float" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EmployeePenalties">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EmpID" Type="int" />
+          <Property Name="Penalty" Type="float" />
+          <Property Name="Date" Type="datetime" />
         </EntityType>
         <EntityType Name="FinancialTransactions">
           <Key>
@@ -385,6 +427,42 @@
             </Principal>
             <Dependent Role="CustomerInvoices">
               <PropertyRef Name="LastEditBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeBenifits_Employee">
+          <End Role="Employee" Type="MaksoudDBModel.Store.Employee" Multiplicity="0..1" />
+          <End Role="EmployeeBenifits" Type="MaksoudDBModel.Store.EmployeeBenifits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeBenifits">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeImprests_Employee">
+          <End Role="Employee" Type="MaksoudDBModel.Store.Employee" Multiplicity="0..1" />
+          <End Role="EmployeeImprests" Type="MaksoudDBModel.Store.EmployeeImprests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeImprests">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeePenalties_Employee">
+          <End Role="Employee" Type="MaksoudDBModel.Store.Employee" Multiplicity="0..1" />
+          <End Role="EmployeePenalties" Type="MaksoudDBModel.Store.EmployeePenalties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeePenalties">
+              <PropertyRef Name="EmpID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -684,6 +762,21 @@
             <End Role="CustomerInvoiceLine" EntitySet="CustomerInvoiceLines" />
           </AssociationSet>
           <EntitySet Name="Employees" EntityType="MaksoudDBModel.Employee" />
+          <EntitySet Name="EmployeeBenifits" EntityType="MaksoudDBModel.EmployeeBenifit" />
+          <EntitySet Name="EmployeeImprests" EntityType="MaksoudDBModel.EmployeeImprest" />
+          <EntitySet Name="EmployeePenalties" EntityType="MaksoudDBModel.EmployeePenalty" />
+          <AssociationSet Name="FK_EmployeeBenifits_Employee" Association="MaksoudDBModel.FK_EmployeeBenifits_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeBenifit" EntitySet="EmployeeBenifits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeImprests_Employee" Association="MaksoudDBModel.FK_EmployeeImprests_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeImprest" EntitySet="EmployeeImprests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeePenalties_Employee" Association="MaksoudDBModel.FK_EmployeePenalties_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeePenalty" EntitySet="EmployeePenalties" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountingTree">
           <Key>
@@ -1167,7 +1260,76 @@
           <Property Type="Int32" Name="ImprestAccID" />
           <Property Type="Int32" Name="BenifitAccID" />
           <Property Type="Int32" Name="PenaltyAccID" />
+          <NavigationProperty Name="EmployeeBenifits" Relationship="MaksoudDBModel.FK_EmployeeBenifits_Employee" FromRole="Employee" ToRole="EmployeeBenifit" />
+          <NavigationProperty Name="EmployeeImprests" Relationship="MaksoudDBModel.FK_EmployeeImprests_Employee" FromRole="Employee" ToRole="EmployeeImprest" />
+          <NavigationProperty Name="EmployeePenalties" Relationship="MaksoudDBModel.FK_EmployeePenalties_Employee" FromRole="Employee" ToRole="EmployeePenalty" />
         </EntityType>
+        <EntityType Name="EmployeeBenifit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="EmpID" />
+          <Property Type="Double" Name="Benifit" />
+          <Property Type="DateTime" Name="Date" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="MaksoudDBModel.FK_EmployeeBenifits_Employee" FromRole="EmployeeBenifit" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="EmployeeImprest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="EmpID" />
+          <Property Type="Double" Name="Imprest" />
+          <Property Type="DateTime" Name="Date" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="MaksoudDBModel.FK_EmployeeImprests_Employee" FromRole="EmployeeImprest" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="EmployeePenalty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="EmpID" />
+          <Property Type="Double" Name="Penalty" />
+          <Property Type="DateTime" Name="Date" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="MaksoudDBModel.FK_EmployeePenalties_Employee" FromRole="EmployeePenalty" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_EmployeeBenifits_Employee">
+          <End Type="MaksoudDBModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="MaksoudDBModel.EmployeeBenifit" Role="EmployeeBenifit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeBenifit">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeImprests_Employee">
+          <End Type="MaksoudDBModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="MaksoudDBModel.EmployeeImprest" Role="EmployeeImprest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeImprest">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeePenalties_Employee">
+          <End Type="MaksoudDBModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="MaksoudDBModel.EmployeePenalty" Role="EmployeePenalty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeePenalty">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1390,6 +1552,36 @@
                 <ScalarProperty Name="SSN" ColumnName="SSN" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeBenifits">
+            <EntityTypeMapping TypeName="MaksoudDBModel.EmployeeBenifit">
+              <MappingFragment StoreEntitySet="EmployeeBenifits">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Benifit" ColumnName="Benifit" />
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeImprests">
+            <EntityTypeMapping TypeName="MaksoudDBModel.EmployeeImprest">
+              <MappingFragment StoreEntitySet="EmployeeImprests">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Imprest" ColumnName="Imprest" />
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeePenalties">
+            <EntityTypeMapping TypeName="MaksoudDBModel.EmployeePenalty">
+              <MappingFragment StoreEntitySet="EmployeePenalties">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Penalty" ColumnName="Penalty" />
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

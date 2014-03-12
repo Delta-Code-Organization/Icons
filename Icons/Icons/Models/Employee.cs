@@ -14,6 +14,13 @@ namespace Icons.Models
     
     public partial class Employee
     {
+        public Employee()
+        {
+            this.EmployeeBenifits = new HashSet<EmployeeBenifit>();
+            this.EmployeeImprests = new HashSet<EmployeeImprest>();
+            this.EmployeePenalties = new HashSet<EmployeePenalty>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
@@ -29,5 +36,9 @@ namespace Icons.Models
         public Nullable<int> ImprestAccID { get; set; }
         public Nullable<int> BenifitAccID { get; set; }
         public Nullable<int> PenaltyAccID { get; set; }
+    
+        public virtual ICollection<EmployeeBenifit> EmployeeBenifits { get; set; }
+        public virtual ICollection<EmployeeImprest> EmployeeImprests { get; set; }
+        public virtual ICollection<EmployeePenalty> EmployeePenalties { get; set; }
     }
 }

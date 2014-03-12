@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "Penalties";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+    Employee E = ViewBag.E;
+}
+
+@using Icons.Models;
+
+<script src="~/scripts/Penalty.js"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">بيانات الموظف</h3>
+            </div>
+            <div class="content">
+                <table class="no-border hover" style="direction: rtl;">
+                    <tbody class="no-border-y">
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>اسم الموظف</td>
+                            <td>@E.Name</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>عنوان الموظف</td>
+                            <td>@E.Address</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>رقم الهاتف الأول</td>
+                            <td>@E.Phone1</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>رقم الهاتف الثاني</td>
+                            <td>@E.Phone2</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>الراتب</td>
+                            <td>@E.BasicSalary</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>مدة القبض</td>
+                            @{
+                                int count = 1;
+                                foreach (string item in ViewBag.ST)
+                                {
+                                    if (count == E.SalaryType)
+                                    {
+                                <td>@item</td>
+                                    }
+                                    count++;
+                                }
+                            }
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>تاريخ الميلاد</td>
+                            <td>@E.DateOfBirth</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>تاريخ التعيين</td>
+                            <td>@E.HiringDate</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>الرقم القومي</td>
+                            <td>@E.SSN</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;"><i class="fa fa-ellipsis-h"></i>عنوان الوظيفة</td>
+                            <td>@E.Title</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">إضافة جزاء / عقوبة</h3>
+            </div>
+            <div class="content">
+                <form class="form-horizontal group-border-dashed" id="AddPenalty" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">قيمة الجزاء</label>
+                        <div class="col-sm-6 Arabic">
+                            <input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="penalty" name="penalty" parsley-trigger="change" required="" parsley-error-message="يجب ادخال قيمة الجزاء" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">انشاء الجزاء</button>
+                            <button type="button" class="btn btn-default">الغاء</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="resultmsg" style="text-align: center; color: blue;">
+                    <label id="result"></label>
+                </div>
+            </div>
+        </div>
+        <div class="block-flat">
+            <div class="header">
+                <h3 style="width: 100%; text-align: right;">جزائات العميل</h3>
+            </div>
+            <div class="content">
+                <table style="direction: rtl;">
+                    <thead>
+                        <tr>
+                            <th style="width: 33.3%; text-align: center;">قيمة الجزاء</th>
+                            <th style="width: 33.3%; text-align: center;">تاريخ الجزاء</th>
+                            <th style="width: 33.3%; text-align: center;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (EmployeePenalty item in ViewBag.AllP)
+                            {
+                            <tr id="DetailRow@(item.Id)">
+                                <td style="width: 14.2%; text-align: center;">@item.Penalty</td>
+                                <td style="width: 14.2%; text-align: center;">@item.Date</td>
+                                <td style="width: 14.2%; text-align: center;">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default">الإجرائات</button>
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="javascript:RemovePenalty(@item.Id);">حذف</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

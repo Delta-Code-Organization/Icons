@@ -37,6 +37,12 @@ namespace Icons.Models
         Customer_Deleted_Successfully = 27,
         Employee_Created_Successfully = 28,
         Employee_Deleted_Successfully = 29,
-        Employee_Updated_Successfully = 30
+        Employee_Updated_Successfully = 30,
+        Penalty_Added_Successfully = 31,
+        Benifit_Added_Successfully = 32,
+        Imprest_Added_Successfully = 33,
+        Penalty_Removed_Successfully = 34,
+        Benifit_Removed_Successfully = 35,
+        Imprest_Removed_Successfully = 36
     }
 }
