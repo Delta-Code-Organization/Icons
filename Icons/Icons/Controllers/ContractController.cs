@@ -73,16 +73,34 @@ namespace Icons.Controllers
             C.Remaining = Convert.ToDouble(FC["cremaining"]);
             C.UnitID = Convert.ToInt32(FC["cunitid"]);
             C.Notes = FC["cnotes"];
-            Installment I = new Installment();
-            I.Amount = Convert.ToDouble(FC["iamount"]);
-            I.DueDate = Convert.ToDateTime(FC["iduedate"]);
-            I.PaymentDate = null;
-            I.ResponsibleID = Convert.ToInt32(FC["iresponsibleid"]);
+            List<Installment> LOI = new List<Installment>();
+            double Amount = Convert.ToDouble(FC["cremaining"]);
+            int InstallNum = Convert.ToInt32(FC["INum"]);
+            double SingleInstallAmount = Convert.ToDouble(Amount / InstallNum);
+            int MonthPeriod = Convert.ToInt32(FC["IMonthNum"]);
+            DateTime LastMonthDate = Convert.ToDateTime(FC["IFirstDate"]);
+            for (int i = 1; i <= InstallNum; i++)
+            {
+                Installment I = new Installment();
+                I.Amount = SingleInstallAmount;
+                if (i == 1)
+                {
+                    I.DueDate = LastMonthDate;
+                }
+                else
+                {
+                    I.DueDate = LastMonthDate.AddMonths(MonthPeriod);
+                    LastMonthDate = (DateTime)I.DueDate;
+                }
+                I.PaymentDate = null;
+                I.ResponsibleID = Convert.ToInt32(FC["iresponsibleid"]);
+                LOI.Add(I);
+            }
             List<ContractOwner> LOCO = new List<ContractOwner>();
             LOCO = TempData["LOCO"] as List<ContractOwner>;
             ProjectUnit PU = new ProjectUnit { Id = (int)C.UnitID };
             int UO = Convert.ToInt32(FC["iresponsibleid"]);
-            C.CreateContract(LOCO, I, PU, UO);
+            C.CreateContract(LOCO, LOI, PU, UO);
         }
     }
 }

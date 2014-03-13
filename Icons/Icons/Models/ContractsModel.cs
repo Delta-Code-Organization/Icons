@@ -11,7 +11,7 @@ namespace Icons.Models
         MaksoudDBEntities db = new MaksoudDBEntities();
         #endregion
 
-        public Returner CreateContract(List<ContractOwner> LOCO,Installment I,ProjectUnit PU,int OwnerID)
+        public Returner CreateContract(List<ContractOwner> LOCO,List<Installment> I,ProjectUnit PU,int OwnerID)
         {
             db.Contracts.Add(this);
             db.SaveChanges();
@@ -22,7 +22,10 @@ namespace Icons.Models
             }
             db.SaveChanges();
             CurrentContract = db.Contracts.Where(p => p.Id == this.Id).SingleOrDefault();
-            CurrentContract.Installments.Add(I);
+            foreach (Installment III in I)
+            {
+                CurrentContract.Installments.Add(III);
+            }
             db.SaveChanges();
             var ProjU = db.ProjectUnits.Where(p => p.Id == PU.Id).SingleOrDefault();
             ProjU.Owner = OwnerID;

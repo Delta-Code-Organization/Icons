@@ -2,12 +2,14 @@
 var UnitID = 0;
 
 $(document).ready(function () {
+    GetUnits($('#cprojectid').val());
+});
+
+$(document).ready(function () {
     $('#ContractCreate').submit(function (event) {
-        UnitID = $('input:radio[name=rad1]:checked').val();
-        $('#TheUnitIDToUpdate').val(UnitID);
         if (ValidatePercentage != 100) {
             alert("مجموع نسبة الملاك يجب ان تكون 100%");
-            return;
+            return false;
         }
         if ($(this).parsley('validate')) {
             $.ajax({
@@ -34,24 +36,14 @@ $(document).ready(function () {
 });
 
 function GetUnits(id) {
-    $('#UnitTableBody').empty();
-    if (id == 1000000) {
-        return;
-    }
+    $('#OPTUnits').empty();
     $.ajax({
         url: '/Contract/GetUnits',
         type: 'post',
         data: { 'id': id },
         success: function (data) {
             $.each(data, function (index, u) {
-                $('#UnitTableBody').append('<tr>'
-                                       + '<td style="width: 25%; text-align:center;">'
-                                       + '<label class="radio-inline"> <input type="radio" name="rad1" value="' + u.Id + '" class="icheck"></label> '
-                                       + '</td>'
-                                       + '<td style="width: 25%; text-align:center;"><strong>' + u.ExpectedPrice + '</strong></td>'
-                                       + '<td style="width: 25%; text-align:center;"><strong>' + u.Finishing + '</strong></td>'
-                                       + '<td style="width: 25%; text-align:center;"><strong>' + u.UnitName + '</strong></td>'
-                                       + '</tr>');
+                $('#OPTUnits').append('<option value="' + u.Id + '">' + u.Id + '</option>');
             });
         },
         error: function (data) {
@@ -61,9 +53,17 @@ function GetUnits(id) {
 }
 
 function AddOwner() {
+    if (ValidatePercentage == 100) {
+        alert('لا يمكنك اضافة ملاك اخرين حيث ان النسبة تساوي 100%');
+        return;
+    }
     var Cus = $('#customerid').val();
     var CusName = $("#customerid option:selected").text();
     var Per = $('#percentage').val();
+    if ((ValidatePercentage + parseInt(Per)) > 100) {
+        alert("مجموع نسب الملاك لا يمكن ان تتخطي او تقل عن 100%");
+        return;
+    }
     if ($("#resoptgrp option[value='" + Cus + "']").length > 0) {
         alert("هذا العميل هو احد الملاك بالفعل .... لا يمكن اختيارة مرة اخري !");
         return;
@@ -75,7 +75,7 @@ function AddOwner() {
         success: function (data) {
             $('#CustomerTableBody').append('<tr id="' + Cus + '">'
                                           + '<td style="width: 25%; text-align: center;">'
-                                          + '<button type="button" class="btn btn-danger" onclick="DeleteOwner(' + Cus + ')"><i class="fa fa-times-circle"></i> حذف</button>'
+                                          + '<button type="button" class="btn btn-danger" onclick="DeleteOwner(' + Cus + ',' + Per + ')"><i class="fa fa-times-circle"></i> حذف</button>'
                                           + '</td>'
                                           + '<td style="width: 37.5%; text-align: center;">' + Per + '</td>'
                                           + '<td style="width: 37.5%; text-align: center;">' + CusName + '</td>'
@@ -89,7 +89,7 @@ function AddOwner() {
     });
 }
 
-function DeleteOwner(id) {
+function DeleteOwner(id, per) {
     $.ajax({
         url: '/Contract/DeleteOwner',
         type: 'post',
@@ -97,7 +97,7 @@ function DeleteOwner(id) {
         success: function (data) {
             $('#CustomerTableBody').find('#' + id).fadeOut(500);
             $("#resoptgrp option[value='" + id + "']").remove();
-            ValidatePercentage -= parseInt(Per);
+            ValidatePercentage -= parseInt(per);
         },
         error: function (data) {
             alert(data.responseText);
@@ -105,8 +105,43 @@ function DeleteOwner(id) {
     });
 }
 
+function CalcInstallmentAmount()
+{
+    var InstallNum = parseInt($('#INum').val());
+    if (isNaN(InstallNum)) {
+        $('#INum').val(0);
+    }
+    if (InstallNum == 0) {
+        return;
+    }
+    var Remain = parseFloat($('#cremaining').val());
+    var SingleInstallAmount = (Remain / InstallNum);
+    $('#SingleInstallVal').val(SingleInstallAmount);
+}
 
-
+function CalcRemaining() {
+    var price = parseInt($('#cprice').val());
+    var paid = parseInt($('#cpaid').val());
+    if (isNaN(paid)) {
+        paid = 0;
+        $('#cpaid').val('0');
+    }
+    if (price < paid) {
+        $.gritter.add({
+            title: '! خطأ',
+            text: ". لا يمكن ان يكون المدفوع اقل من السعر !",
+            image: '/content/images/user-icon.png',
+            class_name: 'clean',
+            time: '3000'
+        });
+        $('#cpaid').val('');
+        $('#cremaining').val('');
+        return false;
+    }
+    var Remaining = price - paid;
+    $('#cremaining').val(Remaining);
+    CalcInstallmentAmount();
+}
 
 function SubmitForm() {
     $('#ContractCreate').submit();

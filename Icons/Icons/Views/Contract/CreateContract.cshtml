@@ -34,7 +34,6 @@
                         </div>
                         <div class="step-content">
                             <form id="ContractCreate" class="form-horizontal group-border-dashed" action="#" novalidate="" parsley-validate="">
-                                <input type="hidden" id="TheUnitIDToUpdate" name="cunitid" value="" />
                                 <div class="step-pane active" id="step1">
                                     <div class="form-group no-padding">
                                         <div class="col-sm-12">
@@ -44,10 +43,9 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">المشروع</label>
                                         <div class="col-sm-6 Arabic">
-                                            <select class="select2 parsley-validated parsley-error" name="cprojectid" parsley-trigger="change" required="" parsley-error-message="يجب اختيار المشروع" onchange="GetUnits(this.value)">
+                                            <select class="select2 parsley-validated parsley-error" id="cprojectid" name="cprojectid" parsley-trigger="change" required="" parsley-error-message="يجب اختيار المشروع" onchange="GetUnits(this.value)">
                                                 <optgroup label="المشاريع">
                                                     @{
-                                                        <option value="1000000"> &nbsp </option>
                                                         foreach (Project item in ViewBag.P)
                                                         {
                                                         <option value="@item.Id">@item.ProjectName</option>
@@ -60,39 +58,28 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">الوحدة</label>
                                         <div class="col-sm-6 Arabic">
-                                            <table class="no-border">
-                                                <thead class="no-border">
-                                                    <tr>
-                                                        <th style="width: 25%; text-align: center;">اختار الوحدة</th>
-                                                        <th style="width: 25%; text-align: center;">السعر</th>
-                                                        <th style="width: 25%; text-align: center;">التشطيب</th>
-                                                        <th style="width: 25%; text-align: center;">الوحدة</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="no-border-y" id="UnitTableBody">
-                                                    <tr>
-                                                        <td colspan="4" style="text-align:center;">الرجاء اختيار المشروع ليتم تحميل وحداتة هنا</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <select class="select2 parsley-validated parsley-error" name="cunitid" parsley-trigger="change" required="" parsley-error-message="يجب اختيار الوحدة">
+                                                <optgroup label="الوحدات" id="OPTUnits">        
+                                                </optgroup>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">السعر</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="cprice" name="cprice" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال السعر" type="text" />
+                                            <input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" onkeyup="CalcRemaining()" id="cprice" name="cprice" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال السعر" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">المدفوع</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="cpaid" name="cpaid" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال المدفوع" type="text" />
+                                            <input class="form-control parsley-validated parsley-error" value="0" onkeypress="return isNumberKey(event)" onkeyup="CalcRemaining()" id="cpaid" name="cpaid" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال المدفوع" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">الباقي</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="cremaining" name="cremaining" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال المتبقي" type="text" />
+                                            <input class="form-control" readonly="" onkeypress="return isNumberKey(event)" id="cremaining" onchange="CalcInstallmentAmount()" name="cremaining" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -118,7 +105,6 @@
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">العميل</label>
                                         <div class="col-sm-6 Arabic">
                                             <select class="select2 parsley-validated parsley-error" id="customerid" name="customerid" parsley-trigger="change" required="" parsley-error-message="يجب اختيار العميل">
-                                                <option value="1000000"> &nbsp </option>
                                                 <optgroup label="العملاء">
                                                     @{
                                                         foreach (Customer item in ViewBag.C)
@@ -139,7 +125,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;"></label>
                                         <div class="col-sm-6 Arabic">
-                                            <button type="button" onclick="AddOwner()" class="btn btn-success"><i class="fa fa-check"></i> اضافة</button>
+                                            <button type="button" onclick="AddOwner()" class="btn btn-success"><i class="fa fa-check"></i>اضافة</button>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -168,30 +154,40 @@
                                 <div class="step-pane" id="step3">
                                     <div class="form-group no-padding">
                                         <div class="col-sm-12">
-                                            <h3 class="hthin" style="width: 100%; text-align: right;">القسط</h3>
+                                            <h3 class="hthin" style="width: 100%; text-align: right;">الأقساط</h3>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">المالك المسئول</label>
                                         <div class="col-sm-6 Arabic">
                                             <select class="select2 parsley-validated parsley-error" name="iresponsibleid" parsley-trigger="change" required="" parsley-error-message="يجب اختيار المالك المسئول">
-                                                <option value="1000000"> &nbsp </option>
                                                 <optgroup label="الملاك" id="resoptgrp">
-                                                        <option value=""> &nbsp </option>
                                                 </optgroup>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">تاريخ الاستحقاق</label>
+                                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">عدد الأقساط</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input style="direction: ltr;" data-mask="datetime" id="iduedate" name="iduedate" class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ الاستحقاق" size="16" value="" type="text">
+                                            <input value="0" class="form-control parsley-validated parsley-error" onkeyup="CalcInstallmentAmount()" onkeypress="return isNumberKey(event)" id="INum" name="INum" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال عدد الأقساط" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">المبلغ</label>
+                                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">قيمة كل قسط</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="iamount" name="iamount" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال المبلغ" type="text" />
+                                            <input class="form-control" readonly="" onkeypress="return isNumberKey(event)" id="SingleInstallVal" name="SingleInstallVal" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">تاريخ اول قسط</label>
+                                        <div class="col-sm-6 Arabic">
+                                            <input style="direction: ltr;" data-mask="datetime" id="IFirstDate" name="IFirstDate" class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ الاستحقاق" size="16" value="" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">فترة الدفع بالشهور</label>
+                                        <div class="col-sm-6 Arabic">
+                                            <input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="IMonthNum" name="IMonthNum" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال فتر الدفع" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group">
