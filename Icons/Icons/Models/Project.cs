@@ -17,6 +17,7 @@ namespace Icons.Models
         public Project()
         {
             this.ProjectUnits = new HashSet<ProjectUnit>();
+            this.Contracts = new HashSet<Contract>();
         }
     
         public int Id { get; set; }
@@ -35,5 +36,6 @@ namespace Icons.Models
     
         public virtual AccountingTree AccountingTree { get; set; }
         public virtual ICollection<ProjectUnit> ProjectUnits { get; set; }
+        public virtual ICollection<Contract> Contracts { get; set; }
     }
 }

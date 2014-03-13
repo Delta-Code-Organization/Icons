@@ -111,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountingController.cs" />
+    <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -125,6 +126,13 @@
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountingTreeModel.cs" />
+    <Compile Include="Models\Contract.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ContractOwner.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ContractsModel.cs" />
     <Compile Include="Models\Customer.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
@@ -172,6 +180,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Icons.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Installment.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SalaryType.cs" />
     <Compile Include="Models\SupplierInvoiceLineModel.cs" />
@@ -2058,6 +2069,7 @@
     <Content Include="Global.asax" />
     <Content Include="scripts\AccTree.js" />
     <Content Include="scripts\Benifit.js" />
+    <Content Include="scripts\Contract.js" />
     <Content Include="scripts\Customer.js" />
     <Content Include="scripts\CustomerInvoice.js" />
     <Content Include="scripts\EditCustomer.js" />
@@ -2525,6 +2537,7 @@
     <Content Include="Views\Employee\Penalties.cshtml" />
     <Content Include="Views\Employee\Benifits.cshtml" />
     <Content Include="Views\Employee\Imprests.cshtml" />
+    <Content Include="Views\Contract\CreateContract.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

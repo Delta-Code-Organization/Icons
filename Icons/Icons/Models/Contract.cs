@@ -12,26 +12,26 @@ namespace Icons.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ProjectUnit
+    public partial class Contract
     {
-        public ProjectUnit()
+        public Contract()
         {
-            this.Contracts = new HashSet<Contract>();
+            this.ContractOwners = new HashSet<ContractOwner>();
+            this.Installments = new HashSet<Installment>();
         }
     
         public int Id { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
         public Nullable<int> ProjectID { get; set; }
-        public Nullable<double> UnitSpace { get; set; }
-        public Nullable<int> UnitType { get; set; }
-        public Nullable<int> FloorNumber { get; set; }
-        public Nullable<double> ExpectedPrice { get; set; }
-        public Nullable<int> Finishing { get; set; }
+        public Nullable<double> Price { get; set; }
+        public Nullable<double> Paid { get; set; }
+        public Nullable<double> Remaining { get; set; }
+        public Nullable<int> UnitID { get; set; }
         public string Notes { get; set; }
-        public Nullable<int> Owner { get; set; }
-        public Nullable<int> AccountingID { get; set; }
     
-        public virtual AccountingTree AccountingTree { get; set; }
+        public virtual ICollection<ContractOwner> ContractOwners { get; set; }
         public virtual Project Project { get; set; }
-        public virtual ICollection<Contract> Contracts { get; set; }
+        public virtual ProjectUnit ProjectUnit { get; set; }
+        public virtual ICollection<Installment> Installments { get; set; }
     }
 }

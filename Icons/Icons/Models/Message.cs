@@ -43,6 +43,7 @@ namespace Icons.Models
         Imprest_Added_Successfully = 33,
         Penalty_Removed_Successfully = 34,
         Benifit_Removed_Successfully = 35,
-        Imprest_Removed_Successfully = 36
+        Imprest_Removed_Successfully = 36,
+        Contract_Created_Successfully = 37
     }
 }

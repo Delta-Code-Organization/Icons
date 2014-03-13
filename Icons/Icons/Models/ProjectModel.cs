@@ -34,10 +34,10 @@ namespace Icons.Models
 
         public Returner GetAll()
         {
-            return new Returner 
-            { 
+            return new Returner
+            {
                 Data = (from P in db.Projects
-                            select P).ToList()
+                        select P).ToList()
             };
         }
 
@@ -46,7 +46,7 @@ namespace Icons.Models
             var P = db.Projects.Where(p => p.Id == this.Id).SingleOrDefault();
             db.Projects.Remove(P);
             db.SaveChanges();
-            return new Returner 
+            return new Returner
             {
                 Message = Message.Project_Deleted_Successfully
             };
@@ -78,6 +78,26 @@ namespace Icons.Models
             return new Returner
             {
                 Message = Message.Project_Updated_Successfully
+            };
+        }
+
+        public Returner GetProjectUnits()
+        {
+            var ProjUnits = db.ProjectUnits.Where(p => p.ProjectID == this.Id).ToList();
+            var ProjUnitsInJSON = (from U in ProjUnits
+                                   select new
+                                   {
+                                       U.Id,
+                                       U.ExpectedPrice,
+                                       Finishing = Enum.GetName(typeof(Finishing), U.Finishing),
+                                       U.FloorNumber,
+                                       U.UnitSpace,
+                                       UnitName = Enum.GetName(typeof(UnitTypes), U.UnitType)
+                                   }).ToList();
+            return new Returner
+            {
+                Data = ProjUnits,
+                DataInJSON = ProjUnitsInJSON.ToJSON()
             };
         }
     }

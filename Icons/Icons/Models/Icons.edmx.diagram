@@ -47,6 +47,15 @@
         <AssociationConnector Association="MaksoudDBModel.FK_EmployeeBenifits_Employee" />
         <AssociationConnector Association="MaksoudDBModel.FK_EmployeeImprests_Employee" />
         <AssociationConnector Association="MaksoudDBModel.FK_EmployeePenalties_Employee" />
+        <EntityTypeShape EntityType="MaksoudDBModel.ContractOwner" Width="1.5" PointX="1.5" PointY="28.25" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Contract" Width="1.5" PointX="3.375" PointY="28.25" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Installment" Width="1.5" PointX="5.375" PointY="28.25" />
+        <AssociationConnector Association="MaksoudDBModel.FK_ContractOwners_Contracts" />
+        <AssociationConnector Association="MaksoudDBModel.FK_ContractOwners_Customers" />
+        <AssociationConnector Association="MaksoudDBModel.FK_Contracts_Projects" />
+        <AssociationConnector Association="MaksoudDBModel.FK_Contracts_ProjectUnits" />
+        <AssociationConnector Association="MaksoudDBModel.FK_Installments_Contracts" />
+        <AssociationConnector Association="MaksoudDBModel.FK_Installments_Customers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

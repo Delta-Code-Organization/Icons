@@ -17,6 +17,8 @@ namespace Icons.Models
         public Customer()
         {
             this.CustomerInvoices = new HashSet<CustomerInvoice>();
+            this.ContractOwners = new HashSet<ContractOwner>();
+            this.Installments = new HashSet<Installment>();
         }
     
         public int ID { get; set; }
@@ -27,5 +29,7 @@ namespace Icons.Models
         public string Notes { get; set; }
     
         public virtual ICollection<CustomerInvoice> CustomerInvoices { get; set; }
+        public virtual ICollection<ContractOwner> ContractOwners { get; set; }
+        public virtual ICollection<Installment> Installments { get; set; }
     }
 }

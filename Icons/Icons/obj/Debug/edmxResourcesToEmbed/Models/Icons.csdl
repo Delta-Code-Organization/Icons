@@ -115,6 +115,33 @@
       <End Role="Employee" EntitySet="Employees" />
       <End Role="EmployeePenalty" EntitySet="EmployeePenalties" />
     </AssociationSet>
+    <EntitySet Name="ContractOwners" EntityType="MaksoudDBModel.ContractOwner" />
+    <EntitySet Name="Contracts" EntityType="MaksoudDBModel.Contract" />
+    <EntitySet Name="Installments" EntityType="MaksoudDBModel.Installment" />
+    <AssociationSet Name="FK_ContractOwners_Contracts" Association="MaksoudDBModel.FK_ContractOwners_Contracts">
+      <End Role="Contract" EntitySet="Contracts" />
+      <End Role="ContractOwner" EntitySet="ContractOwners" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContractOwners_Customers" Association="MaksoudDBModel.FK_ContractOwners_Customers">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="ContractOwner" EntitySet="ContractOwners" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Contracts_Projects" Association="MaksoudDBModel.FK_Contracts_Projects">
+      <End Role="Project" EntitySet="Projects" />
+      <End Role="Contract" EntitySet="Contracts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Contracts_ProjectUnits" Association="MaksoudDBModel.FK_Contracts_ProjectUnits">
+      <End Role="ProjectUnit" EntitySet="ProjectUnits" />
+      <End Role="Contract" EntitySet="Contracts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Installments_Contracts" Association="MaksoudDBModel.FK_Installments_Contracts">
+      <End Role="Contract" EntitySet="Contracts" />
+      <End Role="Installment" EntitySet="Installments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Installments_Customers" Association="MaksoudDBModel.FK_Installments_Customers">
+      <End EntitySet="Customers" Role="Customer" />
+      <End EntitySet="Installments" Role="Installment" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="AccountingTree">
     <Key>
@@ -203,6 +230,7 @@
     <Property Name="AccountID" Type="Int32" />
     <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_Projects_AccountingTree" FromRole="Projects" ToRole="AccountingTree" />
     <NavigationProperty Name="ProjectUnits" Relationship="MaksoudDBModel.FK_ProjectUnits_Projects" FromRole="Projects" ToRole="ProjectUnits" />
+    <NavigationProperty Name="Contracts" Relationship="MaksoudDBModel.FK_Contracts_Projects" FromRole="Project" ToRole="Contract" />
   </EntityType>
   <EntityType Name="ProjectUnit">
     <Key>
@@ -220,6 +248,7 @@
     <Property Name="AccountingID" Type="Int32" />
     <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_ProjectUnits_AccountingTree" FromRole="ProjectUnits" ToRole="AccountingTree" />
     <NavigationProperty Name="Project" Relationship="MaksoudDBModel.FK_ProjectUnits_Projects" FromRole="ProjectUnits" ToRole="Projects" />
+    <NavigationProperty Name="Contracts" Relationship="MaksoudDBModel.FK_Contracts_ProjectUnits" FromRole="ProjectUnit" ToRole="Contract" />
   </EntityType>
   <EntityType Name="Screen">
     <Key>
@@ -487,6 +516,8 @@
     <Property Type="DateTime" Name="BirthDate" Precision="3" />
     <Property Type="String" Name="Notes" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="CustomerInvoices" Relationship="MaksoudDBModel.FK_CustomerInvoices_Customers" FromRole="Customer" ToRole="CustomerInvoice" />
+    <NavigationProperty Name="ContractOwners" Relationship="MaksoudDBModel.FK_ContractOwners_Customers" FromRole="Customer" ToRole="ContractOwner" />
+    <NavigationProperty Name="Installments" Relationship="MaksoudDBModel.FK_Installments_Customers" FromRole="Customer" ToRole="Installment" />
   </EntityType>
   <EntityType Name="CustomerInvoiceLine">
     <Key>
@@ -665,6 +696,119 @@
       </Principal>
       <Dependent Role="EmployeePenalty">
         <PropertyRef Name="EmpID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ContractOwner">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="ContractID" />
+    <Property Type="Int32" Name="CustomerID" />
+    <Property Type="Double" Name="Percentage" />
+    <NavigationProperty Name="Contract" Relationship="MaksoudDBModel.FK_ContractOwners_Contracts" FromRole="ContractOwner" ToRole="Contract" />
+    <NavigationProperty Name="Customer" Relationship="MaksoudDBModel.FK_ContractOwners_Customers" FromRole="ContractOwner" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Contract">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="DateTime" Name="Date" Precision="3" />
+    <Property Type="Int32" Name="ProjectID" />
+    <Property Type="Double" Name="Price" />
+    <Property Type="Double" Name="Paid" />
+    <Property Type="Double" Name="Remaining" />
+    <Property Type="Int32" Name="UnitID" />
+    <NavigationProperty Name="ContractOwners" Relationship="MaksoudDBModel.FK_ContractOwners_Contracts" FromRole="Contract" ToRole="ContractOwner" />
+    <NavigationProperty Name="Project" Relationship="MaksoudDBModel.FK_Contracts_Projects" FromRole="Contract" ToRole="Project" />
+    <NavigationProperty Name="ProjectUnit" Relationship="MaksoudDBModel.FK_Contracts_ProjectUnits" FromRole="Contract" ToRole="ProjectUnit" />
+    <NavigationProperty Name="Installments" Relationship="MaksoudDBModel.FK_Installments_Contracts" FromRole="Contract" ToRole="Installment" />
+    <Property Type="String" Name="Notes" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Installment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="ContractID" />
+    <Property Type="Int32" Name="ResponsibleID" />
+    <Property Type="DateTime" Name="DueDate" Precision="3" />
+    <Property Type="DateTime" Name="PaymentDate" Precision="3" />
+    <Property Type="Double" Name="Amount" />
+    <NavigationProperty Name="Contract" Relationship="MaksoudDBModel.FK_Installments_Contracts" FromRole="Installment" ToRole="Contract" />
+    <NavigationProperty Name="Customer" Relationship="MaksoudDBModel.FK_Installments_Customers" FromRole="Installment" ToRole="Customer" />
+  </EntityType>
+  <Association Name="FK_ContractOwners_Contracts">
+    <End Type="MaksoudDBModel.Contract" Role="Contract" Multiplicity="0..1" />
+    <End Type="MaksoudDBModel.ContractOwner" Role="ContractOwner" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contract">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ContractOwner">
+        <PropertyRef Name="ContractID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContractOwners_Customers">
+    <End Type="MaksoudDBModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="MaksoudDBModel.ContractOwner" Role="ContractOwner" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ContractOwner">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Contracts_Projects">
+    <End Type="MaksoudDBModel.Project" Role="Project" Multiplicity="0..1" />
+    <End Type="MaksoudDBModel.Contract" Role="Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Contract">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Contracts_ProjectUnits">
+    <End Type="MaksoudDBModel.ProjectUnit" Role="ProjectUnit" Multiplicity="0..1" />
+    <End Type="MaksoudDBModel.Contract" Role="Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUnit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Contract">
+        <PropertyRef Name="UnitID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Installments_Contracts">
+    <End Type="MaksoudDBModel.Contract" Role="Contract" Multiplicity="0..1" />
+    <End Type="MaksoudDBModel.Installment" Role="Installment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contract">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Installment">
+        <PropertyRef Name="ContractID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Installments_Customers">
+    <End Type="MaksoudDBModel.Customer" Multiplicity="0..1" Role="Customer" />
+    <End Type="MaksoudDBModel.Installment" Multiplicity="*" Role="Installment" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Installment">
+        <PropertyRef Name="ResponsibleID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

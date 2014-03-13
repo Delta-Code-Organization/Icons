@@ -43,5 +43,8 @@ namespace Icons.Models
         public DbSet<EmployeeBenifit> EmployeeBenifits { get; set; }
         public DbSet<EmployeeImprest> EmployeeImprests { get; set; }
         public DbSet<EmployeePenalty> EmployeePenalties { get; set; }
+        public DbSet<ContractOwner> ContractOwners { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<Installment> Installments { get; set; }
     }
 }
