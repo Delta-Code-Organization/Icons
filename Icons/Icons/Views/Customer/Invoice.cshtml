@@ -97,7 +97,7 @@
                                 <input type="number" value="00000" onkeypress="return isNumberKey(event)" class="form-control" id="qty"></td>
                             <td>
                                 <input type="number" value="00000" onkeypress="return isNumberKey(event)" class="form-control" id="price"></td>
-                            <td> 
+                            <td>
                                 <input type="number" value="00000" onkeypress="return isNumberKey(event)" class="form-control" id="total"></td>
                             <td>
                                 <button class="btn btn-default Arabic" onclick="AddInvoiceLine()">اضافة</button></td>
@@ -128,12 +128,25 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="Arabic">الى حساب</label>
+                        <label class="Arabic">المشروع</label>
                         <select class="select2" name="acc" id="acc">
-                            <optgroup label="Alaskan/Hawaiian Time Zone">
-                                <option value="AK">Alaska TTTTTTTTTTTTTTTTTTTTTT</option>
-                                <option value="HI">Hawaii</option>
-                            </optgroup>
+                            @{
+                                foreach (Project item in ViewBag.Proj)
+                                {
+                                <option value="@item.Id">@item.ProjectName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">الي حساب</label>
+                        <select class="select2" name="acc" id="toacc">
+                            @{
+                                foreach (AccountingTree item in ViewBag.AccTree)
+                                {
+                                <option value="@item.Id">@item.NodeName</option>
+                                }
+                            }
                         </select>
                     </div>
                     <div class="form-group">

@@ -165,6 +165,7 @@
     <Compile Include="Models\FinancialTransaction.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FinancialTransactionsModel.cs" />
     <Compile Include="Models\Finishing.cs" />
     <Compile Include="Models\Icons.Context.cs">
       <AutoGen>True</AutoGen>
@@ -184,33 +185,30 @@
     <Compile Include="Models\Installment.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SalaryType.cs" />
-    <Compile Include="Models\SupplierInvoiceLineModel.cs" />
-    <Compile Include="Models\SupplierInvoiceModel.cs" />
-    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Product.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductCategory.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProductCategoryModel.cs" />
-    <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\Project.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\ProjectUnit.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProjectUnitsModel.cs" />
-    <Compile Include="Models\PurchaseUnit.cs" />
-    <Compile Include="Models\Returner.cs" />
-    <Compile Include="Models\SalesUnit.cs" />
+    <Compile Include="Models\SalaryType.cs" />
     <Compile Include="Models\Screen.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ScreenModel.cs" />
+    <Compile Include="Models\Stock.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StockModel.cs" />
+    <Compile Include="Models\StockTransaction.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StockTransactionsTypes.cs" />
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
@@ -220,6 +218,17 @@
     <Compile Include="Models\SupplierInvoiceLine.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SupplierInvoiceLineModel.cs" />
+    <Compile Include="Models\SupplierInvoiceModel.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\ProductCategoryModel.cs" />
+    <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\ProjectModel.cs" />
+    <Compile Include="Models\ProjectUnitsModel.cs" />
+    <Compile Include="Models\PurchaseUnit.cs" />
+    <Compile Include="Models\Returner.cs" />
+    <Compile Include="Models\SalesUnit.cs" />
+    <Compile Include="Models\ScreenModel.cs" />
     <Compile Include="Models\SupplierModel.cs" />
     <Compile Include="Models\SystemEnums.cs" />
     <Compile Include="Models\UnitTypes.cs" />
@@ -2078,8 +2087,10 @@
     <Content Include="scripts\Penalty.js" />
     <Content Include="scripts\Product.js" />
     <Content Include="scripts\Project.js" />
+    <Content Include="scripts\SearchInvoices.js" />
     <Content Include="scripts\Supplier.js" />
     <Content Include="scripts\SupplierInvoice.js" />
+    <Content Include="scripts\SupplierInvoiceSearch.js" />
     <Content Include="scripts\User.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -2538,6 +2549,10 @@
     <Content Include="Views\Employee\Benifits.cshtml" />
     <Content Include="Views\Employee\Imprests.cshtml" />
     <Content Include="Views\Contract\CreateContract.cshtml" />
+    <Content Include="Views\Contract\SearchInstallments.cshtml" />
+    <Content Include="Views\Customer\SearchInvoices.cshtml" />
+    <Content Include="Views\Supplier\SearchInvoices.cshtml" />
+    <Content Include="Views\Employee\Payroll.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

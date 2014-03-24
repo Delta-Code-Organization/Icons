@@ -26,25 +26,27 @@ namespace Icons.Models
         }
     
         public DbSet<AccountingTree> AccountingTrees { get; set; }
+        public DbSet<ContractOwner> ContractOwners { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<CustomerInvoiceLine> CustomerInvoiceLines { get; set; }
+        public DbSet<CustomerInvoice> CustomerInvoices { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeeBenifit> EmployeeBenifits { get; set; }
+        public DbSet<EmployeeImprest> EmployeeImprests { get; set; }
+        public DbSet<EmployeePenalty> EmployeePenalties { get; set; }
         public DbSet<FinancialTransaction> FinancialTransactions { get; set; }
+        public DbSet<Installment> Installments { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectUnit> ProjectUnits { get; set; }
         public DbSet<Screen> Screens { get; set; }
+        public DbSet<Stock> Stocks { get; set; }
+        public DbSet<StockTransaction> StockTransactions { get; set; }
         public DbSet<SupplierInvoiceLine> SupplierInvoiceLines { get; set; }
         public DbSet<SupplierInvoice> SupplierInvoices { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<CustomerInvoiceLine> CustomerInvoiceLines { get; set; }
-        public DbSet<CustomerInvoice> CustomerInvoices { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<EmployeeBenifit> EmployeeBenifits { get; set; }
-        public DbSet<EmployeeImprest> EmployeeImprests { get; set; }
-        public DbSet<EmployeePenalty> EmployeePenalties { get; set; }
-        public DbSet<ContractOwner> ContractOwners { get; set; }
-        public DbSet<Contract> Contracts { get; set; }
-        public DbSet<Installment> Installments { get; set; }
     }
 }

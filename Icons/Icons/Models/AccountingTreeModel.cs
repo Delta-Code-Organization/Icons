@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Icons.Models
 {
-     [Serializable]
+    [Serializable]
     public class TreeNode
     {
         int _id;
@@ -36,8 +36,8 @@ namespace Icons.Models
         #region Context
         MaksoudDBEntities db = new MaksoudDBEntities();
         #endregion
-        public bool UpdateTree(List<TreeNode> _Tree,TreeNode Parent = null)
-        { 
+        public bool UpdateTree(List<TreeNode> _Tree, TreeNode Parent = null)
+        {
             foreach (TreeNode node in _Tree)
             {
                 AccountingTree CurrentNode = db.AccountingTrees.Where(p => p.Id == node.id).FirstOrDefault();
@@ -53,7 +53,7 @@ namespace Icons.Models
                     CurrentNode.Parent = null;
                 db.SaveChanges();
                 if (node.children.Any())
-                    UpdateTree(node.children,node);
+                    UpdateTree(node.children, node);
             }
             return true;
         }
@@ -71,6 +71,15 @@ namespace Icons.Models
                 db.SaveChanges();
             }
             return true;
-        }  
+        }
+
+        public Returner GetAllAccounts()
+        {
+            return new Returner
+            {
+                Data = (from A in db.AccountingTrees
+                        select A).ToList()
+            };
+        }
     }
 }

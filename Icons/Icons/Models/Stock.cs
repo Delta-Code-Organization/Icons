@@ -12,26 +12,20 @@ namespace Icons.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ProjectUnit
+    public partial class Stock
     {
-        public ProjectUnit()
+        public Stock()
         {
-            this.Contracts = new HashSet<Contract>();
+            this.StockTransactions = new HashSet<StockTransaction>();
         }
     
         public int Id { get; set; }
         public Nullable<int> ProjectID { get; set; }
-        public Nullable<double> UnitSpace { get; set; }
-        public Nullable<int> UnitType { get; set; }
-        public Nullable<int> FloorNumber { get; set; }
-        public Nullable<double> ExpectedPrice { get; set; }
-        public Nullable<int> Finishing { get; set; }
-        public string Notes { get; set; }
-        public Nullable<int> Owner { get; set; }
-        public Nullable<int> AccountingID { get; set; }
+        public Nullable<int> ProductID { get; set; }
+        public Nullable<double> Quantity { get; set; }
     
-        public virtual AccountingTree AccountingTree { get; set; }
-        public virtual ICollection<Contract> Contracts { get; set; }
+        public virtual Product Product { get; set; }
         public virtual Project Project { get; set; }
+        public virtual ICollection<StockTransaction> StockTransactions { get; set; }
     }
 }

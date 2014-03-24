@@ -21,6 +21,8 @@ namespace Icons.Models
                     Message = Message.Customer_Name_Already_Exist
                 };
             }
+            int AccID = AddCustomerNode();
+            this.AccountID = AccID;
             db.Customers.Add(this);
             db.SaveChanges();
             var lastCustomer = db.Customers.OrderByDescending(p => p.ID).FirstOrDefault();
@@ -40,6 +42,7 @@ namespace Icons.Models
             update.Phone = this.Phone;
             update.BirthDate = this.BirthDate;
             update.Notes = this.Notes;
+            UpdateCustomerNode((int)update.AccountID);
             db.SaveChanges();
             return new Returner
             {
@@ -50,6 +53,7 @@ namespace Icons.Models
         public Returner DeleteCusotmer()
         {
             var delete = db.Customers.Where(p => p.ID == this.ID).ToList().SingleOrDefault();
+            DeleteCustomerNode((int)delete.AccountID);
             db.Customers.Remove(delete);
             db.SaveChanges();
             return new Returner
@@ -77,5 +81,32 @@ namespace Icons.Models
                 DataInJSON = getCustomerData.ToJSON()
             };
         }
+
+        #region PrivateMethods
+        public int AddCustomerNode()
+        {
+            int ParentID = db.AccountingTrees.Where(p => p.KeyAccountID == (int)KeyAccounts.Customers).SingleOrDefault().Id;
+            AccountingTree Node = new AccountingTree();
+            Node.NodeName = this.Name;
+            Node.Parent = ParentID;
+            db.AccountingTrees.Add(Node);
+            db.SaveChanges();
+            return Node.Id;
+        }
+
+        public void UpdateCustomerNode(int AccID)
+        {
+            var AccToEdit = db.AccountingTrees.Where(p => p.Id == AccID).SingleOrDefault();
+            AccToEdit.NodeName = this.Name;
+            db.SaveChanges();
+        }
+
+        public void DeleteCustomerNode(int AccID)
+        {
+            var AccToDelete = db.AccountingTrees.Where(p => p.Id == AccID).SingleOrDefault();
+            db.AccountingTrees.Remove(AccToDelete);
+            db.SaveChanges();
+        }
+        #endregion
     }
 }

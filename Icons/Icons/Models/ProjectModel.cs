@@ -26,6 +26,10 @@ namespace Icons.Models
             this.AccountID = AccID.Id;
             db.Projects.Add(this);
             db.SaveChanges();
+            new Stock
+            {
+                ProjectID = this.Id
+            }.NewProject();
             return new Returner
             {
                 Message = Message.Project_Created_Successfully

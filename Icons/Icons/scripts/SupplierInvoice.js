@@ -1,36 +1,27 @@
 ﻿var Total = 0;
 var Discount = 0;
+var counter = 958935;
 
 function AddInvoiceLine() {
     var Prod = $('#prod').val();
+    var Prodname = $("#prod option:selected").text();
     var Qty = $('#qty').val();
     var Price = $('#price').val();
     var ttotal = $('#total').val();
-    var data = { 'Prod': Prod, 'Qty': Qty, 'Price': Price, 'Total': ttotal };
-    $.ajax({
-        url: '/Supplier/AddInvoiceLine',
-        type: 'post',
-        data: data,
-        success: function (data) {
-            $('#ProdEle').append('<tr id="' + data.Id + '">'
-                            + '<td style="width: 30%;">' + data.Product.ProductName + '</td>'
-                            + '<td>' + data.Qty + '</td>'
-                            + '<td class="text-right">' + data.Price + '</td>'
-                            + ' <td class="text-right" id="total' + data.Id + '">' + data.Total + '</td>'
-                            + '<td>'
-                            + '<button class="btn btn-danger Arabic" onclick="RemoveInvoiceLine(' + data.Id + ')">حذف</button></td>'
-                        + '</tr>');
-            Total += parseFloat(data.Total);
-            UpdateTotal();
-        },
-        error: function (data) {
-            alert(data.responseText);
-        }
-    });
+    $('#ProdEle').append('<tr id="' + counter + '">'
+                    + '<td style="width: 30%;" id="lineprodname" prodidattr="' + Prod + '">' + Prodname + '</td>'
+                    + '<td id="lineqty">' + Qty + '</td>'
+                    + '<td class="text-right" id="lineprice">' + Price + '</td>'
+                    + ' <td class="text-right" id="total' + counter + '">' + ttotal + '</td>'
+                    + '<td>'
+                    + '<button class="btn btn-danger Arabic" onclick="RemoveInvoiceLine(' + counter + ')">حذف</button></td>'
+                + '</tr>');
+    Total += parseFloat(ttotal);
+    UpdateTotal();
+    counter++;
 }
 
-function UpdateTotal()
-{
+function UpdateTotal() {
     if (Total == 0) {
         Discount = 0;
         $('#DiscountOfDiscount').text("0");
@@ -40,8 +31,7 @@ function UpdateTotal()
     UpdateNet();
 }
 
-function SetDiscount()
-{
+function SetDiscount() {
     if ($('#Dis').val() == "" || $('#Dis').val() == '0') {
         Discount = 0;
         UpdateDiscount();
@@ -62,54 +52,50 @@ function SetDiscount()
     }
 }
 
-function UpdateDiscount()
-{
+function UpdateDiscount() {
     $('#DiscountOfDiscount').text(Discount);
     UpdateNet();
 }
- 
-function UpdateNet()
-{
+
+function UpdateNet() {
     var Net = Total - Discount;
     $('#NetOfNet').text(Net);
 }
 
 function RemoveInvoiceLine(id) {
-    $.ajax({
-        url: '/Supplier/RemoveInvoiceLine',
-        type: 'post',
-        data: { 'id': id },
-        success: function (data) {
-            $('#' + id).slideToggle(500);
-            setTimeout(function () {
-                $('#' + id).remove();
-            }, 500);
-            $('#qty').val('');
-            $('#price').val('');
-            $('#total').val('');
-            var totalToRemove = parseFloat($('#' + id).find('#total' + id).text());
-            Total -= totalToRemove;
-            UpdateTotal();
-        },
-        error: function (data) {
-            alert(data.responseText);
-        }
-    });
+    $('#' + id).slideToggle(500);
+    setTimeout(function () {
+        $('#' + id).remove();
+    }, 500);
+    $('#qty').val('');
+    $('#price').val('');
+    $('#total').val('');
+    var totalToRemove = parseFloat($('#' + id).find('#total' + id).text());
+    Total -= totalToRemove;
+    UpdateTotal();
 }
 
-function AddFullInvoice()
-{
+function AddFullInvoice() {
+    var InvoiceLines = "";
     var ISup = $('#sup').val();
     var IDate = $('#invoicedate').val();
     var IRef = $('#invoiceref').val();
     var IDis = $('#Dis').val();
     var ITotal = Total;
     var INet = $('#NetOfNet').text();
+    var proj = $('#acc').val();
+    var ToAcc = $('#toacc').val();
     var LineIds = "";
     $('#EleTbl > tbody  > tr').each(function (index, ele) {
-        LineIds += $(ele).attr('id') + ",";
+        if (index != 0) {
+            var EleID = $(ele).attr('id');
+            InvoiceLines += $(ele).find('#lineprodname').attr('prodidattr') + ",";
+            InvoiceLines += $(ele).find('#lineqty').text() + ",";
+            InvoiceLines += $(ele).find('#lineprice').text() + ",";
+            InvoiceLines += $(ele).find('#total' + EleID).text() + ",";
+        }
     });
-    var data = { 'ISup': ISup, 'IDate': IDate, 'IRef': IRef, 'IDis': IDis, 'ITotal': ITotal, 'INet': INet, 'LineIds': LineIds };
+    var data = { 'ISup': ISup, 'IDate': IDate, 'projId': proj, 'IRef': IRef, 'IDis': IDis, 'ITotal': ITotal, 'INet': INet, 'LineIds': InvoiceLines, 'ToAcc': ToAcc };
     $.ajax({
         url: '/Supplier/AddFullInvoice',
         type: 'post',

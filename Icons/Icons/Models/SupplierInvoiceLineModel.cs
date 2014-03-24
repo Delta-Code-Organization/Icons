@@ -48,5 +48,14 @@ namespace Icons.Models
                 Message = Message.Invoice_Line_Removed_Successfully
             };
         }
+
+        public Returner GetByInvoiceID()
+        {
+            var Lines = db.SupplierInvoiceLines.Where(p => p.InvoiceId == this.InvoiceId).ToList();
+            return new Returner
+            {
+                Data = Lines
+            };
+        }
     }
 }

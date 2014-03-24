@@ -81,6 +81,9 @@ namespace Icons.Controllers
             ViewBag.S = LOS;
             List<Product> LOP = new Product().GetAll().Data as List<Product>;
             ViewBag.P = LOP;
+            List<Project> LOProj = new Project().GetAll().Data as List<Project>;
+            ViewBag.Proj = LOProj;
+            ViewBag.AccTree = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
             return View();
         }
 
@@ -110,27 +113,56 @@ namespace Icons.Controllers
         }
 
         [HttpPost]
-        public string AddFullInvoice(int ISup, DateTime IDate, double IDis, double ITotal, double INet, string LineIds)
+        public string AddFullInvoice(int ISup, DateTime IDate, int ToAcc, int projId, double IDis, double ITotal, double INet, string LineIds)
         {
             CustomerInvoice SI = new CustomerInvoice();
             SI.Departed = false;
             SI.InvoiceDate = IDate;
             SI.InvoiceDiscount = IDis;
             SI.InvoiceNet = INet;
+            SI.InvoiceAccount = ToAcc;
             SI.InvoiceTotal = ITotal;
             SI.LastEditBy = (Session["User"] as User).ID;
             SI.CustomerID = ISup;
+            SI.ProjectID = projId;
             string[] LOSIL = LineIds.Split(',');
-            List<string> LOSILToSend = new List<string>();
-            foreach (string item in LOSIL)
+            List<string> AIL = new List<string>(LOSIL);
+            AIL.Remove("");
+            List<CustomerInvoiceLine> LOCILTS = new List<CustomerInvoiceLine>();
+            int Skip = 0;
+            int ObjectsCount = AIL.Count / 4;
+            for (int i = 1; i <= ObjectsCount; i++)
             {
-                if (item != "0" && item != "" && item != null)
-                {
-                    LOSILToSend.Add(item);
-                }
+                List<string> CurrentObject = new List<string>();
+                CurrentObject = AIL.Skip(Skip).Take(4).ToList();
+                CustomerInvoiceLine CILTS = new CustomerInvoiceLine();
+                CILTS.ProductId = Convert.ToInt32(CurrentObject[0]);
+                CILTS.Qty = Convert.ToDouble(CurrentObject[1]);
+                CILTS.Price = Convert.ToDouble(CurrentObject[2]);
+                CILTS.Total = Convert.ToDouble(CurrentObject[3]);
+                LOCILTS.Add(CILTS);
+                Skip += 4;
             }
-            SI.Add(LOSILToSend);
+            SI.Add(LOCILTS);
             return "true";
+        }
+
+        public ActionResult SearchInvoices()
+        {
+            ViewBag.I = new CustomerInvoice().GetAllInvoices().Data as List<CustomerInvoice>;
+            return View();
+        }
+
+        [HttpPost]
+        public void DeleteInvoice(int id)
+        {
+            new CustomerInvoice { Id = id }.DeleteInvoice();
+        }
+
+        [HttpPost]
+        public void Depart(int id)
+        {
+            new CustomerInvoice { Id = id }.Depart((Session["User"] as User).ID);
         }
     }
 }

@@ -11,18 +11,18 @@ namespace Icons.Models
         MaksoudDBEntities db = new MaksoudDBEntities();
         #endregion    
 
-        public Returner Add(List<string> LOSIL)
+        public Returner Add(List<SupplierInvoiceLine> LOSIL)
         {
             db.SupplierInvoices.Add(this);
             db.SaveChanges();
-            foreach (string item in LOSIL)
+            foreach (SupplierInvoiceLine item in LOSIL)
             {
-                int CurrentID = Convert.ToInt32(item);
-                var SSS = db.SupplierInvoiceLines.Where(p => p.Id == CurrentID).SingleOrDefault();
-                SSS.InvoiceId = this.Id;
+                item.InvoiceId = this.Id;
+                db.SupplierInvoiceLines.Add(item);
                 db.SaveChanges();
             }
-            return new Returner 
+            new Stock().Purchases(this.Id);
+            return new Returner
             {
                 Message = Message.Invoice_Added_Successfully
             };
@@ -30,10 +30,61 @@ namespace Icons.Models
 
         public Returner InvoiceNumber()
         {
-            int MaxID = db.SupplierInvoices.Max(p => p.Id);
+            int InvoicesCount = (from SI in db.SupplierInvoices
+                                 select SI).ToList().Count;
+            int MaxID;
+            if (InvoicesCount != 0)
+            {
+                MaxID = db.SupplierInvoices.Max(p => p.Id);
+            }
+            else
+            {
+                MaxID = 0;
+            }
             return new Returner
             {
                 Data = MaxID
+            };
+        }
+
+        public Returner GetAllInvoices()
+        {
+            return new Returner
+            {
+                Data = (from I in db.SupplierInvoices
+                            select I).ToList()
+            };
+        }
+
+        public Returner DeleteInvoice()
+        {
+            var ITD = db.SupplierInvoices.Single(p => p.Id == this.Id);
+            db.SupplierInvoices.Remove(ITD);
+            db.SaveChanges();
+            return new Returner
+            {
+                Message = Message.Invoice_Deleted_Successfully
+            };
+        }
+
+        public Returner Depart(int EditBy)
+        {
+            var ITD = db.SupplierInvoices.Where(p => p.Id == this.Id).SingleOrDefault();
+            ITD.Departed = true;
+            db.SaveChanges();
+            FinancialTransaction Ft = new FinancialTransaction();
+            Ft.Amount = ITD.InvoiceNet;
+            Ft.FromAccount = ITD.InvoiceAccount;
+            Ft.LastEditBy = EditBy;
+            Ft.Notes = "";
+            Ft.Statement = "ترحيل فاتورة بيع";
+            Ft.ToAccount = ITD.Supplier.AccountingID;
+            Ft.TransactionDate = DateTime.Now;
+            db.FinancialTransactions.Add(Ft);
+            db.SaveChanges();
+            return new Returner
+            {
+                Message = Message.Invoice_Departed_Successfully
             };
         }
     }

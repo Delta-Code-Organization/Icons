@@ -33,6 +33,10 @@ namespace Icons.Models
             this.AccountID = AccID.Id;
             db.Products.Add(this);
             db.SaveChanges();
+            new Stock
+            {
+                ProductID = this.Id
+            }.NewProduct();
             return new Returner
             {
                 Message = Message.Product_Created_Successfully

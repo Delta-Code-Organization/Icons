@@ -109,28 +109,30 @@ namespace Icons.Controllers
             string[] SalaryTypes = Enum.GetNames(typeof(SalaryType));
             ViewBag.ST = SalaryTypes;
             ViewBag.E = new Employee { Id = (int)id }.GetByID().Data as Employee;
-            ViewBag.AllP = new EmployeePenalty { EmpID = (int)id }.GetAll().Data as List<EmployeePenalty>;
+            ViewBag.AllP = new Employee { Id = (int)id }.GetPenalties().Data as List<FinancialTransaction>;
+            ViewBag.AllAcc = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
             TempData["EmpID"] = (int)id;
             TempData.Keep();
             return View();
         }
 
         [HttpPost]
-        public JsonResult AddPenalty(FormCollection FC)
+        public void AddPenalty(FormCollection FC)
         {
-            EmployeePenalty EP = new EmployeePenalty();
-            EP.Date = DateTime.Now;
-            EP.EmpID = (int)TempData["EmpID"];
-            EP.Penalty = Convert.ToDouble(FC["penalty"]);
+            Employee E = new Employee { Id = (int)TempData["EmpID"] };
+            FinancialTransaction FT = new FinancialTransaction();
+            FT.Amount = Convert.ToDouble(FC["penalty"]);
+            FT.FromAccount = Convert.ToInt32(FC["ToAcc"]);
+            FT.LastEditBy = (Session["User"] as User).ID;
+            FT.Notes = FC["Notes"];
+            E.AddPenalty(FT);
             TempData.Keep();
-            return EP.Add().DataInJSON;
         }
 
         public string RemovePenalty(int id)
         {
-            EmployeePenalty EP = new EmployeePenalty();
-            EP.Id = id;
-            EP.Remove();
+            Employee E = new Employee();
+            E.RemovePenalty(id);
             return "true";
         }
 
@@ -150,27 +152,30 @@ namespace Icons.Controllers
             string[] SalaryTypes = Enum.GetNames(typeof(SalaryType));
             ViewBag.ST = SalaryTypes;
             ViewBag.E = new Employee { Id = (int)id }.GetByID().Data as Employee;
-            ViewBag.AllP = new EmployeeBenifit { EmpID = (int)id }.GetAll().Data as List<EmployeeBenifit>;
+            ViewBag.AllP = new Employee { Id = (int)id }.GetBenifits().Data as List<FinancialTransaction>;
+            ViewBag.AllAcc = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
             TempData["EmpID"] = (int)id;
             TempData.Keep();
             return View();
         }
 
         [HttpPost]
-        public JsonResult AddBenifit(FormCollection FC)
+        public void AddBenifit(FormCollection FC)
         {
-            EmployeeBenifit EP = new EmployeeBenifit();
-            EP.Date = DateTime.Now;
-            EP.EmpID = (int)TempData["EmpID"];
-            EP.Benifit = Convert.ToDouble(FC["benifit"]);
-            return EP.Add().DataInJSON;
+            Employee E = new Employee { Id = (int)TempData["EmpID"] };
+            FinancialTransaction FT = new FinancialTransaction();
+            FT.Amount = Convert.ToDouble(FC["benifit"]);
+            FT.ToAccount = Convert.ToInt32(FC["FromAcc"]);
+            FT.LastEditBy = (Session["User"] as User).ID;
+            FT.Notes = FC["Notes"];
+            E.AddBenifit(FT);
+            TempData.Keep();
         }
 
         public string RemoveBenifit(int id)
         {
-            EmployeeBenifit EP = new EmployeeBenifit();
-            EP.Id = id;
-            EP.Remove();
+            Employee E = new Employee();
+            E.RemoveBenifit(id);
             return "true";
         }
 
@@ -190,28 +195,42 @@ namespace Icons.Controllers
             string[] SalaryTypes = Enum.GetNames(typeof(SalaryType));
             ViewBag.ST = SalaryTypes;
             ViewBag.E = new Employee { Id = (int)id }.GetByID().Data as Employee;
-            ViewBag.AllP = new EmployeeImprest { EmpID = (int)id }.GetAll().Data as List<EmployeeImprest>;
+            ViewBag.AllP = new Employee { Id = (int)id }.GetImprests().Data as List<FinancialTransaction>;
+            ViewBag.AllAcc = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
             TempData["EmpID"] = (int)id;
             TempData.Keep();
             return View();
         }
 
         [HttpPost]
-        public JsonResult AddImprest(FormCollection FC)
+        public void AddImprest(FormCollection FC)
         {
-            EmployeeImprest EP = new EmployeeImprest();
-            EP.Date = DateTime.Now;
-            EP.EmpID = (int)TempData["EmpID"];
-            EP.Imprest = Convert.ToDouble(FC["imprest"]);
-            return EP.Add().DataInJSON;
+            Employee E = new Employee { Id = (int)TempData["EmpID"] };
+            FinancialTransaction FT = new FinancialTransaction();
+            FT.Amount = Convert.ToDouble(FC["imprest"]);
+            FT.ToAccount = Convert.ToInt32(FC["FromAcc"]);
+            FT.LastEditBy = (Session["User"] as User).ID;
+            FT.Notes = FC["Notes"];
+            E.AddImprest(FT);
+            TempData.Keep();
         }
 
         public string RemoveImprest(int id)
         {
-            EmployeeImprest EP = new EmployeeImprest();
-            EP.Id = id;
-            EP.Remove();
+            Employee E = new Employee();
+            E.RemoveImprest(id);
             return "true";
+        }
+
+        public ActionResult Payroll()
+        {
+            ViewBag.E = new Employee().GetAll().Data as List<Employee>;
+            return View();
+        }
+
+        public void Pay(int id, double Total)
+        {
+            new Employee { Id = id }.Pay(Total, (Session["User"] as User).ID);
         }
     }
 }

@@ -28,7 +28,8 @@ namespace Icons.Models
                                              IL.Total,
                                              Product = new
                                              {
-                                                 IL.Product.ProductName
+                                                 IL.Product.ProductName,
+                                                 IL.Product.Id
                                              }
                                          }).ToList().SingleOrDefault();
             return new Returner
@@ -46,6 +47,15 @@ namespace Icons.Models
             return new Returner
             {
                 Message = Message.Invoice_Line_Removed_Successfully
+            };
+        }
+
+        public Returner GetByInvoiceID()
+        {
+            var Lines = db.CustomerInvoiceLines.Where(p => p.InvoiceId == this.InvoiceId).ToList();
+            return new Returner
+            {
+                Data = Lines
             };
         }
     }

@@ -29,8 +29,10 @@ namespace Icons.Models
         public Nullable<double> InvoiceNet { get; set; }
         public Nullable<bool> Departed { get; set; }
         public Nullable<int> LastEditBy { get; set; }
+        public Nullable<int> ProjectID { get; set; }
     
         public virtual FinancialTransaction FinancialTransaction { get; set; }
+        public virtual Project Project { get; set; }
         public virtual ICollection<SupplierInvoiceLine> SupplierInvoiceLines { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual User User { get; set; }

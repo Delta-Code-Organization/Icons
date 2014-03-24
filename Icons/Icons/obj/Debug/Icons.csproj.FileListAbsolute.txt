@@ -137,3 +137,4 @@ A:\Projects\Delta Code\Al Maksoud\trunk\Icons\Icons\bin\System.Web.WebPages.Depl
 A:\Projects\Delta Code\Al Maksoud\trunk\Icons\Icons\bin\System.Web.WebPages.Razor.xml
 A:\Projects\Delta Code\Al Maksoud\trunk\Icons\Icons\obj\Debug\Icons.dll
 A:\Projects\Delta Code\Al Maksoud\trunk\Icons\Icons\obj\Debug\Icons.pdb
+A:\Projects\Delta Code\Al Maksoud\trunk\Icons\Icons\obj\Debug\Icons.csprojResolveAssemblyReference.cache

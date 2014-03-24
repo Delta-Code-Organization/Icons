@@ -16,8 +16,10 @@ namespace Icons.Models
     {
         public Product()
         {
-            this.SupplierInvoiceLines = new HashSet<SupplierInvoiceLine>();
             this.CustomerInvoiceLines = new HashSet<CustomerInvoiceLine>();
+            this.SupplierInvoiceLines = new HashSet<SupplierInvoiceLine>();
+            this.Stocks = new HashSet<Stock>();
+            this.StockTransactions = new HashSet<StockTransaction>();
         }
     
         public int Id { get; set; }
@@ -30,8 +32,10 @@ namespace Icons.Models
         public Nullable<int> AccountID { get; set; }
     
         public virtual AccountingTree AccountingTree { get; set; }
+        public virtual ICollection<CustomerInvoiceLine> CustomerInvoiceLines { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
         public virtual ICollection<SupplierInvoiceLine> SupplierInvoiceLines { get; set; }
-        public virtual ICollection<CustomerInvoiceLine> CustomerInvoiceLines { get; set; }
+        public virtual ICollection<Stock> Stocks { get; set; }
+        public virtual ICollection<StockTransaction> StockTransactions { get; set; }
     }
 }

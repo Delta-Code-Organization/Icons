@@ -18,6 +18,8 @@
     <EntitySet Name="Projects" EntityType="MaksoudDBModel.Store.Projects" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUnits" EntityType="MaksoudDBModel.Store.ProjectUnits" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Screens" EntityType="MaksoudDBModel.Store.Screens" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Stock" EntityType="MaksoudDBModel.Store.Stock" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StockTransactions" EntityType="MaksoudDBModel.Store.StockTransactions" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SupplierInvoiceLines" EntityType="MaksoudDBModel.Store.SupplierInvoiceLines" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SupplierInvoices" EntityType="MaksoudDBModel.Store.SupplierInvoices" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Suppliers" EntityType="MaksoudDBModel.Store.Suppliers" store:Type="Tables" Schema="dbo" />
@@ -59,9 +61,17 @@
       <End Role="Customers" EntitySet="Customers" />
       <End Role="CustomerInvoices" EntitySet="CustomerInvoices" />
     </AssociationSet>
+    <AssociationSet Name="FK_CustomerInvoices_Projects" Association="MaksoudDBModel.Store.FK_CustomerInvoices_Projects">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="CustomerInvoices" EntitySet="CustomerInvoices" />
+    </AssociationSet>
     <AssociationSet Name="FK_CustomerInvoices_Users" Association="MaksoudDBModel.Store.FK_CustomerInvoices_Users">
       <End Role="Users" EntitySet="Users" />
       <End Role="CustomerInvoices" EntitySet="CustomerInvoices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customers_AccountingTree" Association="MaksoudDBModel.Store.FK_Customers_AccountingTree">
+      <End Role="AccountingTree" EntitySet="AccountingTree" />
+      <End Role="Customers" EntitySet="Customers" />
     </AssociationSet>
     <AssociationSet Name="FK_EmployeeBenifits_Employee" Association="MaksoudDBModel.Store.FK_EmployeeBenifits_Employee">
       <End Role="Employee" EntitySet="Employee" />
@@ -123,8 +133,28 @@
       <End Role="Projects" EntitySet="Projects" />
       <End Role="ProjectUnits" EntitySet="ProjectUnits" />
     </AssociationSet>
+    <AssociationSet Name="FK_Stock_Products" Association="MaksoudDBModel.Store.FK_Stock_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Stock" EntitySet="Stock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stock_Projects" Association="MaksoudDBModel.Store.FK_Stock_Projects">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="Stock" EntitySet="Stock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockTransactions_Products" Association="MaksoudDBModel.Store.FK_StockTransactions_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="StockTransactions" EntitySet="StockTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockTransactions_Stock" Association="MaksoudDBModel.Store.FK_StockTransactions_Stock">
+      <End Role="Stock" EntitySet="Stock" />
+      <End Role="StockTransactions" EntitySet="StockTransactions" />
+    </AssociationSet>
     <AssociationSet Name="FK_SupplierInvoices_FinancialTransactions" Association="MaksoudDBModel.Store.FK_SupplierInvoices_FinancialTransactions">
       <End Role="FinancialTransactions" EntitySet="FinancialTransactions" />
+      <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SupplierInvoices_Projects" Association="MaksoudDBModel.Store.FK_SupplierInvoices_Projects">
+      <End Role="Projects" EntitySet="Projects" />
       <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
     </AssociationSet>
     <AssociationSet Name="FK_SupplierInvoices_Suppliers" Association="MaksoudDBModel.Store.FK_SupplierInvoices_Suppliers">
@@ -209,6 +239,7 @@
     <Property Name="InvoiceNet" Type="float" />
     <Property Name="Departed" Type="bit" />
     <Property Name="LastEditBy" Type="int" />
+    <Property Name="ProjectID" Type="int" />
   </EntityType>
   <EntityType Name="Customers">
     <Key>
@@ -220,6 +251,7 @@
     <Property Name="Phone" Type="nvarchar" MaxLength="50" />
     <Property Name="BirthDate" Type="datetime" />
     <Property Name="Notes" Type="nvarchar(max)" />
+    <Property Name="AccountID" Type="int" />
   </EntityType>
   <EntityType Name="Employee">
     <Key>
@@ -356,6 +388,26 @@
     <Property Name="Title" Type="nvarchar" MaxLength="400" />
     <Property Name="GroupName" Type="nvarchar" MaxLength="800" />
   </EntityType>
+  <EntityType Name="Stock">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="int" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="Quantity" Type="float" />
+  </EntityType>
+  <EntityType Name="StockTransactions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="StockID" Type="int" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="Quantity" Type="float" />
+    <Property Name="Type" Type="int" />
+    <Property Name="Date" Type="datetime" />
+  </EntityType>
   <EntityType Name="SupplierInvoiceLines">
     <Key>
       <PropertyRef Name="Id" />
@@ -381,6 +433,7 @@
     <Property Name="InvoiceNet" Type="float" />
     <Property Name="Departed" Type="bit" />
     <Property Name="LastEditBy" Type="int" />
+    <Property Name="ProjectID" Type="int" />
   </EntityType>
   <EntityType Name="Suppliers">
     <Key>
@@ -521,6 +574,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_CustomerInvoices_Projects">
+    <End Role="Projects" Type="MaksoudDBModel.Store.Projects" Multiplicity="0..1" />
+    <End Role="CustomerInvoices" Type="MaksoudDBModel.Store.CustomerInvoices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CustomerInvoices">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CustomerInvoices_Users">
     <End Role="Users" Type="MaksoudDBModel.Store.Users" Multiplicity="0..1" />
     <End Role="CustomerInvoices" Type="MaksoudDBModel.Store.CustomerInvoices" Multiplicity="*" />
@@ -530,6 +595,18 @@
       </Principal>
       <Dependent Role="CustomerInvoices">
         <PropertyRef Name="LastEditBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customers_AccountingTree">
+    <End Role="AccountingTree" Type="MaksoudDBModel.Store.AccountingTree" Multiplicity="0..1" />
+    <End Role="Customers" Type="MaksoudDBModel.Store.Customers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AccountingTree">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="AccountID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -713,6 +790,54 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Stock_Products">
+    <End Role="Products" Type="MaksoudDBModel.Store.Products" Multiplicity="0..1" />
+    <End Role="Stock" Type="MaksoudDBModel.Store.Stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Stock">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stock_Projects">
+    <End Role="Projects" Type="MaksoudDBModel.Store.Projects" Multiplicity="0..1" />
+    <End Role="Stock" Type="MaksoudDBModel.Store.Stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Stock">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockTransactions_Products">
+    <End Role="Products" Type="MaksoudDBModel.Store.Products" Multiplicity="0..1" />
+    <End Role="StockTransactions" Type="MaksoudDBModel.Store.StockTransactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockTransactions">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockTransactions_Stock">
+    <End Role="Stock" Type="MaksoudDBModel.Store.Stock" Multiplicity="0..1" />
+    <End Role="StockTransactions" Type="MaksoudDBModel.Store.StockTransactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stock">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockTransactions">
+        <PropertyRef Name="StockID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_SupplierInvoices_FinancialTransactions">
     <End Role="FinancialTransactions" Type="MaksoudDBModel.Store.FinancialTransactions" Multiplicity="0..1" />
     <End Role="SupplierInvoices" Type="MaksoudDBModel.Store.SupplierInvoices" Multiplicity="*" />
@@ -722,6 +847,18 @@
       </Principal>
       <Dependent Role="SupplierInvoices">
         <PropertyRef Name="InvoiceAccount" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SupplierInvoices_Projects">
+    <End Role="Projects" Type="MaksoudDBModel.Store.Projects" Multiplicity="0..1" />
+    <End Role="SupplierInvoices" Type="MaksoudDBModel.Store.SupplierInvoices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SupplierInvoices">
+        <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

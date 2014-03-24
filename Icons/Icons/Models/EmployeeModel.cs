@@ -159,6 +159,127 @@ namespace Icons.Models
                 Message = Message.Employee_Updated_Successfully
             };
         }
+
+        public Returner AddBenifit(FinancialTransaction FT)
+        {
+            var Employee = db.Employees.Single(p => p.Id == this.Id);
+            FT.Statement = "اضافة مكافأة لعميل";
+            FT.FromAccount = Employee.BenifitAccID;
+            FT.TransactionDate = DateTime.Now;
+            db.FinancialTransactions.Add(FT);
+            db.SaveChanges();
+            return new Returner
+            {
+                Message = Message.Benifit_Added_Successfully
+            };
+        }
+
+        public Returner AddPenalty(FinancialTransaction FT)
+        {
+            var Employee = db.Employees.Single(p => p.Id == this.Id);
+            FT.Statement = "اضافة جزاء لعميل";
+            FT.ToAccount = Employee.PenaltyAccID;
+            FT.TransactionDate = DateTime.Now;
+            db.FinancialTransactions.Add(FT);
+            db.SaveChanges();
+            return new Returner
+            {
+                Message = Message.Penalty_Added_Successfully
+            };
+        }
+
+        public Returner AddImprest(FinancialTransaction FT)
+        {
+            var Employee = db.Employees.Single(p => p.Id == this.Id);
+            FT.Statement = "اضافة عهدة لعميل";
+            FT.FromAccount = Employee.ImprestAccID;
+            FT.TransactionDate = DateTime.Now;
+            db.FinancialTransactions.Add(FT);
+            db.SaveChanges();
+            return new Returner
+            {
+                Message = Message.Imprest_Added_Successfully
+            };
+        }
+
+        public Returner GetPenalties()
+        {
+            var E = db.Employees.Single(p => p.Id == this.Id);
+            return new Returner
+            {
+                Data = db.FinancialTransactions.Where(p => p.FromAccount == E.PenaltyAccID).ToList()
+            };
+        }
+
+        public Returner GetBenifits()
+        {
+            var E = db.Employees.Single(p => p.Id == this.Id);
+            return new Returner
+            {
+                Data = db.FinancialTransactions.Where(p => p.ToAccount == E.BenifitAccID).ToList()
+            };
+        }
+
+        public Returner GetImprests()
+        {
+            var E = db.Employees.Single(p => p.Id == this.Id);
+            return new Returner
+            {
+                Data = db.FinancialTransactions.Where(p => p.ToAccount == E.ImprestAccID).ToList()
+            };
+        }
+
+        public Returner RemovePenalty(int FTID)
+        {
+            var FTToRemove = db.FinancialTransactions.Where(p => p.Id == FTID).SingleOrDefault();
+            db.FinancialTransactions.Remove(FTToRemove);
+            db.SaveChanges();
+            return new Returner
+            {
+                Message = Message.Penalty_Removed_Successfully
+            };
+        }
+
+        public Returner RemoveBenifit(int FTID)
+        {
+            var FTToRemove = db.FinancialTransactions.Where(p => p.Id == FTID).SingleOrDefault();
+            db.FinancialTransactions.Remove(FTToRemove);
+            db.SaveChanges();
+            return new Returner
+            {
+                Message = Message.Benifit_Removed_Successfully
+            };
+        }
+
+        public Returner RemoveImprest(int FTID)
+        {
+            var FTToRemove = db.FinancialTransactions.Where(p => p.Id == FTID).SingleOrDefault();
+            db.FinancialTransactions.Remove(FTToRemove);
+            db.SaveChanges();
+            return new Returner
+            {
+                Message = Message.Imprest_Removed_Successfully
+            };
+        }
+
+        public Returner Pay(double Total, int EditBy)
+        {
+            var E = db.Employees.Single(p => p.Id == this.Id);
+            FinancialTransaction Ft = new FinancialTransaction();
+            Ft.Amount = Total;
+            Ft.FromAccount = E.EmpAccID;
+            Ft.LastEditBy = EditBy;
+            Ft.Notes = "";
+            Ft.Statement = "دفع راتب للموظف " + E.Name;
+            Ft.ToAccount = 26;
+            Ft.TransactionDate = DateTime.Now;
+            db.FinancialTransactions.Add(Ft);
+            db.SaveChanges();
+            return new Returner
+            {
+                Message = Message.Salary_Paid_Successfully
+            };
+        }
         #endregion
     }
 }

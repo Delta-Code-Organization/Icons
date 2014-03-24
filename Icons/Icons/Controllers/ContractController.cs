@@ -26,7 +26,7 @@ namespace Icons.Controllers
         }
 
         [HttpPost]
-        public void AddOwner(int CusID,double Percentage)
+        public void AddOwner(int CusID, double Percentage)
         {
             ContractOwner Co = new ContractOwner();
             Co.CustomerID = CusID;
@@ -101,6 +101,33 @@ namespace Icons.Controllers
             ProjectUnit PU = new ProjectUnit { Id = (int)C.UnitID };
             int UO = Convert.ToInt32(FC["iresponsibleid"]);
             C.CreateContract(LOCO, LOI, PU, UO);
+        }
+
+        public ActionResult SearchInstallments()
+        {
+            ViewBag.S = new Customer().GetAllCutomers().Data as List<Customer>;
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult SearchInstallments(DateTime? fromdate, DateTime? todate, int? cusid)
+        {
+            int? CustomerID;
+            if (cusid == 0)
+            {
+                CustomerID = null;
+            }
+            else
+            {
+                CustomerID = cusid;
+            }
+            return new Contract().SearchInstallments(fromdate, todate, CustomerID).DataInJSON;
+        }
+
+        [HttpPost]
+        public void PayInstallment(int ID)
+        {
+            new Contract().PayInstallment(ID);
         }
     }
 }

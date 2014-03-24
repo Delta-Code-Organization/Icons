@@ -16,8 +16,11 @@ namespace Icons.Models
     {
         public Project()
         {
-            this.ProjectUnits = new HashSet<ProjectUnit>();
             this.Contracts = new HashSet<Contract>();
+            this.CustomerInvoices = new HashSet<CustomerInvoice>();
+            this.ProjectUnits = new HashSet<ProjectUnit>();
+            this.Stocks = new HashSet<Stock>();
+            this.SupplierInvoices = new HashSet<SupplierInvoice>();
         }
     
         public int Id { get; set; }
@@ -35,7 +38,10 @@ namespace Icons.Models
         public Nullable<int> AccountID { get; set; }
     
         public virtual AccountingTree AccountingTree { get; set; }
-        public virtual ICollection<ProjectUnit> ProjectUnits { get; set; }
         public virtual ICollection<Contract> Contracts { get; set; }
+        public virtual ICollection<CustomerInvoice> CustomerInvoices { get; set; }
+        public virtual ICollection<ProjectUnit> ProjectUnits { get; set; }
+        public virtual ICollection<Stock> Stocks { get; set; }
+        public virtual ICollection<SupplierInvoice> SupplierInvoices { get; set; }
     }
 }

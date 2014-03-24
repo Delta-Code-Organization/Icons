@@ -16,10 +16,10 @@ namespace Icons.Models
     {
         public User()
         {
+            this.CustomerInvoices = new HashSet<CustomerInvoice>();
             this.FinancialTransactions = new HashSet<FinancialTransaction>();
             this.SupplierInvoices = new HashSet<SupplierInvoice>();
             this.Screens = new HashSet<Screen>();
-            this.CustomerInvoices = new HashSet<CustomerInvoice>();
         }
     
         public int ID { get; set; }
@@ -27,9 +27,9 @@ namespace Icons.Models
         public string Password { get; set; }
         public Nullable<int> Status { get; set; }
     
+        public virtual ICollection<CustomerInvoice> CustomerInvoices { get; set; }
         public virtual ICollection<FinancialTransaction> FinancialTransactions { get; set; }
         public virtual ICollection<SupplierInvoice> SupplierInvoices { get; set; }
         public virtual ICollection<Screen> Screens { get; set; }
-        public virtual ICollection<CustomerInvoice> CustomerInvoices { get; set; }
     }
 }

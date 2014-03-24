@@ -11,8 +11,37 @@ namespace Icons.Models
         MaksoudDBEntities db = new MaksoudDBEntities();
         #endregion
 
+        #region PrivateMethods
+        private int AddSupplierAccountingTree()
+        {
+            int ParentSupplierID = db.AccountingTrees.Where(p => p.KeyAccountID == (int)KeyAccounts.Suppliers).SingleOrDefault().Id;
+            AccountingTree SupplierNode = new AccountingTree();
+            SupplierNode.NodeName = this.Name;
+            SupplierNode.Parent = ParentSupplierID;
+            db.AccountingTrees.Add(SupplierNode);
+            db.SaveChanges();
+            return SupplierNode.Id;
+        }
+
+        private void RemoveSupplierNode(int SupplierNodeID)
+        {
+            var AccToRemove = db.AccountingTrees.Where(p => p.Id == SupplierNodeID).SingleOrDefault();
+            db.AccountingTrees.Remove(AccToRemove);
+            db.SaveChanges();
+        }
+
+        private void UpdateSuplierNode(int SupplierNodeID)
+        {
+            var AccToEdit = db.AccountingTrees.Where(p => p.Id == SupplierNodeID).SingleOrDefault();
+            AccToEdit.NodeName = this.Name;
+            db.SaveChanges();
+        }
+        #endregion
+
         public Returner Create()
         {
+            int AccID = AddSupplierAccountingTree();
+            this.AccountingID = AccID;
             db.Suppliers.Add(this);
             db.SaveChanges();
             return new Returner
@@ -43,6 +72,7 @@ namespace Icons.Models
         public Returner Remove()
         {
             var S = db.Suppliers.Where(p => p.ID == this.ID).SingleOrDefault();
+            RemoveSupplierNode((int)S.AccountingID);
             db.Suppliers.Remove(S);
             db.SaveChanges();
             return new Returner
@@ -61,6 +91,7 @@ namespace Icons.Models
             S.Name = this.Name;
             S.Notes = this.Notes;
             S.Phone = this.Phone;
+            UpdateSuplierNode((int)S.AccountingID);
             db.SaveChanges();
             return new Returner
             {

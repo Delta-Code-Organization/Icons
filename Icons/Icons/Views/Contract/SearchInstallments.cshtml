@@ -1,0 +1,156 @@
+﻿@{
+    ViewBag.Title = "SearchInstallments";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+}
+
+@using Icons.Models;
+
+<script src="~/scripts/Contract.js"></script>
+
+<div class="row">
+    <div class="col-md-9" style="padding: 0; padding-left: 15px;">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">الأقساط</h3>
+            </div>
+            <div class="content">
+                <div style="text-align: right; direction: rtl;" class="panel-group accordion accordion-semi" id="accordion3">
+                    @*<div style="text-align: right; direction: rtl;" class="panel-group accordion accordion-semi" id="accordion3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion3" href="#TheCounter">
+                                    <i class="fa fa-angle-left"></i>&nbsp Mohammed
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="TheCounter" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="block">
+
+                                    <div class="content no-padding ">
+                                        <ul class="items">
+                                            <li>
+                                                <i class="fa fa-calendar pull-right"></i>Filet Mignon <span class="pull-left value">$35</span>
+                                                <small>Italian food</small>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-calendar pull-right"></i>Blue beer<span class="pull-left value">$35</span>
+                                                <small>Bar drinks</small>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-calendar pull-right"></i>T-shirts<span class="pull-left value">$35</span>
+                                                <small>Software development</small>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-calendar pull-right"></i>Cloud App<span class="pull-left value">$35</span>
+                                                <small>Game department</small>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-calendar pull-right"></i>Black Metal Music<span class="pull-left value">$35</span>
+                                                <small>Metal genre</small>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="total-data bg-blue">
+                                        <h2>الإجمالي <span class="pull-left">$25.3</span></h2>
+                                    </div>
+                                    <div class="header">
+                                        <h2>دفع قسط
+                                            <span class="pull-left">
+                                                <button class="btn btn-success" type="button" data-target="#mod-info" data-toggle="modal" style="font-size: 20px;">
+                                                    دفع
+                                                </button>
+                                            </span>
+                                        </h2>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3" style="padding: 0;">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">البحث</h3>
+            </div>
+            <div class="content">
+                <form class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" id="SIForm" action="#" style="border-radius: 0px;">
+                    <div class="form-group">
+                        <label class="Arabic">العميل</label>
+                        <select class="select2" name="cusid" id="cusid">
+                            <option value="0">&nbsp</option>
+                            @{
+                                foreach (Customer item in ViewBag.S)
+                                {
+                                <option value="@item.ID">@item.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">من</label>
+                        <input class="form-control datetime" name="fromdate" id="fromdate" size="16" type="text" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">الي</label>
+                        <input class="form-control datetime" name="todate" id="todate" size="16" type="text" value="" />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary Arabic" type="submit">بحث</button>
+                        <button class="btn btn-default Arabic">الغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@*<div aria-hidden="true" style="display: none;" class="modal fade" id="mod-info" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 900px;">
+            <form class="form-horizontal group-border-dashed" id="EditUnit" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+                <div class="modal-header">
+                    <button type="button" class="close" id="ClosePopBtn" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">الشهر</label>
+                        <div class="col-sm-6 Arabic">
+                            <select id="installmonth" name="installmonth" class="form-control">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">ترحيل الي حساب</label>
+                        <div class="col-sm-6 Arabic">
+                            <select id="acc" name="acc" class="form-control">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="background-color: #fff; border: none;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">الغاء</button>
+                    <button type="submit" class="btn btn-primary">دفع</button>
+                </div>
+                <div class="resultmsg" style="text-align: center; color: blue;">
+                    <label id="result1"></label>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>*@

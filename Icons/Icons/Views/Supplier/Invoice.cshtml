@@ -128,12 +128,25 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="Arabic">الى حساب</label>
+                        <label class="Arabic">المشروع</label>
                         <select class="select2" name="acc" id="acc">
-                            <optgroup label="Alaskan/Hawaiian Time Zone">
-                                <option value="AK">Alaska TTTTTTTTTTTTTTTTTTTTTT</option>
-                                <option value="HI">Hawaii</option>
-                            </optgroup>
+                            @{
+                                foreach (Project item in ViewBag.Proj)
+                                {
+                                <option value="@item.Id">@item.ProjectName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">الي حساب</label>
+                        <select class="select2" name="acc" id="toacc">
+                            @{
+                                foreach (AccountingTree item in ViewBag.AccTree)
+                                {
+                                <option value="@item.Id">@item.NodeName</option>
+                                }
+                            }
                         </select>
                     </div>
                     <div class="form-group">

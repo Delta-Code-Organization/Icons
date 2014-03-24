@@ -28,10 +28,12 @@ namespace Icons.Models
         public Nullable<double> InvoiceNet { get; set; }
         public Nullable<bool> Departed { get; set; }
         public Nullable<int> LastEditBy { get; set; }
+        public Nullable<int> ProjectID { get; set; }
     
         public virtual AccountingTree AccountingTree { get; set; }
         public virtual ICollection<CustomerInvoiceLine> CustomerInvoiceLines { get; set; }
         public virtual Customer Customer { get; set; }
+        public virtual Project Project { get; set; }
         public virtual User User { get; set; }
     }
 }

@@ -17,6 +17,122 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ContractOwners">
+      <EntityTypeMapping TypeName="MaksoudDBModel.ContractOwner">
+        <MappingFragment StoreEntitySet="ContractOwners">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ContractID" ColumnName="ContractID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contracts">
+      <EntityTypeMapping TypeName="MaksoudDBModel.Contract">
+        <MappingFragment StoreEntitySet="Contracts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Paid" ColumnName="Paid" />
+          <ScalarProperty Name="Remaining" ColumnName="Remaining" />
+          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerInvoiceLines">
+      <EntityTypeMapping TypeName="MaksoudDBModel.CustomerInvoiceLine">
+        <MappingFragment StoreEntitySet="CustomerInvoiceLines">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerInvoices">
+      <EntityTypeMapping TypeName="MaksoudDBModel.CustomerInvoice">
+        <MappingFragment StoreEntitySet="CustomerInvoices">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+          <ScalarProperty Name="InvoiceAccount" ColumnName="InvoiceAccount" />
+          <ScalarProperty Name="InvoiceTotal" ColumnName="InvoiceTotal" />
+          <ScalarProperty Name="InvoiceDiscount" ColumnName="InvoiceDiscount" />
+          <ScalarProperty Name="InvoiceNet" ColumnName="InvoiceNet" />
+          <ScalarProperty Name="Departed" ColumnName="Departed" />
+          <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="MaksoudDBModel.Customer">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="MaksoudDBModel.Employee">
+        <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="SSN" ColumnName="SSN" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Phone1" ColumnName="Phone1" />
+          <ScalarProperty Name="Phone2" ColumnName="Phone2" />
+          <ScalarProperty Name="HiringDate" ColumnName="HiringDate" />
+          <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
+          <ScalarProperty Name="SalaryType" ColumnName="SalaryType" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="EmpAccID" ColumnName="EmpAccID" />
+          <ScalarProperty Name="ImprestAccID" ColumnName="ImprestAccID" />
+          <ScalarProperty Name="BenifitAccID" ColumnName="BenifitAccID" />
+          <ScalarProperty Name="PenaltyAccID" ColumnName="PenaltyAccID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeBenifits">
+      <EntityTypeMapping TypeName="MaksoudDBModel.EmployeeBenifit">
+        <MappingFragment StoreEntitySet="EmployeeBenifits">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="Benifit" ColumnName="Benifit" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeImprests">
+      <EntityTypeMapping TypeName="MaksoudDBModel.EmployeeImprest">
+        <MappingFragment StoreEntitySet="EmployeeImprests">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="Imprest" ColumnName="Imprest" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeePenalties">
+      <EntityTypeMapping TypeName="MaksoudDBModel.EmployeePenalty">
+        <MappingFragment StoreEntitySet="EmployeePenalties">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="Penalty" ColumnName="Penalty" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FinancialTransactions">
       <EntityTypeMapping TypeName="MaksoudDBModel.FinancialTransaction">
         <MappingFragment StoreEntitySet="FinancialTransactions">
@@ -29,6 +145,18 @@
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="ReferanceDocumentNumber" ColumnName="ReferanceDocumentNumber" />
           <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Installments">
+      <EntityTypeMapping TypeName="MaksoudDBModel.Installment">
+        <MappingFragment StoreEntitySet="Installments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ContractID" ColumnName="ContractID" />
+          <ScalarProperty Name="ResponsibleID" ColumnName="ResponsibleID" />
+          <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -100,6 +228,28 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Stocks">
+      <EntityTypeMapping TypeName="MaksoudDBModel.Stock">
+        <MappingFragment StoreEntitySet="Stock">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockTransactions">
+      <EntityTypeMapping TypeName="MaksoudDBModel.StockTransaction">
+        <MappingFragment StoreEntitySet="StockTransactions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StockID" ColumnName="StockID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="SupplierInvoiceLines">
       <EntityTypeMapping TypeName="MaksoudDBModel.SupplierInvoiceLine">
         <MappingFragment StoreEntitySet="SupplierInvoiceLines">
@@ -125,6 +275,7 @@
           <ScalarProperty Name="InvoiceNet" ColumnName="InvoiceNet" />
           <ScalarProperty Name="Departed" ColumnName="Departed" />
           <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -161,131 +312,5 @@
         <ScalarProperty Name="ID" ColumnName="UserID" />
       </EndProperty>
     </AssociationSetMapping>
-    <EntitySetMapping Name="Customers">
-      <EntityTypeMapping TypeName="MaksoudDBModel.Customer">
-        <MappingFragment StoreEntitySet="Customers">
-          <ScalarProperty Name="Notes" ColumnName="Notes" />
-          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CustomerInvoiceLines">
-      <EntityTypeMapping TypeName="MaksoudDBModel.CustomerInvoiceLine">
-        <MappingFragment StoreEntitySet="CustomerInvoiceLines">
-          <ScalarProperty Name="Total" ColumnName="Total" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Qty" ColumnName="Qty" />
-          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CustomerInvoices">
-      <EntityTypeMapping TypeName="MaksoudDBModel.CustomerInvoice">
-        <MappingFragment StoreEntitySet="CustomerInvoices">
-          <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
-          <ScalarProperty Name="Departed" ColumnName="Departed" />
-          <ScalarProperty Name="InvoiceNet" ColumnName="InvoiceNet" />
-          <ScalarProperty Name="InvoiceDiscount" ColumnName="InvoiceDiscount" />
-          <ScalarProperty Name="InvoiceTotal" ColumnName="InvoiceTotal" />
-          <ScalarProperty Name="InvoiceAccount" ColumnName="InvoiceAccount" />
-          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
-          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Employees">
-      <EntityTypeMapping TypeName="MaksoudDBModel.Employee">
-        <MappingFragment StoreEntitySet="Employee">
-          <ScalarProperty Name="PenaltyAccID" ColumnName="PenaltyAccID" />
-          <ScalarProperty Name="BenifitAccID" ColumnName="BenifitAccID" />
-          <ScalarProperty Name="ImprestAccID" ColumnName="ImprestAccID" />
-          <ScalarProperty Name="EmpAccID" ColumnName="EmpAccID" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="SalaryType" ColumnName="SalaryType" />
-          <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
-          <ScalarProperty Name="HiringDate" ColumnName="HiringDate" />
-          <ScalarProperty Name="Phone2" ColumnName="Phone2" />
-          <ScalarProperty Name="Phone1" ColumnName="Phone1" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="SSN" ColumnName="SSN" />
-          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="EmployeeBenifits">
-      <EntityTypeMapping TypeName="MaksoudDBModel.EmployeeBenifit">
-        <MappingFragment StoreEntitySet="EmployeeBenifits">
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="Benifit" ColumnName="Benifit" />
-          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="EmployeeImprests">
-      <EntityTypeMapping TypeName="MaksoudDBModel.EmployeeImprest">
-        <MappingFragment StoreEntitySet="EmployeeImprests">
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="Imprest" ColumnName="Imprest" />
-          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="EmployeePenalties">
-      <EntityTypeMapping TypeName="MaksoudDBModel.EmployeePenalty">
-        <MappingFragment StoreEntitySet="EmployeePenalties">
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="Penalty" ColumnName="Penalty" />
-          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ContractOwners">
-      <EntityTypeMapping TypeName="MaksoudDBModel.ContractOwner">
-        <MappingFragment StoreEntitySet="ContractOwners">
-          <ScalarProperty Name="Percentage" ColumnName="Percentage" />
-          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-          <ScalarProperty Name="ContractID" ColumnName="ContractID" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Contracts">
-      <EntityTypeMapping TypeName="MaksoudDBModel.Contract">
-        <MappingFragment StoreEntitySet="Contracts">
-          <ScalarProperty Name="Notes" ColumnName="Notes" />
-          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
-          <ScalarProperty Name="Remaining" ColumnName="Remaining" />
-          <ScalarProperty Name="Paid" ColumnName="Paid" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Installments">
-      <EntityTypeMapping TypeName="MaksoudDBModel.Installment">
-        <MappingFragment StoreEntitySet="Installments">
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
-          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
-          <ScalarProperty Name="DueDate" ColumnName="DueDate" />
-          <ScalarProperty Name="ResponsibleID" ColumnName="ResponsibleID" />
-          <ScalarProperty Name="ContractID" ColumnName="ContractID" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -44,6 +44,13 @@ namespace Icons.Models
         Penalty_Removed_Successfully = 34,
         Benifit_Removed_Successfully = 35,
         Imprest_Removed_Successfully = 36,
-        Contract_Created_Successfully = 37
+        Contract_Created_Successfully = 37,
+        Stock_Created_Successfully = 38,
+        Purchase_Operation_Finished_Successfully = 39,
+        Sell_Operation_Finished_Successfully = 40,
+        Installment_Paid_Successfully = 41,
+        Invoice_Deleted_Successfully = 42,
+        Invoice_Departed_Successfully = 43,
+        Salary_Paid_Successfully = 44
     }
 }

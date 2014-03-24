@@ -69,3 +69,17 @@ function Remove(id) {
         });
     }
 }
+
+function Pay(id, Total) {
+    $.ajax({
+        url: '/Employee/Pay',
+        type: 'post',
+        data: { 'id': id, 'Total': Total },
+        success: function (data) {
+            $('#' + id).fadeOut(500);
+        },
+        error: function (data) {
+            alert(data.responseText);
+        }
+    });
+}

@@ -105,8 +105,7 @@ function DeleteOwner(id, per) {
     });
 }
 
-function CalcInstallmentAmount()
-{
+function CalcInstallmentAmount() {
     var InstallNum = parseInt($('#INum').val());
     if (isNaN(InstallNum)) {
         $('#INum').val(0);
@@ -145,4 +144,95 @@ function CalcRemaining() {
 
 function SubmitForm() {
     $('#ContractCreate').submit();
+}
+
+function convertDate(inputFormat) {
+    var d = new Date(inputFormat);
+    return [d.getDate(), d.getMonth() + 1, d.getFullYear()].join('/');
+}
+
+$(document).ready(function () {
+    $('#SIForm').submit(function (event) {
+        if ($(this).parsley('validate')) {
+            $.ajax({
+                type: 'post',
+                url: '/Contract/SearchInstallments',
+                data: $(this).serialize(),
+                success: function (data) {
+                    $('#accordion3').empty();
+                    $.each(data, function (index, Cus) {
+                        var Tot = 0;
+                        $('#accordion3').append('<div class="panel panel-default">'
+                        + '<div class="panel-heading">'
+                            + '<h4 class="panel-title">'
+                                + '<a data-toggle="collapse" data-parent="#accordion3" href="#TheCounter' + index + '">'
+                                    + '<i class="fa fa-angle-left"></i>&nbsp ' + Cus.Name + ''
+                                + '</a>'
+                            + '</h4>'
+                        + '</div>'
+                        + '<div id="TheCounter' + index + '" class="panel-collapse collapse">'
+                            + '<div class="panel-body">'
+                                + '<div class="block">'
+                                    + '<div class="content no-padding ">'
+                                        + '<ul class="items" id="' + index + '">'
+                                        + '</ul>'
+                                    + '</div>'
+                                    + '<div class="total-data bg-blue">'
+                                        + '<h2>إجمالي الأقساط المدفوعة <span class="pull-left" id="Total' + index + '"></span></h2>'
+                                    + '</div>'
+                                + '</div>'
+                            + '</div>'
+                        + '</div>'
+                    + '</div>');
+                        $.each(Cus.Installments, function (inde, Ins) {
+                            var millii = Ins.DueDate.replace(/\/Date\((-?\d+)\)\//, '$1');
+                            var DateTimee = new Date(parseInt(millii));
+                            var Dayy = DateTimee.getDate();
+                            var yearr = DateTimee.getFullYear();
+                            var mounthh = DateTimee.getMonth() + 1;
+                            var FullDatee = mounthh + "/" + Dayy + "/" + yearr;
+                            if (Ins.PaymentDate == "null" || Ins.PaymentDate == null) {
+                                $('#' + index).append('<li id="Installment' + Ins.Id + '">'
+                                                + '<i class="fa fa-calendar pull-right"></i>' + FullDatee + ' <span class="pull-left value" id="ThisCont' + Ins.Id + '">'
+                                                + '<button class="btn btn-success" type="button" onclick="PayInstallment(' + Ins.Id + ',' + Ins.Amount + ')">'
+                                                    + 'دفع'
+                                                + '</button>'
+                                                + '</span>'
+                                                + '<small>&nbsp</small>'
+                                            + '</li>');
+                            }
+                            else {
+                                Tot += parseFloat(Ins.Amount);
+                                $('#' + index).append('<li>'
+                                                + '<i class="fa fa-calendar pull-right"></i>' + FullDatee + ' <span class="pull-left value">' + Ins.Amount + '</span>'
+                                                + '<small>&nbsp</small>'
+                                            + '</li>');
+                            }
+                        });
+                        $('#Total' + index).text(Tot);
+                    });
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            });
+            return false;
+        }
+        return false;
+    });
+});
+
+function PayInstallment(id, amount) {
+    $.ajax({
+        url: '/Contract/PayInstallment',
+        type: 'post',
+        data: { 'ID': id },
+        success: function (data) {
+            $('#ThisCont' + id).empty();
+            $('#ThisCont' + id).text(amount);
+        },
+        error: function (data) {
+            alert(data.responseText);
+        }
+    });
 }
