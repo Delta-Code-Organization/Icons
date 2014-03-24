@@ -100,7 +100,7 @@ namespace Icons.Controllers
             LOCO = TempData["LOCO"] as List<ContractOwner>;
             ProjectUnit PU = new ProjectUnit { Id = (int)C.UnitID };
             int UO = Convert.ToInt32(FC["iresponsibleid"]);
-            C.CreateContract(LOCO, LOI, PU, UO);
+            C.CreateContract(LOCO, LOI, PU, UO, (Session["User"] as User).ID);
         }
 
         public ActionResult SearchInstallments()
@@ -127,7 +127,7 @@ namespace Icons.Controllers
         [HttpPost]
         public void PayInstallment(int ID)
         {
-            new Contract().PayInstallment(ID);
+            new Contract().PayInstallment(ID, (Session["User"] as User).ID);
         }
     }
 }

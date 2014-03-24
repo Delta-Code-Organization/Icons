@@ -225,12 +225,20 @@ namespace Icons.Controllers
         public ActionResult Payroll()
         {
             ViewBag.E = new Employee().GetAll().Data as List<Employee>;
+            ViewBag.AllAcc = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
             return View();
         }
 
-        public void Pay(int id, double Total)
+        public string Pay(int id, double Total,DateTime PaymentDate,int ToAccID)
         {
-            new Employee { Id = id }.Pay(Total, (Session["User"] as User).ID);
+            if (new Employee { Id = id }.Pay(Total, (Session["User"] as User).ID, PaymentDate, ToAccID).Message == Message.Cannot_pay_salary_at_Wrong_time)
+            {
+                return "false";
+            }
+            else
+            {
+                return "true";
+            }
         }
     }
 }

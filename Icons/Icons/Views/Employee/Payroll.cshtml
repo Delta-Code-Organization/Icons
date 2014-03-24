@@ -30,35 +30,28 @@
                             @{
                                 foreach (Employee y in ViewBag.E)
                                 {
-                                   double? Penalty = new MaksoudDBEntities().FinancialTransactions.Where(p => p.ToAccount == y.PenaltyAccID).ToList().Sum(p => p.Amount);
-                                   if (Penalty == null)
-                                   {
-                                       Penalty = 0;
-                                   }
-                                   double? Benifit = new MaksoudDBEntities().FinancialTransactions.Where(p => p.FromAccount == y.BenifitAccID).ToList().Sum(p => p.Amount);
-                                   if (Benifit == null)
-                                   {
-                                       Benifit = 0;
-                                   }
-                                   double Total = Convert.ToDouble(y.BasicSalary) + Convert.ToDouble(Benifit) - Convert.ToDouble(Penalty);
+                                    double? Penalty = new MaksoudDBEntities().FinancialTransactions.Where(p => p.ToAccount == y.PenaltyAccID).ToList().Sum(p => p.Amount);
+                                    if (Penalty == null)
+                                    {
+                                        Penalty = 0;
+                                    }
+                                    double? Benifit = new MaksoudDBEntities().FinancialTransactions.Where(p => p.FromAccount == y.BenifitAccID).ToList().Sum(p => p.Amount);
+                                    if (Benifit == null)
+                                    {
+                                        Benifit = 0;
+                                    }
+                                    double Total = Convert.ToDouble(y.BasicSalary) + Convert.ToDouble(Benifit) - Convert.ToDouble(Penalty);
                                 <tr class="odd gradeX" id="@y.Id">
                                     <td>@y.Name</td>
                                     <td>@y.BasicSalary</td>
                                     <td>@Benifit</td>
                                     <td>@Penalty</td>
                                     <td>@Total</td>
-                                    <td class="center" style="text-align:center;">
+                                    <td class="center" style="text-align: center;">
                                         <div class="btn-group">
-                                            <button class="btn btn-default btn-xs" type="button">الإجرائات</button>
-                                            <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul role="menu" class="dropdown-menu">
-                                                <li>
-                                                    <a onclick="Pay(@y.Id,@Total)">دفع</a>
-                                                </li>
-                                            </ul>
+                                            <a data-toggle="modal" data-target="#mod-info" onclick="SetHiddenFields(@y.Id,@Total)">
+                                                <button class="btn btn-success" type="button">دفع الراتب</button>
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
@@ -72,6 +65,53 @@
         </div>
     </div>
 </div>
+
+<div aria-hidden="true" style="display: none;" class="modal fade" id="mod-info" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 900px;">
+            <form class="form-horizontal group-border-dashed" id="PaySalary" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+                <div class="modal-header">
+                    <button type="button" class="close" id="ClosePopBtn" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">تاريخ الدفع</label>
+                        <div class="col-sm-6 Arabic">
+                            <input style="direction: ltr;" data-mask="datetime" id="PaymentDate" name="PaymentDate" class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ الدفع" size="16" value="" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" value="" id="id" />
+                        <input type="hidden" value="" id="Total" />
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">الحساب</label>
+                        <div class="col-sm-6 Arabic">
+                            <select class="select2" id="ToAccID" name="ToAccID">
+                                <optgroup label="الحسابات">
+                                    @{
+                                        foreach (AccountingTree item in ViewBag.AllAcc)
+                                        {
+                                        <option value="@item.Id">@item.NodeName</option>
+                                        }
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="background-color: #fff; border: none;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">الغاء</button>
+                    <button type="submit" class="btn btn-primary">دفع</button>
+                </div>
+                <div class="resultmsg" style="text-align: center; color: blue;">
+                    <label id="result1"></label>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 <script type="text/javascript">
     $(document).ready(function () {
         App.init();

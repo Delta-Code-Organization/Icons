@@ -194,6 +194,7 @@ $(document).ready(function () {
                             if (Ins.PaymentDate == "null" || Ins.PaymentDate == null) {
                                 $('#' + index).append('<li id="Installment' + Ins.Id + '">'
                                                 + '<i class="fa fa-calendar pull-right"></i>' + FullDatee + ' <span class="pull-left value" id="ThisCont' + Ins.Id + '">'
+                                                + '&nbsp' + Ins.Amount + '&nbsp'
                                                 + '<button class="btn btn-success" type="button" onclick="PayInstallment(' + Ins.Id + ',' + Ins.Amount + ')">'
                                                     + 'دفع'
                                                 + '</button>'
@@ -204,7 +205,7 @@ $(document).ready(function () {
                             else {
                                 Tot += parseFloat(Ins.Amount);
                                 $('#' + index).append('<li>'
-                                                + '<i class="fa fa-calendar pull-right"></i>' + FullDatee + ' <span class="pull-left value">' + Ins.Amount + '</span>'
+                                                + '<i class="fa fa-calendar pull-right"></i>' + FullDatee + ' <span class="pull-left value">' + '&nbsp' + Ins.Amount + '&nbsp' + 'مدفوع' + '</span>'
                                                 + '<small>&nbsp</small>'
                                             + '</li>');
                             }
