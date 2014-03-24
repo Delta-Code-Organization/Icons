@@ -18,6 +18,7 @@ namespace Icons.Controllers
         {
             return View();
         }
+
         public ActionResult Tree()
         {
             List<AccountingTree> Tree = db.AccountingTrees.Where(p=>p.Parent == null || p.Parent == 0).ToList();
@@ -71,5 +72,44 @@ namespace Icons.Controllers
             return "true";
         }
 
+        public ActionResult WorkOrder()
+        {
+            List<Product> LOP = new Product().GetAll().Data as List<Product>;
+            ViewBag.P = LOP;
+            List<Project> LOProj = new Project().GetAll().Data as List<Project>;
+            ViewBag.Proj = LOProj;
+            ViewBag.AccTree = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
+            return View();
+        }
+
+        [HttpPost]
+        public string GetProdPrice(int ProdID)
+        {
+            return (new Product { Id = ProdID }.GetLastProductPrice().Data as double?).ToString();
+        }
+
+        [HttpPost]
+        public void SaveWorkOrder(DateTime Date, int Acc, int ProjId, string Notes,double Total, string LineIds)
+        {
+            string[] LOSIL = LineIds.Split(',');
+            List<string> AIL = new List<string>(LOSIL);
+            AIL.Remove("");
+            List<CustomerInvoiceLine> LOCILTS = new List<CustomerInvoiceLine>();
+            int Skip = 0;
+            int ObjectsCount = AIL.Count / 4;
+            for (int i = 1; i <= ObjectsCount; i++)
+            {
+                List<string> CurrentObject = new List<string>();
+                CurrentObject = AIL.Skip(Skip).Take(4).ToList();
+                CustomerInvoiceLine CILTS = new CustomerInvoiceLine();
+                CILTS.ProductId = Convert.ToInt32(CurrentObject[0]);
+                CILTS.Qty = Convert.ToDouble(CurrentObject[1]);
+                CILTS.Price = Convert.ToDouble(CurrentObject[2]);
+                CILTS.Total = Convert.ToDouble(CurrentObject[3]);
+                LOCILTS.Add(CILTS);
+                Skip += 4;
+            }
+            new AccountingTree().SaveWorkOrder(LOCILTS, Date, ProjId, Acc, Notes, Total, (Session["User"] as User).ID);
+        }
     }
 }

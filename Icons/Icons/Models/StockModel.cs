@@ -68,7 +68,7 @@ namespace Icons.Models
                     ProductID = StockToUpdate.ProductID,
                     Quantity = item.Qty,
                     StockID = StockToUpdate.Id,
-                    Type = (int)StockTransactionsTypes.Purchase
+                    Type = (int)StockTransactionsTypes.شراء
                 };
                 db.StockTransactions.Add(ST);
                 db.SaveChanges();
@@ -95,7 +95,7 @@ namespace Icons.Models
                     ProductID = StockToUpdate.ProductID,
                     Quantity = -item.Qty,
                     StockID = StockToUpdate.Id,
-                    Type = (int)StockTransactionsTypes.Sell
+                    Type = (int)StockTransactionsTypes.بيع
                 };
                 db.StockTransactions.Add(ST);
                 db.SaveChanges();

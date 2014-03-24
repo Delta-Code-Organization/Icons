@@ -81,5 +81,41 @@ namespace Icons.Models
                         select A).ToList()
             };
         }
+
+        public Returner SaveWorkOrder(List<CustomerInvoiceLine> CIL,DateTime Date,int ProjID , int Acc,string Notes,double Total,int EditBy)
+        {
+             var CurrentProject = db.Projects.Where(p => p.Id == ProjID).SingleOrDefault();
+            foreach (CustomerInvoiceLine item in CIL)
+            {
+                var CurrentStock = db.Stocks.Single(p => p.ProjectID == ProjID && p.ProductID == item.ProductId);
+                CurrentStock.Quantity -= item.Qty;
+                db.SaveChanges();
+                StockTransaction ST = new StockTransaction();
+                ST.Date = Date;
+                ST.StockID = CurrentStock.Id;
+                ST.ProductID = item.ProductId;
+                ST.Quantity = -item.Qty;
+                ST.Type = (int)StockTransactionsTypes.امر_عمل;
+                db.StockTransactions.Add(ST);
+            }
+            db.SaveChanges();
+            FinancialTransaction Ft = new FinancialTransaction();
+            Ft.Amount = Total;
+            Ft.LastEditBy = EditBy;
+            Ft.Notes = Notes;
+            Ft.Statement = "";
+            Ft.TransactionDate = Date;
+            Ft.FromAccount = CurrentProject.AccountID;
+            Ft.ToAccount = Acc;
+            db.FinancialTransactions.Add(Ft);
+            db.SaveChanges();
+            var CurrentFt = db.FinancialTransactions.Where(p => p.Id == Ft.Id).SingleOrDefault();
+            CurrentFt.Statement = "امر شغل رقم " + CurrentFt.Id + " بتاريخ " + Date.ToString("MM/dd/yyyy");
+            db.SaveChanges();
+            return new Returner
+            {
+                Message = Message.Work_Order_Saved_Successfully
+            };
+        }
     }
 }

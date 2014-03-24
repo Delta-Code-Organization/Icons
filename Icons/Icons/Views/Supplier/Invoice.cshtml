@@ -78,6 +78,10 @@
                                         List<ProductCategory> LOPC = new List<ProductCategory>();
                                         foreach (Product P in LOP)
                                         {
+                                            if (LOPC.Any(p => p.Id == P.Category))
+                                            {
+                                                continue;
+                                            }
                                             LOPC.Add(P.ProductCategory);
                                         }
                                         foreach (ProductCategory item in LOPC)

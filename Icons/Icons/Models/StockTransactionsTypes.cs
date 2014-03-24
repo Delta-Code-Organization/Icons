@@ -7,7 +7,9 @@ namespace Icons.Models
 {
     public enum StockTransactionsTypes
     {
-        Purchase = 1,
-        Sell = 2
+        شراء = 1,
+        بيع = 2,
+        امر_عمل = 3,
+        ضبط_مخزن = 4
     }
 }

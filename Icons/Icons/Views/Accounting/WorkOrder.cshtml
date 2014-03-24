@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "WorkOrder";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+}
+
+@using Icons.Models;
+
+<script src="~/scripts/WorkOrder.js"></script>
+
+<div class="row">
+    <div class="col-md-9" style="padding: 0; padding-left: 15px;">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">امر شغل</h3>
+            </div>
+            <div class="content">
+                <div class="col-sm-4 col-md-4 col-lg-2 Arabic">
+                    <div class="block-flat">
+                        <div class="header">
+                            <h3 class="visible-sm visible-md">Col 4</h3>
+                            <h3 class="visible-lg">الاجمالي</h3>
+                            <h3 class="visible-xs">0</h3>
+                        </div>
+                        <div class="content">
+                            <p>
+                                <b id="NetOfNet">0</b><span class="hidden-lg"> </span>
+                                <span class="hidden-md hidden-sm hidden-lg"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <table class="no-border" style="direction: rtl" id="EleTbl">
+                    <thead class="no-border">
+                        <tr>
+                            <th class="text-right">المنتج</th>
+                            <th class="text-right">الكميه</th>
+                            <th class="text-right">السعر</th>
+                            <th class="text-right">الاجمالي</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="no-border-x" id="ProdEle">
+                        <tr id="0">
+                            <td>
+                                <select class="select2" id="prod" onchange="GetProdPrice(this)">
+                                    @{
+                                        List<Product> LOP = ViewBag.P as List<Product>;
+                                        List<ProductCategory> LOPC = new List<ProductCategory>();
+                                        foreach (Product P in LOP)
+                                        {
+                                            if (LOPC.Any(p => p.Id == P.Category))
+                                            {
+                                                continue;
+                                            }
+                                            LOPC.Add(P.ProductCategory);
+                                        }
+                                        foreach (ProductCategory item in LOPC)
+                                        {
+                                        <optgroup label="@item.CategoryName">
+                                            @{
+                                            foreach (Product Pitem in item.Products)
+                                            {
+                                                <option value="@Pitem.Id">@Pitem.ProductName</option>
+                                            }
+                                            }
+                                        </optgroup>
+                                        }
+                                    }
+                                </select></td>
+                            <td>
+                                <input type="number" value="00000" onkeypress="return isNumberKey(event)" onkeyup="CalcCurrentLineTotal()" class="form-control" id="qty"></td>
+                            <td>
+                                <input disabled type="number" value="00000" onkeypress="return isNumberKey(event)" class="form-control" id="price"></td>
+                            <td>
+                                <input disabled type="number" value="00000" onkeypress="return isNumberKey(event)" class="form-control" id="total"></td>
+                            <td>
+                                <button class="btn btn-default Arabic" onclick="AddInvoiceLine()">اضافة</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-3" style="padding: 0;">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">البيانات</h3>
+            </div>
+            <div class="content">
+                <form class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" id="WorkOrderForm" action="#" style="border-radius: 0px;">
+                    <div class="form-group">
+                        <label class="Arabic">تاريخ</label>
+                        <input class="form-control datetime" name="Date" id="Date" size="16" type="text" value="" parsley-trigger="change" required="" parsley-required-message="يجب ادخال التاريخ" />
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">حساب</label>
+                        <select class="select2" name="Acc" id="Acc">
+                            @{
+                                foreach (AccountingTree item in ViewBag.AccTree)
+                                {
+                                <option value="@item.Id">@item.NodeName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">مخزن</label>
+                        <select class="select2" name="ProjId" id="ProjId">
+                            @{
+                                foreach (Project item in ViewBag.Proj)
+                                {
+                                <option value="@item.Id">@item.ProjectName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">ملاحظات</label>
+                        <textarea id="Notes" name="Notes" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary Arabic" type="submit">حفظ الأمر</button>
+                        <button class="btn btn-default Arabic">الغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

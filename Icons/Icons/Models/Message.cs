@@ -52,6 +52,7 @@ namespace Icons.Models
         Invoice_Deleted_Successfully = 42,
         Invoice_Departed_Successfully = 43,
         Salary_Paid_Successfully = 44,
-        Cannot_pay_salary_at_Wrong_time = 45
+        Cannot_pay_salary_at_Wrong_time = 45,
+        Work_Order_Saved_Successfully = 46
     }
 }

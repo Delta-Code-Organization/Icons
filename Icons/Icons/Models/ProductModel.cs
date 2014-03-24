@@ -117,5 +117,14 @@ namespace Icons.Models
                 Message = Message.Product_Deleted_Successfully
             };
         }
+
+        public Returner GetLastProductPrice()
+        {
+            double ProdPrice = Convert.ToDouble(db.SupplierInvoiceLines.Where(p => p.ProductId == this.Id).OrderByDescending(p => p.Id).FirstOrDefault().Price);
+            return new Returner
+            {
+                Data = ProdPrice
+            };
+        }
     }
 }
