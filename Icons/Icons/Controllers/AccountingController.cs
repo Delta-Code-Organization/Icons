@@ -8,7 +8,7 @@ using System.Web.Script.Serialization;
 using Icons.Models;
 namespace Icons.Controllers
 {
-   
+
     public class AccountingController : Controller
     {
         //
@@ -21,7 +21,7 @@ namespace Icons.Controllers
 
         public ActionResult Tree()
         {
-            List<AccountingTree> Tree = db.AccountingTrees.Where(p=>p.Parent == null || p.Parent == 0).ToList();
+            List<AccountingTree> Tree = db.AccountingTrees.Where(p => p.Parent == null || p.Parent == 0).ToList();
             ViewBag.Nodes = Tree;
             return View("AccountingTree");
         }
@@ -89,7 +89,7 @@ namespace Icons.Controllers
         }
 
         [HttpPost]
-        public void SaveWorkOrder(DateTime Date, int Acc, int ProjId, string Notes,double Total, string LineIds)
+        public void SaveWorkOrder(DateTime Date, int Acc, int ProjId, string Notes, double Total, string LineIds)
         {
             string[] LOSIL = LineIds.Split(',');
             List<string> AIL = new List<string>(LOSIL);
@@ -110,6 +110,19 @@ namespace Icons.Controllers
                 Skip += 4;
             }
             new AccountingTree().SaveWorkOrder(LOCILTS, Date, ProjId, Acc, Notes, Total, (Session["User"] as User).ID);
+        }
+
+        public ActionResult WorkOrderReport()
+        {
+            ViewBag.Projects = new Project().GetAll().Data as List<Project>;
+            ViewBag.Products = new Product().GetAll().Data as List<Product>;
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult FilterWorkOrderReport(int ProjId, int ProdId, DateTime From, DateTime To)
+        {
+            return new AccountingTree().WorkOrderReport(ProjId, ProdId, From, To).DataInJSON;
         }
     }
 }

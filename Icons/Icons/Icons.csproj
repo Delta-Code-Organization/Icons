@@ -2093,6 +2093,7 @@
     <Content Include="scripts\SupplierInvoiceSearch.js" />
     <Content Include="scripts\User.js" />
     <Content Include="scripts\WorkOrder.js" />
+    <Content Include="scripts\WorkOrderReport.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2555,6 +2556,7 @@
     <Content Include="Views\Supplier\SearchInvoices.cshtml" />
     <Content Include="Views\Employee\Payroll.cshtml" />
     <Content Include="Views\Accounting\WorkOrder.cshtml" />
+    <Content Include="Views\Accounting\WorkOrderReport.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
