@@ -195,7 +195,7 @@ $(document).ready(function () {
                                 $('#' + index).append('<li id="Installment' + Ins.Id + '">'
                                                 + '<i class="fa fa-calendar pull-right"></i>' + FullDatee + ' <span class="pull-left value" id="ThisCont' + Ins.Id + '">'
                                                 + '&nbsp' + Ins.Amount + '&nbsp'
-                                                + '<button class="btn btn-success" type="button" onclick="PayInstallment(' + Ins.Id + ',' + Ins.Amount + ')">'
+                                                + '<button class="btn btn-success" data-target="#mod-info" data-toggle="modal" type="button" onclick="SetInstallmentData(' + Ins.Id + ',' + Ins.Amount + ')">'
                                                     + 'دفع'
                                                 + '</button>'
                                                 + '</span>'
@@ -223,17 +223,42 @@ $(document).ready(function () {
     });
 });
 
-function PayInstallment(id, amount) {
+function SetInstallmentData(id, amount) {
+    $('#ISTID').val(id);
+    $('#ISTAmount').val(amount);
+}
+
+function PayInstallment(id, amount , PaymentDate) {
     $.ajax({
         url: '/Contract/PayInstallment',
         type: 'post',
-        data: { 'ID': id },
+        data: { 'ID': id, 'PaymentDate': PaymentDate },
         success: function (data) {
             $('#ThisCont' + id).empty();
             $('#ThisCont' + id).text(amount);
+            $.gritter.add({
+                title: '! نجاح العملية',
+                text: ". تم دفع القسط بنجاح",
+                image: '/content/images/user-icon.png',
+                class_name: 'clean',
+                time: '4000'
+            });
+            $('#ClosePopBtn').click();
         },
         error: function (data) {
             alert(data.responseText);
         }
     });
 }
+
+$(document).ready(function () {
+    $('#PayCurrentInstallment').submit(function (event) {
+        if ($(this).parsley('validate')) {
+            var PayId = $('#ISTID').val();
+            var PayAmount = $('#ISTAmount').val();
+            var PaymentDate = $('#PaymentDate').val();
+            PayInstallment(PayId, PayAmount, PaymentDate);
+        }
+        return false;
+    });
+});

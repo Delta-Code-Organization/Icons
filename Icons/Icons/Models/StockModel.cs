@@ -44,6 +44,7 @@ namespace Icons.Models
                     ProductID = this.ProductID,
                     Quantity = 0
                 };
+                db.Stocks.Add(S);
             }
             db.SaveChanges();
             return new Returner

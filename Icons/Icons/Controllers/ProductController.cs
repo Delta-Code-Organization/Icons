@@ -37,8 +37,14 @@ namespace Icons.Controllers
         {
             ProductCategory PC = new ProductCategory();
             PC.Id = id;
-            PC.Remove();
-            return "true";
+            if (PC.Remove().Message == Message.Cannot_Delete_Category_That_Contains_Products)
+            {
+                return "false";
+            }
+            else
+            {
+                return "true";
+            }
         }
 
         public ActionResult EditCategory(int? id)
@@ -116,8 +122,14 @@ namespace Icons.Controllers
         {
             Product P = new Product();
             P.Id = id;
-            P.Remove();
-            return "true";
+            if (P.Remove().Message == Message.Cannot_Delete_This_Product)
+            {
+                return "false";
+            }
+            else
+            {
+                return "true";
+            }
         }
 
         public ActionResult EditProduct(int? id)

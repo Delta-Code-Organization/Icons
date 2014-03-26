@@ -107,6 +107,18 @@ namespace Icons.Models
         public Returner Remove()
         {
             var ProdToDelete = db.Products.Where(p => p.Id == this.Id).SingleOrDefault();
+            if (db.Stocks.Any(p => p.ProductID == ProdToDelete.Id && p.Quantity > 0))
+            {
+                return new Returner
+                {
+                    Message = Message.Cannot_Delete_This_Product
+                };
+            }
+            else
+            {
+                db.Database.ExecuteSqlCommand("delete from Stock where ProductID = {0}", ProdToDelete.Id);
+            }
+            db.SaveChanges();
             var AccToDelete = db.AccountingTrees.Where(p => p.Id == ProdToDelete.AccountID).SingleOrDefault();
             db.Products.Remove(ProdToDelete);
             db.SaveChanges();

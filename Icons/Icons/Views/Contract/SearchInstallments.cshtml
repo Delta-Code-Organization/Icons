@@ -76,6 +76,9 @@
         </div>
     </div>
 
+    <input type="hidden" id="ISTID" value="" />
+    <input type="hidden" id="ISTAmount" value="" />
+
     <div class="col-md-3" style="padding: 0;">
         <div class="block-flat">
             <div class="header">
@@ -116,28 +119,18 @@
 
 
 
-@*<div aria-hidden="true" style="display: none;" class="modal fade" id="mod-info" tabindex="-1" role="dialog">
+<div aria-hidden="true" style="display: none;" class="modal fade" id="mod-info" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content" style="width: 900px;">
-            <form class="form-horizontal group-border-dashed" id="EditUnit" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+            <form class="form-horizontal group-border-dashed" id="PayCurrentInstallment" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
                 <div class="modal-header">
                     <button type="button" class="close" id="ClosePopBtn" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">الشهر</label>
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">تاريخ الدفع</label>
                         <div class="col-sm-6 Arabic">
-                            <select id="installmonth" name="installmonth" class="form-control">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">ترحيل الي حساب</label>
-                        <div class="col-sm-6 Arabic">
-                            <select id="acc" name="acc" class="form-control">
-                                <option value=""></option>
-                            </select>
+                            <input class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ التعاقد" name="PaymentDate" id="PaymentDate" size="16" type="text" value="" />
                         </div>
                     </div>
                 </div>
@@ -153,4 +146,4 @@
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-</div>*@
+</div>

@@ -125,9 +125,9 @@ namespace Icons.Controllers
         }
 
         [HttpPost]
-        public void PayInstallment(int ID)
+        public void PayInstallment(int ID, DateTime PaymentDate)
         {
-            new Contract().PayInstallment(ID, (Session["User"] as User).ID);
+            new Contract().PayInstallment(ID, (Session["User"] as User).ID, PaymentDate);
         }
     }
 }

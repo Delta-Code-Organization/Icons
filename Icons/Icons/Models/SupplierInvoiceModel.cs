@@ -74,11 +74,11 @@ namespace Icons.Models
             db.SaveChanges();
             FinancialTransaction Ft = new FinancialTransaction();
             Ft.Amount = ITD.InvoiceNet;
-            Ft.FromAccount = ITD.InvoiceAccount;
+            Ft.FromAccount = ITD.Supplier.AccountingID;
             Ft.LastEditBy = EditBy;
             Ft.Notes = "";
-            Ft.Statement = "ترحيل فاتورة بيع";
-            Ft.ToAccount = ITD.Supplier.AccountingID;
+            Ft.Statement = "ترحيل فاتورة شراء";
+            Ft.ToAccount = ITD.InvoiceAccount;
             Ft.TransactionDate = DateTime.Now;
             db.FinancialTransactions.Add(Ft);
             db.SaveChanges();

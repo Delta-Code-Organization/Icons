@@ -123,10 +123,10 @@ namespace Icons.Models
             };
         }
 
-        public Returner PayInstallment(int ID,int EditBy)
+        public Returner PayInstallment(int ID,int EditBy,DateTime PaymentDate)
         {
             var Installment = db.Installments.Where(p => p.Id == ID).SingleOrDefault();
-            Installment.PaymentDate = DateTime.Now;
+            Installment.PaymentDate = PaymentDate;
             db.SaveChanges();
             FinancialTransaction Ft = new FinancialTransaction();
             Ft.Amount = Installment.Amount;

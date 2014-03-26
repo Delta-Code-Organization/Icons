@@ -266,46 +266,52 @@ namespace Icons.Models
         {
             var E = db.Employees.Single(p => p.Id == this.Id);
             var lastTransaction = db.FinancialTransactions.Where(p => p.FromAccount == E.EmpAccID).OrderByDescending(p => p.TransactionDate).FirstOrDefault();
-            switch (E.SalaryType)
+            if (lastTransaction != null)
             {
-                case 1:
-                    if (PaymentDate < ((DateTime)lastTransaction.TransactionDate).AddHours(24))
-                    {
-                        return new Returner
+                switch (E.SalaryType)
+                {
+                    case 1:
+                        if (PaymentDate < ((DateTime)lastTransaction.TransactionDate).AddHours(24))
                         {
-                            Message = Message.Cannot_pay_salary_at_Wrong_time
-                        };
-                    }
-                    break;
-                case 2:
-                    if (PaymentDate < ((DateTime)lastTransaction.TransactionDate).AddDays(15))
-                    {
-                        return new Returner
+                            return new Returner
+                            {
+                                Message = Message.Cannot_pay_salary_at_Wrong_time
+                            };
+                        }
+                        break;
+                    case 2:
+                        if (PaymentDate < ((DateTime)lastTransaction.TransactionDate).AddDays(15))
                         {
-                            Message = Message.Cannot_pay_salary_at_Wrong_time
-                        };
-                    }
-                    break;
-                case 3:
-                    if (PaymentDate < ((DateTime)lastTransaction.TransactionDate).AddDays(30))
-                    {
-                        return new Returner
+                            return new Returner
+                            {
+                                Message = Message.Cannot_pay_salary_at_Wrong_time
+                            };
+                        }
+                        break;
+                    case 3:
+                        if (PaymentDate < ((DateTime)lastTransaction.TransactionDate).AddDays(30))
                         {
-                            Message = Message.Cannot_pay_salary_at_Wrong_time
-                        };
-                    }
-                    break;
+                            return new Returner
+                            {
+                                Message = Message.Cannot_pay_salary_at_Wrong_time
+                            };
+                        }
+                        break;
+                }
             }
-            FinancialTransaction Ft = new FinancialTransaction();
-            Ft.Amount = Total;
-            Ft.FromAccount = E.EmpAccID;
-            Ft.LastEditBy = EditBy;
-            Ft.Notes = "";
-            Ft.Statement = "دفع راتب للموظف " + E.Name;
-            Ft.ToAccount = ToAcc;
-            Ft.TransactionDate = PaymentDate;
-            db.FinancialTransactions.Add(Ft);
-            db.SaveChanges();
+            else
+            {
+                FinancialTransaction Ft = new FinancialTransaction();
+                Ft.Amount = Total;
+                Ft.FromAccount = E.EmpAccID;
+                Ft.LastEditBy = EditBy;
+                Ft.Notes = "";
+                Ft.Statement = "دفع راتب للموظف " + E.Name;
+                Ft.ToAccount = ToAcc;
+                Ft.TransactionDate = PaymentDate;
+                db.FinancialTransactions.Add(Ft);
+                db.SaveChanges();
+            }
             return new Returner
             {
                 Message = Message.Salary_Paid_Successfully

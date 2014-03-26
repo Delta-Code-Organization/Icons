@@ -48,6 +48,21 @@ namespace Icons.Models
         public Returner Remove()
         {
             var P = db.Projects.Where(p => p.Id == this.Id).SingleOrDefault();
+            if (db.Stocks.Any(p=>p.ProjectID == P.Id && p.Quantity > 0))
+            {
+                return new Returner
+                {
+                    Message = Message.This_Project_Have_Stock_Cannot_Be_Deleted
+                };
+            }
+            else
+            {
+                db.Database.ExecuteSqlCommand("delete from Stock where ProjectID = {0}", P.Id);
+            }
+            db.SaveChanges();
+            var PAcc = db.AccountingTrees.Where(p => p.Id == (int)P.AccountID).SingleOrDefault();
+            db.AccountingTrees.Remove(PAcc);
+            db.SaveChanges();
             db.Projects.Remove(P);
             db.SaveChanges();
             return new Returner
@@ -67,6 +82,9 @@ namespace Icons.Models
         public Returner Edit()
         {
             var P = db.Projects.Where(p => p.Id == this.Id).SingleOrDefault();
+            var PAcc = db.AccountingTrees.Where(p => p.Id == P.AccountID).SingleOrDefault();
+            PAcc.NodeName = this.ProjectName;
+            db.SaveChanges();
             P.ExpectedCost = this.ExpectedCost;
             P.FirstViewLength = this.FirstViewLength;
             P.FloorsCount = this.FloorsCount;

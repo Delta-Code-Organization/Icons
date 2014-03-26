@@ -90,6 +90,10 @@
 
     $('#ProjEdit').submit(function (event) {
         if ($(this).parsley('validate')) {
+            if (parseFloat($('#per').val()) > 100) {
+                alert('نسبة الملكية لايمكن ان تتخطي الـ 100%');
+                return false;
+            }
             $.gritter.removeAll();
             $.ajax({
                 type: 'post',
@@ -131,7 +135,18 @@ function Remove(id) {
             type: 'post',
             data: { 'ID': id },
             success: function (data) {
-                $('#' + id).fadeOut(500);
+                if (data == "false") {
+                    $.gritter.add({
+                        title: '! فشل العملية',
+                        text: ". لا يمكن حذف هذا المشروع لأنة مخزن",
+                        image: '/content/images/user-icon.png',
+                        class_name: 'clean',
+                        time: '120000'
+                    });
+                }
+                else {
+                    $('#' + id).fadeOut(500);
+                }
             },
             error: function (data) {
                 alert(data.responseText);

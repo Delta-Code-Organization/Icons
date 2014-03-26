@@ -66,10 +66,17 @@ namespace Icons.Models
                 Message = Message.Product_Category_Updated_Successfully
             };
         }
-
+        
         public Returner Remove()
         {
             var CatToDelete = db.ProductCategories.Where(p => p.Id == this.Id).SingleOrDefault();
+            if (CatToDelete.Products.Count > 0)
+            {
+                return new Returner
+                {
+                    Message = Message.Cannot_Delete_Category_That_Contains_Products
+                };
+            }
             db.ProductCategories.Remove(CatToDelete);
             db.SaveChanges();
             var AccToDelete = db.AccountingTrees.Where(p => p.Id == CatToDelete.AccTreeCode).SingleOrDefault();

@@ -45,8 +45,14 @@ namespace Icons.Controllers
         [HttpPost]
         public string Remove(int ID)
         {
-            new Project { Id = ID }.Remove();
-            return "true";
+            if (new Project { Id = ID }.Remove().Message == Message.This_Project_Have_Stock_Cannot_Be_Deleted)
+            {
+                return "false";
+            }
+            else
+            {
+                return "true";
+            }
         }
 
         public ActionResult EditProject(int? id)
@@ -85,6 +91,7 @@ namespace Icons.Controllers
             P.SecondViewLength = Convert.ToDouble(FC["second"]);
             P.ThirdViewLength = Convert.ToDouble(FC["third"]);
             P.Edit();
+            TempData.Keep();
             return "true";
         }
 
