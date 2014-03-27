@@ -146,9 +146,15 @@ $(document).ready(function () {
                         class_name: 'clean',
                         time: '5000'
                     });
-                    setTimeout(function () {
-                        location.reload();
-                    }, 2000);
+                    $('#EleTbl > tbody  > tr').each(function (index, ele) {
+                        if (index != 0) {
+                            $(ele).remove();
+                        }
+                    });
+                    $('#Date').val('');
+                    $('#Date').val('');
+                    $('#Notes').val('');
+                    $('#Notes').text('');
                 },
                 error: function (data) {
                     alert(data.responseText);

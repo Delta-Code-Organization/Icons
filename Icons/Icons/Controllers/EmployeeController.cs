@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Icons.Models;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace Icons.Controllers
 {
@@ -19,10 +22,43 @@ namespace Icons.Controllers
             return View();
         }
 
+        private Image LoadImage(string Base64)
+        {
+            
+            //get a temp image from bytes, instead of loading from disk
+            //data:image/gif;base64,
+            //this image is a single pixel (black)
+            byte[] bytes = Convert.FromBase64String(Base64);
+            byte[] bbbbb = new byte[900000000000];
+            Image image;
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+                image = Image.FromStream(ms);
+            }
+
+            return image;
+        }
+
         [HttpPost]
         public string CreateEmployee(FormCollection FC)
         {
             Employee E = new Employee();
+            string File = FC["Attachment"];
+            //if (File != " ")
+            //{
+            //    //if not empty here the steps of saving the image to the folder of knowledgebase on the server 
+            //    Image Img = LoadImage(File);
+            //    string Path;
+            //    using (Bitmap image = new Bitmap(Img))
+            //    {
+            //        //image object properties
+            //        var fileName = Guid.NewGuid() + ".png";
+            //        Path = @"/content/img/knowledgebase/" + fileName;
+            //        string ImagePath = Server.MapPath(Path);
+            //        image.Save(ImagePath, ImageFormat.Png);
+            //    }
+            //    B.ImageURL = Path;
+            //}
             E.Address = FC["address"];
             E.BasicSalary = Convert.ToInt32(FC["basicsalary"]);
             E.DateOfBirth = Convert.ToDateTime(FC["dateofbirth"]);

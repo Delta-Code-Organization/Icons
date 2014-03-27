@@ -2526,6 +2526,7 @@
       <DependentUpon>Icons.edmx</DependentUpon>
       <LastGenOutput>Icons.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Properties\PublishProfiles\Maksoud.pubxml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Accounting\AccountingTree.cshtml" />

@@ -2,6 +2,48 @@
 var Discount = 0;
 var counter = 958935;
 
+$(document).ready(function () {
+    var value = $('#prod').val();
+    $.ajax({
+        url: '/Accounting/GetProdPrice',
+        type: 'post',
+        data: { 'ProdID': value },
+        success: function (data) {
+            $('#price').val(data);
+            CalcCurrentLineTotal();
+        },
+        error: function (data) {
+            alert(data.responseText);
+        }
+    });
+});
+
+function GetProdPrice(ele) {
+    var value = ele.options[ele.selectedIndex].value;
+    $.ajax({
+        url: '/Accounting/GetProdPrice',
+        type: 'post',
+        data: { 'ProdID': value },
+        success: function (data) {
+            $('#price').val(data);
+            CalcCurrentLineTotal();
+        },
+        error: function (data) {
+            alert(data.responseText);
+        }
+    });
+}
+
+function CalcCurrentLineTotal() {
+    var Qty = parseFloat($('#qty').val());
+    var LastPrice = parseFloat($('#price').val());
+    var Tota = Qty * LastPrice;
+    $('#total').val(Tota);
+    if ($('#total').val() == "NaN" || $('#total').val() == NaN) {
+        $('#total').val(0);
+    }
+}
+
 function AddInvoiceLine() {
     var Prod = $('#prod').val();
     var Prodname = $("#prod option:selected").text();
@@ -108,9 +150,14 @@ function AddFullInvoice() {
                 class_name: 'clean',
                 time: '5000'
             });
-            setTimeout(function () {
-                location.reload();
-            }, 2000);
+            $('#EleTbl > tbody  > tr').each(function (index, ele) {
+                if (index != 0) {
+                    $(ele).remove();
+                }
+            });
+            $('#invoicedate').val('');
+            $('#invoiceref').val('');
+            $('#Dis').val('');
         },
         error: function (data) {
             alert(data.responseText);
