@@ -155,36 +155,33 @@ namespace Icons.Models
                 return false;
             }
         }
-
-        private List<FinancialTransaction> GetFtChilds(AccountingTree Acc)
+        private List<FinancialTransaction> GetFtChilds(AccountingTree Acc, int ToAcc)
         {
             List<FinancialTransaction> LOFTTT = new List<FinancialTransaction>();
-            LOFTTT = Acc.FinancialTransactions.ToList();
-            LOFTTT.AddRange(Acc.FinancialTransactions1);
+            if (ToAcc == 0)
+            {
+                LOFTTT = Acc.FinancialTransactions.ToList();
+                LOFTTT.AddRange(Acc.FinancialTransactions1);
+            }
+            else
+            {
+                LOFTTT = Acc.FinancialTransactions.Where(p => p.FromAccount == ToAcc || p.ToAccount == ToAcc).ToList();
+                LOFTTT.AddRange(Acc.FinancialTransactions1.Where(p => p.FromAccount == ToAcc || p.ToAccount == ToAcc));
+            }
             if (Acc.AccountingTree1.Count > 0)
             {
                 foreach (AccountingTree Child in Acc.AccountingTree1)
                 {
-                    LOFTTT.AddRange(GetFtChilds(Child));
+                    LOFTTT.AddRange(GetFtChilds(Child, ToAcc));
                 }
             }
-            return LOFTTT.OrderBy(p => p.Id).ToList() ;
+            return LOFTTT.OrderBy(p => p.Id).ToList();
         }
-
         public Returner FilterStatements(int FromAcc, int ToAcc)
         {
             List<FinancialTransaction> LOFT = new List<FinancialTransaction>();
-            if (ToAcc == 0)
-            {
-                var Acc = db.AccountingTrees.Single(p => p.Id == FromAcc);
-                LOFT = GetFtChilds(Acc);
-            }
-            else
-            {
-
-                var Acc = db.AccountingTrees.Single(p => p.Id == FromAcc);
-                LOFT = GetFtChilds(Acc);
-            }
+            var Acc = db.AccountingTrees.Single(p => p.Id == FromAcc);
+            LOFT = GetFtChilds(Acc, ToAcc);
             var ResInJson = (from F in LOFT
                              select new
                              {
