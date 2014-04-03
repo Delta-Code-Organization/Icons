@@ -160,6 +160,7 @@ namespace Icons.Models
         {
             List<FinancialTransaction> LOFTTT = new List<FinancialTransaction>();
             LOFTTT = Acc.FinancialTransactions.ToList();
+            LOFTTT.AddRange(Acc.FinancialTransactions1);
             if (Acc.AccountingTree1.Count > 0)
             {
                 foreach (AccountingTree Child in Acc.AccountingTree1)
@@ -167,7 +168,7 @@ namespace Icons.Models
                     LOFTTT.AddRange(GetFtChilds(Child));
                 }
             }
-                return LOFTTT;
+            return LOFTTT.OrderBy(p => p.Id).ToList() ;
         }
 
         public Returner FilterStatements(int FromAcc, int ToAcc)

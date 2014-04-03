@@ -9,10 +9,15 @@
                 data: $(this).serialize(),
                 success: function (data) {
                     var Total = 0;
+                    var da2en = 0;
+                    var maden = 0;
                     $('#AreaToAppend').empty();
                     $('#Loader').css('display', 'none');
                     $.each(data, function (index, St) {
-                        Total += St.Amount;
+                        if ($('#Acc1').select2('data').text == St.AccountingTree.NodeName) {
+                            da2en += St.Amount;
+                        } else
+                            maden += St.Amount;
                         var millii = St.TransactionDate.replace(/\/Date\((-?\d+)\)\//, '$1');
                         var DateTimee = new Date(parseInt(millii));
                         var Dayy = DateTimee.getDate();
@@ -31,6 +36,15 @@
                     $('#AreaToAppend').append('<tr>'
                                     + '<td style="width: 16.66%; text-align: center; font-weight:bold;"></td>'
                                     + '<td style="width: 16.66%; text-align: center; font-weight:bold;" colspan="5"></td>'
+                                + '</tr>');
+                    Total = da2en - maden;
+                    $('#AreaToAppend').append('<tr>'
+                                    + '<td style="width: 16.66%; text-align: center; font-weight:bold;">دائن</td>'
+                                    + '<td style="width: 16.66%; text-align: center; font-weight:bold;" colspan="5">' + da2en + '</td>'
+                                + '</tr>');
+                    $('#AreaToAppend').append('<tr>'
+                                    + '<td style="width: 16.66%; text-align: center; font-weight:bold;"> مدين</td>'
+                                    + '<td style="width: 16.66%; text-align: center; font-weight:bold;" colspan="5">' + maden + '</td>'
                                 + '</tr>');
                     $('#AreaToAppend').append('<tr>'
                                     + '<td style="width: 16.66%; text-align: center; font-weight:bold;">الصافي</td>'

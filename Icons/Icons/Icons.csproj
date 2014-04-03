@@ -279,7 +279,6 @@
     <Content Include="content\images\gallery\img7.jpg" />
     <Content Include="content\images\icon-mic.jpg" />
     <Content Include="content\images\loader_40x40.gif" />
-    <Content Include="content\images\loading_circle_fully_working.gif" />
     <Content Include="content\images\logo.png" />
     <Content Include="content\images\menu-tail-left.png" />
     <Content Include="content\images\mic-icon.png" />
