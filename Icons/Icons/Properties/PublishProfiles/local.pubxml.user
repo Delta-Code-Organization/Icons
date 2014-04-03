@@ -14,7 +14,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/05/2014 11:27:26</publishTime>
     </File>
     <File Include="bin/Icons.dll">
-      <publishTime>03/27/2014 11:55:48</publishTime>
+      <publishTime>04/02/2014 15:48:16</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>03/05/2014 11:27:34</publishTime>
@@ -6662,19 +6662,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/11/2014 18:06:12</publishTime>
     </File>
     <File Include="scripts/Contract.js">
-      <publishTime>03/26/2014 11:28:08</publishTime>
+      <publishTime>04/02/2014 11:39:06</publishTime>
     </File>
     <File Include="scripts/Customer.js">
       <publishTime>03/09/2014 18:09:46</publishTime>
     </File>
     <File Include="scripts/CustomerInvoice.js">
-      <publishTime>03/23/2014 14:04:38</publishTime>
+      <publishTime>03/27/2014 14:17:36</publishTime>
     </File>
     <File Include="scripts/EditCustomer.js">
       <publishTime>03/10/2014 14:10:16</publishTime>
     </File>
     <File Include="scripts/Employee.js">
-      <publishTime>03/24/2014 11:18:30</publishTime>
+      <publishTime>03/30/2014 12:09:10</publishTime>
+    </File>
+    <File Include="scripts/FinancialTransaction.js">
+      <publishTime>03/31/2014 11:01:28</publishTime>
     </File>
     <File Include="scripts/Imprest.js">
       <publishTime>03/11/2014 18:22:38</publishTime>
@@ -6686,16 +6689,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/26/2014 14:03:20</publishTime>
     </File>
     <File Include="scripts/Project.js">
-      <publishTime>03/26/2014 13:07:22</publishTime>
+      <publishTime>03/31/2014 12:59:32</publishTime>
     </File>
     <File Include="scripts/SearchInvoices.js">
       <publishTime>03/24/2014 01:41:22</publishTime>
+    </File>
+    <File Include="scripts/Statements.js">
+      <publishTime>04/02/2014 15:00:36</publishTime>
     </File>
     <File Include="scripts/Supplier.js">
       <publishTime>03/06/2014 20:29:18</publishTime>
     </File>
     <File Include="scripts/SupplierInvoice.js">
-      <publishTime>03/23/2014 14:27:46</publishTime>
+      <publishTime>03/31/2014 12:06:20</publishTime>
     </File>
     <File Include="scripts/SupplierInvoiceSearch.js">
       <publishTime>03/24/2014 01:41:08</publishTime>
@@ -6704,7 +6710,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/10/2014 13:11:52</publishTime>
     </File>
     <File Include="scripts/WorkOrder.js">
-      <publishTime>03/24/2014 16:48:08</publishTime>
+      <publishTime>03/27/2014 14:19:38</publishTime>
     </File>
     <File Include="scripts/WorkOrderReport.js">
       <publishTime>03/25/2014 16:10:46</publishTime>
@@ -6715,17 +6721,23 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Accounting/AccountsSetting.cshtml">
       <publishTime>03/09/2014 10:37:46</publishTime>
     </File>
+    <File Include="Views/Accounting/AddFinancialTransactions.cshtml">
+      <publishTime>03/31/2014 11:26:50</publishTime>
+    </File>
+    <File Include="Views/Accounting/Statements.cshtml">
+      <publishTime>04/02/2014 14:58:08</publishTime>
+    </File>
     <File Include="Views/Accounting/WorkOrder.cshtml">
-      <publishTime>03/24/2014 16:23:26</publishTime>
+      <publishTime>03/27/2014 14:22:26</publishTime>
     </File>
     <File Include="Views/Accounting/WorkOrderReport.cshtml">
       <publishTime>03/25/2014 16:11:06</publishTime>
     </File>
     <File Include="Views/Contract/CreateContract.cshtml">
-      <publishTime>03/13/2014 14:32:58</publishTime>
+      <publishTime>04/02/2014 11:38:34</publishTime>
     </File>
     <File Include="Views/Contract/SearchInstallments.cshtml">
-      <publishTime>03/26/2014 11:13:16</publishTime>
+      <publishTime>03/30/2014 11:12:14</publishTime>
     </File>
     <File Include="Views/Customer/CreateCustomer.cshtml">
       <publishTime>03/10/2014 13:47:30</publishTime>
@@ -6734,7 +6746,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/10/2014 13:48:04</publishTime>
     </File>
     <File Include="Views/Customer/Invoice.cshtml">
-      <publishTime>03/24/2014 13:51:46</publishTime>
+      <publishTime>03/27/2014 13:58:50</publishTime>
     </File>
     <File Include="Views/Customer/SearchCustomers.cshtml">
       <publishTime>03/10/2014 14:09:18</publishTime>
@@ -6746,7 +6758,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/23/2014 16:32:40</publishTime>
     </File>
     <File Include="Views/Employee/CreateEmployee.cshtml">
-      <publishTime>03/10/2014 17:17:42</publishTime>
+      <publishTime>03/30/2014 12:08:40</publishTime>
     </File>
     <File Include="Views/Employee/EditEmployee.cshtml">
       <publishTime>03/10/2014 17:48:52</publishTime>
@@ -6788,7 +6800,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/06/2014 17:23:30</publishTime>
     </File>
     <File Include="Views/Project/CreateProject.cshtml">
-      <publishTime>03/10/2014 13:41:30</publishTime>
+      <publishTime>03/31/2014 13:03:20</publishTime>
     </File>
     <File Include="Views/Project/CreateProjectUnits.cshtml">
       <publishTime>03/10/2014 13:43:28</publishTime>
@@ -6809,7 +6821,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/10/2014 13:40:08</publishTime>
     </File>
     <File Include="Views/Supplier/Invoice.cshtml">
-      <publishTime>03/24/2014 13:51:58</publishTime>
+      <publishTime>03/31/2014 12:07:40</publishTime>
     </File>
     <File Include="Views/Supplier/SearchInvoices.cshtml">
       <publishTime>03/26/2014 18:17:10</publishTime>
@@ -6833,7 +6845,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/05/2014 11:25:48</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/27/2014 11:55:50</publishTime>
+      <publishTime>04/02/2014 15:48:20</publishTime>
     </File>
   </ItemGroup>
 </Project>

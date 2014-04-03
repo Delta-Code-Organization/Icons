@@ -2083,11 +2083,13 @@
     <Content Include="scripts\CustomerInvoice.js" />
     <Content Include="scripts\EditCustomer.js" />
     <Content Include="scripts\Employee.js" />
+    <Content Include="scripts\FinancialTransaction.js" />
     <Content Include="scripts\Imprest.js" />
     <Content Include="scripts\Penalty.js" />
     <Content Include="scripts\Product.js" />
     <Content Include="scripts\Project.js" />
     <Content Include="scripts\SearchInvoices.js" />
+    <Content Include="scripts\Statements.js" />
     <Content Include="scripts\Supplier.js" />
     <Content Include="scripts\SupplierInvoice.js" />
     <Content Include="scripts\SupplierInvoiceSearch.js" />
@@ -2558,6 +2560,8 @@
     <Content Include="Views\Employee\Payroll.cshtml" />
     <Content Include="Views\Accounting\WorkOrder.cshtml" />
     <Content Include="Views\Accounting\WorkOrderReport.cshtml" />
+    <Content Include="Views\Accounting\Statements.cshtml" />
+    <Content Include="Views\Accounting\AddFinancialTransactions.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

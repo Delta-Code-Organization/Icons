@@ -2,6 +2,10 @@
     $('#ProjCreate').submit(function (event) {
         if ($(this).parsley('validate')) {
             $.gritter.removeAll();
+            if (parseInt($('#per').val()) > 100 || parseInt($('#per').val()) < 0) {
+                alert("الرجاء التأكد من نسبة الملكية");
+                return false;
+            }
             $.ajax({
                 type: 'post',
                 url: '/Project/CreateProject',

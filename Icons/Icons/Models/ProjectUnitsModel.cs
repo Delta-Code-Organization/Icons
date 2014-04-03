@@ -7,9 +7,14 @@ namespace Icons.Models
 {
     public partial class ProjectUnit
     {
-    #region Context
+        #region Context
         MaksoudDBEntities db = new MaksoudDBEntities();
-	#endregion
+        #endregion
+
+        public string DisplayText
+        {
+            get { return Project.ProjectName + "-" + Enum.GetName(typeof(UnitTypes), UnitType) + "-" + FloorNumber.ToString() + "-" + UnitSpace.ToString(); }
+        }
 
         #region PrivateMethods
         private int CreateUnitNode()

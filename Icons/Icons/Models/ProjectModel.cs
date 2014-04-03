@@ -114,6 +114,7 @@ namespace Icons.Models
                                        Finishing = Enum.GetName(typeof(Finishing), U.Finishing),
                                        U.FloorNumber,
                                        U.UnitSpace,
+                                       U.DisplayText,
                                        UnitName = Enum.GetName(typeof(UnitTypes), U.UnitType)
                                    }).ToList();
             return new Returner

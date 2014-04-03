@@ -72,7 +72,7 @@
                     <tbody class="no-border-x" id="ProdEle">
                         <tr id="0">
                             <td>
-                                <select class="select2" id="prod" onchange="GetProdPrice(this)">
+                                <select class="select2" id="prod">
                                     @{
                                         List<Product> LOP = ViewBag.P as List<Product>;
                                         List<ProductCategory> LOPC = new List<ProductCategory>();
@@ -98,11 +98,11 @@
                                     }
                                 </select></td>
                             <td>
-                                <input type="number" value="" onkeypress="return isNumberKey(event)" onkeyup="CalcCurrentLineTotal()" class="form-control" id="qty"></td>
+                                <input type="number" value="" placeholder="0" onkeypress="return isNumberKey(event)" onkeyup="CalcCurrentLineTotal()" class="form-control" id="qty"></td>
                             <td>
-                                <input type="number" value="00000" onkeypress="return isNumberKey(event)" disabled="disabled" class="form-control" id="price"></td>
+                                <input type="number" value="" placeholder="0" onkeypress="return isNumberKey(event)" class="form-control" onkeyup="CalcCurrentLineTotal()" id="price"></td>
                             <td>
-                                <input type="number" value="00000" onkeypress="return isNumberKey(event)" disabled="disabled" class="form-control" id="total"></td>
+                                <input type="number" value="" placeholder="0" onkeypress="return isNumberKey(event)" disabled="disabled" class="form-control" id="total"></td>
                             <td>
                                 <button class="btn btn-default Arabic" onclick="AddInvoiceLine()">اضافة</button></td>
                         </tr>

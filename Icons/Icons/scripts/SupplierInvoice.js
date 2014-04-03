@@ -2,21 +2,21 @@
 var Discount = 0;
 var counter = 958935;
 
-$(document).ready(function () {
-    var value = $('#prod').val();
-    $.ajax({
-        url: '/Accounting/GetProdPrice',
-        type: 'post',
-        data: { 'ProdID': value },
-        success: function (data) {
-            $('#price').val(data);
-            CalcCurrentLineTotal();
-        },
-        error: function (data) {
-            alert(data.responseText);
-        }
-    });
-});
+//$(document).ready(function () {
+//    var value = $('#prod').val();
+//    $.ajax({
+//        url: '/Accounting/GetProdPrice',
+//        type: 'post',
+//        data: { 'ProdID': value },
+//        success: function (data) {
+//            $('#price').val(data);
+//            CalcCurrentLineTotal();
+//        },
+//        error: function (data) {
+//            alert(data.responseText);
+//        }
+//    });
+//});
 
 function GetProdPrice(ele) {
     var value = ele.options[ele.selectedIndex].value;

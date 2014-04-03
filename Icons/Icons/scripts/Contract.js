@@ -43,7 +43,7 @@ function GetUnits(id) {
         data: { 'id': id },
         success: function (data) {
             $.each(data, function (index, u) {
-                $('#OPTUnits').append('<option value="' + u.Id + '">' + u.Id + '</option>');
+                $('#OPTUnits').append('<option value="' + u.Id + '">' + u.DisplayText + '</option>');
             });
         },
         error: function (data) {

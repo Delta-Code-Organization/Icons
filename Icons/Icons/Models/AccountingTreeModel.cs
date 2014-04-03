@@ -142,5 +142,81 @@ namespace Icons.Models
                 DataInJSON = TheStockInJSON.ToJSON()
             };
         }
+
+        public bool hasChild()
+        {
+            var AT = db.AccountingTrees.Where(p => p.Parent == this.Id).ToList();
+            if (AT.Count != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private List<FinancialTransaction> GetFtChilds(AccountingTree Acc)
+        {
+            List<FinancialTransaction> LOFTTT = new List<FinancialTransaction>();
+            LOFTTT = Acc.FinancialTransactions.ToList();
+            if (Acc.AccountingTree1.Count > 0)
+            {
+                foreach (AccountingTree Child in Acc.AccountingTree1)
+                {
+                    LOFTTT.AddRange(GetFtChilds(Child));
+                }
+            }
+                return LOFTTT;
+        }
+
+        public Returner FilterStatements(int FromAcc, int ToAcc)
+        {
+            List<FinancialTransaction> LOFT = new List<FinancialTransaction>();
+            if (ToAcc == 0)
+            {
+                var Acc = db.AccountingTrees.Single(p => p.Id == FromAcc);
+                LOFT = GetFtChilds(Acc);
+            }
+            else
+            {
+
+                var Acc = db.AccountingTrees.Single(p => p.Id == FromAcc);
+                LOFT = GetFtChilds(Acc);
+            }
+            var ResInJson = (from F in LOFT
+                             select new
+                             {
+                                 F.FromAccount,
+                                 F.ToAccount,
+                                 F.Statement,
+                                 F.TransactionDate,
+                                 F.Notes,
+                                 F.Amount,
+                                 AccountingTree = new
+                                 {
+                                     F.AccountingTree.NodeName
+                                 },
+                                 AccountingTree1 = new
+                                 {
+                                     F.AccountingTree1.NodeName
+                                 }
+                             });
+            return new Returner
+            {
+                Data = LOFT,
+                DataInJSON = ResInJson.ToJSON()
+            };
+        }
+
+        public Returner AddFT(FinancialTransaction Ft)
+        {
+            db.FinancialTransactions.Add(Ft);
+            db.SaveChanges();
+            return new Returner
+            {
+                Message = Message.Financial_Transaction_Saved_Successfully
+            };
+        }
     }
 }

@@ -124,5 +124,38 @@ namespace Icons.Controllers
         {
             return new AccountingTree().WorkOrderReport(ProjId, ProdId, From, To).DataInJSON;
         }
+
+        public ActionResult Statements()
+        {
+            ViewBag.Accs = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult FilterStatements(int Acc1, int Acc2)
+        {
+            return new AccountingTree().FilterStatements(Acc1, Acc2).DataInJSON;
+        }
+
+        public ActionResult AddFinancialTransactions()
+        {
+            ViewBag.Accs = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
+            return View();
+        }
+
+        [HttpPost]
+        public void AddFT(int Acc1, int Acc2, double Amount, string State, DateTime Date, string Notes)
+        {
+            new AccountingTree().AddFT(new FinancialTransaction
+            {
+                FromAccount = Acc1,
+                ToAccount = Acc2,
+                Amount = Amount,
+                Statement = State,
+                TransactionDate = Date,
+                Notes = Notes,
+                LastEditBy = (Session["User"] as User).ID
+            });
+        }
     }
 }

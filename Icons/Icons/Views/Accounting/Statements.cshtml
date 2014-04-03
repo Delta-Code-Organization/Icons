@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Statements";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+}
+
+@using Icons.Models;
+
+<script src="~/scripts/Statements.js"></script>
+
+<div class="row">
+    <div class="col-md-9" style="padding: 0; padding-left: 15px;">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">كشف حساب</h3>
+            </div>
+            <div class="content">
+                <div class="block-flat">
+                    <div class="header">
+                        <h3 class="ArabicAlign">الحساب</h3>
+                    </div>
+                    <div class="content">
+                        <table class="no-border ArabicDir" id="ToPrint">
+                            <thead class="no-border">
+                                <tr>
+                                    <th style="width: 16.66%; text-align: center; font-weight:bold;">مدين</th>
+                                    <th style="width: 16.66%; text-align: center; font-weight:bold;">دائن</th>
+                                    <th style="width: 16.66%; text-align: center; font-weight:bold;">القيمة</th>
+                                    <th style="width: 16.66%; text-align: center; font-weight:bold;">بيان</th>
+                                    <th style="width: 16.66%; text-align: center; font-weight:bold;">تاريخ</th>
+                                    <th style="width: 16.66%; text-align: center; font-weight:bold;">ملاحظات</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y" id="AreaToAppend">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3" style="padding: 0;">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">البحث</h3>
+            </div>
+            <div class="content">
+                <form class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" id="StatementsForm" action="#" style="border-radius: 0px;">
+                    <div class="form-group">
+                        <label class="Arabic">حساب</label>
+                        <select class="select2" name="Acc1" id="Acc1">
+                            @{
+                                foreach (AccountingTree item in ViewBag.Accs)
+                                {
+                                <option value="@item.Id">@item.NodeName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">حساب</label>
+                        <select class="select2" name="Acc2" id="Acc2">
+                            <option value="0">الكل</option>
+                            @{
+                                foreach (AccountingTree item in ViewBag.Accs)
+                                {
+                                <option value="@item.Id">@item.NodeName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary Arabic" type="submit">عرض</button>
+                        <button class="btn btn-default Arabic">الغاء</button>
+                        <img alt="loader" id="Loader" src="~/content/images/loader_40x40.gif" style="float:right; display:none;" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
