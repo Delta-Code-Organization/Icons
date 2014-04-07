@@ -65,6 +65,7 @@
         <AssociationConnector Association="MaksoudDBModel.FK_SupplierInvoices_Suppliers" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_SupplierInvoices_Users" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.UserAccess" ManuallyRouted="false" />
+        <AssociationConnector Association="MaksoudDBModel.FK_SupplierInvoices_AccountingTree" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

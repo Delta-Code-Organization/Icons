@@ -42,6 +42,18 @@ namespace Icons.Models
         public Returner Remove()
         {
             var ILToRemove = db.CustomerInvoiceLines.Where(p => p.Id == this.Id).SingleOrDefault();
+            var ILParent = db.CustomerInvoices.Single(p => p.Id == ILToRemove.InvoiceId);
+            StockTransaction ST = new StockTransaction();
+            ST.Date = DateTime.Now;
+            ST.ProductID = ILToRemove.ProductId;
+            ST.Quantity = ILToRemove.Qty;
+            ST.StockID = db.Stocks.Single(p => p.ProductID == ILToRemove.ProductId && p.ProjectID == ILParent.ProjectID).Id;
+            ST.Type = (int)StockTransactionsTypes.تعديل_فاتورة_بيع;
+            db.StockTransactions.Add(ST);
+            var StockToEdit = db.Stocks.Single(p => p.ProductID == ILToRemove.ProductId && p.ProjectID == ILParent.ProjectID);
+            StockToEdit.Quantity += ST.Quantity;
+            ILParent.InvoiceTotal -= ILToRemove.Total;
+            ILParent.InvoiceNet = ILParent.InvoiceTotal - ILParent.InvoiceDiscount;
             db.CustomerInvoiceLines.Remove(ILToRemove);
             db.SaveChanges();
             return new Returner

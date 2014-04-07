@@ -129,5 +129,17 @@ namespace Icons.Controllers
         {
             new Contract().PayInstallment(ID, (Session["User"] as User).ID, PaymentDate);
         }
+
+        
+
+        [HttpPost]
+        public void EditInstallment(FormCollection FC)
+        {
+            Installment I = new Installment();
+            I.Id = Convert.ToInt32(FC["IDPop"]);
+            I.DueDate = Convert.ToDateTime(FC["DueDatePop"]);
+            I.Amount = Convert.ToDouble(FC["AmountPop"]);
+            new Contract().EditInstallment(I);
+        }
     }
 }

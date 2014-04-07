@@ -1,5 +1,6 @@
 ﻿var ValidatePercentage = 0;
 var UnitID = 0;
+var TotOfTot = 0;
 
 $(document).ready(function () {
     GetUnits($('#cprojectid').val());
@@ -179,6 +180,7 @@ $(document).ready(function () {
                                     + '</div>'
                                     + '<div class="total-data bg-blue">'
                                         + '<h2>إجمالي الأقساط المدفوعة <span class="pull-left" id="Total' + index + '"></span></h2>'
+                                        + '<h2>إجمالي الأقساط المتبقية <span class="pull-left" id="Rem' + index + '"></span></h2>'
                                     + '</div>'
                                 + '</div>'
                             + '</div>'
@@ -190,7 +192,7 @@ $(document).ready(function () {
                             var Dayy = DateTimee.getDate();
                             var yearr = DateTimee.getFullYear();
                             var mounthh = DateTimee.getMonth() + 1;
-                            var FullDatee = mounthh + "/" + Dayy + "/" + yearr;
+                            var FullDatee = (mounthh + "/" + Dayy + "/" + yearr).toString();
                             if (Ins.PaymentDate == "null" || Ins.PaymentDate == null) {
                                 $('#' + index).append('<li id="Installment' + Ins.Id + '">'
                                                 + '<i class="fa fa-calendar pull-right"></i>' + FullDatee + ' <span class="pull-left value" id="ThisCont' + Ins.Id + '">'
@@ -198,12 +200,17 @@ $(document).ready(function () {
                                                 + '<button class="btn btn-success" data-target="#mod-info" data-toggle="modal" type="button" onclick="SetInstallmentData(' + Ins.Id + ',' + Ins.Amount + ')">'
                                                     + 'دفع'
                                                 + '</button>'
+                                                + '<button class="btn btn-primary" data-target="#mod-Edit" data-toggle="modal" type="button" onclick="SetInstallmentData2Edit(' + Ins.Id + ',' + mounthh + ',' + Dayy + ',' + yearr + ',' + Ins.Amount + ')">'
+                                                    + 'تعديل'
+                                                + '</button>'
                                                 + '</span>'
                                                 + '<small>&nbsp</small>'
                                             + '</li>');
+                                TotOfTot += parseFloat(Ins.Amount);
                             }
                             else {
                                 Tot += parseFloat(Ins.Amount);
+                                TotOfTot = parseFloat(Ins.Amount);
                                 $('#' + index).append('<li>'
                                                 + '<i class="fa fa-calendar pull-right"></i>' + FullDatee + ' <span class="pull-left value">' + '&nbsp' + Ins.Amount + '&nbsp' + 'مدفوع' + '</span>'
                                                 + '<small>&nbsp</small>'
@@ -211,6 +218,8 @@ $(document).ready(function () {
                             }
                         });
                         $('#Total' + index).text(Tot);
+                        var Remain = TotOfTot - Tot;
+                        $('#Rem' + index).text(Remain);
                     });
                 },
                 error: function (data) {
@@ -228,7 +237,14 @@ function SetInstallmentData(id, amount) {
     $('#ISTAmount').val(amount);
 }
 
-function PayInstallment(id, amount , PaymentDate) {
+function SetInstallmentData2Edit(id, month2, day2, year2, Amount) {
+    $('#IDPop').val(id);
+    var fulldate2 = month2 + '/' + day2 + '/' + year2;
+    $('#DueDatePop').val(fulldate2);
+    $('#AmountPop').val(Amount);
+}
+
+function PayInstallment(id, amount, PaymentDate) {
     $.ajax({
         url: '/Contract/PayInstallment',
         type: 'post',
@@ -258,6 +274,33 @@ $(document).ready(function () {
             var PayAmount = $('#ISTAmount').val();
             var PaymentDate = $('#PaymentDate').val();
             PayInstallment(PayId, PayAmount, PaymentDate);
+        }
+        return false;
+    });
+});
+
+$(document).ready(function () {
+    $('#EditCurrentInstallment').submit(function (event) {
+        if ($(this).parsley('validate')) {
+            $.ajax({
+                url: '/Contract/EditInstallment',
+                type: 'post',
+                data: $(this).serialize(),
+                success: function (data) {
+                    $.gritter.add({
+                        title: '! نجاح العملية',
+                        text: ". تم تعديل القسط بنجاح",
+                        image: '/content/images/user-icon.png',
+                        class_name: 'clean',
+                        time: '4000'
+                    });
+                    $('#ClosePopBtn2').click();
+                    location.reload();
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            });
         }
         return false;
     });

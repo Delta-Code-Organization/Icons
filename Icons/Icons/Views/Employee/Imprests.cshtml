@@ -71,52 +71,57 @@
                 </table>
             </div>
         </div>
-        <div class="block-flat">
-            <div class="header">
-                <h3 class="ArabicAlign">إضافة عهد</h3>
-            </div>
-            <div class="content">
-                <form class="form-horizontal group-border-dashed" id="AddImprest" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">قيمة العهد</label>
-                        <div class="col-sm-6 Arabic">
-                            <input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="imprest" name="imprest" parsley-trigger="change" required="" parsley-error-message="يجب ادخال قيمة الجزاء" type="text" />
+        @{
+            if ((ViewBag.AllP as List<FinancialTransaction>).Count == 0)
+            {
+            <div class="block-flat">
+                <div class="header">
+                    <h3 class="ArabicAlign">إضافة عهد</h3>
+                </div>
+                <div class="content">
+                    <form class="form-horizontal group-border-dashed" id="AddImprest" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">قيمة العهد</label>
+                            <div class="col-sm-6 Arabic">
+                                <input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="imprest" name="imprest" parsley-trigger="change" required="" parsley-error-message="يجب ادخال قيمة الجزاء" type="text" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">من حساب</label>
-                        <div class="col-sm-6 Arabic">
-                            <select class="select2" name="FromAcc" id="FromAcc">
-                                @{
-                                    foreach (AccountingTree item in ViewBag.AllAcc)
-                                    {
-                                    <option value="@item.Id">@item.NodeName</option>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">من حساب</label>
+                            <div class="col-sm-6 Arabic">
+                                <select class="select2" name="FromAcc" id="FromAcc">
+                                    @{
+                foreach (AccountingTree item in ViewBag.AllAcc)
+                {
+                                        <option value="@item.Id">@item.NodeName</option>
+                }
                                     }
-                                }
-                            </select>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">ملاحظات</label>
-                        <div class="col-sm-6 Arabic">
-                            <textarea id="Notes" name="Notes" class="form-control"></textarea>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">ملاحظات</label>
+                            <div class="col-sm-6 Arabic">
+                                <textarea id="Notes" name="Notes" class="form-control"></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">انشاء العهد</button>
-                            <button type="button" class="btn btn-default">الغاء</button>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">انشاء العهد</button>
+                                <button type="button" class="btn btn-default">الغاء</button>
+                            </div>
                         </div>
+                    </form>
+                    <div class="resultmsg" style="text-align: center; color: blue;">
+                        <label id="result"></label>
                     </div>
-                </form>
-                <div class="resultmsg" style="text-align: center; color: blue;">
-                    <label id="result"></label>
                 </div>
             </div>
-        </div>
+            }
+        }
         <div class="block-flat">
             <div class="header">
-                <h3 style="width: 100%; text-align: right;">عهد العميل</h3>
+                <h3 style="width: 100%; text-align: right;">تفاصيل العهدة</h3>
             </div>
             <div class="content">
                 <table style="direction: rtl;">

@@ -36,5 +36,6 @@ namespace Icons.Models
         public virtual ICollection<SupplierInvoiceLine> SupplierInvoiceLines { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual User User { get; set; }
+        public virtual AccountingTree AccountingTree { get; set; }
     }
 }

@@ -1,0 +1,212 @@
+﻿@{
+    ViewBag.Title = "EditInvoice";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+    CustomerInvoice I = ViewBag.I;
+}
+
+@using Icons.Models;
+
+<script src="~/scripts/EditCustomerInvoice.js"></script>
+
+<div class="row">
+    <div class="col-md-9" style="padding: 0; padding-left: 15px;">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">تفاصيل الفاتورة</h3>
+            </div>
+            <div class="content">
+                <div class="col-sm-4 col-md-4 col-lg-2 Arabic">
+                    <div class="block-flat">
+                        <div class="header">
+                            <h3 class="visible-sm visible-md">Col 4</h3>
+                            <h3 class="visible-lg">مجموع</h3>
+                            <h3 class="visible-xs">0</h3>
+                        </div>
+                        <div class="content">
+                            <p>
+                                <b id="TotalOfTotal">@I.InvoiceTotal</b><span class="hidden-lg"> </span>
+                                <span class="hidden-md hidden-sm hidden-lg"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-2 Arabic">
+                    <div class="block-flat">
+                        <div class="header">
+                            <h3 class="visible-sm visible-md">Col 4</h3>
+                            <h3 class="visible-lg">خصم</h3>
+                            <h3 class="visible-xs"></h3>
+                        </div>
+                        <div class="content">
+                            <p>
+                                <b id="DiscountOfDiscount">@I.InvoiceDiscount</b><span class="hidden-lg"> </span>
+                                <span class="hidden-md hidden-sm hidden-lg"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-2 Arabic">
+                    <div class="block-flat">
+                        <div class="header">
+                            <h3 class="visible-sm visible-md">Col 4</h3>
+                            <h3 class="visible-lg">صافي</h3>
+                            <h3 class="visible-xs">0</h3>
+                        </div>
+                        <div class="content">
+                            <p>
+                                <b id="NetOfNet">@I.InvoiceNet</b><span class="hidden-lg"> </span>
+                                <span class="hidden-md hidden-sm hidden-lg"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <table class="no-border" style="direction: rtl" id="EleTbl">
+                    <thead class="no-border">
+                        <tr>
+                            <th class="text-right">المنتج</th>
+                            <th class="text-right">الكميه</th>
+                            <th class="text-right">السعر</th>
+                            <th class="text-right">الاجمالي</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="no-border-x" id="ProdEle">
+                        <tr id="0">
+                            <td>
+                                <select class="select2" id="prod" onchange="GetProdPrice(this)">
+                                    @{
+                                        List<Product> LOP = ViewBag.P as List<Product>;
+                                        List<ProductCategory> LOPC = new List<ProductCategory>();
+                                        foreach (Product P in LOP)
+                                        {
+                                            if (LOPC.Any(p => p.Id == P.Category))
+                                            {
+                                                continue;
+                                            }
+                                            LOPC.Add(P.ProductCategory);
+                                        }
+                                        foreach (ProductCategory item in LOPC)
+                                        {
+                                        <optgroup label="@item.CategoryName">
+                                            @{
+                                            foreach (Product Pitem in item.Products)
+                                            {
+                                                <option value="@Pitem.Id">@Pitem.ProductName</option>
+                                            }
+                                            }
+                                        </optgroup>
+                                        }
+                                    }
+                                </select></td>
+                            <td>
+                                <input type="number" value="" onkeypress="return isNumberKey(event)" onkeyup="CalcCurrentLineTotal()" class="form-control" id="qty"></td>
+                            <td>
+                                <input type="number" value="00000" onkeypress="return isNumberKey(event)" disabled="disabled" class="form-control" id="price"></td>
+                            <td>
+                                <input type="number" value="00000" onkeypress="return isNumberKey(event)" disabled="disabled" class="form-control" id="total"></td>
+                            <td>
+                                <button class="btn btn-default Arabic" onclick="AddInvoiceLine()">اضافة</button></td>
+                        </tr>
+                        @{
+                            foreach (CustomerInvoiceLine item in I.CustomerInvoiceLines)
+                            {
+                            <tr id="@item.Id">
+                                <td style="width: 30%;" id="lineprodname" prodidattr="@item.Product.Id">@item.Product.ProductName</td>
+                                <td id="lineqty">@item.Qty</td>
+                                <td class="text-right" id="lineprice">@item.Price</td>
+                                <td class="text-right" id="total@(item.Id)">@item.Total</td>
+                                <td>
+                                    <button class="btn btn-danger Arabic" onclick="RemoveInvoiceLine(@item.Id)">حذف</button>
+                                </td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-3" style="padding: 0;">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">بيانات الفاتورة</h3>
+            </div>
+            <div class="content">
+                <form class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" id="SIForm" action="#" style="border-radius: 0px;">
+                    <div class="form-group">
+                        <label class="Arabic">العميل</label>
+                        <select class="select2" name="sup" id="sup">
+                            @{
+                                foreach (Customer item in ViewBag.S)
+                                {
+                                    if (item.ID == I.CustomerID)
+                                    {
+                                <option value="@item.ID" selected="selected">@item.Name</option>
+                                    }
+                                    else
+                                    {
+                                <option value="@item.ID">@item.Name</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">المشروع</label>
+                        <select class="select2" name="acc" id="acc">
+                            @{
+                                foreach (Project item in ViewBag.Proj)
+                                {
+                                    if (item.Id == I.ProjectID)
+                                    {
+                                <option value="@item.Id" selected="selected">@item.ProjectName</option>
+                                    }
+                                    else
+                                    {
+                                <option value="@item.Id">@item.ProjectName</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">الي حساب</label>
+                        <select class="select2" name="acc" id="toacc">
+                            @{
+                                foreach (AccountingTree item in ViewBag.AccTree)
+                                {
+                                    if (item.Id == I.InvoiceAccount)
+                                    {
+                                <option value="@item.Id" selected="selected">@item.NodeName</option>
+                                    }
+                                    else
+                                    {
+                                <option value="@item.Id">@item.NodeName</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    @*<div class="form-group">
+                        <label class="Arabic">رقم القاتورة</label>
+                        <input type="number" name="invoicenum" id="invoicenum" disabled value="@ViewBag.InvoiceNum" class="form-control">
+                    </div>*@
+                    <div class="form-group">
+                        <label class="Arabic">تاريخ</label>
+                        <input class="form-control datetime" name="invoicedate" id="invoicedate" size="16" type="text" value="@I.InvoiceDate" parsley-trigger="change" required="" parsley-required-message="يجب ادخال التاريخ" />
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">الخصم</label>
+                        <input type="number" id="Dis" name="Dis" onkeypress="return isNumberKey(event)" class="form-control" value="@I.InvoiceDiscount" onkeyup="SetDiscount()" parsley-trigger="change" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" required="" parsley-required-message="يجب ادخال الخصم" />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary Arabic" type="submit">حفظ الفاتورة</button>
+                        <button class="btn btn-default Arabic">الغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

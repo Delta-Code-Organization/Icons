@@ -2081,6 +2081,8 @@
     <Content Include="scripts\Customer.js" />
     <Content Include="scripts\CustomerInvoice.js" />
     <Content Include="scripts\EditCustomer.js" />
+    <Content Include="scripts\EditCustomerInvoice.js" />
+    <Content Include="scripts\EditSupplierInvoice.js" />
     <Content Include="scripts\Employee.js" />
     <Content Include="scripts\FinancialTransaction.js" />
     <Content Include="scripts\Imprest.js" />
@@ -2561,6 +2563,10 @@
     <Content Include="Views\Accounting\WorkOrderReport.cshtml" />
     <Content Include="Views\Accounting\Statements.cshtml" />
     <Content Include="Views\Accounting\AddFinancialTransactions.cshtml" />
+    <Content Include="Views\Customer\EditInvoice.cshtml" />
+    <Content Include="Views\Supplier\EditInvoice.cshtml" />
+    <Content Include="Views\Customer\DisplayInvoice.cshtml" />
+    <Content Include="Views\Supplier\DisplayInvoice.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

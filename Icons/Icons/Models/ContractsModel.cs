@@ -11,7 +11,7 @@ namespace Icons.Models
         MaksoudDBEntities db = new MaksoudDBEntities();
         #endregion
 
-        public Returner CreateContract(List<ContractOwner> LOCO, List<Installment> I, ProjectUnit PU, int OwnerID,int EditBy)
+        public Returner CreateContract(List<ContractOwner> LOCO, List<Installment> I, ProjectUnit PU, int OwnerID, int EditBy)
         {
             db.Contracts.Add(this);
             db.SaveChanges();
@@ -58,7 +58,8 @@ namespace Icons.Models
                 Ft2.Notes = "";
                 Ft2.Statement = "قسط بيع " + Enum.GetName(typeof(UnitTypes), CurrentProjectUnit.UnitType) + " للعميل " + CurrentCustomer.Name;
                 Ft2.ToAccount = CurrentProjectUnit.AccountingID;
-                Ft2.TransactionDate = CurrentContract.Date;
+                Ft2.TransactionDate = ite.DueDate;
+                Ft2.ReferanceDocumentNumber = ite.Id;
                 db.FinancialTransactions.Add(Ft2);
             }
             db.SaveChanges();
@@ -123,7 +124,7 @@ namespace Icons.Models
             };
         }
 
-        public Returner PayInstallment(int ID,int EditBy,DateTime PaymentDate)
+        public Returner PayInstallment(int ID, int EditBy, DateTime PaymentDate)
         {
             var Installment = db.Installments.Where(p => p.Id == ID).SingleOrDefault();
             Installment.PaymentDate = PaymentDate;
@@ -141,6 +142,21 @@ namespace Icons.Models
             return new Returner
             {
                 Message = Message.Installment_Paid_Successfully
+            };
+        }
+
+        public Returner EditInstallment(Installment I)
+        {
+            var ITE = db.Installments.Single(p => p.Id == I.Id);
+            ITE.DueDate = I.DueDate;
+            ITE.Amount = I.Amount;
+            var FTToUpdate = db.FinancialTransactions.Single(p => p.ReferanceDocumentNumber == ITE.Id);
+            FTToUpdate.Amount = ITE.Amount;
+            FTToUpdate.TransactionDate = ITE.DueDate;
+            db.SaveChanges();
+            return new Returner
+            {
+                Message = Message.Installment_Updated_Successfully
             };
         }
     }

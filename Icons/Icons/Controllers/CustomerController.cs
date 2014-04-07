@@ -164,5 +164,79 @@ namespace Icons.Controllers
         {
             new CustomerInvoice { Id = id }.Depart((Session["User"] as User).ID);
         }
+
+        [OutputCache(VaryByParam = "*", Duration = 0, NoStore = true)]
+        public ActionResult EditInvoice(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("SearchInvoices", "Customer");
+            }
+            List<Customer> LOS = new Customer().GetAllCutomers().Data as List<Customer>;
+            ViewBag.S = LOS;
+            List<Product> LOP = new Product().GetAll().Data as List<Product>;
+            ViewBag.P = LOP;
+            List<Project> LOProj = new Project().GetAll().Data as List<Project>;
+            ViewBag.Proj = LOProj;
+            ViewBag.AccTree = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
+            ViewBag.I = new CustomerInvoice { Id = (int)id }.GetByID().Data as CustomerInvoice;
+            TempData["IID"] = id;
+            TempData.Keep();
+            return View();
+        }
+
+        [HttpPost]
+        public void DeleteInvoiceLine(int ID)
+        {
+            new CustomerInvoiceLine { Id = ID }.Remove();
+        }
+
+        [HttpPost]
+        public string EditFullInvoice(int ISup, DateTime IDate, int ToAcc, int projId, double IDis, double ITotal, double INet, string LineIds)
+        {
+            CustomerInvoice SI = new CustomerInvoice();
+            SI.Id = (int)TempData["IID"];
+            SI.Departed = false;
+            SI.InvoiceDate = IDate;
+            SI.InvoiceDiscount = IDis;
+            SI.InvoiceNet = INet;
+            SI.InvoiceAccount = ToAcc;
+            SI.InvoiceTotal = ITotal;
+            SI.LastEditBy = (Session["User"] as User).ID;
+            SI.CustomerID = ISup;
+            SI.ProjectID = projId;
+            string[] LOSIL = LineIds.Split(',');
+            List<string> AIL = new List<string>(LOSIL);
+            AIL.Remove("");
+            List<CustomerInvoiceLine> LOCILTS = new List<CustomerInvoiceLine>();
+            int Skip = 0;
+            int ObjectsCount = AIL.Count / 5;
+            for (int i = 1; i <= ObjectsCount; i++)
+            {
+                List<string> CurrentObject = new List<string>();
+                CurrentObject = AIL.Skip(Skip).Take(5).ToList();
+                CustomerInvoiceLine CILTS = new CustomerInvoiceLine();
+                CILTS.Id = Convert.ToInt32(CurrentObject[0]);
+                CILTS.ProductId = Convert.ToInt32(CurrentObject[1]);
+                CILTS.Qty = Convert.ToDouble(CurrentObject[2]);
+                CILTS.Price = Convert.ToDouble(CurrentObject[3]);
+                CILTS.Total = Convert.ToDouble(CurrentObject[4]);
+                LOCILTS.Add(CILTS);
+                Skip += 5;
+            }
+            TempData.Keep();
+            SI.Edit(LOCILTS);
+            return "true";
+        }
+
+        public ActionResult DisplayInvoice(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("SearchInvoices", "Customer");
+            }
+            ViewBag.I = new CustomerInvoice { Id = (int)id }.GetByID().Data as CustomerInvoice;
+            return View();
+        }
     }
 }

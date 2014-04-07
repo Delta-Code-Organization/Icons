@@ -225,7 +225,7 @@ namespace Icons.Models
             var E = db.Employees.Single(p => p.Id == this.Id);
             return new Returner
             {
-                Data = db.FinancialTransactions.Where(p => p.ToAccount == E.ImprestAccID).ToList()
+                Data = db.FinancialTransactions.Where(p => p.FromAccount == E.ImprestAccID).ToList()
             };
         }
 

@@ -59,6 +59,23 @@ namespace Icons.Models
         public Returner DeleteInvoice()
         {
             var ITD = db.SupplierInvoices.Single(p => p.Id == this.Id);
+            var InvLines = db.SupplierInvoiceLines.Where(p => p.InvoiceId == ITD.Id).ToList();
+            List<SupplierInvoiceLine> LOCIL = new List<SupplierInvoiceLine>();
+            LOCIL = InvLines;
+            foreach (SupplierInvoiceLine CIL in LOCIL)
+            {
+                Stock S = db.Stocks.Single(p => p.ProjectID == ITD.ProjectID && p.ProductID == CIL.ProductId);
+                S.Quantity -= CIL.Qty;
+                StockTransaction ST = new StockTransaction();
+                ST.Date = DateTime.Now;
+                ST.ProductID = CIL.ProductId;
+                ST.Quantity = -CIL.Qty;
+                ST.StockID = S.Id;
+                ST.Type = (int)StockTransactionsTypes.حذف_فاتورة_شراء;
+                db.StockTransactions.Add(ST);
+                db.SaveChanges();
+                db.SupplierInvoiceLines.Remove(CIL);
+            }
             db.SupplierInvoices.Remove(ITD);
             db.SaveChanges();
             return new Returner
@@ -85,6 +102,57 @@ namespace Icons.Models
             return new Returner
             {
                 Message = Message.Invoice_Departed_Successfully
+            };
+        }
+
+        public Returner GetByID()
+        {
+            return new Returner
+            {
+                Data = db.SupplierInvoices.Single(p => p.Id == this.Id)
+            };
+        }
+
+        public Returner Edit(List<SupplierInvoiceLine> LOSIL)
+        {
+            var Sup = db.SupplierInvoices.Single(p => p.Id == this.Id);
+            Sup.Departed = this.Departed;
+            Sup.InvoiceAccount = this.InvoiceAccount;
+            Sup.InvoiceDate = this.InvoiceDate;
+            Sup.InvoiceDiscount = this.InvoiceDiscount;
+            Sup.InvoiceNet = this.InvoiceNet;
+            Sup.InvoiceTotal = this.InvoiceTotal;
+            Sup.LastEditBy = this.LastEditBy;
+            Sup.ProjectID = this.ProjectID;
+            Sup.SupplierID = this.SupplierID;
+            Sup.SupplierReferenaceNo = this.SupplierReferenaceNo;
+            db.SaveChanges();
+            foreach (SupplierInvoiceLine item in LOSIL)
+            {
+                if (db.SupplierInvoiceLines.Any(p => p.Id == item.Id))
+                {
+                    continue;
+                }
+                else
+                {
+                    item.InvoiceId = this.Id;
+                    db.SupplierInvoiceLines.Add(item);
+                    StockTransaction ST = new StockTransaction();
+                    ST.Date = DateTime.Now;
+                    ST.ProductID = item.ProductId;
+                    ST.Quantity = item.Qty;
+                    ST.StockID = db.Stocks.Single(p => p.ProductID == item.ProductId && p.ProjectID == Sup.ProjectID).Id;
+                    ST.Type = (int)StockTransactionsTypes.تعديل_فاتورة_شراء;
+                    db.StockTransactions.Add(ST);
+                    var StockToEdit = db.Stocks.Single(p => p.ProductID == item.ProductId && p.ProjectID == Sup.ProjectID);
+                    StockToEdit.Quantity += ST.Quantity;
+                    db.SaveChanges();
+                }
+            }
+            //new Stock().Purchases(this.Id);
+            return new Returner
+            {
+                Message = Message.Invoice_Added_Successfully
             };
         }
     }

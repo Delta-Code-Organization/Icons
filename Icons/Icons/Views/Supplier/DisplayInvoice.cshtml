@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "DisplayInvoice";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+    SupplierInvoice I = ViewBag.I;
+    
+}
+
+@using Icons.Models;
+
+<div class="row">
+    <div class="col-md-9" style="padding: 0; padding-left: 15px;">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">تفاصيل الفاتورة</h3>
+            </div>
+            <div class="content">
+                <div class="col-sm-4 col-md-4 col-lg-2 Arabic">
+                    <div class="block-flat">
+                        <div class="header">
+                            <h3 class="visible-sm visible-md">Col 4</h3>
+                            <h3 class="visible-lg">مجموع</h3>
+                            <h3 class="visible-xs">0</h3>
+                        </div>
+                        <div class="content">
+                            <p>
+                                <b id="TotalOfTotal">@I.InvoiceTotal</b><span class="hidden-lg"> </span>
+                                <span class="hidden-md hidden-sm hidden-lg"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-2 Arabic">
+                    <div class="block-flat">
+                        <div class="header">
+                            <h3 class="visible-sm visible-md">Col 4</h3>
+                            <h3 class="visible-lg">خصم</h3>
+                            <h3 class="visible-xs">0</h3>
+                        </div>
+                        <div class="content">
+                            <p>
+                                <b id="DiscountOfDiscount">@I.InvoiceDiscount</b><span class="hidden-lg"> </span>
+                                <span class="hidden-md hidden-sm hidden-lg"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-2 Arabic">
+                    <div class="block-flat">
+                        <div class="header">
+                            <h3 class="visible-sm visible-md">Col 4</h3>
+                            <h3 class="visible-lg">صافي</h3>
+                            <h3 class="visible-xs"></h3>
+                        </div>
+                        <div class="content">
+                            <p>
+                                <b id="NetOfNet">@I.InvoiceNet</b><span class="hidden-lg"> </span>
+                                <span class="hidden-md hidden-sm hidden-lg"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <table class="no-border" style="direction: rtl" id="EleTbl">
+                    <thead class="no-border">
+                        <tr>
+                            <th class="text-right">المنتج</th>
+                            <th class="text-right">الكميه</th>
+                            <th class="text-right">السعر</th>
+                            <th class="text-right">الاجمالي</th>
+                        </tr>
+                    </thead>
+                    <tbody class="no-border-x" id="ProdEle">
+                        @{
+                            foreach (SupplierInvoiceLine item in I.SupplierInvoiceLines)
+                            {
+                            <tr id="@item.Id">
+                                <td style="width: 30%;" id="lineprodname" prodidattr="@item.Product.Id">@item.Product.ProductName</td>
+                                <td id="lineqty">@item.Qty</td>
+                                <td class="text-right" id="lineprice">@item.Price</td>
+                                <td class="text-right" id="total@(item.Id)">@item.Total</td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-3" style="padding: 0;">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">بيانات الفاتورة</h3>
+            </div>
+            <div class="content">
+                <form class="form-horizontal group-border-dashed" id="SIForm" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+                    <div class="form-group">
+                        <label class="Arabic">المورد</label>
+                        @I.Supplier.Name
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">المشروع</label>
+                        @I.Project.ProjectName
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">الي حساب</label>
+                        @I.AccountingTree.NodeName;
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">تاريخ</label>
+                        @I.InvoiceDate
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">رقم مرجعي</label>
+                        @I.SupplierReferenaceNo
+                    </div>
+                    <div class="form-group">
+                        <label class="Arabic">الخصم</label>
+                        @I.InvoiceDiscount
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

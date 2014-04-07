@@ -57,6 +57,7 @@ namespace Icons.Models
         This_Project_Have_Stock_Cannot_Be_Deleted = 47,
         Cannot_Delete_Category_That_Contains_Products = 48,
         Cannot_Delete_This_Product = 49,
-        Financial_Transaction_Saved_Successfully = 50
+        Financial_Transaction_Saved_Successfully = 50,
+        Installment_Updated_Successfully = 51
     }
 }

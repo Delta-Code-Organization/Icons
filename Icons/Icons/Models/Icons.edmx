@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MaksoudDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MaksoudDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="MaksoudDBModelStoreContainer">
           <EntitySet Name="AccountingTree" EntityType="MaksoudDBModel.Store.AccountingTree" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ContractOwners" EntityType="MaksoudDBModel.Store.ContractOwners" store:Type="Tables" Schema="dbo" />
@@ -154,8 +154,8 @@
             <End Role="Stock" EntitySet="Stock" />
             <End Role="StockTransactions" EntitySet="StockTransactions" />
           </AssociationSet>
-          <AssociationSet Name="FK_SupplierInvoices_FinancialTransactions" Association="MaksoudDBModel.Store.FK_SupplierInvoices_FinancialTransactions">
-            <End Role="FinancialTransactions" EntitySet="FinancialTransactions" />
+          <AssociationSet Name="FK_SupplierInvoices_AccountingTree" Association="MaksoudDBModel.Store.FK_SupplierInvoices_AccountingTree">
+            <End Role="AccountingTree" EntitySet="AccountingTree" />
             <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
           </AssociationSet>
           <AssociationSet Name="FK_SupplierInvoices_Projects" Association="MaksoudDBModel.Store.FK_SupplierInvoices_Projects">
@@ -843,11 +843,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SupplierInvoices_FinancialTransactions">
-          <End Role="FinancialTransactions" Type="MaksoudDBModel.Store.FinancialTransactions" Multiplicity="0..1" />
+        <Association Name="FK_SupplierInvoices_AccountingTree">
+          <End Role="AccountingTree" Type="MaksoudDBModel.Store.AccountingTree" Multiplicity="0..1" />
           <End Role="SupplierInvoices" Type="MaksoudDBModel.Store.SupplierInvoices" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="FinancialTransactions">
+            <Principal Role="AccountingTree">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SupplierInvoices">
@@ -927,8 +927,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MaksoudDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1104,6 +1103,10 @@
             <End Role="Screens" EntitySet="Screens" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoices_AccountingTree" Association="MaksoudDBModel.FK_SupplierInvoices_AccountingTree">
+            <End Role="AccountingTree" EntitySet="AccountingTrees" />
+            <End Role="SupplierInvoice" EntitySet="SupplierInvoices" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountingTree">
           <Key>
@@ -1129,6 +1132,7 @@
           <NavigationProperty Name="Projects" Relationship="MaksoudDBModel.FK_Projects_AccountingTree" FromRole="AccountingTree" ToRole="Projects" />
           <NavigationProperty Name="ProjectUnits" Relationship="MaksoudDBModel.FK_ProjectUnits_AccountingTree" FromRole="AccountingTree" ToRole="ProjectUnits" />
           <NavigationProperty Name="Suppliers" Relationship="MaksoudDBModel.FK_Suppliers_ToAccountingTree" FromRole="AccountingTree" ToRole="Suppliers" />
+          <NavigationProperty Name="SupplierInvoices" Relationship="MaksoudDBModel.FK_SupplierInvoices_AccountingTree" FromRole="AccountingTree" ToRole="SupplierInvoice" />
         </EntityType>
         <EntityType Name="ContractOwner">
           <Key>
@@ -1429,6 +1433,7 @@
           <NavigationProperty Name="SupplierInvoiceLines" Relationship="MaksoudDBModel.FK_InvoiceLines_Invoices" FromRole="SupplierInvoices" ToRole="SupplierInvoiceLines" />
           <NavigationProperty Name="Supplier" Relationship="MaksoudDBModel.FK_SupplierInvoices_Suppliers" FromRole="SupplierInvoices" ToRole="Suppliers" />
           <NavigationProperty Name="User" Relationship="MaksoudDBModel.FK_SupplierInvoices_Users" FromRole="SupplierInvoices" ToRole="Users" />
+          <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_SupplierInvoices_AccountingTree" FromRole="SupplierInvoice" ToRole="AccountingTree" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -1894,6 +1899,18 @@
         <Association Name="UserAccess">
           <End Role="Screens" Type="MaksoudDBModel.Screen" Multiplicity="*" />
           <End Role="Users" Type="MaksoudDBModel.User" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_SupplierInvoices_AccountingTree">
+          <End Type="MaksoudDBModel.AccountingTree" Role="AccountingTree" Multiplicity="0..1" />
+          <End Type="MaksoudDBModel.SupplierInvoice" Role="SupplierInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountingTree">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierInvoice">
+              <PropertyRef Name="InvoiceAccount" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>

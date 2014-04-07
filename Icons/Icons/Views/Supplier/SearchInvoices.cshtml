@@ -55,6 +55,12 @@
                                                     <a onclick="Depart(@y.Id)">ترحيل</a>
                                                 </li>
                                                 <li>
+                                                    <a href="@Url.Action("EditInvoice", "Supplier", new { id = y.Id })">تعديل</a>
+                                                </li>
+                                                <li>
+                                                    <a href="@Url.Action("DisplayInvoice", "Supplier", new { id = y.Id })">عرض تفاصيل الفاتورة</a>
+                                                </li>
+                                                <li>
                                                     <a onclick="DeleteInvoice(@y.Id)">حذف</a>
                                                 </li>
                                             </ul>

@@ -149,8 +149,8 @@
       <End Role="Stock" EntitySet="Stock" />
       <End Role="StockTransactions" EntitySet="StockTransactions" />
     </AssociationSet>
-    <AssociationSet Name="FK_SupplierInvoices_FinancialTransactions" Association="MaksoudDBModel.Store.FK_SupplierInvoices_FinancialTransactions">
-      <End Role="FinancialTransactions" EntitySet="FinancialTransactions" />
+    <AssociationSet Name="FK_SupplierInvoices_AccountingTree" Association="MaksoudDBModel.Store.FK_SupplierInvoices_AccountingTree">
+      <End Role="AccountingTree" EntitySet="AccountingTree" />
       <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
     </AssociationSet>
     <AssociationSet Name="FK_SupplierInvoices_Projects" Association="MaksoudDBModel.Store.FK_SupplierInvoices_Projects">
@@ -838,11 +838,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_SupplierInvoices_FinancialTransactions">
-    <End Role="FinancialTransactions" Type="MaksoudDBModel.Store.FinancialTransactions" Multiplicity="0..1" />
+  <Association Name="FK_SupplierInvoices_AccountingTree">
+    <End Role="AccountingTree" Type="MaksoudDBModel.Store.AccountingTree" Multiplicity="0..1" />
     <End Role="SupplierInvoices" Type="MaksoudDBModel.Store.SupplierInvoices" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="FinancialTransactions">
+      <Principal Role="AccountingTree">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="SupplierInvoices">

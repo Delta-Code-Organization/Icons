@@ -231,7 +231,8 @@ namespace Icons.Controllers
             string[] SalaryTypes = Enum.GetNames(typeof(SalaryType));
             ViewBag.ST = SalaryTypes;
             ViewBag.E = new Employee { Id = (int)id }.GetByID().Data as Employee;
-            ViewBag.AllP = new Employee { Id = (int)id }.GetImprests().Data as List<FinancialTransaction>;
+            List<FinancialTransaction> LOFT = new Employee { Id = (int)id }.GetImprests().Data as List<FinancialTransaction>;
+            ViewBag.AllP = LOFT;
             ViewBag.AllAcc = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
             TempData["EmpID"] = (int)id;
             TempData.Keep();

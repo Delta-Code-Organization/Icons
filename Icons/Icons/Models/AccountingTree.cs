@@ -25,6 +25,7 @@ namespace Icons.Models
             this.Projects = new HashSet<Project>();
             this.ProjectUnits = new HashSet<ProjectUnit>();
             this.Suppliers = new HashSet<Supplier>();
+            this.SupplierInvoices = new HashSet<SupplierInvoice>();
         }
     
         public int Id { get; set; }
@@ -48,5 +49,6 @@ namespace Icons.Models
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<ProjectUnit> ProjectUnits { get; set; }
         public virtual ICollection<Supplier> Suppliers { get; set; }
+        public virtual ICollection<SupplierInvoice> SupplierInvoices { get; set; }
     }
 }
