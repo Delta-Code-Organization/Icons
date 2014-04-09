@@ -37,12 +37,12 @@ namespace Icons.Models
             Ft.LastEditBy = EditBy;
             Ft.Notes = "";
             Ft.Statement = "عقد بيع " + Enum.GetName(typeof(UnitTypes), CurrentProjectUnit.UnitType) + " للعميل " + CurrentCustomer.Name;
-            Ft.ToAccount = CurrentProjectUnit.AccountingID;
+            Ft.ToAccount = 42;
             Ft.TransactionDate = CurrentContract.Date;
             db.FinancialTransactions.Add(Ft);
             FinancialTransaction Ft1 = new FinancialTransaction();
             Ft1.Amount = CurrentContract.Paid;
-            Ft1.FromAccount = CurrentProjectUnit.AccountingID;
+            Ft1.FromAccount = 42;
             Ft1.LastEditBy = EditBy;
             Ft1.Notes = "";
             Ft1.Statement = "دفع مقدم بيع " + Enum.GetName(typeof(UnitTypes), CurrentProjectUnit.UnitType) + " للعميل " + CurrentCustomer.Name;
@@ -57,7 +57,7 @@ namespace Icons.Models
                 Ft2.LastEditBy = EditBy;
                 Ft2.Notes = "";
                 Ft2.Statement = "قسط بيع " + Enum.GetName(typeof(UnitTypes), CurrentProjectUnit.UnitType) + " للعميل " + CurrentCustomer.Name;
-                Ft2.ToAccount = CurrentProjectUnit.AccountingID;
+                Ft2.ToAccount = 42;
                 Ft2.TransactionDate = ite.DueDate;
                 Ft2.ReferanceDocumentNumber = ite.Id;
                 db.FinancialTransactions.Add(Ft2);
@@ -131,12 +131,12 @@ namespace Icons.Models
             db.SaveChanges();
             FinancialTransaction Ft = new FinancialTransaction();
             Ft.Amount = Installment.Amount;
-            Ft.FromAccount = Installment.Contract.ProjectUnit.AccountingID;
+            Ft.FromAccount = 42;//Installment.Contract.ProjectUnit.AccountingID;
             Ft.LastEditBy = EditBy;
             Ft.Notes = "";
             Ft.Statement = "دفع قسط " + Enum.GetName(typeof(UnitTypes), Installment.Contract.ProjectUnit.UnitType) + " من العميل " + Installment.Customer.Name;
             Ft.ToAccount = Installment.Customer.AccountID;
-            Ft.TransactionDate = DateTime.Now;
+            Ft.TransactionDate = PaymentDate;
             db.FinancialTransactions.Add(Ft);
             db.SaveChanges();
             return new Returner

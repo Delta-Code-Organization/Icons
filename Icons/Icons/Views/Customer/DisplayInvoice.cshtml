@@ -68,17 +68,17 @@
                         </tr>
                     </thead>
                     <tbody class="no-border-x" id="ProdEle">
-                        <tr id="0">
-                            @{
-                                foreach (CustomerInvoiceLine item in I.CustomerInvoiceLines)
-                                {
+                        @{
+                            foreach (CustomerInvoiceLine item in I.CustomerInvoiceLines)
+                            {
+                            <tr id="@item.Id">
                                 <td>@item.Product.ProductName</td>
                                 <td>@item.Qty</td>
                                 <td>@item.Price</td>
                                 <td>@item.Total</td>
-                                }
+                            </tr>
                             }
-                        </tr>
+                        }
                     </tbody>
                 </table>
             </div>

@@ -78,7 +78,6 @@ namespace Icons.Models
             }
             db.CustomerInvoices.Remove(ITD);
             db.SaveChanges();
-
             return new Returner
             {
                 Message = Message.Invoice_Deleted_Successfully

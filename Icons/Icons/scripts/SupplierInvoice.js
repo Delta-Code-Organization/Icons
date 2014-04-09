@@ -158,6 +158,9 @@ function AddFullInvoice() {
             $('#invoicedate').val('');
             $('#invoiceref').val('');
             $('#Dis').val('');
+            $('#TotalOfTotal').text('0');
+            $('#DiscountOfDiscount').text('0');
+            $('#NetOfNet').text('0');
         },
         error: function (data) {
             alert(data.responseText);

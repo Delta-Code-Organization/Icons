@@ -14,7 +14,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/05/2014 11:27:26</publishTime>
     </File>
     <File Include="bin/Icons.dll">
-      <publishTime>04/03/2014 14:17:50</publishTime>
+      <publishTime>04/09/2014 11:00:38</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>03/05/2014 11:27:34</publishTime>
@@ -6647,7 +6647,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/20/2014 02:15:00</publishTime>
     </File>
     <File Include="Models/Icons.edmx.diagram">
-      <publishTime>03/20/2014 02:15:40</publishTime>
+      <publishTime>04/06/2014 12:14:22</publishTime>
     </File>
     <File Include="Models/Icons.tt">
       <publishTime>03/20/2014 02:15:00</publishTime>
@@ -6662,16 +6662,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/11/2014 18:06:12</publishTime>
     </File>
     <File Include="scripts/Contract.js">
-      <publishTime>04/02/2014 11:39:06</publishTime>
+      <publishTime>04/06/2014 14:39:18</publishTime>
     </File>
     <File Include="scripts/Customer.js">
       <publishTime>03/09/2014 18:09:46</publishTime>
     </File>
     <File Include="scripts/CustomerInvoice.js">
-      <publishTime>03/27/2014 14:17:36</publishTime>
+      <publishTime>04/09/2014 01:03:34</publishTime>
     </File>
     <File Include="scripts/EditCustomer.js">
       <publishTime>03/10/2014 14:10:16</publishTime>
+    </File>
+    <File Include="scripts/EditCustomerInvoice.js">
+      <publishTime>04/07/2014 14:32:58</publishTime>
+    </File>
+    <File Include="scripts/EditSupplierInvoice.js">
+      <publishTime>04/07/2014 14:24:34</publishTime>
     </File>
     <File Include="scripts/Employee.js">
       <publishTime>03/30/2014 12:09:10</publishTime>
@@ -6701,7 +6707,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/06/2014 20:29:18</publishTime>
     </File>
     <File Include="scripts/SupplierInvoice.js">
-      <publishTime>03/31/2014 12:06:20</publishTime>
+      <publishTime>04/09/2014 01:02:46</publishTime>
     </File>
     <File Include="scripts/SupplierInvoiceSearch.js">
       <publishTime>03/24/2014 01:41:08</publishTime>
@@ -6737,13 +6743,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/02/2014 11:38:34</publishTime>
     </File>
     <File Include="Views/Contract/SearchInstallments.cshtml">
-      <publishTime>03/30/2014 11:12:14</publishTime>
+      <publishTime>04/06/2014 14:36:56</publishTime>
     </File>
     <File Include="Views/Customer/CreateCustomer.cshtml">
       <publishTime>03/10/2014 13:47:30</publishTime>
     </File>
+    <File Include="Views/Customer/DisplayInvoice.cshtml">
+      <publishTime>04/09/2014 01:18:02</publishTime>
+    </File>
     <File Include="Views/Customer/EditCustomer.cshtml">
       <publishTime>03/10/2014 13:48:04</publishTime>
+    </File>
+    <File Include="Views/Customer/EditInvoice.cshtml">
+      <publishTime>04/06/2014 03:16:42</publishTime>
     </File>
     <File Include="Views/Customer/Invoice.cshtml">
       <publishTime>03/27/2014 13:58:50</publishTime>
@@ -6752,7 +6764,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/10/2014 14:09:18</publishTime>
     </File>
     <File Include="Views/Customer/SearchInvoices.cshtml">
-      <publishTime>03/26/2014 18:17:42</publishTime>
+      <publishTime>04/06/2014 12:02:58</publishTime>
     </File>
     <File Include="Views/Employee/Benifits.cshtml">
       <publishTime>03/23/2014 16:32:40</publishTime>
@@ -6764,7 +6776,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/10/2014 17:48:52</publishTime>
     </File>
     <File Include="Views/Employee/Imprests.cshtml">
-      <publishTime>03/23/2014 16:32:36</publishTime>
+      <publishTime>04/06/2014 13:00:26</publishTime>
     </File>
     <File Include="Views/Employee/Payroll.cshtml">
       <publishTime>03/24/2014 10:56:32</publishTime>
@@ -6817,6 +6829,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Supplier/CreateSupplier.cshtml">
       <publishTime>03/10/2014 13:38:56</publishTime>
     </File>
+    <File Include="Views/Supplier/DisplayInvoice.cshtml">
+      <publishTime>04/06/2014 12:45:00</publishTime>
+    </File>
+    <File Include="Views/Supplier/EditInvoice.cshtml">
+      <publishTime>04/06/2014 11:28:34</publishTime>
+    </File>
     <File Include="Views/Supplier/EditSupplier.cshtml">
       <publishTime>03/10/2014 13:40:08</publishTime>
     </File>
@@ -6824,7 +6842,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/31/2014 12:07:40</publishTime>
     </File>
     <File Include="Views/Supplier/SearchInvoices.cshtml">
-      <publishTime>03/26/2014 18:17:10</publishTime>
+      <publishTime>04/06/2014 12:11:00</publishTime>
     </File>
     <File Include="Views/Supplier/SuppliersSearch.cshtml">
       <publishTime>03/05/2014 11:25:48</publishTime>
@@ -6845,7 +6863,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/05/2014 11:25:48</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/03/2014 14:18:04</publishTime>
+      <publishTime>04/09/2014 11:00:48</publishTime>
     </File>
   </ItemGroup>
 </Project>
