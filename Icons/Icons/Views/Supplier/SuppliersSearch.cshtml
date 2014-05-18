@@ -24,6 +24,7 @@
                                 <th style="text-align: center;">رقم الموبايل</th>
                                 <th style="text-align: center;">المدينة</th>
                                 <th style="text-align: center;">الحي</th>
+                                <th style="text-align: center;">اخر تعديل بواسطة</th>
                                 <th style="text-align: center;"></th>
                             </tr>
                         </thead>
@@ -39,7 +40,19 @@
                                     <td>@y.Mobile</td>
                                     <td>@y.City</td>
                                     <td>@y.District</td>
-                                    <td class="center" style="text-align:center;">
+                                    @{
+                                    MaksoudDBEntities db = new MaksoudDBEntities();
+                                    if (y.LastEditBy != null)
+                                    {
+                                        var LastU = db.Users.Single(p => p.ID == y.LastEditBy);
+                                        <td>@LastU.Username</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Null In Database</td>
+                                    }
+                                    }
+                                    <td class="center" style="text-align: center;">
                                         <div class="btn-group">
                                             <button class="btn btn-default btn-xs" type="button">الإجرائات</button>
                                             <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">

@@ -39,5 +39,12 @@ namespace Icons.Models
             FT.TransactionDate = this.TransactionDate;
             db.SaveChanges();
         }
+
+        public void Delete()
+        {
+            var FT = db.FinancialTransactions.Single(p => p.Id == this.Id);
+            db.FinancialTransactions.Remove(FT);
+            db.SaveChanges();
+        }
     }
 }

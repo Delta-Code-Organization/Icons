@@ -213,6 +213,7 @@ namespace Icons.Models
             db.SaveChanges();
             return new Returner
             {
+                Data = Ft.Id,
                 Message = Message.Financial_Transaction_Saved_Successfully
             };
         }

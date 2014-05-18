@@ -20,12 +20,13 @@
                                 <th style="text-align: center;">العنوان</th>
                                 <th style="text-align: center;">رقم الهاتف</th>
                                 <th style="text-align: center;">تاريخ الميلاد</th>
+                                <th style="text-align: center;">اخر تعديل بواسطة</th>
                                 <th style="text-align: center;"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @{
-                                foreach (var y in ViewBag.allcustomers)
+                                foreach (Customer y in ViewBag.allcustomers)
                                 {
                                 <tr class="odd gradeX" id="@y.ID">
 
@@ -33,6 +34,18 @@
                                     <td>@y.Address</td>
                                     <td>@y.Phone</td>
                                     <td class="center">@(((DateTime)y.BirthDate).ToString("MM/dd/yyyy"))</td>
+                                    @{
+                                    MaksoudDBEntities db = new MaksoudDBEntities();
+                                    if (y.LastEditBy != null)
+                                    {
+                                        var LastU = db.Users.Single(p => p.ID == y.LastEditBy);
+                                        <td>@LastU.Username</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Null In Database</td>
+                                    }
+                                    }
                                     <td class="center">
                                         <div class="btn-group">
                                             <button class="btn btn-default btn-xs" type="button">Actions</button>

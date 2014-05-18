@@ -22,6 +22,8 @@ namespace Icons.Controllers
         public ActionResult Tree()
         {
             List<AccountingTree> Tree = db.AccountingTrees.Where(p => p.Parent == null || p.Parent == 0).ToList();
+            List<AccountingTree> AllTrees = db.AccountingTrees.ToList();
+            ViewBag.AllTrees = AllTrees;
             ViewBag.Nodes = Tree;
             return View("AccountingTree");
         }
@@ -144,9 +146,9 @@ namespace Icons.Controllers
         }
 
         [HttpPost]
-        public void AddFT(int Acc1, int Acc2, double Amount, string State, DateTime Date, string Notes)
+        public string AddFT(int Acc1, int Acc2, double Amount, string State, DateTime Date, string Notes)
         {
-            new AccountingTree().AddFT(new FinancialTransaction
+            return new AccountingTree().AddFT(new FinancialTransaction
             {
                 FromAccount = Acc1,
                 ToAccount = Acc2,
@@ -155,7 +157,7 @@ namespace Icons.Controllers
                 TransactionDate = Date,
                 Notes = Notes,
                 LastEditBy = (Session["User"] as User).ID
-            });
+            }).Data.ToString();
         }
 
         public ActionResult SearchFinancialTransactions()
@@ -190,6 +192,12 @@ namespace Icons.Controllers
                 LastEditBy = (Session["User"] as User).ID
             };
             Ft.Edit();
+        }
+
+        [HttpPost]
+        public void DeleteFT(int _ID)
+        {
+            new FinancialTransaction { Id = _ID }.Delete();
         }
     }
 }

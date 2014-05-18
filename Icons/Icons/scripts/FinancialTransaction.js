@@ -8,7 +8,7 @@
                 success: function (data) {
                     $.gritter.add({
                         title: '! نجاح العملية',
-                        text: ". تم اضافة المعاملة المالية بنجاح",
+                        text: ". تم اضافة المعاملة المالية بنجاح برقم (" + data + ")",
                         image: '/content/images/user-icon.png',
                         class_name: 'clean',
                         time: '120000'

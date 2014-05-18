@@ -34,16 +34,24 @@
     $(document).ready(function () {
         //initialize the javascript
         App.init();
+
+        $('#list1').nestable('collapseAll');
         //App.nestableLists();
     });
     function SerializeIt() {
         App.nestableLists();
     }
     function AddToTree() {
-        $('#ol1').append('<li class="dd-item" data-id="0" data-name="' + $('#accname').val() + '">\
+        var ParentVal = $('#ParentAcc').val();
+        $('#' + ParentVal + " > ol").append('<li class="dd-item" data-id="0" data-name="' + $('#accname').val() + '">\
                           <div class="dd-handle">' + $('#accname').val() + '</div>\
                           </li>');
         $('#ol1').val('');
+
+        //$('#ol1').append('<li class="dd-item" data-id="0" data-name="' + $('#accname').val() + '">\
+        //                  <div class="dd-handle">' + $('#accname').val() + '</div>\
+        //                  </li>');
+        //$('#ol1').val('');
     }
 </script>
 
@@ -65,11 +73,11 @@
                                 <div class="content">
                                     <div class="dd" id="list1">
                                         @helper ShowTree(IEnumerable<AccountingTree> Node)
-{
+                                        {
                                             <ol id="ol1" class="dd-list">
                                                 @foreach (var foo in Node)
                                                 {
-                                                    <li class="dd-item" data-name="@foo.NodeName" data-id="@foo.Id">
+                                                    <li class="dd-item" id="@foo.Id" data-name="@foo.NodeName" data-id="@foo.Id">
                                                         <div class="dd-handle">@foo.NodeName (@foo.Id)</div>
                                                         @if (foo.AccountingTree1.Any())
                                                         {
@@ -92,6 +100,19 @@
 
                     <div class="col-sm-6 col-md-6 col-lg-6">
                         <div class="form-group">
+                            <label class="col-sm-3 control-label Arabic" style="text-align: center;">تحت الحساب</label>
+                            <div class="col-sm-6 Arabic">
+                                <select class="select2" name="ParentAcc" id="ParentAcc">
+                                    @{
+                                        foreach (AccountingTree item in ViewBag.AllTrees)
+                                        {
+                                        <option value="@item.Id">@item.NodeName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label Arabic" style="text-align: center;">اسم الحساب</label>
                             <div class="col-sm-6 Arabic">
                                 <input class="form-control parsley-validated parsley-error" id="accname" name="aname" parsley-trigger="change" parsley-minlength="2" parsley-minlength-message="اسم المستخدم يجب ان يكون حرفان علي الاقل" parsley-required-message="يجب ادخال اسم المستخدم" type="text" />
@@ -105,15 +126,15 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label Arabic" style="text-align: center;">حذف حساب رقم</label>
                             <div class="col-sm-6 Arabic">
-                                <input class="form-control parsley-validated parsley-error"  id="accnum" name="accnum" parsley-trigger="change" parsley-minlength="2" parsley-minlength-message="اسم المستخدم يجب ان يكون حرفان علي الاقل" parsley-required-message="يجب ادخال اسم المستخدم" type="text" />
+                                <input class="form-control parsley-validated parsley-error" id="accnum" name="accnum" parsley-trigger="change" parsley-minlength="2" parsley-minlength-message="اسم المستخدم يجب ان يكون حرفان علي الاقل" parsley-required-message="يجب ادخال اسم المستخدم" type="text" />
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="button" onclick="DeleteNode()"  class="btn btn-danger">حذف الحساب</button>
+                                <button type="button" onclick="DeleteNode()" class="btn btn-danger">حذف الحساب</button>
                             </div>
                         </div>
-                       
+
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">

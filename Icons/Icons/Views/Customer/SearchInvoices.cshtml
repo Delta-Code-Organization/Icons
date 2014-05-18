@@ -30,6 +30,7 @@
                                 <th style="text-align: center;">الخصم</th>
                                 <th style="text-align: center;">الصافي</th>
                                 <th style="text-align: center;">المشروع</th>
+                                @*<th style="text-align: center;">اخر تعديل بواسطة</th>*@
                                 <th style="text-align: center;"></th>
                             </tr>
                         </thead>
@@ -48,6 +49,18 @@
                                     <td class="center">@y.InvoiceDiscount</td>
                                     <td class="center">@y.InvoiceNet</td>
                                     <td class="center">@y.Project.ProjectName</td>
+                                    @*@{
+                                    MaksoudDBEntities db = new MaksoudDBEntities();
+                                    if (y.LastEditBy != null)
+                                    {
+                                        var LastU = db.Users.Single(p => p.ID == y.LastEditBy);
+                                        <td>@LastU.Username</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Null In Database</td>
+                                    }
+                                    }*@
                                     <td class="center">
                                         <div class="btn-group">
                                             <button class="btn btn-default btn-xs" type="button">Actions</button>

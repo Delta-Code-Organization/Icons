@@ -6,6 +6,23 @@
 
 @using Icons.Models;
 
+<script type="text/javascript">
+    function DeleteFT(ID) {
+        $.ajax({
+            url: '/Accounting/DeleteFT',
+            type: 'post',
+            data: { '_ID': ID },
+            success: function (data) {
+                $('#' + ID).fadeOut(250);
+                return false;
+            },
+            error: function (data) {
+                console.log(data.responseText);
+            }
+        });
+    }
+</script>
+
 <div class="row">
     <div class="col-md-12">
         <div class="block-flat">
@@ -22,6 +39,7 @@
                                 <th style="text-align: center;">قيمة</th>
                                 <th style="text-align: center;">بيان</th>
                                 <th style="text-align: center;">تاريخ</th>
+                                <th style="text-align: center;">اخر تعديل بواسطة</th>
                                 <th style="text-align: center;"></th>
                             </tr>
                         </thead>
@@ -36,6 +54,18 @@
                                     <td>@y.Amount</td>
                                     <td class="center">@y.Statement</td>
                                     <td class="center">@y.TransactionDate</td>
+                                    @{
+                                    MaksoudDBEntities db = new MaksoudDBEntities();
+                                    if (y.LastEditBy != null)
+                                    {
+                                        var LastU = db.Users.Single(p => p.ID == y.LastEditBy);
+                                        <td>@LastU.Username</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Null In Database</td>
+                                    }
+                                    }
                                     <td class="center">
                                         <div class="btn-group">
                                             <button class="btn btn-default btn-xs" type="button">Actions</button>
@@ -46,6 +76,9 @@
                                             <ul role="menu" class="dropdown-menu">
                                                 <li>
                                                     <a href="/Accounting/EditFinancialTransactions/@y.Id">تعديل</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:DeleteFT(@y.Id)">حذف</a>
                                                 </li>
                                             </ul>
                                         </div>

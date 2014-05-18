@@ -25,6 +25,7 @@
                                 <th style="text-align: center;">عدد الادوار</th>
                                 <th style="text-align: center;">التكلفة المتوقعة</th>
                                 <th style="text-align: center;">نسبة الملكية</th>
+                                <th style="text-align: center;">اخر تعديل بواسطة</th>
                                 <th style="text-align: center;"></th>
                             </tr>
                         </thead>
@@ -41,7 +42,19 @@
                                     <td>@y.FloorsCount</td>
                                     <td>@y.ExpectedCost</td>
                                     <td>@y.OwnershipPercentage</td>
-                                    <td class="center" style="text-align:center;">
+                                    @{
+                                    MaksoudDBEntities db = new MaksoudDBEntities();
+                                    if (y.LastEditBy != null)
+                                    {
+                                        var LastU = db.Users.Single(p => p.ID == y.LastEditBy);
+                                        <td>@LastU.Username</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Null In Database</td>
+                                    }
+                                    }
+                                    <td class="center" style="text-align: center;">
                                         <div class="btn-group">
                                             <button class="btn btn-default btn-xs" type="button">الإجرائات</button>
                                             <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">

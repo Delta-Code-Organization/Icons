@@ -24,6 +24,7 @@
                                 <th style="text-align: center;">وحدة البيع</th>
                                 <th style="text-align: center;">نسبة التحويل</th>
                                 <th style="text-align: center;">الوصف</th>
+                                <th style="text-align: center;">اخر تعديل بواسطة</th>
                                 <th style="text-align: center;"></th>
                             </tr>
                         </thead>
@@ -41,6 +42,18 @@
                                     <td>@SU</td>
                                     <td>@y.PtoSRate</td>
                                     <td>@y.Description</td>
+                                    @{
+                                    MaksoudDBEntities db = new MaksoudDBEntities();
+                                    if (y.LastEditBy != null)
+                                    {
+                                        var LastU = db.Users.Single(p => p.ID == y.LastEditBy);
+                                        <td>@LastU.Username</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Null In Database</td>
+                                    }
+                                    }
                                     <td class="center" style="text-align:center;">
                                         <div class="btn-group">
                                             <button class="btn btn-default btn-xs" type="button">الإجرائات</button>

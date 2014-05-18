@@ -18,7 +18,8 @@
                     <table class="table table-bordered" id="datatable">
                         <thead>
                             <tr style="direction: rtl;">
-                                <th style="text-align: center; width:80%;">اسم التصنيف</th>
+                                <th style="text-align: center; width: 80%;">اسم التصنيف</th>
+                                <th style="text-align: center; width: 80%;">اخر تعديل بواسطة</th>
                                 <th style="text-align: center;"></th>
                             </tr>
                         </thead>
@@ -28,8 +29,20 @@
                                 {
                                 <tr class="odd gradeX" id="@y.Id">
 
-                                    <td style="width:80%;">@y.CategoryName</td>
-                                    <td class="center" style="text-align:center;">
+                                    <td style="width: 80%;">@y.CategoryName</td>
+                                    @{
+                                    MaksoudDBEntities db = new MaksoudDBEntities();
+                                    if (y.LastEditBy != null)
+                                    {
+                                        var LastU = db.Users.Single(p => p.ID == y.LastEditBy);
+                                        <td>@LastU.Username</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Null In Database</td>
+                                    }
+                                    }
+                                    <td class="center" style="text-align: center;">
                                         <div class="btn-group">
                                             <button class="btn btn-default btn-xs" type="button">الإجرائات</button>
                                             <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">
