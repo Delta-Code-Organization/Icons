@@ -22,6 +22,7 @@ namespace Icons.Models
         public int Id { get; set; }
         public string CategoryName { get; set; }
         public Nullable<int> AccTreeCode { get; set; }
+        public Nullable<int> LastEditBy { get; set; }
     
         public virtual ICollection<Product> Products { get; set; }
     }

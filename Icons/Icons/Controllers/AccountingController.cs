@@ -157,5 +157,39 @@ namespace Icons.Controllers
                 LastEditBy = (Session["User"] as User).ID
             });
         }
+
+        public ActionResult SearchFinancialTransactions()
+        {
+            ViewBag.LOFT = new FinancialTransaction().Search().Data as List<FinancialTransaction>;
+            return View();
+        }
+
+        public ActionResult EditFinancialTransactions(int id)
+        {
+            TempData["FTID"] = id;
+            TempData.Keep();
+            ViewBag.FT = new FinancialTransaction { Id = id }.GetByID().Data as FinancialTransaction;
+            ViewBag.Accs = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
+            return View();
+        }
+
+        [HttpPost]
+        public void EditFT(int Acc1, int Acc2, double Amount, string State, DateTime Date, string Notes)
+        {
+            int id = (int)TempData["FTID"];
+            TempData.Keep();
+            FinancialTransaction Ft = new FinancialTransaction
+            {
+                Id = id,
+                FromAccount = Acc1,
+                ToAccount = Acc2,
+                Amount = Amount,
+                Statement = State,
+                TransactionDate = Date,
+                Notes = Notes,
+                LastEditBy = (Session["User"] as User).ID
+            };
+            Ft.Edit();
+        }
     }
 }

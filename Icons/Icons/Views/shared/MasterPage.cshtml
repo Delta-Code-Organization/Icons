@@ -91,7 +91,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="fa fa-gear"></span>
                 </button>
-                <a class="navbar-brand" href="#"><span>ابراج المقصود</span></a>
+                <a style="z-index: 999999; position: relative;" class="navbar-brand" href="/Home/Index"><span>ابراج المقصود</span></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right user-nav">
@@ -103,7 +103,10 @@
                                 <span>@Uname</span> <b class="caret"></b></a>
                         }
                         <ul class="dropdown-menu">
-                            <li><a href="/User/EditUser/@UID" style="text-align:center;">حسابي</a></li>
+                            @if ((Session["User"] as User).Screens.Any(p => p.ScreenURL == "/User/SearchUsers"))
+                            {
+                                <li><a href="/User/EditUser/@UID" style="text-align:center;">حسابي</a></li>
+                            }
                             <li class="divider"></li>
                             <li><a href="javascript:Logout();" style="text-align: center;">تسجيل الخروج</a></li>
                         </ul>
@@ -142,7 +145,10 @@
                                     LOCS = LOS.Where(P => P.GroupName == GR).ToList();
                                     foreach (Screen SCR in LOCS)
                                     {
+                                        if (SCR.IsMenuItem == true)
+                                        {
                                             <li><a href="@SCR.ScreenURL">@SCR.Title</a></li>
+                                        }
                                     }
                                         }
                                     </ul>
@@ -153,7 +159,7 @@
                     </div>
                 </div>
                 <div class="text-right collapse-button" style="padding: 7px 9px;">
-                    <input type="text" class="form-control search" placeholder="Search..." />
+                    <input id="GeneralSearch" type="text" class="form-control search" placeholder="Search..." />
                     <button id="sidebar-collapse" class="btn btn-default" style=""><i style="color: #fff;" class="fa fa-angle-right"></i></button>
                 </div>
             </div>
@@ -175,6 +181,16 @@
             App.init();
             App.masks();
             App.dataTables();
+
+            $('#GeneralSearch').bind('keypress', function (e) {
+                if (e.keyCode == 13) {
+                    var Keyword = $('#GeneralSearch').val();
+                    if (Keyword == "" || Keyword == undefined || Keyword == null) {
+                        return false;
+                    }
+                    window.location.href = "/Home/GeneralSearch?Keyword=" + Keyword;
+                }
+            });
             //introJs().setOption('showBullets', false).start();
         });
     </script>

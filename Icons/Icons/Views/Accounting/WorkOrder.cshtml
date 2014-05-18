@@ -94,17 +94,7 @@
                         <label class="Arabic">تاريخ</label>
                         <input class="form-control datetime" name="Date" id="Date" size="16" type="text" value="" parsley-trigger="change" required="" parsley-required-message="يجب ادخال التاريخ" />
                     </div>
-                    <div class="form-group">
-                        <label class="Arabic">حساب</label>
-                        <select class="select2" name="Acc" id="Acc">
-                            @{
-                                foreach (AccountingTree item in ViewBag.AccTree)
-                                {
-                                <option value="@item.Id">@item.NodeName</option>
-                                }
-                            }
-                        </select>
-                    </div>
+
                     <div class="form-group">
                         <label class="Arabic">مخزن</label>
                         <select class="select2" name="ProjId" id="ProjId">
@@ -112,6 +102,18 @@
                                 foreach (Project item in ViewBag.Proj)
                                 {
                                 <option value="@item.Id">@item.ProjectName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="Arabic">حساب</label>
+                        <select class="select2" name="Acc" id="Acc">
+                            @{
+                                foreach (AccountingTree item in ViewBag.AccTree)
+                                {
+                                <option value="@item.Id">@item.NodeName</option>
                                 }
                             }
                         </select>

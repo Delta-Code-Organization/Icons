@@ -29,6 +29,7 @@ namespace Icons.Models
         public string Notes { get; set; }
         public Nullable<int> Owner { get; set; }
         public Nullable<int> AccountingID { get; set; }
+        public Nullable<int> LastEditBy { get; set; }
     
         public virtual AccountingTree AccountingTree { get; set; }
         public virtual ICollection<Contract> Contracts { get; set; }

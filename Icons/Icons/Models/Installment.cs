@@ -20,6 +20,7 @@ namespace Icons.Models
         public Nullable<System.DateTime> DueDate { get; set; }
         public Nullable<System.DateTime> PaymentDate { get; set; }
         public Nullable<double> Amount { get; set; }
+        public Nullable<int> LastEditBy { get; set; }
     
         public virtual Contract Contract { get; set; }
         public virtual Customer Customer { get; set; }

@@ -28,6 +28,7 @@ namespace Icons.Models
         public Nullable<double> Remaining { get; set; }
         public Nullable<int> UnitID { get; set; }
         public string Notes { get; set; }
+        public Nullable<int> LastEditBy { get; set; }
     
         public virtual ICollection<ContractOwner> ContractOwners { get; set; }
         public virtual Project Project { get; set; }

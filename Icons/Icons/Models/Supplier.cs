@@ -28,6 +28,7 @@ namespace Icons.Models
         public string District { get; set; }
         public string Notes { get; set; }
         public Nullable<int> AccountingID { get; set; }
+        public Nullable<int> LastEditBy { get; set; }
     
         public virtual AccountingTree AccountingTree { get; set; }
         public virtual ICollection<SupplierInvoice> SupplierInvoices { get; set; }

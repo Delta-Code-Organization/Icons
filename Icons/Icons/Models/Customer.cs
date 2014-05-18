@@ -28,6 +28,7 @@ namespace Icons.Models
         public Nullable<System.DateTime> BirthDate { get; set; }
         public string Notes { get; set; }
         public Nullable<int> AccountID { get; set; }
+        public Nullable<int> LastEditBy { get; set; }
     
         public virtual AccountingTree AccountingTree { get; set; }
         public virtual ICollection<ContractOwner> ContractOwners { get; set; }

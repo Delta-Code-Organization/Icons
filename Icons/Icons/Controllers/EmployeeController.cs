@@ -69,6 +69,7 @@ namespace Icons.Controllers
             E.SalaryType = Convert.ToInt32(FC["salarytype"]);
             E.SSN = FC["ssn"];
             E.Title = FC["title"];
+            E.LastEditBy = (Session["User"] as User).ID;
             E.Add();
             return "true";
         }
@@ -124,6 +125,7 @@ namespace Icons.Controllers
             E.SalaryType = Convert.ToInt32(FC["salarytype"]);
             E.SSN = FC["ssn"];
             E.Title = FC["title"];
+            E.LastEditBy = (Session["User"] as User).ID;
             E.Edit();
             TempData.Keep();
             return "true";

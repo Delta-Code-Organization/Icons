@@ -36,6 +36,7 @@ namespace Icons.Models
         public Nullable<double> ExpectedCost { get; set; }
         public Nullable<double> OwnershipPercentage { get; set; }
         public Nullable<int> AccountID { get; set; }
+        public Nullable<int> LastEditBy { get; set; }
     
         public virtual AccountingTree AccountingTree { get; set; }
         public virtual ICollection<Contract> Contracts { get; set; }

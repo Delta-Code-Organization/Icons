@@ -44,6 +44,7 @@ namespace Icons.Controllers
             cust.Name = _Name;
             cust.Address = _Address;
             cust.Phone = _Phone;
+            cust.LastEditBy = (Session["User"] as User).ID;
             DateTime.Parse(_BirthDate);
             DateTime Dt = Convert.ToDateTime(_BirthDate);
             cust.BirthDate = Dt;
@@ -58,6 +59,7 @@ namespace Icons.Controllers
             cust.Name = _Name;
             cust.Address = _Address;
             cust.Phone = _Phone;
+            cust.LastEditBy = (Session["User"] as User).ID;
             DateTime.Parse(_BirthDate);
             DateTime Dt = Convert.ToDateTime(_BirthDate);
             cust.BirthDate = Dt;
@@ -237,6 +239,17 @@ namespace Icons.Controllers
             }
             ViewBag.I = new CustomerInvoice { Id = (int)id }.GetByID().Data as CustomerInvoice;
             return View();
+        }
+
+        public JsonResult GetInvoiceLines(int _ID)
+        {
+            return new CustomerInvoiceLine { InvoiceId = _ID }.GetByInvoiceID().DataInJSON;
+        }
+
+        [HttpPost]
+        public string DeepInvoiceSearch(string _Keyword)
+        {
+            return new CustomerInvoice().DeepSearch(_Keyword).Data.ToString();
         }
     }
 }

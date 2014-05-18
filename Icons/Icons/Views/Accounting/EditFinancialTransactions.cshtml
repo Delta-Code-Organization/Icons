@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "EditFinancialTransactions";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+    FinancialTransaction FT = ViewBag.FT;
+}
+
+@using Icons.Models;
+
+<script src="~/scripts/FinancialTransaction.js"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">تعديل معاملة مالية</h3>
+            </div>
+            <div class="content">
+                <form id="EditFT" class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+                    <div class="block-flat" style="border: none;">
+                        <div class="content">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label Arabic" style="text-align: center;">حساب</label>
+                                <div class="col-sm-6 Arabic">
+                                    <select class="select2" name="Acc1" id="Acc1">
+                                        @{
+                                            foreach (AccountingTree item in ViewBag.Accs)
+                                            {
+                                                if (item.Id == FT.FromAccount)
+                                                {
+                                                    <option selected="selected" value="@item.Id">@item.NodeName</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Id">@item.NodeName</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label Arabic" style="text-align: center;">حساب</label>
+                                <div class="col-sm-6 Arabic">
+                                    <select class="select2" name="Acc2" id="Acc2">
+                                        @{
+                                            foreach (AccountingTree item in ViewBag.Accs)
+                                            {
+                                                if (item.Id == FT.ToAccount)
+                                                {
+                                                    <option selected="selected" value="@item.Id">@item.NodeName</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Id">@item.NodeName</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label Arabic" style="text-align: center;">القيمة</label>
+                                <div class="col-sm-6 Arabic">
+                                    <input class="form-control parsley-validated parsley-error" value="@FT.Amount" onkeypress="return isNumberKey(event)" id="Amount" name="Amount" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال القيمة" type="text" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label Arabic" style="text-align: center;">بيان</label>
+                                <div class="col-sm-6 Arabic">
+                                    <input class="form-control parsley-validated parsley-error" id="State" name="State" parsley-trigger="change" required="" value="@FT.Statement" parsley-required-message="يجب ادخال البيان" type="text" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label Arabic" style="text-align: center;">التاريخ</label>
+                                <div class="col-sm-6 Arabic">
+                                    <input style="direction: ltr;" id="Date" name="Date" class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال التاريخ" size="16" value="@FT.TransactionDate" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label Arabic" style="text-align: center;">ملاحظات</label>
+                                <div class="col-sm-6 Arabic">
+                                    <textarea id="Notes" name="Notes" class="form-control">@FT.Notes</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">حفظ</button>
+                            <button type="button" onclick="Cancel()" class="btn btn-default">الغاء</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

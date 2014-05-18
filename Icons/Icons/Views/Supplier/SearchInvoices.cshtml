@@ -12,14 +12,19 @@
         <div class="block-flat">
             <div class="header">
                 <h3 style="text-align: right;">بحث فواتير الموردين</h3>
+                <br />
+                <div class="col-md-12" style="direction: rtl;">
+                    <input type="image" onclick="RefreshSearch()" src="~/content/images/round_delete.png" style="border:1px solid #808080; border-radius:0px 100px 100px 0px; border-left:none; width:32px; height:32px; float:right;" /><input id="DeepSearch" class="form-control" style="width: 200px; height:32px; border:1px solid #808080; border-right:none;" type="text" placeholder="بحث متقدم" />
+                </div>
+                <br />
             </div>
             <div class="content" style="direction: rtl;">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="datatable">
+                    <table class="table table-bordered" id="datatable2">
                         <thead>
                             <tr style="direction: rtl;">
                                 <th style="text-align: center;">رقم الفاتورة</th>
-                                <th style="text-align: center;">اسم العميل</th>
+                                <th style="text-align: center;">اسم المورد</th>
                                 <th style="text-align: center;">تاريخ الفاتورة</th>
                                 <th style="text-align: center;">اجمالي الفاتورة</th>
                                 <th style="text-align: center;">الخصم</th>
@@ -112,16 +117,72 @@
         functions.clone().appendTo(this);
     });*@
 
+    function RefreshSearch() {
+        $('#DeepSearch').val('');
+        $('#datatable2 > tbody  > tr').each(function (index, CurrentRow) {
+            $(CurrentRow).fadeIn(0);
+        });
+    }
+
     $(document).ready(function () {
+        $('#DeepSearch').bind('keyup', function (e) {
+            var Keyword = $('#DeepSearch').val();
+            if (Keyword == "" || Keyword == undefined || Keyword == null) {
+                $('#datatable2 > tbody  > tr').each(function (index, CurrentRow) {
+                    $(CurrentRow).fadeIn(0);
+                });
+            }
+            else {
+                $.ajax({
+                    type: 'post',
+                    url: '/Supplier/DeepInvoiceSearch',
+                    data: { '_Keyword': Keyword },
+                    async: true,
+                    success: function (data) {
+                        var IDSArray = data.split(',');
+                        var InArray = false;
+                        $('#datatable2 > tbody  > tr').each(function (index, CurrentRow) {
+                            $.each(IDSArray, function (index, ID) {
+                                if ($(CurrentRow).attr("id") == ID) {
+                                    InArray = true;
+                                    $(CurrentRow).fadeIn(0);
+                                }
+                            });
+                            if (InArray == false) {
+                                $(CurrentRow).fadeOut(0);
+                            }
+                            InArray = false;
+                        });
+
+                    },
+                    error: function (data) {
+                        alert(data.responseText);
+                    }
+                });
+            }
+        });
+
         /* Formating function for row details */
-        function fnFormatDetails(oTable, nTr) {
+        function fnFormatDetails(oTable, nTr, InvoiceID) {
             var aData = oTable.fnGetData(nTr);
             var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
-            sOut += '<tr><td>Rendering engine:</td><td>' + aData[1] + ' ' + aData[4] + '</td></tr>';
-            sOut += '<tr><td>Link to source:</td><td>Could provide a link here</td></tr>';
-            sOut += '<tr><td>Extra info:</td><td>And any further details here (images etc)</td></tr>';
-            sOut += '</table>';
+            sOut += '<tr><td>المنتج</td><td>الكمية</td><td>السعر</td><td>الاجمالي</td></tr>';
 
+            $.ajax({
+                type: 'post',
+                url: '/Supplier/GetInvoiceLines',
+                data: { '_ID': InvoiceID },
+                async: false,
+                success: function (data) {
+                    $.each(data, function (index, Line) {
+                        sOut += '<tr><td>' + Line.Product.ProductName + '</td><td>' + Line.Qty + '</td><td>' + Line.Price + '</td><td>' + Line.Total + '</td></tr>';
+                    });
+                    sOut += '</table>';
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            });
             return sOut;
         }
 
@@ -130,7 +191,7 @@
          */
         var nCloneTh = document.createElement('th');
         var nCloneTd = document.createElement('td');
-        nCloneTd.innerHTML = '<img class="toggle-details" src="images/plus.png" />';
+        nCloneTd.innerHTML = '<img class="toggle-details" src="/content/images/plus.png" />';
         nCloneTd.className = "center";
 
         $('#datatable2 thead tr').each(function () {
@@ -157,19 +218,20 @@
          */
         $('#datatable2').delegate('tbody td img', 'click', function () {
             var nTr = $(this).parents('tr')[0];
+            var InvID = $(this).parents('tr').attr("id");
             if (oTable.fnIsOpen(nTr)) {
                 /* This row is already open - close it */
-                this.src = "images/plus.png";
+                this.src = "/content/images/plus.png";
                 oTable.fnClose(nTr);
             }
             else {
                 /* Open this row */
-                this.src = "images/minus.png";
-                oTable.fnOpen(nTr, fnFormatDetails(oTable, nTr), 'details');
+                this.src = "/content/images/minus.png";
+                oTable.fnOpen(nTr, fnFormatDetails(oTable, nTr, InvID), 'details');
             }
         });
 
-        $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search');
+        $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'بحث');
         $('.dataTables_length select').addClass('form-control');
     });
 </script>

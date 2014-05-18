@@ -73,6 +73,7 @@ namespace Icons.Controllers
             C.Remaining = Convert.ToDouble(FC["cremaining"]);
             C.UnitID = Convert.ToInt32(FC["cunitid"]);
             C.Notes = FC["cnotes"];
+            C.LastEditBy = (Session["User"] as User).ID;
             List<Installment> LOI = new List<Installment>();
             double Amount = Convert.ToDouble(FC["cremaining"]);
             int InstallNum = Convert.ToInt32(FC["INum"]);
@@ -83,6 +84,7 @@ namespace Icons.Controllers
             {
                 Installment I = new Installment();
                 I.Amount = SingleInstallAmount;
+                I.LastEditBy = (Session["User"] as User).ID;
                 if (i == 1)
                 {
                     I.DueDate = LastMonthDate;
@@ -139,6 +141,7 @@ namespace Icons.Controllers
             I.Id = Convert.ToInt32(FC["IDPop"]);
             I.DueDate = Convert.ToDateTime(FC["DueDatePop"]);
             I.Amount = Convert.ToDouble(FC["AmountPop"]);
+            I.LastEditBy = (Session["User"] as User).ID;
             new Contract().EditInstallment(I);
         }
     }

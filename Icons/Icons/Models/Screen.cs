@@ -23,6 +23,7 @@ namespace Icons.Models
         public string ScreenURL { get; set; }
         public string Title { get; set; }
         public string GroupName { get; set; }
+        public Nullable<bool> IsMenuItem { get; set; }
     
         public virtual ICollection<User> Users { get; set; }
     }

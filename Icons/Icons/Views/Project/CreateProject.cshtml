@@ -57,11 +57,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                    <label class="col-sm-3 control-label Arabic" style="text-align:center;">تاريخ الإنشاء</label>
-                                    <div class="col-sm-6 Arabic">
-                                        <input style="direction:ltr;" data-mask="datetime" id="date" name="date" class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ الإنشاء" size="16" value="" type="text">
+                                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">تاريخ الإنشاء</label>
+                                        <div class="col-sm-6 Arabic">
+                                            <input style="direction: ltr;" data-mask="datetime" id="date" name="date" class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ الإنشاء" size="16" value="" type="text">
+                                        </div>
                                     </div>
-                                </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
                                             <button class="btn btn-default">الغاء</button>
@@ -78,25 +78,57 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الأول</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="first" name="first" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال المنظر الأول" type="text" />
+                                            @*<input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="first" name="first" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال المنظر الأول" type="text" />*@
+                                            <select class="select2" id="first" name="first">
+                                                <optgroup label="الاتجاهات">
+                                                    <option value="1">شرقي</option>
+                                                    <option value="2">غربي</option>
+                                                    <option value="3">شمالي</option>
+                                                    <option value="4">جنوبي</option>
+                                                </optgroup>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الثاني</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="second" name="second" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال المنظر الثاني" type="text" />
+                                            @*<input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="second" name="second" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال المنظر الثاني" type="text" />*@
+                                            <select class="select2" id="second" name="second">
+                                                <optgroup label="الاتجاهات">
+                                                    <option value="1">شرقي</option>
+                                                    <option value="2">غربي</option>
+                                                    <option value="3">شمالي</option>
+                                                    <option value="4">جنوبي</option>
+                                                </optgroup>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الثالث</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="third" name="third" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال المنظر الثالث" type="text" />
+                                            @*<input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="third" name="third" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال المنظر الثالث" type="text" />*@
+                                            <select class="select2" id="third" name="third">
+                                                <optgroup label="الاتجاهات">
+                                                    <option value="1">شرقي</option>
+                                                    <option value="2">غربي</option>
+                                                    <option value="3">شمالي</option>
+                                                    <option value="4">جنوبي</option>
+                                                </optgroup>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">المنظر الرابع</label>
                                         <div class="col-sm-6 Arabic">
-                                            <input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="forth" name="forth" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال المنظر الرابع" type="text" />
+                                            @*<input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" id="forth" name="forth" parsley-type="number" parsley-type-number-message="يرجي ادخال رقم صحيح" parsley-trigger="change" required="" parsley-required-message="يجب ادخال المنظر الرابع" type="text" />*@
+                                            <select class="select2" id="forth" name="forth">
+                                                <optgroup label="الاتجاهات">
+                                                    <option value="1">شرقي</option>
+                                                    <option value="2">غربي</option>
+                                                    <option value="3">شمالي</option>
+                                                    <option value="4">جنوبي</option>
+                                                </optgroup>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">

@@ -155,5 +155,44 @@ namespace Icons.Models
                 Message = Message.Invoice_Added_Successfully
             };
         }
+
+        public Returner DeepSearch(string _Keyword)
+        {
+            List<SupplierInvoice> LOCI = new List<SupplierInvoice>();
+            string IDS = "";
+            string KeywordType = "string";
+            int AfterParseInt;
+            DateTime AfterParseDate;
+            if (int.TryParse(_Keyword, out AfterParseInt))
+            {
+                KeywordType = "int";
+            }
+            if (DateTime.TryParse(_Keyword, out AfterParseDate))
+            {
+                KeywordType = "DateTime";
+            }
+            if (KeywordType == "string")
+            {
+                LOCI = db.SupplierInvoices.Where(p => p.Supplier.Name.Contains(_Keyword) || p.SupplierInvoiceLines.Any(n => n.Product.ProductName.Contains(_Keyword)) || p.AccountingTree.NodeName.Contains(_Keyword)).ToList();
+            }
+            if (KeywordType == "int")
+            {
+                LOCI = db.SupplierInvoices.Where(p => p.InvoiceDiscount == AfterParseInt || p.InvoiceNet == AfterParseInt || p.InvoiceTotal == AfterParseInt || p.SupplierInvoiceLines.Any(n => n.Price == AfterParseInt) || p.SupplierInvoiceLines.Any(n => n.Qty == AfterParseInt) || p.SupplierInvoiceLines.Any(n => n.Total == AfterParseInt)).ToList();
+            }
+            if (KeywordType == "DateTime")
+            {
+                LOCI = db.SupplierInvoices.Where(p => p.InvoiceDate == AfterParseDate).ToList();
+            }
+            foreach (SupplierInvoice item in LOCI)
+            {
+                IDS += item.Id + ",";
+            }
+            int LastCharIndex = IDS.Length - 1;
+            IDS = IDS.Remove(LastCharIndex, 1);
+            return new Returner
+            {
+                Data = IDS
+            };
+        }
     }
 }

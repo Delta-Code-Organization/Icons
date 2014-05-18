@@ -22,6 +22,7 @@ namespace Icons.Controllers
         {
             ProductCategory PC = new ProductCategory();
             PC.CategoryName = FC["Cat"];
+            PC.LastEditBy = (Session["User"] as User).ID;
             PC.Create();
             return "true";
         }
@@ -75,6 +76,7 @@ namespace Icons.Controllers
             ProductCategory PC = new ProductCategory();
             PC.Id = (int)TempData["PCat"];
             PC.CategoryName = FC["Cat"];
+            PC.LastEditBy = (Session["User"] as User).ID;
             PC.Edit();
             TempData.Keep();
             return "true";
@@ -98,6 +100,7 @@ namespace Icons.Controllers
             P.PtoSRate = Convert.ToInt32(FC["per"]);
             P.PurchaseUnit = Convert.ToInt32(FC["pu"]);
             P.SalesUnit = Convert.ToInt32(FC["su"]);
+            P.LastEditBy = (Session["User"] as User).ID;
             P.Description = FC["notes"];
             P.ProductName = FC["name"];
             Returner R = P.Create();
@@ -168,6 +171,7 @@ namespace Icons.Controllers
             P.PtoSRate = Convert.ToInt32(FC["per"]);
             P.PurchaseUnit = Convert.ToInt32(FC["pu"]);
             P.SalesUnit = Convert.ToInt32(FC["su"]);
+            P.LastEditBy = (Session["User"] as User).ID;
             P.Description = FC["notes"];
             P.ProductName = FC["name"];
             P.Edit();

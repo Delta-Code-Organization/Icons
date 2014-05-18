@@ -30,6 +30,7 @@ namespace Icons.Models
         public Nullable<int> SalesUnit { get; set; }
         public Nullable<int> PtoSRate { get; set; }
         public Nullable<int> AccountID { get; set; }
+        public Nullable<int> LastEditBy { get; set; }
     
         public virtual AccountingTree AccountingTree { get; set; }
         public virtual ICollection<CustomerInvoiceLine> CustomerInvoiceLines { get; set; }

@@ -102,6 +102,7 @@ namespace Icons.Controllers
             S.Name = FC["name"].ToString();
             S.Notes = FC["notes"].ToString();
             S.Phone = FC["phone"].ToString();
+            S.LastEditBy = (Session["User"] as User).ID;
             S.Create();
             return "true";
         }
@@ -153,6 +154,7 @@ namespace Icons.Controllers
             S.Name = FC["name"].ToString();
             S.Notes = FC["notes"].ToString();
             S.Phone = FC["phone"].ToString();
+            S.LastEditBy = (Session["User"] as User).ID;
             S.Edit();
             TempData.Keep();
             return "true";
@@ -249,6 +251,17 @@ namespace Icons.Controllers
             }
             ViewBag.I = new SupplierInvoice { Id = (int)id }.GetByID().Data as SupplierInvoice;
             return View();
+        }
+
+        public JsonResult GetInvoiceLines(int _ID)
+        {
+            return new SupplierInvoiceLine { InvoiceId = _ID }.GetByInvoiceID().DataInJSON;
+        }
+
+        [HttpPost]
+        public string DeepInvoiceSearch(string _Keyword)
+        {
+            return new SupplierInvoice().DeepSearch(_Keyword).Data.ToString();
         }
     }
 }

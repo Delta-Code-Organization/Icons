@@ -36,6 +36,7 @@ namespace Icons.Models
         public Nullable<int> ImprestAccID { get; set; }
         public Nullable<int> BenifitAccID { get; set; }
         public Nullable<int> PenaltyAccID { get; set; }
+        public Nullable<int> LastEditBy { get; set; }
     
         public virtual ICollection<EmployeeBenifit> EmployeeBenifits { get; set; }
         public virtual ICollection<EmployeeImprest> EmployeeImprests { get; set; }

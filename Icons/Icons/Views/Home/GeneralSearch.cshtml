@@ -1,0 +1,308 @@
+﻿@{
+    ViewBag.Title = "GeneralSearch";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+}
+
+@using Icons.Models;
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">نتائج البحث</h3>
+            </div>
+            <div class="content">
+                <div style="text-align: right; direction: rtl;" class="panel-group accordion accordion-semi" id="accordion3">
+                    @{
+                        List<Customer> LOC = ViewBag.LOC;
+                        List<Supplier> LOS = ViewBag.LOS;
+                        List<SupplierInvoice> LOSI = ViewBag.LOSI;
+                        List<CustomerInvoice> LOCI = ViewBag.LOCI;
+                        List<FinancialTransaction> LOFT = ViewBag.LOFT;
+                        List<Product> LOP = ViewBag.LOP;
+                        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion3" href="#1">
+                                        <i class="fa fa-angle-left"></i>&nbsp العملاء (@LOC.Count)
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="1" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div class="block-flat">
+                                        <div class="content">
+                                            <table style="direction: rtl;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 25%; text-align: center;">اسم العميل</th>
+                                                        <th style="width: 25%; text-align: center;">العنوان</th>
+                                                        <th style="width: 25%; text-align: center;">رقم الهاتف</th>
+                                                        <th style="width: 25%; text-align: center;">تاريخ الميلاد</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        foreach (Customer item in LOC)
+                                                        {
+                                                        <tr id="DetailRow">
+                                                            <td style="width: 25%; text-align: center;">@item.Name</td>
+                                                            <td style="width: 25%; text-align: center;">@item.Address</td>
+                                                            <td style="width: 25%; text-align: center;">@item.Phone</td>
+                                                            <td style="width: 25%; text-align: center;">@item.BirthDate</td>
+                                                        </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion3" href="#2">
+                                        <i class="fa fa-angle-left"></i>&nbsp الموردين (@LOS.Count)
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="2" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="block-flat">
+                                        <div class="content">
+                                            <table style="direction: rtl;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 16.6%; text-align: center;">اسم مورد</th>
+                                                        <th style="width: 16.6%; text-align: center;">العنوان</th>
+                                                        <th style="width: 16.6%; text-align: center;">رقم الهاتف</th>
+                                                        <th style="width: 16.6%; text-align: center;">رقم الموبايل</th>
+                                                        <th style="width: 16.6%; text-align: center;">المدينة</th>
+                                                        <th style="width: 16.6%; text-align: center;">الحي</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        foreach (Supplier item in LOS)
+                                                        {
+                                                        <tr id="DetailRow">
+                                                            <td style="width: 16.6%; text-align: center;">@item.Name</td>
+                                                            <td style="width: 16.6%; text-align: center;">@item.Address</td>
+                                                            <td style="width: 16.6%; text-align: center;">@item.Phone</td>
+                                                            <td style="width: 16.6%; text-align: center;">@item.Mobile</td>
+                                                            <td style="width: 16.6%; text-align: center;">@item.City</td>
+                                                            <td style="width: 16.6%; text-align: center;">@item.District</td>
+                                                        </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion3" href="#3">
+                                        <i class="fa fa-angle-left"></i>&nbsp فواتير العملاء (@LOCI.Count)
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="3" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="block-flat">
+                                        <div class="content">
+                                            <table style="direction: rtl;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 14.1%; text-align: center;">رقم الفاتور</th>
+                                                        <th style="width: 14.1%; text-align: center;">اسم العميل</th>
+                                                        <th style="width: 14.1%; text-align: center;">تاريخ الفاتورة</th>
+                                                        <th style="width: 14.1%; text-align: center;">اجمالي الفاتورة</th>
+                                                        <th style="width: 14.1%; text-align: center;">الخصم</th>
+                                                        <th style="width: 14.1%; text-align: center;">الصافي</th>
+                                                        <th style="width: 14.1%; text-align: center;">المشروع</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        foreach (CustomerInvoice item in LOCI)
+                                                        {
+                                                        <tr id="DetailRow">
+                                                            <td style="width: 14.1%; text-align: center;">@item.Id</td>
+                                                            <td style="width: 14.1%; text-align: center;">@item.Customer.Name</td>
+                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceDate</td>
+                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceTotal</td>
+                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceDiscount</td>
+                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceNet</td>
+                                                            <td style="width: 14.1%; text-align: center;">@item.Project.ProjectName</td>
+                                                        </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion3" href="#4">
+                                        <i class="fa fa-angle-left"></i>&nbsp فواتير الموردين (@LOSI.Count)
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="4" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="block-flat">
+                                        <div class="content">
+                                            <table style="direction: rtl;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 14.1%; text-align: center;">رقم الفاتورة</th>
+                                                        <th style="width: 14.1%; text-align: center;">اسم المورد</th>
+                                                        <th style="width: 14.1%; text-align: center;">تاريخ الفاتورة</th>
+                                                        <th style="width: 14.1%; text-align: center;">اجمالي الفاتورة</th>
+                                                        <th style="width: 14.1%; text-align: center;">الخصم</th>
+                                                        <th style="width: 14.1%; text-align: center;">الصافي</th>
+                                                        <th style="width: 14.1%; text-align: center;">المشروع</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        foreach (SupplierInvoice item in LOSI)
+                                                        {
+                                                        <tr id="DetailRow">
+                                                            <td style="width: 14.1%; text-align: center;">@item.Id</td>
+                                                            <td style="width: 14.1%; text-align: center;">@item.Supplier.Name</td>
+                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceDate</td>
+                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceTotal</td>
+                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceDiscount</td>
+                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceNet</td>
+                                                            <td style="width: 14.1%; text-align: center;">@item.Project.ProjectName</td>
+                                                        </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion3" href="#5">
+                                        <i class="fa fa-angle-left"></i>&nbsp المعاملات المالية (@LOFT.Count)
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="5" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="block-flat">
+                                        <div class="content">
+                                            <table style="direction: rtl;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 20%; text-align: center;">من حساب</th>
+                                                        <th style="width: 20%; text-align: center;">الي حساب</th>
+                                                        <th style="width: 20%; text-align: center;">قيمة</th>
+                                                        <th style="width: 20%; text-align: center;">بيان</th>
+                                                        <th style="width: 20%; text-align: center;">تاريخ</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        foreach (FinancialTransaction item in LOFT)
+                                                        {
+                                                        <tr id="DetailRow">
+                                                            <td style="width: 20%; text-align: center;">@item.AccountingTree.NodeName</td>
+                                                            <td style="width: 20%; text-align: center;">@item.AccountingTree1.NodeName</td>
+                                                            <td style="width: 20%; text-align: center;">@item.Amount</td>
+                                                            <td style="width: 20%; text-align: center;">@item.Statement</td>
+                                                            <td style="width: 20%; text-align: center;">@item.TransactionDate</td>
+                                                        </tr>
+                                                        } 
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion3" href="#6">
+                                        <i class="fa fa-angle-left"></i>&nbsp المنتجات (@LOP.Count)
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="6" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="block-flat">
+                                        <div class="content">
+                                            <table style="direction: rtl;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 16.6%; text-align: center;">اسم المنتج</th>
+                                                        <th style="width: 16.6%; text-align: center;">التصنيف</th>
+                                                        <th style="width: 16.6%; text-align: center;">وحدة الشراء</th>
+                                                        <th style="width: 16.6%; text-align: center;">وحدة البيع</th>
+                                                        <th style="width: 16.6%; text-align: center;">نسبة التحويل</th>
+                                                        <th style="width: 16.6%; text-align: center;">الوصف</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        foreach (Product item in LOP)
+                                                        {
+                                                            string PU = Enum.GetName(typeof(PurchaseUnit), item.PurchaseUnit);
+                                                            string SU = Enum.GetName(typeof(SalesUnit), item.SalesUnit);
+                                                        <tr id="DetailRow">
+                                                            <td style="width: 16.6%; text-align: center;">@item.ProductName</td>
+                                                            <td style="width: 16.6%; text-align: center;">@item.ProductCategory.CategoryName</td>
+                                                            <td style="width: 16.6%; text-align: center;">@PU</td>
+                                                            <td style="width: 16.6%; text-align: center;">@SU</td>
+                                                            <td style="width: 16.6%; text-align: center;">@item.PtoSRate</td>
+                                                            <td style="width: 16.6%; text-align: center;">@item.Description</td>
+                                                        </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

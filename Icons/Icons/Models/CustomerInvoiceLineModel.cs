@@ -65,9 +65,21 @@ namespace Icons.Models
         public Returner GetByInvoiceID()
         {
             var Lines = db.CustomerInvoiceLines.Where(p => p.InvoiceId == this.InvoiceId).ToList();
+            var LinesInJSON = (from L in Lines
+                               select new
+                               {
+                                   L.Price,
+                                   L.Qty,
+                                   L.Total,
+                                   Product = new
+                                   {
+                                       L.Product.ProductName
+                                   }
+                               }).ToList();
             return new Returner
             {
-                Data = Lines
+                Data = Lines,
+                DataInJSON = LinesInJSON.ToJSON()
             };
         }
     }

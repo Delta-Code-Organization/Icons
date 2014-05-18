@@ -10,5 +10,34 @@ namespace Icons.Models
         #region Context
         MaksoudDBEntities db = new MaksoudDBEntities();
         #endregion
+
+        public Returner Search()
+        {
+            return new Returner
+            {
+                Data = db.FinancialTransactions.ToList()
+            };
+        }
+
+        public Returner GetByID()
+        {
+            return new Returner
+            {
+                Data = db.FinancialTransactions.Single(p => p.Id == this.Id)
+            };
+        }
+
+        public void Edit()
+        {
+            var FT = db.FinancialTransactions.Single(p => p.Id == this.Id);
+            FT.Amount = this.Amount;
+            FT.FromAccount = this.FromAccount;
+            FT.LastEditBy = this.LastEditBy;
+            FT.Notes = this.Notes;
+            FT.Statement = this.Statement;
+            FT.ToAccount = this.ToAccount;
+            FT.TransactionDate = this.TransactionDate;
+            db.SaveChanges();
+        }
     }
 }

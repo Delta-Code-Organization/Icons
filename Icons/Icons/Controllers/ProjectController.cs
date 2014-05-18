@@ -28,6 +28,7 @@ namespace Icons.Controllers
             P.ForthViewLength = Convert.ToDouble(FC["forth"]);
             P.LandSpace = Convert.ToInt32(FC["space"]);
             P.OwnershipPercentage = Convert.ToDouble(FC["per"]);
+            P.LastEditBy = (Session["User"] as User).ID;
             P.ProjectAddress = FC["address"];
             P.ProjectName = FC["name"];
             P.SecondViewLength = Convert.ToDouble(FC["second"]);
@@ -69,6 +70,8 @@ namespace Icons.Controllers
                 }
             }
             ViewBag.P = new Project { Id = (int)id }.GetByID().Data as Project;
+            string[] Directions = Enum.GetNames(typeof(Directions));
+            ViewBag.Directions = Directions;
             TempData["ProjID"] = (int)id;
             TempData.Keep();
             return View();
@@ -86,6 +89,7 @@ namespace Icons.Controllers
             P.ForthViewLength = Convert.ToDouble(FC["forth"]);
             P.LandSpace = Convert.ToInt32(FC["space"]);
             P.OwnershipPercentage = Convert.ToDouble(FC["per"]);
+            P.LastEditBy = (Session["User"] as User).ID;
             P.ProjectAddress = FC["address"];
             P.ProjectName = FC["name"];
             P.SecondViewLength = Convert.ToDouble(FC["second"]);
@@ -117,6 +121,7 @@ namespace Icons.Controllers
             PU.FloorNumber = Convert.ToInt32(FC["floors"]);
             PU.Notes = FC["notes"];
             PU.ProjectID = (int)TempData["PID"];
+            PU.LastEditBy = (Session["User"] as User).ID;
             PU.UnitSpace = Convert.ToInt32(FC["space"]);
             PU.UnitType = Convert.ToInt32(FC["type"]);
             PU.Create();
@@ -140,6 +145,7 @@ namespace Icons.Controllers
             PU.Finishing = Convert.ToInt32(FC["Pfinish"]);
             PU.FloorNumber = Convert.ToInt32(FC["Pfloors"]);
             PU.Notes = FC["Pnotes"];
+            PU.LastEditBy = (Session["User"] as User).ID;
             PU.ProjectID = (int)TempData["PID"];
             PU.UnitSpace = Convert.ToInt32(FC["Pspace"]);
             PU.UnitType = Convert.ToInt32(FC["Ptype"]);
