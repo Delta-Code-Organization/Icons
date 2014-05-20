@@ -145,6 +145,7 @@
     <Compile Include="Models\CustomerInvoiceLineModel.cs" />
     <Compile Include="Models\CustomerInvoiceModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\Directions.cs" />
     <Compile Include="Models\Employee.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
@@ -167,6 +168,7 @@
     </Compile>
     <Compile Include="Models\FinancialTransactionsModel.cs" />
     <Compile Include="Models\Finishing.cs" />
+    <Compile Include="Models\General.cs" />
     <Compile Include="Models\Icons.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -286,6 +288,8 @@
     <Content Include="content\images\mov_bbb.mp4" />
     <Content Include="content\images\photos_licenses.txt" />
     <Content Include="content\images\plus.png" />
+    <Content Include="content\images\refresh.png" />
+    <Content Include="content\images\round_delete.png" />
     <Content Include="content\images\stat-down.png" />
     <Content Include="content\images\stat-same.png" />
     <Content Include="content\images\stat-up.png" />
@@ -2567,6 +2571,9 @@
     <Content Include="Views\Supplier\EditInvoice.cshtml" />
     <Content Include="Views\Customer\DisplayInvoice.cshtml" />
     <Content Include="Views\Supplier\DisplayInvoice.cshtml" />
+    <Content Include="Views\Home\GeneralSearch.cshtml" />
+    <Content Include="Views\Accounting\SearchFinancialTransactions.cshtml" />
+    <Content Include="Views\Accounting\EditFinancialTransactions.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
