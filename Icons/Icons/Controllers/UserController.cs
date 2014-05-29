@@ -14,6 +14,11 @@ namespace Icons.Controllers
 
         public ActionResult Login()
         {
+            using (MaksoudDBEntities db = new MaksoudDBEntities())
+            {
+                var LOS = db.Screens.ToList();
+                Session["AllScreens"] = LOS;
+            }
             return View();
         }
 

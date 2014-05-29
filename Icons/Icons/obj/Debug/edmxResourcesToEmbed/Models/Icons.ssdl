@@ -214,6 +214,7 @@
     <Property Name="Remaining" Type="float" />
     <Property Name="UnitID" Type="int" />
     <Property Name="Notes" Type="nvarchar(max)" />
+    <Property Name="LastEditBy" Type="int" />
   </EntityType>
   <EntityType Name="CustomerInvoiceLines">
     <Key>
@@ -252,6 +253,7 @@
     <Property Name="BirthDate" Type="datetime" />
     <Property Name="Notes" Type="nvarchar(max)" />
     <Property Name="AccountID" Type="int" />
+    <Property Name="LastEditBy" Type="int" />
   </EntityType>
   <EntityType Name="Employee">
     <Key>
@@ -272,6 +274,14 @@
     <Property Name="ImprestAccID" Type="int" />
     <Property Name="BenifitAccID" Type="int" />
     <Property Name="PenaltyAccID" Type="int" />
+    <Property Name="LastEditBy" Type="int" />
+    <Property Name="ExitDate" Type="datetime" />
+    <Property Name="HoldingAssets" Type="nvarchar(max)" />
+    <Property Name="ExitDeliveredAssets" Type="nvarchar(max)" />
+    <Property Name="InsurancePercentage" Type="float" />
+    <Property Name="InsuranceFrom" Type="datetime" />
+    <Property Name="InsuranceTo" Type="datetime" />
+    <Property Name="Notes" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="EmployeeBenifits">
     <Key>
@@ -324,6 +334,7 @@
     <Property Name="DueDate" Type="datetime" />
     <Property Name="PaymentDate" Type="datetime" />
     <Property Name="Amount" Type="float" />
+    <Property Name="LastEditBy" Type="int" />
   </EntityType>
   <EntityType Name="ProductCategories">
     <Key>
@@ -332,6 +343,7 @@
     <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="CategoryName" Type="nvarchar(max)" />
     <Property Name="AccTreeCode" Type="int" />
+    <Property Name="LastEditBy" Type="int" />
   </EntityType>
   <EntityType Name="Products">
     <Key>
@@ -345,6 +357,7 @@
     <Property Name="SalesUnit" Type="int" />
     <Property Name="PtoSRate" Type="int" />
     <Property Name="AccountID" Type="int" />
+    <Property Name="LastEditBy" Type="int" />
   </EntityType>
   <EntityType Name="Projects">
     <Key>
@@ -363,6 +376,7 @@
     <Property Name="ExpectedCost" Type="float" />
     <Property Name="OwnershipPercentage" Type="float" />
     <Property Name="AccountID" Type="int" />
+    <Property Name="LastEditBy" Type="int" />
   </EntityType>
   <EntityType Name="ProjectUnits">
     <Key>
@@ -378,6 +392,7 @@
     <Property Name="Notes" Type="nvarchar" />
     <Property Name="Owner" Type="int" />
     <Property Name="AccountingID" Type="int" />
+    <Property Name="LastEditBy" Type="int" />
   </EntityType>
   <EntityType Name="Screens">
     <Key>
@@ -387,6 +402,7 @@
     <Property Name="ScreenURL" Type="nvarchar" />
     <Property Name="Title" Type="nvarchar" MaxLength="400" />
     <Property Name="GroupName" Type="nvarchar" MaxLength="800" />
+    <Property Name="IsMenuItem" Type="bit" />
   </EntityType>
   <EntityType Name="Stock">
     <Key>
@@ -448,6 +464,7 @@
     <Property Name="District" Type="nvarchar" MaxLength="100" />
     <Property Name="Notes" Type="nvarchar" />
     <Property Name="AccountingID" Type="int" />
+    <Property Name="LastEditBy" Type="int" />
   </EntityType>
   <EntityType Name="UserAccess">
     <Key>

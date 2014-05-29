@@ -18,9 +18,9 @@
                     <table class="table table-bordered" id="datatable">
                         <thead>
                             <tr style="direction: rtl;">
-                                <th style="text-align: center; width: 80%;">اسم التصنيف</th>
-                                <th style="text-align: center; width: 80%;">اخر تعديل بواسطة</th>
-                                <th style="text-align: center;"></th>
+                                <th style="text-align: center; width: 50%;">اسم التصنيف</th>
+                                <th style="text-align: center; width: 25%;">اخر تعديل بواسطة</th>
+                                <th style="text-align: center; width: 25%;"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,20 +29,20 @@
                                 {
                                 <tr class="odd gradeX" id="@y.Id">
 
-                                    <td style="width: 80%;">@y.CategoryName</td>
+                                    <td style="width: 50%;">@y.CategoryName</td>
                                     @{
                                     MaksoudDBEntities db = new MaksoudDBEntities();
                                     if (y.LastEditBy != null)
                                     {
                                         var LastU = db.Users.Single(p => p.ID == y.LastEditBy);
-                                        <td>@LastU.Username</td>
+                                        <td style="width: 25%;">@LastU.Username</td>
                                     }
                                     else
                                     {
-                                        <td>Null In Database</td>
+                                        <td style="width: 25%;">Null In Database</td>
                                     }
                                     }
-                                    <td class="center" style="text-align: center;">
+                                    <td class="center" style="text-align: center; width:25%;">
                                         <div class="btn-group">
                                             <button class="btn btn-default btn-xs" type="button">الإجرائات</button>
                                             <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">

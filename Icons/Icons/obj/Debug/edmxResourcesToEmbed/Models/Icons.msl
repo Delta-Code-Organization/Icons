@@ -30,6 +30,7 @@
     <EntitySetMapping Name="Contracts">
       <EntityTypeMapping TypeName="MaksoudDBModel.Contract">
         <MappingFragment StoreEntitySet="Contracts">
+          <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
@@ -72,6 +73,7 @@
     <EntitySetMapping Name="Customers">
       <EntityTypeMapping TypeName="MaksoudDBModel.Customer">
         <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Address" ColumnName="Address" />
@@ -85,6 +87,14 @@
     <EntitySetMapping Name="Employees">
       <EntityTypeMapping TypeName="MaksoudDBModel.Employee">
         <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="InsuranceTo" ColumnName="InsuranceTo" />
+          <ScalarProperty Name="InsuranceFrom" ColumnName="InsuranceFrom" />
+          <ScalarProperty Name="InsurancePercentage" ColumnName="InsurancePercentage" />
+          <ScalarProperty Name="ExitDeliveredAssets" ColumnName="ExitDeliveredAssets" />
+          <ScalarProperty Name="HoldingAssets" ColumnName="HoldingAssets" />
+          <ScalarProperty Name="ExitDate" ColumnName="ExitDate" />
+          <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
@@ -151,6 +161,7 @@
     <EntitySetMapping Name="Installments">
       <EntityTypeMapping TypeName="MaksoudDBModel.Installment">
         <MappingFragment StoreEntitySet="Installments">
+          <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ContractID" ColumnName="ContractID" />
           <ScalarProperty Name="ResponsibleID" ColumnName="ResponsibleID" />
@@ -163,6 +174,7 @@
     <EntitySetMapping Name="ProductCategories">
       <EntityTypeMapping TypeName="MaksoudDBModel.ProductCategory">
         <MappingFragment StoreEntitySet="ProductCategories">
+          <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
           <ScalarProperty Name="AccTreeCode" ColumnName="AccTreeCode" />
@@ -172,6 +184,7 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="MaksoudDBModel.Product">
         <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ProductName" ColumnName="ProductName" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -186,6 +199,7 @@
     <EntitySetMapping Name="Projects">
       <EntityTypeMapping TypeName="MaksoudDBModel.Project">
         <MappingFragment StoreEntitySet="Projects">
+          <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
           <ScalarProperty Name="ProjectAddress" ColumnName="ProjectAddress" />
@@ -205,6 +219,7 @@
     <EntitySetMapping Name="ProjectUnits">
       <EntityTypeMapping TypeName="MaksoudDBModel.ProjectUnit">
         <MappingFragment StoreEntitySet="ProjectUnits">
+          <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
           <ScalarProperty Name="UnitSpace" ColumnName="UnitSpace" />
@@ -221,6 +236,7 @@
     <EntitySetMapping Name="Screens">
       <EntityTypeMapping TypeName="MaksoudDBModel.Screen">
         <MappingFragment StoreEntitySet="Screens">
+          <ScalarProperty Name="IsMenuItem" ColumnName="IsMenuItem" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="ScreenURL" ColumnName="ScreenURL" />
           <ScalarProperty Name="Title" ColumnName="Title" />
@@ -282,6 +298,7 @@
     <EntitySetMapping Name="Suppliers">
       <EntityTypeMapping TypeName="MaksoudDBModel.Supplier">
         <MappingFragment StoreEntitySet="Suppliers">
+          <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />

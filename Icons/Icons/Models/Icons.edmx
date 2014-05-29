@@ -280,6 +280,13 @@
           <Property Name="BenifitAccID" Type="int" />
           <Property Name="PenaltyAccID" Type="int" />
           <Property Name="LastEditBy" Type="int" />
+          <Property Name="ExitDate" Type="datetime" />
+          <Property Name="HoldingAssets" Type="nvarchar(max)" />
+          <Property Name="ExitDeliveredAssets" Type="nvarchar(max)" />
+          <Property Name="InsurancePercentage" Type="float" />
+          <Property Name="InsuranceFrom" Type="datetime" />
+          <Property Name="InsuranceTo" Type="datetime" />
+          <Property Name="Notes" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="EmployeeBenifits">
           <Key>
@@ -1246,6 +1253,13 @@
           <NavigationProperty Name="EmployeeImprests" Relationship="MaksoudDBModel.FK_EmployeeImprests_Employee" FromRole="Employee" ToRole="EmployeeImprests" />
           <NavigationProperty Name="EmployeePenalties" Relationship="MaksoudDBModel.FK_EmployeePenalties_Employee" FromRole="Employee" ToRole="EmployeePenalties" />
           <Property Type="Int32" Name="LastEditBy" />
+          <Property Type="DateTime" Name="ExitDate" Precision="3" />
+          <Property Type="String" Name="HoldingAssets" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ExitDeliveredAssets" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="InsurancePercentage" />
+          <Property Type="DateTime" Name="InsuranceFrom" Precision="3" />
+          <Property Type="DateTime" Name="InsuranceTo" Precision="3" />
+          <Property Type="String" Name="Notes" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="EmployeeBenifit">
           <Key>
@@ -2024,6 +2038,13 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="MaksoudDBModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="InsuranceTo" ColumnName="InsuranceTo" />
+                <ScalarProperty Name="InsuranceFrom" ColumnName="InsuranceFrom" />
+                <ScalarProperty Name="InsurancePercentage" ColumnName="InsurancePercentage" />
+                <ScalarProperty Name="ExitDeliveredAssets" ColumnName="ExitDeliveredAssets" />
+                <ScalarProperty Name="HoldingAssets" ColumnName="HoldingAssets" />
+                <ScalarProperty Name="ExitDate" ColumnName="ExitDate" />
                 <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

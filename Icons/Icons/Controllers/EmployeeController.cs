@@ -24,7 +24,6 @@ namespace Icons.Controllers
 
         private Image LoadImage(string Base64)
         {
-            
             //get a temp image from bytes, instead of loading from disk
             //data:image/gif;base64,
             //this image is a single pixel (black)
@@ -43,7 +42,7 @@ namespace Icons.Controllers
         public string CreateEmployee(FormCollection FC)
         {
             Employee E = new Employee();
-            string File = FC["Attachment"];
+            //string File = FC["Attachment"];
             //if (File != " ")
             //{
             //    //if not empty here the steps of saving the image to the folder of knowledgebase on the server 
@@ -59,6 +58,13 @@ namespace Icons.Controllers
             //    }
             //    B.ImageURL = Path;
             //}
+            E.ExitDate = Convert.ToDateTime(FC["ExitDate"]);
+            E.HoldingAssets = FC["HoldingAssets"];
+            E.ExitDeliveredAssets = FC["ExitDeliveredAssets"];
+            E.Notes = FC["Notes"];
+            E.InsurancePercentage = Convert.ToDouble(FC["InsurancePercentage"]);
+            E.InsuranceFrom = Convert.ToDateTime(FC["InsuranceFrom"]);
+            E.InsuranceTo = Convert.ToDateTime(FC["InsuranceTo"]);
             E.Address = FC["address"];
             E.BasicSalary = Convert.ToInt32(FC["basicsalary"]);
             E.DateOfBirth = Convert.ToDateTime(FC["dateofbirth"]);
@@ -114,6 +120,13 @@ namespace Icons.Controllers
         public string EditEmployee(FormCollection FC)
         {
             Employee E = new Employee();
+            E.ExitDate = Convert.ToDateTime(FC["ExitDate"]);
+            E.HoldingAssets = FC["HoldingAssets"];
+            E.ExitDeliveredAssets = FC["ExitDeliveredAssets"];
+            E.Notes = FC["Notes"];
+            E.InsurancePercentage = Convert.ToDouble(FC["InsurancePercentage"]);
+            E.InsuranceFrom = Convert.ToDateTime(FC["InsuranceFrom"]);
+            E.InsuranceTo = Convert.ToDateTime(FC["InsuranceTo"]);
             E.Id = (int)TempData["EmpID"];
             E.Address = FC["address"];
             E.BasicSalary = Convert.ToInt32(FC["basicsalary"]);

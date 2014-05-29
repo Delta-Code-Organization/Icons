@@ -37,6 +37,13 @@ namespace Icons.Models
         public Nullable<int> BenifitAccID { get; set; }
         public Nullable<int> PenaltyAccID { get; set; }
         public Nullable<int> LastEditBy { get; set; }
+        public Nullable<System.DateTime> ExitDate { get; set; }
+        public string HoldingAssets { get; set; }
+        public string ExitDeliveredAssets { get; set; }
+        public Nullable<double> InsurancePercentage { get; set; }
+        public Nullable<System.DateTime> InsuranceFrom { get; set; }
+        public Nullable<System.DateTime> InsuranceTo { get; set; }
+        public string Notes { get; set; }
     
         public virtual ICollection<EmployeeBenifit> EmployeeBenifits { get; set; }
         public virtual ICollection<EmployeeImprest> EmployeeImprests { get; set; }

@@ -44,7 +44,7 @@ namespace Icons.Models
             var ILToRemove = db.CustomerInvoiceLines.Where(p => p.Id == this.Id).SingleOrDefault();
             var ILParent = db.CustomerInvoices.Single(p => p.Id == ILToRemove.InvoiceId);
             StockTransaction ST = new StockTransaction();
-            ST.Date = DateTime.Now;
+            ST.Date = DateTime.UtcNow.AddHours(3);
             ST.ProductID = ILToRemove.ProductId;
             ST.Quantity = ILToRemove.Qty;
             ST.StockID = db.Stocks.Single(p => p.ProductID == ILToRemove.ProductId && p.ProjectID == ILParent.ProjectID).Id;

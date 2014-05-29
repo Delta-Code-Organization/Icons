@@ -62,9 +62,33 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">عنوان الوظيفة</label>
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">المسمى الوظيفي</label>
                                     <div class="col-sm-6 Arabic">
-                                        <input value="@E.Title" class="form-control parsley-validated parsley-error" id="title" name="title" parsley-trigger="change" required="" parsley-error-message="يجب ادخال عنوان الوظيفة" type="text" />
+                                        <input value="@E.Title" class="form-control parsley-validated parsley-error" id="title" name="title" parsley-trigger="change" required="" parsley-error-message="يجب ادخال المسمى الوظيفي" type="text" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">تاريخ الخروج</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input class="form-control datetime parsley-validated parsley-error" value="@E.ExitDate" id="ExitDate" name="ExitDate" parsley-trigger="change" required="" parsley-error-message="يجب ادخال تاريخ الخروج" type="text" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">المقتنيات المستلمة منة</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input class="form-control parsley-validated parsley-error" id="HoldingAssets" value="@E.HoldingAssets" name="HoldingAssets" parsley-trigger="change" required="" parsley-error-message="يجب ادخال المقتنيات المستلمة منة" type="text" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">المقتنيات المسلمة الية</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input class="form-control parsley-validated parsley-error" id="ExitDeliveredAssets" value="@E.ExitDeliveredAssets" name="ExitDeliveredAssets" parsley-trigger="change" required="" parsley-error-message="يجب ادخال المقتنيات المسلمة الية" type="text" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">بيانات اخري</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <textarea id="Notes" name="Notes" class="form-control">@E.Notes</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -101,6 +125,24 @@
                                     <label class="col-sm-3 control-label Arabic" style="text-align: center;">تاريخ الميلاد</label>
                                     <div class="col-sm-6 Arabic">
                                         <input style="direction: ltr;" name="dateofbirth" id="dateofbirth" class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ الميلاد" size="16" value="@E.DateOfBirth" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">نسبة التأمين</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input style="direction: ltr;"  name="InsurancePercentage" id="InsurancePercentage" onkeypress="return isNumberKey(event)" class="form-control parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال نسبة التأمين" size="16" value="@E.InsurancePercentage" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">تاريخ بداية التأمين</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input style="direction: ltr;" name="InsuranceFrom" id="InsuranceFrom" class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ بداية التأمين" size="16" value="@E.InsuranceFrom" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">تاريخ نهاية التأمين</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input style="direction: ltr;" name="InsuranceTo" id="InsuranceTo" class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ نهاية التأمين" size="16" value="@E.InsuranceTo" type="text">
                                     </div>
                                 </div>
                             </div>

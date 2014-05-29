@@ -165,7 +165,7 @@ namespace Icons.Models
             var Employee = db.Employees.Single(p => p.Id == this.Id);
             FT.Statement = "اضافة مكافأة لعميل";
             FT.FromAccount = Employee.BenifitAccID;
-            FT.TransactionDate = DateTime.Now;
+            FT.TransactionDate = DateTime.UtcNow.AddHours(3);
             db.FinancialTransactions.Add(FT);
             db.SaveChanges();
             return new Returner
@@ -179,7 +179,7 @@ namespace Icons.Models
             var Employee = db.Employees.Single(p => p.Id == this.Id);
             FT.Statement = "اضافة جزاء لعميل";
             FT.ToAccount = Employee.PenaltyAccID;
-            FT.TransactionDate = DateTime.Now;
+            FT.TransactionDate = DateTime.UtcNow.AddHours(3);
             db.FinancialTransactions.Add(FT);
             db.SaveChanges();
             return new Returner
@@ -193,7 +193,7 @@ namespace Icons.Models
             var Employee = db.Employees.Single(p => p.Id == this.Id);
             FT.Statement = "اضافة عهدة لعميل";
             FT.FromAccount = Employee.ImprestAccID;
-            FT.TransactionDate = DateTime.Now;
+            FT.TransactionDate = DateTime.UtcNow.AddHours(3);
             db.FinancialTransactions.Add(FT);
             db.SaveChanges();
             return new Returner
@@ -299,19 +299,16 @@ namespace Icons.Models
                         break;
                 }
             }
-            else
-            {
-                FinancialTransaction Ft = new FinancialTransaction();
-                Ft.Amount = Total;
-                Ft.FromAccount = E.EmpAccID;
-                Ft.LastEditBy = EditBy;
-                Ft.Notes = "";
-                Ft.Statement = "دفع راتب للموظف " + E.Name;
-                Ft.ToAccount = ToAcc;
-                Ft.TransactionDate = PaymentDate;
-                db.FinancialTransactions.Add(Ft);
-                db.SaveChanges();
-            }
+            FinancialTransaction Ft = new FinancialTransaction();
+            Ft.Amount = Total;
+            Ft.FromAccount = E.EmpAccID;
+            Ft.LastEditBy = EditBy;
+            Ft.Notes = "";
+            Ft.Statement = "دفع راتب للموظف " + E.Name;
+            Ft.ToAccount = ToAcc;
+            Ft.TransactionDate = PaymentDate;
+            db.FinancialTransactions.Add(Ft);
+            db.SaveChanges();
             return new Returner
             {
                 Message = Message.Salary_Paid_Successfully

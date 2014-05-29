@@ -34,6 +34,7 @@
                     <table class="table table-bordered" id="datatable">
                         <thead>
                             <tr style="direction: rtl;">
+                                <th style="text-align: center;">الرقم</th>
                                 <th style="text-align: center;">من حساب</th>
                                 <th style="text-align: center;">الي حساب</th>
                                 <th style="text-align: center;">قيمة</th>
@@ -48,7 +49,7 @@
                                 foreach (FinancialTransaction y in LOFT)
                                 {
                                 <tr class="odd gradeX" id="@y.Id">
-
+                                    <td>@y.Id</td>
                                     <td>@y.AccountingTree.NodeName</td>
                                     <td>@y.AccountingTree1.NodeName</td>
                                     <td>@y.Amount</td>

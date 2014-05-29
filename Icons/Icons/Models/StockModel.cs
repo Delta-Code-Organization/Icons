@@ -65,7 +65,7 @@ namespace Icons.Models
                 db.SaveChanges();
                 StockTransaction ST = new StockTransaction
                 {
-                    Date = DateTime.Now,
+                    Date = DateTime.UtcNow.AddHours(3),
                     ProductID = StockToUpdate.ProductID,
                     Quantity = item.Qty,
                     StockID = StockToUpdate.Id,
@@ -92,7 +92,7 @@ namespace Icons.Models
                 db.SaveChanges();
                 StockTransaction ST = new StockTransaction
                 {
-                    Date = DateTime.Now,
+                    Date = DateTime.UtcNow.AddHours(3),
                     ProductID = StockToUpdate.ProductID,
                     Quantity = -item.Qty,
                     StockID = StockToUpdate.Id,

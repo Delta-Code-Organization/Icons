@@ -66,7 +66,8 @@ namespace Icons.Controllers
         public void CreateContract(FormCollection FC)
         {
             Contract C = new Contract();
-            C.Date = DateTime.Now;
+            
+            C.Date = DateTime.UtcNow.AddHours(3);
             C.Paid = Convert.ToDouble(FC["cpaid"]);
             C.Price = Convert.ToDouble(FC["cprice"]);
             C.ProjectID = Convert.ToInt32(FC["cprojectid"]);

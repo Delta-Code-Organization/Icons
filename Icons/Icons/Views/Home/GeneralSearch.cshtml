@@ -36,10 +36,11 @@
                                             <table style="direction: rtl;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 25%; text-align: center;">اسم العميل</th>
-                                                        <th style="width: 25%; text-align: center;">العنوان</th>
-                                                        <th style="width: 25%; text-align: center;">رقم الهاتف</th>
-                                                        <th style="width: 25%; text-align: center;">تاريخ الميلاد</th>
+                                                        <th style="width: 20%; text-align: center;">اسم العميل</th>
+                                                        <th style="width: 20%; text-align: center;">العنوان</th>
+                                                        <th style="width: 20%; text-align: center;">رقم الهاتف</th>
+                                                        <th style="width: 20%; text-align: center;">تاريخ الميلاد</th>
+                                                        <th style="width: 20%; text-align: center;"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -47,10 +48,28 @@
                                                         foreach (Customer item in LOC)
                                                         {
                                                         <tr id="DetailRow">
-                                                            <td style="width: 25%; text-align: center;">@item.Name</td>
-                                                            <td style="width: 25%; text-align: center;">@item.Address</td>
-                                                            <td style="width: 25%; text-align: center;">@item.Phone</td>
-                                                            <td style="width: 25%; text-align: center;">@item.BirthDate</td>
+                                                            <td style="width: 20%; text-align: center;">@item.Name</td>
+                                                            <td style="width: 20%; text-align: center;">@item.Address</td>
+                                                            <td style="width: 20%; text-align: center;">@item.Phone</td>
+                                                            <td style="width: 20%; text-align: center;">@item.BirthDate</td>
+                                                            <td style="width: 20%; text-align: center;">
+                                                                <div class="btn-group">
+                                                                    <button class="btn btn-default btn-xs" type="button">الإجرائات</button>
+                                                                    <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">
+                                                                        <span class="caret"></span>
+                                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                                    </button>
+                                                                    <ul role="menu" class="dropdown-menu">
+                                                                        <li>
+                                                                            <a href="/Customer/EditCustomer?_ID=@item.ID">تعديل</a>
+                                                                        </li>
+                                                                        <li class="divider"></li>
+                                                                        <li>
+                                                                            <a onclick="Remove(@item.ID)">حذف</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                         }
                                                     }
@@ -79,12 +98,13 @@
                                             <table style="direction: rtl;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 16.6%; text-align: center;">اسم مورد</th>
-                                                        <th style="width: 16.6%; text-align: center;">العنوان</th>
-                                                        <th style="width: 16.6%; text-align: center;">رقم الهاتف</th>
-                                                        <th style="width: 16.6%; text-align: center;">رقم الموبايل</th>
-                                                        <th style="width: 16.6%; text-align: center;">المدينة</th>
-                                                        <th style="width: 16.6%; text-align: center;">الحي</th>
+                                                        <th style="width: 14.2%; text-align: center;">اسم مورد</th>
+                                                        <th style="width: 14.2%; text-align: center;">العنوان</th>
+                                                        <th style="width: 14.2%; text-align: center;">رقم الهاتف</th>
+                                                        <th style="width: 14.2%; text-align: center;">رقم الموبايل</th>
+                                                        <th style="width: 14.2%; text-align: center;">المدينة</th>
+                                                        <th style="width: 14.2%; text-align: center;">الحي</th>
+                                                        <th style="width: 14.2%; text-align: center;"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -92,12 +112,30 @@
                                                         foreach (Supplier item in LOS)
                                                         {
                                                         <tr id="DetailRow">
-                                                            <td style="width: 16.6%; text-align: center;">@item.Name</td>
-                                                            <td style="width: 16.6%; text-align: center;">@item.Address</td>
-                                                            <td style="width: 16.6%; text-align: center;">@item.Phone</td>
-                                                            <td style="width: 16.6%; text-align: center;">@item.Mobile</td>
-                                                            <td style="width: 16.6%; text-align: center;">@item.City</td>
-                                                            <td style="width: 16.6%; text-align: center;">@item.District</td>
+                                                            <td style="width: 14.2%; text-align: center;">@item.Name</td>
+                                                            <td style="width: 14.2%; text-align: center;">@item.Address</td>
+                                                            <td style="width: 14.2%; text-align: center;">@item.Phone</td>
+                                                            <td style="width: 14.2%; text-align: center;">@item.Mobile</td>
+                                                            <td style="width: 14.2%; text-align: center;">@item.City</td>
+                                                            <td style="width: 14.2%; text-align: center;">@item.District</td>
+                                                            <td style="width: 14.2%; text-align: center;">
+                                                                <div class="btn-group">
+                                                                    <button class="btn btn-default btn-xs" type="button">الإجرائات</button>
+                                                                    <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">
+                                                                        <span class="caret"></span>
+                                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                                    </button>
+                                                                    <ul role="menu" class="dropdown-menu">
+                                                                        <li>
+                                                                            <a href="/Supplier/EditSupplier/@item.ID">تعديل</a>
+                                                                        </li>
+                                                                        <li class="divider"></li>
+                                                                        <li>
+                                                                            <a onclick="Remove(@item.ID)">حذف</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                         }
                                                     }
@@ -126,13 +164,14 @@
                                             <table style="direction: rtl;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 14.1%; text-align: center;">رقم الفاتور</th>
-                                                        <th style="width: 14.1%; text-align: center;">اسم العميل</th>
-                                                        <th style="width: 14.1%; text-align: center;">تاريخ الفاتورة</th>
-                                                        <th style="width: 14.1%; text-align: center;">اجمالي الفاتورة</th>
-                                                        <th style="width: 14.1%; text-align: center;">الخصم</th>
-                                                        <th style="width: 14.1%; text-align: center;">الصافي</th>
-                                                        <th style="width: 14.1%; text-align: center;">المشروع</th>
+                                                        <th style="width: 12.5%; text-align: center;">رقم الفاتور</th>
+                                                        <th style="width: 12.5%; text-align: center;">اسم العميل</th>
+                                                        <th style="width: 12.5%; text-align: center;">تاريخ الفاتورة</th>
+                                                        <th style="width: 12.5%; text-align: center;">اجمالي الفاتورة</th>
+                                                        <th style="width: 12.5%; text-align: center;">الخصم</th>
+                                                        <th style="width: 12.5%; text-align: center;">الصافي</th>
+                                                        <th style="width: 12.5%; text-align: center;">المشروع</th>
+                                                        <th style="width: 12.5%; text-align: center;"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -140,13 +179,36 @@
                                                         foreach (CustomerInvoice item in LOCI)
                                                         {
                                                         <tr id="DetailRow">
-                                                            <td style="width: 14.1%; text-align: center;">@item.Id</td>
-                                                            <td style="width: 14.1%; text-align: center;">@item.Customer.Name</td>
-                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceDate</td>
-                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceTotal</td>
-                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceDiscount</td>
-                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceNet</td>
-                                                            <td style="width: 14.1%; text-align: center;">@item.Project.ProjectName</td>
+                                                            <td style="width: 12.5%; text-align: center;">@item.Id</td>
+                                                            <td style="width: 12.5%; text-align: center;">@item.Customer.Name</td>
+                                                            <td style="width: 12.5%; text-align: center;">@item.InvoiceDate</td>
+                                                            <td style="width: 12.5%; text-align: center;">@item.InvoiceTotal</td>
+                                                            <td style="width: 12.5%; text-align: center;">@item.InvoiceDiscount</td>
+                                                            <td style="width: 12.5%; text-align: center;">@item.InvoiceNet</td>
+                                                            <td style="width: 12.5%; text-align: center;">@item.Project.ProjectName</td>
+                                                            <td style="width: 12.5%; text-align: center;">
+                                                                <div class="btn-group">
+                                                                    <button class="btn btn-default btn-xs" type="button">الاجرائات</button>
+                                                                    <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">
+                                                                        <span class="caret"></span>
+                                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                                    </button>
+                                                                    <ul role="menu" class="dropdown-menu">
+                                                                        <li>
+                                                                            <a onclick="Depart(@item.Id)">ترحيل</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="@Url.Action("EditInvoice", "Customer", new { id = item.Id })">تعديل</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="@Url.Action("DisplayInvoice", "Customer", new { id = item.Id })">عرض تفاصيل الفاتورة</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a onclick="DeleteInvoice(@item.Id)">حذف</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                         }
                                                     }
@@ -175,13 +237,14 @@
                                             <table style="direction: rtl;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 14.1%; text-align: center;">رقم الفاتورة</th>
-                                                        <th style="width: 14.1%; text-align: center;">اسم المورد</th>
-                                                        <th style="width: 14.1%; text-align: center;">تاريخ الفاتورة</th>
-                                                        <th style="width: 14.1%; text-align: center;">اجمالي الفاتورة</th>
-                                                        <th style="width: 14.1%; text-align: center;">الخصم</th>
-                                                        <th style="width: 14.1%; text-align: center;">الصافي</th>
-                                                        <th style="width: 14.1%; text-align: center;">المشروع</th>
+                                                        <th style="width: 12.5%; text-align: center;">رقم الفاتورة</th>
+                                                        <th style="width: 12.5%; text-align: center;">اسم المورد</th>
+                                                        <th style="width: 12.5%; text-align: center;">تاريخ الفاتورة</th>
+                                                        <th style="width: 12.5%; text-align: center;">اجمالي الفاتورة</th>
+                                                        <th style="width: 12.5%; text-align: center;">الخصم</th>
+                                                        <th style="width: 12.5%; text-align: center;">الصافي</th>
+                                                        <th style="width: 12.5%; text-align: center;">المشروع</th>
+                                                        <th style="width: 12.5%; text-align: center;"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -189,13 +252,36 @@
                                                         foreach (SupplierInvoice item in LOSI)
                                                         {
                                                         <tr id="DetailRow">
-                                                            <td style="width: 14.1%; text-align: center;">@item.Id</td>
-                                                            <td style="width: 14.1%; text-align: center;">@item.Supplier.Name</td>
-                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceDate</td>
-                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceTotal</td>
-                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceDiscount</td>
-                                                            <td style="width: 14.1%; text-align: center;">@item.InvoiceNet</td>
-                                                            <td style="width: 14.1%; text-align: center;">@item.Project.ProjectName</td>
+                                                            <td style="width: 12.5%; text-align: center;">@item.Id</td>
+                                                            <td style="width: 12.5%; text-align: center;">@item.Supplier.Name</td>
+                                                            <td style="width: 12.5%; text-align: center;">@item.InvoiceDate</td>
+                                                            <td style="width: 12.5%; text-align: center;">@item.InvoiceTotal</td>
+                                                            <td style="width: 12.5%; text-align: center;">@item.InvoiceDiscount</td>
+                                                            <td style="width: 12.5%; text-align: center;">@item.InvoiceNet</td>
+                                                            <td style="width: 12.5%; text-align: center;">@item.Project.ProjectName</td>
+                                                            <td style="width: 12.5%; text-align: center;">
+                                                                <div class="btn-group">
+                                                                    <button class="btn btn-default btn-xs" type="button">Actions</button>
+                                                                    <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">
+                                                                        <span class="caret"></span>
+                                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                                    </button>
+                                                                    <ul role="menu" class="dropdown-menu">
+                                                                        <li>
+                                                                            <a onclick="Depart(@item.Id)">ترحيل</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="@Url.Action("EditInvoice", "Supplier", new { id = item.Id })">تعديل</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="@Url.Action("DisplayInvoice", "Supplier", new { id = item.Id })">عرض تفاصيل الفاتورة</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a onclick="DeleteInvoice(@item.Id)">حذف</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                         }
                                                     }
@@ -224,11 +310,12 @@
                                             <table style="direction: rtl;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 20%; text-align: center;">من حساب</th>
-                                                        <th style="width: 20%; text-align: center;">الي حساب</th>
-                                                        <th style="width: 20%; text-align: center;">قيمة</th>
-                                                        <th style="width: 20%; text-align: center;">بيان</th>
-                                                        <th style="width: 20%; text-align: center;">تاريخ</th>
+                                                        <th style="width: 16.6%; text-align: center;">من حساب</th>
+                                                        <th style="width: 16.6%; text-align: center;">الي حساب</th>
+                                                        <th style="width: 16.6%; text-align: center;">قيمة</th>
+                                                        <th style="width: 16.6%; text-align: center;">بيان</th>
+                                                        <th style="width: 16.6%; text-align: center;">تاريخ</th>
+                                                        <th style="width: 16.6%; text-align: center;"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -236,11 +323,28 @@
                                                         foreach (FinancialTransaction item in LOFT)
                                                         {
                                                         <tr id="DetailRow">
-                                                            <td style="width: 20%; text-align: center;">@item.AccountingTree.NodeName</td>
-                                                            <td style="width: 20%; text-align: center;">@item.AccountingTree1.NodeName</td>
-                                                            <td style="width: 20%; text-align: center;">@item.Amount</td>
-                                                            <td style="width: 20%; text-align: center;">@item.Statement</td>
-                                                            <td style="width: 20%; text-align: center;">@item.TransactionDate</td>
+                                                            <td style="width: 16.6%; text-align: center;">@item.AccountingTree.NodeName</td>
+                                                            <td style="width: 16.6%; text-align: center;">@item.AccountingTree1.NodeName</td>
+                                                            <td style="width: 16.6%; text-align: center;">@item.Amount</td>
+                                                            <td style="width: 16.6%; text-align: center;">@item.Statement</td>
+                                                            <td style="width: 16.6%; text-align: center;">@item.TransactionDate</td>
+                                                            <td style="width: 16.6%; text-align: center;">
+                                                                <div class="btn-group">
+                                                                    <button class="btn btn-default btn-xs" type="button">Actions</button>
+                                                                    <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">
+                                                                        <span class="caret"></span>
+                                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                                    </button>
+                                                                    <ul role="menu" class="dropdown-menu">
+                                                                        <li>
+                                                                            <a href="/Accounting/EditFinancialTransactions/@item.Id">تعديل</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="javascript:DeleteFT(@item.Id)">حذف</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                         } 
                                                     }
@@ -268,12 +372,13 @@
                                             <table style="direction: rtl;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 16.6%; text-align: center;">اسم المنتج</th>
-                                                        <th style="width: 16.6%; text-align: center;">التصنيف</th>
-                                                        <th style="width: 16.6%; text-align: center;">وحدة الشراء</th>
-                                                        <th style="width: 16.6%; text-align: center;">وحدة البيع</th>
-                                                        <th style="width: 16.6%; text-align: center;">نسبة التحويل</th>
-                                                        <th style="width: 16.6%; text-align: center;">الوصف</th>
+                                                        <th style="width: 14.2%; text-align: center;">اسم المنتج</th>
+                                                        <th style="width: 14.2%; text-align: center;">التصنيف</th>
+                                                        <th style="width: 14.2%; text-align: center;">وحدة الشراء</th>
+                                                        <th style="width: 14.2%; text-align: center;">وحدة البيع</th>
+                                                        <th style="width: 14.2%; text-align: center;">نسبة التحويل</th>
+                                                        <th style="width: 14.2%; text-align: center;">الوصف</th>
+                                                        <th style="width: 14.2%; text-align: center;"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -283,12 +388,30 @@
                                                             string PU = Enum.GetName(typeof(PurchaseUnit), item.PurchaseUnit);
                                                             string SU = Enum.GetName(typeof(SalesUnit), item.SalesUnit);
                                                         <tr id="DetailRow">
-                                                            <td style="width: 16.6%; text-align: center;">@item.ProductName</td>
-                                                            <td style="width: 16.6%; text-align: center;">@item.ProductCategory.CategoryName</td>
-                                                            <td style="width: 16.6%; text-align: center;">@PU</td>
-                                                            <td style="width: 16.6%; text-align: center;">@SU</td>
-                                                            <td style="width: 16.6%; text-align: center;">@item.PtoSRate</td>
-                                                            <td style="width: 16.6%; text-align: center;">@item.Description</td>
+                                                            <td style="width: 14.2%; text-align: center;">@item.ProductName</td>
+                                                            <td style="width: 14.2%; text-align: center;">@item.ProductCategory.CategoryName</td>
+                                                            <td style="width: 14.2%; text-align: center;">@PU</td>
+                                                            <td style="width: 14.2%; text-align: center;">@SU</td>
+                                                            <td style="width: 14.2%; text-align: center;">@item.PtoSRate</td>
+                                                            <td style="width: 14.2%; text-align: center;">@item.Description</td>
+                                                            <td style="width: 14.2%; text-align: center;">
+                                                                <div class="btn-group">
+                                                                    <button class="btn btn-default btn-xs" type="button">الإجرائات</button>
+                                                                    <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">
+                                                                        <span class="caret"></span>
+                                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                                    </button>
+                                                                    <ul role="menu" class="dropdown-menu">
+                                                                        <li>
+                                                                            <a href="/Product/EditProduct/@item.Id">تعديل</a>
+                                                                        </li>
+                                                                        <li class="divider"></li>
+                                                                        <li>
+                                                                            <a onclick="RemoveProduct(@item.Id)">حذف</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                         }
                                                     }

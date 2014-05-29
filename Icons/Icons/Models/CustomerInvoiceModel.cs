@@ -67,7 +67,7 @@ namespace Icons.Models
                 Stock S = db.Stocks.Single(p => p.ProjectID == ITD.ProjectID && p.ProductID == CIL.ProductId);
                 S.Quantity += CIL.Qty;
                 StockTransaction ST = new StockTransaction();
-                ST.Date = DateTime.Now;
+                ST.Date = DateTime.UtcNow.AddHours(3);
                 ST.ProductID = CIL.ProductId;
                 ST.Quantity = CIL.Qty;
                 ST.StockID = S.Id;
@@ -96,7 +96,7 @@ namespace Icons.Models
             Ft.Notes = "";
             Ft.Statement = "ترحيل فاتورة بيع";
             Ft.ToAccount = ITD.Customer.AccountID;
-            Ft.TransactionDate = DateTime.Now;
+            Ft.TransactionDate = DateTime.UtcNow.AddHours(3);
             db.FinancialTransactions.Add(Ft);
             db.SaveChanges();
             return new Returner
@@ -137,7 +137,7 @@ namespace Icons.Models
                     item.InvoiceId = this.Id;
                     db.CustomerInvoiceLines.Add(item);
                     StockTransaction ST = new StockTransaction();
-                    ST.Date = DateTime.Now;
+                    ST.Date = DateTime.UtcNow.AddHours(3);
                     ST.ProductID = item.ProductId;
                     ST.Quantity = -item.Qty;
                     ST.StockID = db.Stocks.Single(p => p.ProductID == item.ProductId && p.ProjectID == Inv.ProjectID).Id;
