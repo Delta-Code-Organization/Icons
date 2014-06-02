@@ -93,6 +93,7 @@ namespace Icons.Models
             Ft.Amount = ITD.InvoiceNet;
             Ft.FromAccount = ITD.Supplier.AccountingID;
             Ft.LastEditBy = EditBy;
+            Ft.Confirmed = false;
             Ft.Notes = "";
             Ft.Statement = "ترحيل فاتورة شراء";
             Ft.ToAccount = ITD.InvoiceAccount;

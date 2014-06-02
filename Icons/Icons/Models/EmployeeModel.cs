@@ -165,6 +165,7 @@ namespace Icons.Models
             var Employee = db.Employees.Single(p => p.Id == this.Id);
             FT.Statement = "اضافة مكافأة لعميل";
             FT.FromAccount = Employee.BenifitAccID;
+            FT.Confirmed = false;
             FT.TransactionDate = DateTime.UtcNow.AddHours(3);
             db.FinancialTransactions.Add(FT);
             db.SaveChanges();
@@ -179,6 +180,7 @@ namespace Icons.Models
             var Employee = db.Employees.Single(p => p.Id == this.Id);
             FT.Statement = "اضافة جزاء لعميل";
             FT.ToAccount = Employee.PenaltyAccID;
+            FT.Confirmed = false;
             FT.TransactionDate = DateTime.UtcNow.AddHours(3);
             db.FinancialTransactions.Add(FT);
             db.SaveChanges();
@@ -193,6 +195,7 @@ namespace Icons.Models
             var Employee = db.Employees.Single(p => p.Id == this.Id);
             FT.Statement = "اضافة عهدة لعميل";
             FT.FromAccount = Employee.ImprestAccID;
+            FT.Confirmed = false;
             FT.TransactionDate = DateTime.UtcNow.AddHours(3);
             db.FinancialTransactions.Add(FT);
             db.SaveChanges();
@@ -306,6 +309,7 @@ namespace Icons.Models
             Ft.Notes = "";
             Ft.Statement = "دفع راتب للموظف " + E.Name;
             Ft.ToAccount = ToAcc;
+            Ft.Confirmed = false;
             Ft.TransactionDate = PaymentDate;
             db.FinancialTransactions.Add(Ft);
             db.SaveChanges();

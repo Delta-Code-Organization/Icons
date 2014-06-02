@@ -152,6 +152,109 @@ function convertDate(inputFormat) {
     return [d.getDate(), d.getMonth() + 1, d.getFullYear()].join('/');
 }
 
+//$(document).ready(function () {
+//    $('#SIForm').submit(function (event) {
+//        if ($(this).parsley('validate')) {
+//            $.ajax({
+//                type: 'post',
+//                url: '/Contract/SearchInstallments',
+//                data: $(this).serialize(),
+//                success: function (data) {
+//                    $('#accordion3').empty();
+//                    $.each(data, function (index, Cus) {
+//                        var Tot = 0;
+//                        $('#accordion3').append('<div class="panel panel-default">'
+//                        + '<div class="panel-heading">'
+//                            + '<h4 class="panel-title">'
+//                                + '<a data-toggle="collapse" data-parent="#accordion3" href="#TheCounter' + index + '">'
+//                                    + '<i class="fa fa-angle-left"></i>&nbsp ' + Cus.Name + ''
+//                                + '</a>'
+//                            + '</h4>'
+//                        + '</div>'
+//                        + '<div id="TheCounter' + index + '" class="panel-collapse collapse">'
+//                            + '<div class="panel-body">'
+//                                + '<div class="block">'
+//                                    + '<div class="content no-padding ">'
+//                                        + '<ul class="items" id="' + index + '">'
+//                                        + '</ul>'
+//                                    + '</div>'
+//                                    + '<div class="total-data bg-blue">'
+//                                        + '<h2>إجمالي الأقساط المدفوعة <span class="pull-left" id="Total' + index + '"></span></h2>'
+//                                        + '<h2>إجمالي الأقساط المتبقية <span class="pull-left" id="Rem' + index + '"></span></h2>'
+//                                    + '</div>'
+//                                + '</div>'
+//                            + '</div>'
+//                        + '</div>'
+//                    + '</div>');
+//                        $.each(Cus.Installments, function (inde, Ins) {
+//                            var millii = Ins.DueDate.replace(/\/Date\((-?\d+)\)\//, '$1');
+//                            var DateTimee = new Date(parseInt(millii));
+//                            var Dayy = DateTimee.getDate();
+//                            var yearr = DateTimee.getFullYear();
+//                            var mounthh = DateTimee.getMonth() + 1;
+//                            var FullDatee = (mounthh + "/" + Dayy + "/" + yearr).toString();
+//                            if (Ins.PaymentDate == "null" || Ins.PaymentDate == null) {
+//                                $('#' + index).append('<li id="Installment' + Ins.Id + '">'
+//                                                + '<i class="fa fa-calendar pull-right"></i>' + FullDatee + ' <span class="pull-left value" id="ThisCont' + Ins.Id + '">'
+//                                                + '&nbsp' + Ins.Amount + '&nbsp'
+//                                                + '<button class="btn btn-success" data-target="#mod-info" data-toggle="modal" type="button" onclick="SetInstallmentData(' + Ins.Id + ',' + Ins.Amount + ')">'
+//                                                    + 'دفع'
+//                                                + '</button>'
+//                                                + '<button class="btn btn-primary" data-target="#mod-Edit" data-toggle="modal" type="button" onclick="SetInstallmentData2Edit(' + Ins.Id + ',' + mounthh + ',' + Dayy + ',' + yearr + ',' + Ins.Amount + ')">'
+//                                                    + 'تعديل'
+//                                                + '</button>'
+//                                                + '</span>'
+//                                                + '<small>&nbsp</small>'
+//                                            + '</li>');
+//                                TotOfTot += parseFloat(Ins.Amount);
+//                            }
+//                            else {
+//                                Tot += parseFloat(Ins.Amount);
+//                                TotOfTot = parseFloat(Ins.Amount);
+//                                $('#' + index).append('<li>'
+//                                                + '<i class="fa fa-calendar pull-right"></i>' + FullDatee + ' <span class="pull-left value">' + '&nbsp' + Ins.Amount + '&nbsp' + 'مدفوع' + '</span>'
+//                                                + '<small>&nbsp</small>'
+//                                            + '</li>');
+//                            }
+//                        });
+//                        $('#Total' + index).text(Tot);
+//                        var Remain = TotOfTot - Tot;
+//                        $('#Rem' + index).text(Remain);
+//                    });
+//                },
+//                error: function (data) {
+//                    alert(data.responseText);
+//                }
+//            });
+//            return false;
+//        }
+//        return false;
+//    });
+//});
+
+function GetUnitType(ID) {
+    switch (ID) {
+        case 1:
+            return "محل";
+        case 2:
+            return "شقة";
+        case 3:
+            return "فيلا";
+        case 4:
+            return "دوبلكس";
+        case 5:
+            return "ميزانين";
+        case 6:
+            return "روف";
+        case 7:
+            return "جراج";
+        case 8:
+            return "باكية";
+        default:
+            return "";
+    }
+}
+
 $(document).ready(function () {
     $('#SIForm').submit(function (event) {
         if ($(this).parsley('validate')) {
@@ -161,13 +264,20 @@ $(document).ready(function () {
                 data: $(this).serialize(),
                 success: function (data) {
                     $('#accordion3').empty();
-                    $.each(data, function (index, Cus) {
+                    $.each(data, function (index, Con) {
                         var Tot = 0;
+                        var CusName = "";
+                        var UnitType = GetUnitType(Con.ProjectUnit.UnitType);
+                        $.each(Con.Installments, function (inde, Ins) {
+                            CusName = Ins.Customer.Name
+                        });
+                        alert(CusName);
+                        alert(UnitType);
                         $('#accordion3').append('<div class="panel panel-default">'
                         + '<div class="panel-heading">'
                             + '<h4 class="panel-title">'
                                 + '<a data-toggle="collapse" data-parent="#accordion3" href="#TheCounter' + index + '">'
-                                    + '<i class="fa fa-angle-left"></i>&nbsp ' + Cus.Name + ''
+                                    + '<i class="fa fa-angle-left"></i>&nbsp عقد بيع ' + UnitType + ' للعميل ' + CusName + ' في ' + Con.Project.ProjectName
                                 + '</a>'
                             + '</h4>'
                         + '</div>'
@@ -186,7 +296,7 @@ $(document).ready(function () {
                             + '</div>'
                         + '</div>'
                     + '</div>');
-                        $.each(Cus.Installments, function (inde, Ins) {
+                        $.each(Con.Installments, function (inde, Ins) {
                             var millii = Ins.DueDate.replace(/\/Date\((-?\d+)\)\//, '$1');
                             var DateTimee = new Date(parseInt(millii));
                             var Dayy = DateTimee.getDate();

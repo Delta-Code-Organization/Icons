@@ -38,12 +38,14 @@ namespace Icons.Models
             Ft.Notes = "";
             Ft.Statement = "عقد بيع " + Enum.GetName(typeof(UnitTypes), CurrentProjectUnit.UnitType) + " للعميل " + CurrentCustomer.Name;
             Ft.ToAccount = 42;
+            Ft.Confirmed = false;
             Ft.TransactionDate = CurrentContract.Date;
             db.FinancialTransactions.Add(Ft);
             FinancialTransaction Ft1 = new FinancialTransaction();
             Ft1.Amount = CurrentContract.Paid;
             Ft1.FromAccount = 42;
             Ft1.LastEditBy = EditBy;
+            Ft1.Confirmed = false;
             Ft1.Notes = "";
             Ft1.Statement = "دفع مقدم بيع " + Enum.GetName(typeof(UnitTypes), CurrentProjectUnit.UnitType) + " للعميل " + CurrentCustomer.Name;
             Ft1.ToAccount = CurrentCustomer.AccountID;
@@ -58,6 +60,7 @@ namespace Icons.Models
                 Ft2.Notes = "";
                 Ft2.Statement = "قسط بيع " + Enum.GetName(typeof(UnitTypes), CurrentProjectUnit.UnitType) + " للعميل " + CurrentCustomer.Name;
                 Ft2.ToAccount = 42;
+                Ft2.Confirmed = false;
                 Ft2.TransactionDate = ite.DueDate;
                 Ft2.ReferanceDocumentNumber = ite.Id;
                 db.FinancialTransactions.Add(Ft2);
@@ -75,52 +78,91 @@ namespace Icons.Models
 
         public Returner SearchInstallments(DateTime? From, DateTime? To, int? CusID)
         {
-            List<Installment> LOI = new List<Installment>();
+            //List<Installment> LOI = new List<Installment>();
+            List<Contract> LOContracts = new List<Contract>();
             if (CusID != null && From == null && To == null)
             {
-                LOI = db.Installments.Where(p => p.ResponsibleID == CusID).ToList();
+                LOContracts = db.Contracts.Where(p => p.Installments.FirstOrDefault().ResponsibleID == CusID).ToList();
+                //LOI = db.Installments.Where(p => p.ResponsibleID == CusID).ToList();
             }
             if (From != null && To != null && CusID == null)
             {
-                LOI = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To).ToList();
+                LOContracts = db.Contracts.Where(p => p.Installments.FirstOrDefault().DueDate >= From && p.Installments.FirstOrDefault().DueDate <= To).ToList();
+                //LOI = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To).ToList();
             }
             if (From != null && To != null && CusID != null)
             {
-                LOI = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To && p.ResponsibleID == CusID).ToList();
+                LOContracts = db.Contracts.Where(p => p.Installments.FirstOrDefault().DueDate >= From && p.Installments.FirstOrDefault().DueDate <= To && p.Installments.FirstOrDefault().ResponsibleID == CusID).ToList();
+                //LOI = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To && p.ResponsibleID == CusID).ToList();
             }
-            List<Customer> LOC = (from Cus in LOI
-                                  select Cus.Customer).ToList();
-            List<Customer> LONC = new List<Customer>();
-            foreach (Customer item in LOC)
-            {
-                if (LONC.Any(p => p.ID == item.ID) == false)
-                {
-                    LONC.Add(item);
-                }
-            }
-            var ResultInJSON = (from I in LONC
-                                select new
-                                {
-                                    I.AccountID,
-                                    I.Address,
-                                    I.BirthDate,
-                                    I.ID,
-                                    I.Name,
-                                    Installments = new List<object>((from III in I.Installments
-                                                                     select new
-                                                                     {
-                                                                         III.Amount,
-                                                                         III.ContractID,
-                                                                         III.DueDate,
-                                                                         III.Id,
-                                                                         III.PaymentDate,
-                                                                         III.ResponsibleID
-                                                                     }).Cast<object>().ToList()).Cast<object>().ToList()
-                                }).ToList();
+            //List<Customer> LOC = (from Cus in LOI
+            //                      select Cus.Customer).ToList();
+            //List<Customer> LONC = new List<Customer>();
+            //foreach (Customer item in LOC)
+            //{
+            //    if (LONC.Any(p => p.ID == item.ID) == false)
+            //    {
+            //        LONC.Add(item);
+            //    }
+            //}
+            var ContractsInJSON = (from C in LOContracts
+                                   select new
+                                   {
+                                       C.Date,
+                                       C.Id,
+                                       C.LastEditBy,
+                                       C.Notes,
+                                       C.Paid,
+                                       C.Price,
+                                       C.ProjectID,
+                                       C.Remaining,
+                                       C.UnitID,
+                                       Installments = new List<object>((from III in C.Installments
+                                                                        select new
+                                                                        {
+                                                                            III.Amount,
+                                                                            III.ContractID,
+                                                                            III.DueDate,
+                                                                            III.Id,
+                                                                            III.PaymentDate,
+                                                                            III.ResponsibleID,
+                                                                            Customer = new
+                                                                            {
+                                                                                III.Customer.Name
+                                                                            }
+                                                                        }).Cast<object>().ToList()).Cast<object>().ToList(),
+                                       Project = new
+                                       {
+                                           C.Project.ProjectName
+                                       },
+                                       ProjectUnit = new
+                                       {
+                                           C.ProjectUnit.UnitType
+                                       }
+                                   }).ToList();
+        //    var ResultInJSON = (from I in LONC
+        //                        select new
+        //                        {
+        //                            I.AccountID,
+        //                            I.Address,
+        //                            I.BirthDate,
+        //                            I.ID,
+        //                            I.Name,
+        //                            Installments = new List<object>((from III in I.Installments
+        //                                                             select new
+        //                                                             {
+        //                                                                 III.Amount,
+        //                                                                 III.ContractID,
+        //                                                                 III.DueDate,
+        //                                                                 III.Id,
+        //                                                                 III.PaymentDate,
+        //                                                                 III.ResponsibleID
+        //                                                             }).Cast<object>().ToList()).Cast<object>().ToList()
+        //                        }).ToList();
             return new Returner
             {
-                Data = LOI,
-                DataInJSON = ResultInJSON.ToJSON()
+                Data = LOContracts,
+                DataInJSON = ContractsInJSON.ToJSON()
             };
         }
 
@@ -134,6 +176,7 @@ namespace Icons.Models
             Ft.FromAccount = 42;//Installment.Contract.ProjectUnit.AccountingID;
             Ft.LastEditBy = EditBy;
             Ft.Notes = "";
+            Ft.Confirmed = false;
             Ft.Statement = "دفع قسط " + Enum.GetName(typeof(UnitTypes), Installment.Contract.ProjectUnit.UnitType) + " من العميل " + Installment.Customer.Name;
             Ft.ToAccount = Installment.Customer.AccountID;
             Ft.TransactionDate = PaymentDate;

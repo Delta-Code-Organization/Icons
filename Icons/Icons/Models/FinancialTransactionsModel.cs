@@ -46,5 +46,12 @@ namespace Icons.Models
             db.FinancialTransactions.Remove(FT);
             db.SaveChanges();
         }
+
+        public void Confirm()
+        {
+            var FT = db.FinancialTransactions.Single(p => p.Id == this.Id);
+            FT.Confirmed = true;
+            db.SaveChanges();
+        }
     }
 }

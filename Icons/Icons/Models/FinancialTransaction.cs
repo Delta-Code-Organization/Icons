@@ -28,6 +28,7 @@ namespace Icons.Models
         public string Notes { get; set; }
         public Nullable<int> ReferanceDocumentNumber { get; set; }
         public Nullable<int> LastEditBy { get; set; }
+        public Nullable<bool> Confirmed { get; set; }
     
         public virtual AccountingTree AccountingTree { get; set; }
         public virtual AccountingTree AccountingTree1 { get; set; }

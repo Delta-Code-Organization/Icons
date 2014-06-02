@@ -48,5 +48,7 @@ namespace Icons.Models
         public DbSet<SupplierInvoice> SupplierInvoices { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Table> Tables { get; set; }
     }
 }

@@ -101,6 +101,7 @@ namespace Icons.Models
                 FinancialTransaction Ft = new FinancialTransaction();
                 Ft.Amount = item.Total;
                 Ft.LastEditBy = EditBy;
+                Ft.Confirmed = false;
                 Ft.Notes = Notes;
                 Ft.Statement = "امر شغل " + " بتاريخ " + Date.ToString("MM/dd/yyyy");
                 Ft.TransactionDate = Date;
@@ -209,6 +210,7 @@ namespace Icons.Models
 
         public Returner AddFT(FinancialTransaction Ft)
         {
+            Ft.Confirmed = false;
             db.FinancialTransactions.Add(Ft);
             db.SaveChanges();
             return new Returner

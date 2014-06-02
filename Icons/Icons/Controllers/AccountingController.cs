@@ -199,5 +199,11 @@ namespace Icons.Controllers
         {
             new FinancialTransaction { Id = _ID }.Delete();
         }
+
+        [HttpPost]
+        public void ConfirmFT(int _ID)
+        {
+            new FinancialTransaction { Id = _ID }.Confirm();
+        }
     }
 }

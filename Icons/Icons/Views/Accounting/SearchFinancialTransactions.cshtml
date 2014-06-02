@@ -21,6 +21,21 @@
             }
         });
     }
+
+    function ConfirmFT(ID) {
+        $.ajax({
+            url: '/Accounting/ConfirmFT',
+            type: 'post',
+            data: { '_ID': ID },
+            success: function (data) {
+                $('#' + ID).fadeOut(250);
+                return false;
+            },
+            error: function (data) {
+                console.log(data.responseText);
+            }
+        });
+    }
 </script>
 
 <div class="row">
@@ -77,6 +92,9 @@
                                             <ul role="menu" class="dropdown-menu">
                                                 <li>
                                                     <a href="/Accounting/EditFinancialTransactions/@y.Id">تعديل</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:ConfirmFT(@y.Id)">تأكيد</a>
                                                 </li>
                                                 <li>
                                                     <a href="javascript:DeleteFT(@y.Id)">حذف</a>

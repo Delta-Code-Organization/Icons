@@ -94,6 +94,7 @@ namespace Icons.Models
             Ft.FromAccount = ITD.InvoiceAccount;
             Ft.LastEditBy = EditBy;
             Ft.Notes = "";
+            Ft.Confirmed = false;
             Ft.Statement = "ترحيل فاتورة بيع";
             Ft.ToAccount = ITD.Customer.AccountID;
             Ft.TransactionDate = DateTime.UtcNow.AddHours(3);

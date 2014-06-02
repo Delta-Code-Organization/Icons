@@ -72,6 +72,17 @@
     <script type="text/javascript" src="/content/js/jquery.flot/jquery.flot.labels.js"></script>
 
     <script type="text/javascript">
+        function NotiShown() {
+            $('.bubble').slideToggle(0);
+            $.ajax({
+                url: '/User/UpdateNotificationCount',
+                type: 'post',
+                data: {},
+                success: function (data) { },
+                error: function (data) { alert(data.responseText); }
+            });
+        }
+
         function Logout() {
             $.ajax({
                 url: '/User/Logout',
@@ -124,6 +135,40 @@
                             }
                             <li class="divider"></li>
                             <li><a href="javascript:Logout();" style="text-align: center;">تسجيل الخروج</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right not-nav">
+                    <li class="button dropdown">
+                        @{
+                            int NotCount = Convert.ToInt32(Session["NotificationCount"]);
+                            if (NotCount != 0)
+                            {
+                                <a href="javascript:;" onclick="NotiShown();" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i><span class="bubble">@NotCount</span></a>
+                            }
+                            else
+                            {
+                                <a href="javascript:;" onclick="NotiShown();" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i></a>
+                            }
+                        }
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="nano nscroller">
+                                    <div class="content">
+                                        <ul>
+                                            @{
+                                                foreach (Notification item in Session["Notification"] as List<Notification>)
+                                                {
+                                                <li><a href="@item.RedirectURL"><i class="fa fa-male success"></i>@item.Text<span class="date">@item.Date</span></a></li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                                <ul class="foot">
+                                    <li><a href="#">View all activity </a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                 </ul>

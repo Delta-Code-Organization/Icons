@@ -19,6 +19,9 @@ namespace Icons.Controllers
                 var LOS = db.Screens.ToList();
                 Session["AllScreens"] = LOS;
             }
+            List<Notification> LON = new Notification().GetNotifications();
+            Session["Notification"] = LON;
+            Session["NotificationCount"] = LON.Count;
             return View();
         }
 
@@ -38,6 +41,12 @@ namespace Icons.Controllers
             {
                 return "false";
             }
+        }
+
+        [HttpPost]
+        public void UpdateNotificationCount()
+        {
+            Session["NotificationCount"] = 0;
         }
 
         public void Logout()
