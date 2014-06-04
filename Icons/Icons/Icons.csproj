@@ -187,6 +187,10 @@
     <Compile Include="Models\Installment.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Notification.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NotificationsModel.cs" />
     <Compile Include="Models\Product.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
@@ -233,6 +237,9 @@
     <Compile Include="Models\ScreenModel.cs" />
     <Compile Include="Models\SupplierModel.cs" />
     <Compile Include="Models\SystemEnums.cs" />
+    <Compile Include="Models\Table.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UnitTypes.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>Icons.tt</DependentUpon>

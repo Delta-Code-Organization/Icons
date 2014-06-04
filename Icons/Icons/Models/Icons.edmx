@@ -498,6 +498,9 @@
           </Key>
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="ScreenID" Type="int" Nullable="false" />
+          <Property Name="CanEdit" Type="bit" />
+          <Property Name="CanDelete" Type="bit" />
+          <Property Name="Opt1" Type="bit" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
