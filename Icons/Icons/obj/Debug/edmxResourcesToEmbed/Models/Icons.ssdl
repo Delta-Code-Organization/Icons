@@ -13,6 +13,7 @@
     <EntitySet Name="EmployeePenalties" EntityType="MaksoudDBModel.Store.EmployeePenalties" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FinancialTransactions" EntityType="MaksoudDBModel.Store.FinancialTransactions" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Installments" EntityType="MaksoudDBModel.Store.Installments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Notifications" EntityType="MaksoudDBModel.Store.Notifications" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProductCategories" EntityType="MaksoudDBModel.Store.ProductCategories" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Products" EntityType="MaksoudDBModel.Store.Products" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Projects" EntityType="MaksoudDBModel.Store.Projects" store:Type="Tables" Schema="dbo" />
@@ -23,6 +24,7 @@
     <EntitySet Name="SupplierInvoiceLines" EntityType="MaksoudDBModel.Store.SupplierInvoiceLines" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SupplierInvoices" EntityType="MaksoudDBModel.Store.SupplierInvoices" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Suppliers" EntityType="MaksoudDBModel.Store.Suppliers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Table" EntityType="MaksoudDBModel.Store.Table" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserAccess" EntityType="MaksoudDBModel.Store.UserAccess" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users" EntityType="MaksoudDBModel.Store.Users" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_AccountingTree_AccTree" Association="MaksoudDBModel.Store.FK_AccountingTree_AccTree">
@@ -323,6 +325,7 @@
     <Property Name="Notes" Type="nvarchar(max)" />
     <Property Name="ReferanceDocumentNumber" Type="int" />
     <Property Name="LastEditBy" Type="int" />
+    <Property Name="Confirmed" Type="bit" />
   </EntityType>
   <EntityType Name="Installments">
     <Key>
@@ -335,6 +338,16 @@
     <Property Name="PaymentDate" Type="datetime" />
     <Property Name="Amount" Type="float" />
     <Property Name="LastEditBy" Type="int" />
+  </EntityType>
+  <EntityType Name="Notifications">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="Text" Type="nvarchar(max)" />
+    <Property Name="RedirectURL" Type="nvarchar(max)" />
+    <Property Name="Status" Type="int" />
   </EntityType>
   <EntityType Name="ProductCategories">
     <Key>
@@ -465,6 +478,13 @@
     <Property Name="Notes" Type="nvarchar" />
     <Property Name="AccountingID" Type="int" />
     <Property Name="LastEditBy" Type="int" />
+  </EntityType>
+  <EntityType Name="Table">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="File" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="UserAccess">
     <Key>

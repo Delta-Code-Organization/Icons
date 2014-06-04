@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="74ae209529714ef3981402e86770b9f8" Name="Diagram1">
+      <Diagram DiagramId="74ae209529714ef3981402e86770b9f8" Name="Diagram1" ZoomLevel="95">
         <EntityTypeShape EntityType="MaksoudDBModel.AccountingTree" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MaksoudDBModel.ContractOwner" Width="1.5" PointX="5.25" PointY="17.125" IsExpanded="true" />
         <EntityTypeShape EntityType="MaksoudDBModel.Contract" Width="1.5" PointX="5.25" PointY="30" IsExpanded="true" />
@@ -66,6 +66,8 @@
         <AssociationConnector Association="MaksoudDBModel.FK_SupplierInvoices_Users" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.UserAccess" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_SupplierInvoices_AccountingTree" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Notification" Width="1.5" PointX="9.3678354664555918" PointY="21.117685953675622" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Table" Width="1.5" PointX="2.2939950406057736" PointY="11.244283100238201" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

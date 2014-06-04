@@ -146,6 +146,7 @@
     <EntitySetMapping Name="FinancialTransactions">
       <EntityTypeMapping TypeName="MaksoudDBModel.FinancialTransaction">
         <MappingFragment StoreEntitySet="FinancialTransactions">
+          <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
           <ScalarProperty Name="FromAccount" ColumnName="FromAccount" />
@@ -329,5 +330,24 @@
         <ScalarProperty Name="ID" ColumnName="UserID" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="Notifications">
+      <EntityTypeMapping TypeName="MaksoudDBModel.Notification">
+        <MappingFragment StoreEntitySet="Notifications">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="RedirectURL" ColumnName="RedirectURL" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tables">
+      <EntityTypeMapping TypeName="MaksoudDBModel.Table">
+        <MappingFragment StoreEntitySet="Table">
+          <ScalarProperty Name="File" ColumnName="File" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
