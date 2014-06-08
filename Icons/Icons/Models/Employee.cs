@@ -44,6 +44,8 @@ namespace Icons.Models
         public Nullable<System.DateTime> InsuranceFrom { get; set; }
         public Nullable<System.DateTime> InsuranceTo { get; set; }
         public string Notes { get; set; }
+        public string Attach { get; set; }
+        public string FileName { get; set; }
     
         public virtual ICollection<EmployeeBenifit> EmployeeBenifits { get; set; }
         public virtual ICollection<EmployeeImprest> EmployeeImprests { get; set; }

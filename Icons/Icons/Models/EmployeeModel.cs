@@ -141,6 +141,8 @@ namespace Icons.Models
             Emp.BasicSalary = this.BasicSalary;
             Emp.DateOfBirth = this.DateOfBirth;
             Emp.HiringDate = this.HiringDate;
+            Emp.FileName = this.FileName;
+            Emp.Attach = this.Attach;
             Emp.Name = this.Name;
             Emp.Phone1 = this.Phone1;
             Emp.Phone2 = this.Phone2;

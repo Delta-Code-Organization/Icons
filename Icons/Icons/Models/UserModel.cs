@@ -31,7 +31,7 @@ namespace Icons.Models
             }
         }
 
-        public Returner CreateAccount(List<Screen> LOUA)
+        public Returner CreateAccount(List<UserAccess> LOUA)
         {
             if (db.Users.Any(p => p.Username == this.Username))
             {
@@ -44,17 +44,23 @@ namespace Icons.Models
             {
                 db.Users.Add(this);
                 db.SaveChanges();
-                var U = db.Users.Where(P => P.Username == this.Username).SingleOrDefault();
-                List<Screen> LOSTAP = new List<Screen>();
-                foreach (Screen item in LOUA)
+                var U = db.Users.Where(P => P.ID == this.ID).SingleOrDefault();
+                foreach (UserAccess UA in LOUA)
                 {
-                    LOSTAP.Add(db.Screens.Where(p => p.ID == item.ID).SingleOrDefault());
+                    UA.UserID = U.ID;
+                    db.UserAccesses.Add(UA);
+                    db.SaveChanges();
                 }
-                foreach (Screen item in LOSTAP)
-                {
-                    U.Screens.Add(item);
-                }
-                db.SaveChanges();
+                //List<UserAccess> LOSTAP = new List<UserAccess>();
+                //foreach (UserAccess item in LOUA)
+                //{
+                //    LOSTAP.Add(db.UserAccesses.Where(p => p.ID == item.ID).SingleOrDefault());
+                //}
+                //foreach (Screen item in LOSTAP)
+                //{
+                //    U.Screens.Add(item);
+                //}
+                //db.SaveChanges();
                 return new Returner
                 {
                     Message = Message.Account_created_successfully
@@ -93,7 +99,7 @@ namespace Icons.Models
             };
         }
 
-        public Returner Update(List<Screen> LOS)
+        public Returner Update(List<UserAccess> LOS)
         {
             var U = db.Users.Where(p => p.ID == this.ID).SingleOrDefault();
             if (db.Users.Any(p => p.Username == this.Username && p.ID != U.ID && p.Status == 1))
@@ -106,22 +112,19 @@ namespace Icons.Models
             else
             {
                 U.Password = this.Password;
-                List<Screen> STLO = U.Screens.ToList();
-                foreach (Screen item in STLO)
+                List<UserAccess> STLO = U.UserAccesses.ToList();
+                foreach (UserAccess item in STLO)
                 {
-                    U.Screens.Remove(item);
-                }
-                List<Screen> LOSTAP = new List<Screen>();
-                foreach (Screen item in LOS)
-                {
-                    LOSTAP.Add(db.Screens.Where(p => p.ID == item.ID).SingleOrDefault());
-                }
-                foreach (Screen item in LOSTAP)
-                {
-                    U.Screens.Add(item);
+                    U.UserAccesses.Remove(item);
                 }
                 U.Username = this.Username;
                 db.SaveChanges();
+                foreach (UserAccess UA in LOS)
+                {
+                    UA.UserID = U.ID;
+                    db.UserAccesses.Add(UA);
+                    db.SaveChanges();
+                }
                 return new Returner
                 {
                     Message = Message.User_updated_successfully

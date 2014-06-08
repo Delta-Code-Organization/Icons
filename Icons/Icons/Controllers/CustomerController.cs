@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Icons.Models;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace Icons.Controllers
 {
@@ -36,9 +39,42 @@ namespace Icons.Controllers
             return View();
         }
 
-        public string EditCutomerData(string _Name, string _Address, string _Phone, string _Notes, string _BirthDate)
+        public string EditCutomerData(string _Name, string _Address, string _Phone, string _Notes, string _BirthDate, string Attachment, string Ext, string FileName)
         {
             Customer cust = new Customer();
+            string File = Attachment;
+            if (File != " " || File != "")
+            {
+                if (Ext == "png" || Ext == "jpg" || Ext == "jpeg" || Ext == "gif")
+                {
+                    Image Img = LoadImage(File);
+                    string Path;
+                    using (Bitmap image = new Bitmap(Img))
+                    {
+                        //image object properties
+                        var fileName = Guid.NewGuid() + ".png";
+                        Path = @"/content/Attachs/" + fileName;
+                        string ImagePath = Server.MapPath(Path);
+                        image.Save(ImagePath, ImageFormat.Png);
+                    }
+                    cust.Attach = Path;
+                }
+                else
+                {
+                    var fileName = Guid.NewGuid() + "." + Ext;
+                    string PathO = @"/content/Attachs/" + fileName;
+                    string FilePath = Server.MapPath(PathO);
+                    byte[] filebytes = Convert.FromBase64String(File);
+                    FileStream fs = new FileStream(FilePath,
+                    FileMode.CreateNew,
+                    FileAccess.Write,
+                    FileShare.None);
+                    fs.Write(filebytes, 0, filebytes.Length);
+                    fs.Close();
+                    cust.Attach = PathO;
+                }
+                cust.FileName = FileName;
+            }
             cust.ID = (int)TempData["customerID"];
             TempData.Keep();
             cust.Name = _Name;
@@ -53,9 +89,58 @@ namespace Icons.Controllers
             return "تم تعديل بيانات العميل بنجاح ! ";
         }
 
-        public string CreateCustom(string _Name, string _Address, string _Phone, string _BirthDate, string _Notes)
+        private Image LoadImage(string Base64)
+        {
+            //get a temp image from bytes, instead of loading from disk
+            //data:image/gif;base64,
+            //this image is a single pixel (black)
+            byte[] bytes = Convert.FromBase64String(Base64);
+            byte[] bbbbb = new byte[900000000000];
+            Image image;
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+                image = Image.FromStream(ms);
+            }
+
+            return image;
+        }
+
+        public string CreateCustom(string _Name, string _Address, string _Phone, string _BirthDate, string _Notes, string Attachment, string Ext, string FileName)
         {
             Customer cust = new Customer();
+            string File = Attachment;
+            if (File != " " || File != "")
+            {
+                if (Ext == "png" || Ext == "jpg" || Ext == "jpeg" || Ext == "gif")
+                {
+                    Image Img = LoadImage(File);
+                    string Path;
+                    using (Bitmap image = new Bitmap(Img))
+                    {
+                        //image object properties
+                        var fileName = Guid.NewGuid() + ".png";
+                        Path = @"/content/Attachs/" + fileName;
+                        string ImagePath = Server.MapPath(Path);
+                        image.Save(ImagePath, ImageFormat.Png);
+                    }
+                    cust.Attach = Path;
+                }
+                else
+                {
+                    var fileName = Guid.NewGuid() + "." + Ext;
+                    string PathO = @"/content/Attachs/" + fileName;
+                    string FilePath = Server.MapPath(PathO);
+                    byte[] filebytes = Convert.FromBase64String(File);
+                    FileStream fs = new FileStream(FilePath,
+                    FileMode.CreateNew,
+                    FileAccess.Write,
+                    FileShare.None);
+                    fs.Write(filebytes, 0, filebytes.Length);
+                    fs.Close();
+                    cust.Attach = PathO;
+                }
+                cust.FileName = FileName;
+            }
             cust.Name = _Name;
             cust.Address = _Address;
             cust.Phone = _Phone;

@@ -261,6 +261,8 @@
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="AccountID" Type="int" />
           <Property Name="LastEditBy" Type="int" />
+          <Property Name="Attach" Type="nvarchar(max)" />
+          <Property Name="FileName" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -289,6 +291,8 @@
           <Property Name="InsuranceFrom" Type="datetime" />
           <Property Name="InsuranceTo" Type="datetime" />
           <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Attach" Type="nvarchar(max)" />
+          <Property Name="FileName" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="EmployeeBenifits">
           <Key>
@@ -421,6 +425,7 @@
           <Property Name="Title" Type="nvarchar" MaxLength="400" />
           <Property Name="GroupName" Type="nvarchar" MaxLength="800" />
           <Property Name="IsMenuItem" Type="bit" />
+          <Property Name="MultiPermission" Type="bit" />
         </EntityType>
         <EntityType Name="Stock">
           <Key>
@@ -493,14 +498,14 @@
         </EntityType>
         <EntityType Name="UserAccess">
           <Key>
-            <PropertyRef Name="UserID" />
-            <PropertyRef Name="ScreenID" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="ScreenID" Type="int" Nullable="false" />
           <Property Name="CanEdit" Type="bit" />
           <Property Name="CanDelete" Type="bit" />
           <Property Name="Opt1" Type="bit" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -984,6 +989,7 @@
           <EntitySet Name="EmployeePenalties" EntityType="MaksoudDBModel.EmployeePenalty" />
           <EntitySet Name="FinancialTransactions" EntityType="MaksoudDBModel.FinancialTransaction" />
           <EntitySet Name="Installments" EntityType="MaksoudDBModel.Installment" />
+          <EntitySet Name="Notifications" EntityType="MaksoudDBModel.Notification" />
           <EntitySet Name="ProductCategories" EntityType="MaksoudDBModel.ProductCategory" />
           <EntitySet Name="Products" EntityType="MaksoudDBModel.Product" />
           <EntitySet Name="Projects" EntityType="MaksoudDBModel.Project" />
@@ -994,6 +1000,8 @@
           <EntitySet Name="SupplierInvoiceLines" EntityType="MaksoudDBModel.SupplierInvoiceLine" />
           <EntitySet Name="SupplierInvoices" EntityType="MaksoudDBModel.SupplierInvoice" />
           <EntitySet Name="Suppliers" EntityType="MaksoudDBModel.Supplier" />
+          <EntitySet Name="Tables" EntityType="MaksoudDBModel.Table" />
+          <EntitySet Name="UserAccesses" EntityType="MaksoudDBModel.UserAccess" />
           <EntitySet Name="Users" EntityType="MaksoudDBModel.User" />
           <AssociationSet Name="FK_AccountingTree_AccTree" Association="MaksoudDBModel.FK_AccountingTree_AccTree">
             <End Role="AccountingTree" EntitySet="AccountingTrees" />
@@ -1026,6 +1034,10 @@
           <AssociationSet Name="FK_ProjectUnits_AccountingTree" Association="MaksoudDBModel.FK_ProjectUnits_AccountingTree">
             <End Role="AccountingTree" EntitySet="AccountingTrees" />
             <End Role="ProjectUnits" EntitySet="ProjectUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoices_AccountingTree" Association="MaksoudDBModel.FK_SupplierInvoices_AccountingTree">
+            <End Role="AccountingTree" EntitySet="AccountingTrees" />
+            <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
           </AssociationSet>
           <AssociationSet Name="FK_Suppliers_ToAccountingTree" Association="MaksoudDBModel.FK_Suppliers_ToAccountingTree">
             <End Role="AccountingTree" EntitySet="AccountingTrees" />
@@ -1091,10 +1103,6 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="FinancialTransactions" EntitySet="FinancialTransactions" />
           </AssociationSet>
-          <AssociationSet Name="FK_SupplierInvoices_FinancialTransactions" Association="MaksoudDBModel.FK_SupplierInvoices_FinancialTransactions">
-            <End Role="FinancialTransactions" EntitySet="FinancialTransactions" />
-            <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
-          </AssociationSet>
           <AssociationSet Name="FK_Products_Categories" Association="MaksoudDBModel.FK_Products_Categories">
             <End Role="ProductCategories" EntitySet="ProductCategories" />
             <End Role="Products" EntitySet="Products" />
@@ -1123,6 +1131,10 @@
             <End Role="Projects" EntitySet="Projects" />
             <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserAccess_Screens" Association="MaksoudDBModel.FK_UserAccess_Screens">
+            <End Role="Screens" EntitySet="Screens" />
+            <End Role="UserAccess" EntitySet="UserAccesses" />
+          </AssociationSet>
           <AssociationSet Name="FK_StockTransactions_Stock" Association="MaksoudDBModel.FK_StockTransactions_Stock">
             <End Role="Stock" EntitySet="Stocks" />
             <End Role="StockTransactions" EntitySet="StockTransactions" />
@@ -1139,16 +1151,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="SupplierInvoices" EntitySet="SupplierInvoices" />
           </AssociationSet>
-          <AssociationSet Name="UserAccess" Association="MaksoudDBModel.UserAccess">
-            <End Role="Screens" EntitySet="Screens" />
+          <AssociationSet Name="FK_UserAccess_Users" Association="MaksoudDBModel.FK_UserAccess_Users">
             <End Role="Users" EntitySet="Users" />
+            <End Role="UserAccess" EntitySet="UserAccesses" />
           </AssociationSet>
-          <AssociationSet Name="FK_SupplierInvoices_AccountingTree" Association="MaksoudDBModel.FK_SupplierInvoices_AccountingTree">
-            <End Role="AccountingTree" EntitySet="AccountingTrees" />
-            <End Role="SupplierInvoice" EntitySet="SupplierInvoices" />
-          </AssociationSet>
-          <EntitySet Name="Notifications" EntityType="MaksoudDBModel.Notification" />
-          <EntitySet Name="Tables" EntityType="MaksoudDBModel.Table" />
         </EntityContainer>
         <EntityType Name="AccountingTree">
           <Key>
@@ -1173,8 +1179,8 @@
           <NavigationProperty Name="Products" Relationship="MaksoudDBModel.FK_Products_AccountingTree" FromRole="AccountingTree" ToRole="Products" />
           <NavigationProperty Name="Projects" Relationship="MaksoudDBModel.FK_Projects_AccountingTree" FromRole="AccountingTree" ToRole="Projects" />
           <NavigationProperty Name="ProjectUnits" Relationship="MaksoudDBModel.FK_ProjectUnits_AccountingTree" FromRole="AccountingTree" ToRole="ProjectUnits" />
+          <NavigationProperty Name="SupplierInvoices" Relationship="MaksoudDBModel.FK_SupplierInvoices_AccountingTree" FromRole="AccountingTree" ToRole="SupplierInvoices" />
           <NavigationProperty Name="Suppliers" Relationship="MaksoudDBModel.FK_Suppliers_ToAccountingTree" FromRole="AccountingTree" ToRole="Suppliers" />
-          <NavigationProperty Name="SupplierInvoices" Relationship="MaksoudDBModel.FK_SupplierInvoices_AccountingTree" FromRole="AccountingTree" ToRole="SupplierInvoice" />
         </EntityType>
         <EntityType Name="ContractOwner">
           <Key>
@@ -1199,11 +1205,11 @@
           <Property Name="Remaining" Type="Double" />
           <Property Name="UnitID" Type="Int32" />
           <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LastEditBy" Type="Int32" />
           <NavigationProperty Name="ContractOwners" Relationship="MaksoudDBModel.FK_ContractOwners_Contracts" FromRole="Contracts" ToRole="ContractOwners" />
           <NavigationProperty Name="Project" Relationship="MaksoudDBModel.FK_Contracts_Projects" FromRole="Contracts" ToRole="Projects" />
           <NavigationProperty Name="ProjectUnit" Relationship="MaksoudDBModel.FK_Contracts_ProjectUnits" FromRole="Contracts" ToRole="ProjectUnits" />
           <NavigationProperty Name="Installments" Relationship="MaksoudDBModel.FK_Installments_Contracts" FromRole="Contracts" ToRole="Installments" />
-          <Property Type="Int32" Name="LastEditBy" />
         </EntityType>
         <EntityType Name="CustomerInvoiceLine">
           <Key>
@@ -1249,11 +1255,13 @@
           <Property Name="BirthDate" Type="DateTime" Precision="3" />
           <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="AccountID" Type="Int32" />
+          <Property Name="LastEditBy" Type="Int32" />
           <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_Customers_AccountingTree" FromRole="Customers" ToRole="AccountingTree" />
           <NavigationProperty Name="ContractOwners" Relationship="MaksoudDBModel.FK_ContractOwners_Customers" FromRole="Customers" ToRole="ContractOwners" />
           <NavigationProperty Name="CustomerInvoices" Relationship="MaksoudDBModel.FK_CustomerInvoices_Customers" FromRole="Customers" ToRole="CustomerInvoices" />
           <NavigationProperty Name="Installments" Relationship="MaksoudDBModel.FK_Installments_Customers" FromRole="Customers" ToRole="Installments" />
-          <Property Type="Int32" Name="LastEditBy" />
+          <Property Type="String" Name="Attach" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FileName" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -1274,17 +1282,19 @@
           <Property Name="ImprestAccID" Type="Int32" />
           <Property Name="BenifitAccID" Type="Int32" />
           <Property Name="PenaltyAccID" Type="Int32" />
+          <Property Name="LastEditBy" Type="Int32" />
+          <Property Name="ExitDate" Type="DateTime" Precision="3" />
+          <Property Name="HoldingAssets" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ExitDeliveredAssets" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="InsurancePercentage" Type="Double" />
+          <Property Name="InsuranceFrom" Type="DateTime" Precision="3" />
+          <Property Name="InsuranceTo" Type="DateTime" Precision="3" />
+          <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="EmployeeBenifits" Relationship="MaksoudDBModel.FK_EmployeeBenifits_Employee" FromRole="Employee" ToRole="EmployeeBenifits" />
           <NavigationProperty Name="EmployeeImprests" Relationship="MaksoudDBModel.FK_EmployeeImprests_Employee" FromRole="Employee" ToRole="EmployeeImprests" />
           <NavigationProperty Name="EmployeePenalties" Relationship="MaksoudDBModel.FK_EmployeePenalties_Employee" FromRole="Employee" ToRole="EmployeePenalties" />
-          <Property Type="Int32" Name="LastEditBy" />
-          <Property Type="DateTime" Name="ExitDate" Precision="3" />
-          <Property Type="String" Name="HoldingAssets" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ExitDeliveredAssets" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="Double" Name="InsurancePercentage" />
-          <Property Type="DateTime" Name="InsuranceFrom" Precision="3" />
-          <Property Type="DateTime" Name="InsuranceTo" Precision="3" />
-          <Property Type="String" Name="Notes" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Attach" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FileName" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="EmployeeBenifit">
           <Key>
@@ -1329,11 +1339,10 @@
           <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="ReferanceDocumentNumber" Type="Int32" />
           <Property Name="LastEditBy" Type="Int32" />
+          <Property Name="Confirmed" Type="Boolean" />
           <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree" FromRole="FinancialTransactions" ToRole="AccountingTree" />
           <NavigationProperty Name="AccountingTree1" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree2" FromRole="FinancialTransactions" ToRole="AccountingTree" />
           <NavigationProperty Name="User" Relationship="MaksoudDBModel.FK_FinancialTransactions_Users" FromRole="FinancialTransactions" ToRole="Users" />
-          <NavigationProperty Name="SupplierInvoices" Relationship="MaksoudDBModel.FK_SupplierInvoices_FinancialTransactions" FromRole="FinancialTransactions" ToRole="SupplierInvoices" />
-          <Property Type="Boolean" Name="Confirmed" />
         </EntityType>
         <EntityType Name="Installment">
           <Key>
@@ -1345,9 +1354,19 @@
           <Property Name="DueDate" Type="DateTime" Precision="3" />
           <Property Name="PaymentDate" Type="DateTime" Precision="3" />
           <Property Name="Amount" Type="Double" />
+          <Property Name="LastEditBy" Type="Int32" />
           <NavigationProperty Name="Contract" Relationship="MaksoudDBModel.FK_Installments_Contracts" FromRole="Installments" ToRole="Contracts" />
           <NavigationProperty Name="Customer" Relationship="MaksoudDBModel.FK_Installments_Customers" FromRole="Installments" ToRole="Customers" />
-          <Property Type="Int32" Name="LastEditBy" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Text" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="RedirectURL" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Status" Type="Int32" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -1356,8 +1375,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="CategoryName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="AccTreeCode" Type="Int32" />
+          <Property Name="LastEditBy" Type="Int32" />
           <NavigationProperty Name="Products" Relationship="MaksoudDBModel.FK_Products_Categories" FromRole="ProductCategories" ToRole="Products" />
-          <Property Type="Int32" Name="LastEditBy" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -1371,13 +1390,13 @@
           <Property Name="SalesUnit" Type="Int32" />
           <Property Name="PtoSRate" Type="Int32" />
           <Property Name="AccountID" Type="Int32" />
+          <Property Name="LastEditBy" Type="Int32" />
           <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_Products_AccountingTree" FromRole="Products" ToRole="AccountingTree" />
           <NavigationProperty Name="CustomerInvoiceLines" Relationship="MaksoudDBModel.FK_CustomerInvoiceLines_Products" FromRole="Products" ToRole="CustomerInvoiceLines" />
           <NavigationProperty Name="ProductCategory" Relationship="MaksoudDBModel.FK_Products_Categories" FromRole="Products" ToRole="ProductCategories" />
           <NavigationProperty Name="SupplierInvoiceLines" Relationship="MaksoudDBModel.FK_InvoiceLines_Products" FromRole="Products" ToRole="SupplierInvoiceLines" />
           <NavigationProperty Name="Stocks" Relationship="MaksoudDBModel.FK_Stock_Products" FromRole="Products" ToRole="Stock" />
           <NavigationProperty Name="StockTransactions" Relationship="MaksoudDBModel.FK_StockTransactions_Products" FromRole="Products" ToRole="StockTransactions" />
-          <Property Type="Int32" Name="LastEditBy" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -1396,13 +1415,13 @@
           <Property Name="ExpectedCost" Type="Double" />
           <Property Name="OwnershipPercentage" Type="Double" />
           <Property Name="AccountID" Type="Int32" />
+          <Property Name="LastEditBy" Type="Int32" />
           <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_Projects_AccountingTree" FromRole="Projects" ToRole="AccountingTree" />
           <NavigationProperty Name="Contracts" Relationship="MaksoudDBModel.FK_Contracts_Projects" FromRole="Projects" ToRole="Contracts" />
           <NavigationProperty Name="CustomerInvoices" Relationship="MaksoudDBModel.FK_CustomerInvoices_Projects" FromRole="Projects" ToRole="CustomerInvoices" />
           <NavigationProperty Name="ProjectUnits" Relationship="MaksoudDBModel.FK_ProjectUnits_Projects" FromRole="Projects" ToRole="ProjectUnits" />
           <NavigationProperty Name="Stocks" Relationship="MaksoudDBModel.FK_Stock_Projects" FromRole="Projects" ToRole="Stock" />
           <NavigationProperty Name="SupplierInvoices" Relationship="MaksoudDBModel.FK_SupplierInvoices_Projects" FromRole="Projects" ToRole="SupplierInvoices" />
-          <Property Type="Int32" Name="LastEditBy" />
         </EntityType>
         <EntityType Name="ProjectUnit">
           <Key>
@@ -1418,10 +1437,10 @@
           <Property Name="Notes" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
           <Property Name="Owner" Type="Int32" />
           <Property Name="AccountingID" Type="Int32" />
+          <Property Name="LastEditBy" Type="Int32" />
           <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_ProjectUnits_AccountingTree" FromRole="ProjectUnits" ToRole="AccountingTree" />
           <NavigationProperty Name="Contracts" Relationship="MaksoudDBModel.FK_Contracts_ProjectUnits" FromRole="ProjectUnits" ToRole="Contracts" />
           <NavigationProperty Name="Project" Relationship="MaksoudDBModel.FK_ProjectUnits_Projects" FromRole="ProjectUnits" ToRole="Projects" />
-          <Property Type="Int32" Name="LastEditBy" />
         </EntityType>
         <EntityType Name="Screen">
           <Key>
@@ -1431,8 +1450,9 @@
           <Property Name="ScreenURL" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
           <Property Name="Title" Type="String" MaxLength="400" Unicode="true" FixedLength="false" />
           <Property Name="GroupName" Type="String" MaxLength="800" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="Users" Relationship="MaksoudDBModel.UserAccess" FromRole="Screens" ToRole="Users" />
-          <Property Type="Boolean" Name="IsMenuItem" />
+          <Property Name="IsMenuItem" Type="Boolean" />
+          <Property Name="MultiPermission" Type="Boolean" />
+          <NavigationProperty Name="UserAccesses" Relationship="MaksoudDBModel.FK_UserAccess_Screens" FromRole="Screens" ToRole="UserAccess" />
         </EntityType>
         <EntityType Name="Stock">
           <Key>
@@ -1487,12 +1507,11 @@
           <Property Name="Departed" Type="Boolean" />
           <Property Name="LastEditBy" Type="Int32" />
           <Property Name="ProjectID" Type="Int32" />
-          <NavigationProperty Name="FinancialTransaction" Relationship="MaksoudDBModel.FK_SupplierInvoices_FinancialTransactions" FromRole="SupplierInvoices" ToRole="FinancialTransactions" />
+          <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_SupplierInvoices_AccountingTree" FromRole="SupplierInvoices" ToRole="AccountingTree" />
           <NavigationProperty Name="Project" Relationship="MaksoudDBModel.FK_SupplierInvoices_Projects" FromRole="SupplierInvoices" ToRole="Projects" />
           <NavigationProperty Name="SupplierInvoiceLines" Relationship="MaksoudDBModel.FK_InvoiceLines_Invoices" FromRole="SupplierInvoices" ToRole="SupplierInvoiceLines" />
           <NavigationProperty Name="Supplier" Relationship="MaksoudDBModel.FK_SupplierInvoices_Suppliers" FromRole="SupplierInvoices" ToRole="Suppliers" />
           <NavigationProperty Name="User" Relationship="MaksoudDBModel.FK_SupplierInvoices_Users" FromRole="SupplierInvoices" ToRole="Users" />
-          <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_SupplierInvoices_AccountingTree" FromRole="SupplierInvoice" ToRole="AccountingTree" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -1507,9 +1526,29 @@
           <Property Name="District" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
           <Property Name="Notes" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
           <Property Name="AccountingID" Type="Int32" />
+          <Property Name="LastEditBy" Type="Int32" />
           <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_Suppliers_ToAccountingTree" FromRole="Suppliers" ToRole="AccountingTree" />
           <NavigationProperty Name="SupplierInvoices" Relationship="MaksoudDBModel.FK_SupplierInvoices_Suppliers" FromRole="Suppliers" ToRole="SupplierInvoices" />
-          <Property Type="Int32" Name="LastEditBy" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="File" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="UserAccess">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="ScreenID" Type="Int32" Nullable="false" />
+          <Property Name="CanEdit" Type="Boolean" />
+          <Property Name="CanDelete" Type="Boolean" />
+          <Property Name="Opt1" Type="Boolean" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Screen" Relationship="MaksoudDBModel.FK_UserAccess_Screens" FromRole="UserAccess" ToRole="Screens" />
+          <NavigationProperty Name="User" Relationship="MaksoudDBModel.FK_UserAccess_Users" FromRole="UserAccess" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1522,7 +1561,7 @@
           <NavigationProperty Name="CustomerInvoices" Relationship="MaksoudDBModel.FK_CustomerInvoices_Users" FromRole="Users" ToRole="CustomerInvoices" />
           <NavigationProperty Name="FinancialTransactions" Relationship="MaksoudDBModel.FK_FinancialTransactions_Users" FromRole="Users" ToRole="FinancialTransactions" />
           <NavigationProperty Name="SupplierInvoices" Relationship="MaksoudDBModel.FK_SupplierInvoices_Users" FromRole="Users" ToRole="SupplierInvoices" />
-          <NavigationProperty Name="Screens" Relationship="MaksoudDBModel.UserAccess" FromRole="Users" ToRole="Screens" />
+          <NavigationProperty Name="UserAccesses" Relationship="MaksoudDBModel.FK_UserAccess_Users" FromRole="Users" ToRole="UserAccess" />
         </EntityType>
         <Association Name="FK_AccountingTree_AccTree">
           <End Role="AccountingTree" Type="MaksoudDBModel.AccountingTree" Multiplicity="0..1" />
@@ -1617,6 +1656,18 @@
             </Principal>
             <Dependent Role="ProjectUnits">
               <PropertyRef Name="AccountingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoices_AccountingTree">
+          <End Role="AccountingTree" Type="MaksoudDBModel.AccountingTree" Multiplicity="0..1" />
+          <End Role="SupplierInvoices" Type="MaksoudDBModel.SupplierInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountingTree">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierInvoices">
+              <PropertyRef Name="InvoiceAccount" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1812,18 +1863,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SupplierInvoices_FinancialTransactions">
-          <End Role="FinancialTransactions" Type="MaksoudDBModel.FinancialTransaction" Multiplicity="0..1" />
-          <End Role="SupplierInvoices" Type="MaksoudDBModel.SupplierInvoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FinancialTransactions">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SupplierInvoices">
-              <PropertyRef Name="InvoiceAccount" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Products_Categories">
           <End Role="ProductCategories" Type="MaksoudDBModel.ProductCategory" Multiplicity="0..1" />
           <End Role="Products" Type="MaksoudDBModel.Product" Multiplicity="*" />
@@ -1908,6 +1947,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserAccess_Screens">
+          <End Role="Screens" Type="MaksoudDBModel.Screen" Multiplicity="1" />
+          <End Role="UserAccess" Type="MaksoudDBModel.UserAccess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Screens">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserAccess">
+              <PropertyRef Name="ScreenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_StockTransactions_Stock">
           <End Role="Stock" Type="MaksoudDBModel.Stock" Multiplicity="0..1" />
           <End Role="StockTransactions" Type="MaksoudDBModel.StockTransaction" Multiplicity="*" />
@@ -1956,39 +2007,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="UserAccess">
-          <End Role="Screens" Type="MaksoudDBModel.Screen" Multiplicity="*" />
-          <End Role="Users" Type="MaksoudDBModel.User" Multiplicity="*" />
-        </Association>
-        <Association Name="FK_SupplierInvoices_AccountingTree">
-          <End Type="MaksoudDBModel.AccountingTree" Role="AccountingTree" Multiplicity="0..1" />
-          <End Type="MaksoudDBModel.SupplierInvoice" Role="SupplierInvoice" Multiplicity="*" />
+        <Association Name="FK_UserAccess_Users">
+          <End Role="Users" Type="MaksoudDBModel.User" Multiplicity="1" />
+          <End Role="UserAccess" Type="MaksoudDBModel.UserAccess" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AccountingTree">
-              <PropertyRef Name="Id" />
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="SupplierInvoice">
-              <PropertyRef Name="InvoiceAccount" />
+            <Dependent Role="UserAccess">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Notification">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="DateTime" Name="Date" Precision="3" />
-          <Property Type="String" Name="Text" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="RedirectURL" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="Status" />
-        </EntityType>
-        <EntityType Name="Table">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Binary" Name="File" MaxLength="Max" FixedLength="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2024,7 +2054,6 @@
           <EntitySetMapping Name="Contracts">
             <EntityTypeMapping TypeName="MaksoudDBModel.Contract">
               <MappingFragment StoreEntitySet="Contracts">
-                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
@@ -2033,6 +2062,7 @@
                 <ScalarProperty Name="Remaining" ColumnName="Remaining" />
                 <ScalarProperty Name="UnitID" ColumnName="UnitID" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2067,7 +2097,8 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="MaksoudDBModel.Customer">
               <MappingFragment StoreEntitySet="Customers">
-                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Attach" ColumnName="Attach" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -2075,20 +2106,15 @@
                 <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="MaksoudDBModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="InsuranceTo" ColumnName="InsuranceTo" />
-                <ScalarProperty Name="InsuranceFrom" ColumnName="InsuranceFrom" />
-                <ScalarProperty Name="InsurancePercentage" ColumnName="InsurancePercentage" />
-                <ScalarProperty Name="ExitDeliveredAssets" ColumnName="ExitDeliveredAssets" />
-                <ScalarProperty Name="HoldingAssets" ColumnName="HoldingAssets" />
-                <ScalarProperty Name="ExitDate" ColumnName="ExitDate" />
-                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Attach" ColumnName="Attach" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
@@ -2104,6 +2130,14 @@
                 <ScalarProperty Name="ImprestAccID" ColumnName="ImprestAccID" />
                 <ScalarProperty Name="BenifitAccID" ColumnName="BenifitAccID" />
                 <ScalarProperty Name="PenaltyAccID" ColumnName="PenaltyAccID" />
+                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
+                <ScalarProperty Name="ExitDate" ColumnName="ExitDate" />
+                <ScalarProperty Name="HoldingAssets" ColumnName="HoldingAssets" />
+                <ScalarProperty Name="ExitDeliveredAssets" ColumnName="ExitDeliveredAssets" />
+                <ScalarProperty Name="InsurancePercentage" ColumnName="InsurancePercentage" />
+                <ScalarProperty Name="InsuranceFrom" ColumnName="InsuranceFrom" />
+                <ScalarProperty Name="InsuranceTo" ColumnName="InsuranceTo" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2140,7 +2174,6 @@
           <EntitySetMapping Name="FinancialTransactions">
             <EntityTypeMapping TypeName="MaksoudDBModel.FinancialTransaction">
               <MappingFragment StoreEntitySet="FinancialTransactions">
-                <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
                 <ScalarProperty Name="FromAccount" ColumnName="FromAccount" />
@@ -2150,36 +2183,47 @@
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="ReferanceDocumentNumber" ColumnName="ReferanceDocumentNumber" />
                 <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
+                <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Installments">
             <EntityTypeMapping TypeName="MaksoudDBModel.Installment">
               <MappingFragment StoreEntitySet="Installments">
-                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ContractID" ColumnName="ContractID" />
                 <ScalarProperty Name="ResponsibleID" ColumnName="ResponsibleID" />
                 <ScalarProperty Name="DueDate" ColumnName="DueDate" />
                 <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="MaksoudDBModel.Notification">
+              <MappingFragment StoreEntitySet="Notifications">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="RedirectURL" ColumnName="RedirectURL" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductCategories">
             <EntityTypeMapping TypeName="MaksoudDBModel.ProductCategory">
               <MappingFragment StoreEntitySet="ProductCategories">
-                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="AccTreeCode" ColumnName="AccTreeCode" />
+                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="MaksoudDBModel.Product">
               <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -2188,13 +2232,13 @@
                 <ScalarProperty Name="SalesUnit" ColumnName="SalesUnit" />
                 <ScalarProperty Name="PtoSRate" ColumnName="PtoSRate" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="MaksoudDBModel.Project">
               <MappingFragment StoreEntitySet="Projects">
-                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
                 <ScalarProperty Name="ProjectAddress" ColumnName="ProjectAddress" />
@@ -2208,13 +2252,13 @@
                 <ScalarProperty Name="ExpectedCost" ColumnName="ExpectedCost" />
                 <ScalarProperty Name="OwnershipPercentage" ColumnName="OwnershipPercentage" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProjectUnits">
             <EntityTypeMapping TypeName="MaksoudDBModel.ProjectUnit">
               <MappingFragment StoreEntitySet="ProjectUnits">
-                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
                 <ScalarProperty Name="UnitSpace" ColumnName="UnitSpace" />
@@ -2225,17 +2269,19 @@
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="Owner" ColumnName="Owner" />
                 <ScalarProperty Name="AccountingID" ColumnName="AccountingID" />
+                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Screens">
             <EntityTypeMapping TypeName="MaksoudDBModel.Screen">
               <MappingFragment StoreEntitySet="Screens">
-                <ScalarProperty Name="IsMenuItem" ColumnName="IsMenuItem" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ScreenURL" ColumnName="ScreenURL" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="IsMenuItem" ColumnName="IsMenuItem" />
+                <ScalarProperty Name="MultiPermission" ColumnName="MultiPermission" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2293,7 +2339,6 @@
           <EntitySetMapping Name="Suppliers">
             <EntityTypeMapping TypeName="MaksoudDBModel.Supplier">
               <MappingFragment StoreEntitySet="Suppliers">
-                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
@@ -2303,6 +2348,27 @@
                 <ScalarProperty Name="District" ColumnName="District" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="AccountingID" ColumnName="AccountingID" />
+                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tables">
+            <EntityTypeMapping TypeName="MaksoudDBModel.Table">
+              <MappingFragment StoreEntitySet="Table">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="File" ColumnName="File" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAccesses">
+            <EntityTypeMapping TypeName="MaksoudDBModel.UserAccess">
+              <MappingFragment StoreEntitySet="UserAccess">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ScreenID" ColumnName="ScreenID" />
+                <ScalarProperty Name="CanEdit" ColumnName="CanEdit" />
+                <ScalarProperty Name="CanDelete" ColumnName="CanDelete" />
+                <ScalarProperty Name="Opt1" ColumnName="Opt1" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2313,33 +2379,6 @@
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="UserAccess" TypeName="MaksoudDBModel.UserAccess" StoreEntitySet="UserAccess">
-            <EndProperty Name="Screens">
-              <ScalarProperty Name="ID" ColumnName="ScreenID" />
-            </EndProperty>
-            <EndProperty Name="Users">
-              <ScalarProperty Name="ID" ColumnName="UserID" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <EntitySetMapping Name="Notifications">
-            <EntityTypeMapping TypeName="MaksoudDBModel.Notification">
-              <MappingFragment StoreEntitySet="Notifications">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="RedirectURL" ColumnName="RedirectURL" />
-                <ScalarProperty Name="Text" ColumnName="Text" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tables">
-            <EntityTypeMapping TypeName="MaksoudDBModel.Table">
-              <MappingFragment StoreEntitySet="Table">
-                <ScalarProperty Name="File" ColumnName="File" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

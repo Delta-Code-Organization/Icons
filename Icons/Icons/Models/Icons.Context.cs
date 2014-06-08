@@ -37,6 +37,7 @@ namespace Icons.Models
         public DbSet<EmployeePenalty> EmployeePenalties { get; set; }
         public DbSet<FinancialTransaction> FinancialTransactions { get; set; }
         public DbSet<Installment> Installments { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Project> Projects { get; set; }
@@ -47,8 +48,8 @@ namespace Icons.Models
         public DbSet<SupplierInvoiceLine> SupplierInvoiceLines { get; set; }
         public DbSet<SupplierInvoice> SupplierInvoices { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Notification> Notifications { get; set; }
         public DbSet<Table> Tables { get; set; }
+        public DbSet<UserAccess> UserAccesses { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

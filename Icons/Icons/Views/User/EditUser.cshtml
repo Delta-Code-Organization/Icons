@@ -43,11 +43,17 @@
                         <div class="col-sm-6 Arabic">
                             <div style="text-align: right; direction: rtl;" class="panel-group accordion accordion-semi" id="accordion3">
                                 @{
-                                    User CurrentUser = ViewBag.U;
-                                    List<Screen> LOUSP = new List<Screen>();
-                                    LOUSP = CurrentUser.Screens.ToList();
                                     List<Screen> LOS = new List<Screen>();
                                     LOS = ViewBag.Screens;
+                                    User CurrentUser = ViewBag.U;
+                                    List<Screen> LOUSP = new List<Screen>();
+                                    foreach (Screen item in LOS)
+                                    {
+                                        if (CurrentUser.UserAccesses.Any(p => p.ScreenID == item.ID))
+                                        {
+                                            LOUSP.Add(item);
+                                        }
+                                    }
                                     List<string> Groups = new List<string>();
                                     List<string> DisGroups = new List<string>();
                                     Groups = ViewBag.Groups;
@@ -74,17 +80,84 @@
                                             {
                                                 if (LOUSP.Any(p => p.ID == SSS.ID))
                                                 {
+                                                    if (SSS.MultiPermission == true)
+                                                    {
+                                                    <label>@SSS.Title :</label>
+                                                    <br />
+                                                    <label class="checkbox-inline">
+                                                        <input class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Show@(SSS.ID)" name="Pers[]">
+                                                        &nbsp عرض 
+                                                    </label>
+                                                        if (CurrentUser.UserAccesses.Where(p => p.ScreenID == SSS.ID).FirstOrDefault().CanEdit == true)
+                                                        {
+                                                    <label class="checkbox-inline">
+                                                        <input checked="checked" class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Edit@(SSS.ID)" name="Pers[]" />
+                                                        &nbsp تعديل 
+                                                    </label>
+                                                        }
+                                                        if (CurrentUser.UserAccesses.Where(p => p.ScreenID == SSS.ID).FirstOrDefault().CanDelete == true)
+                                                        {
+                                                    <label class="checkbox-inline">
+                                                        <input checked="checked" class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Delete@(SSS.ID)" name="Pers[]">
+                                                        &nbsp حذف 
+                                                    </label>
+                                                        }
+                                                        if (CurrentUser.UserAccesses.Where(p => p.ScreenID == SSS.ID).FirstOrDefault().Opt1 == true)
+                                                        {
+                                                    <label class="checkbox-inline">
+                                                        <input checked="checked" class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Opt1@(SSS.ID)" name="Pers[]">
+                                                        &nbsp صلاحية كاملة
+                                                    </label>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                    <br />
                                                     <label class="checkbox-inline">
                                                         <input checked="checked" class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="@SSS.ID" name="Pers[]">
                                                         &nbsp @SSS.Title
                                                     </label>
+                                                    <br />
+                                                    }
                                                 }
                                                 else
                                                 {
+                                                    if (SSS.MultiPermission == true)
+                                                    {
+                                                    <label>@SSS.Title :</label>
+                                                    <br />
+                                                    <label class="checkbox-inline">
+                                                        <input class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Show@(SSS.ID)" name="Pers[]">
+                                                        &nbsp عرض 
+                                                    </label>
+                                                        
+                                                    <label class="checkbox-inline">
+                                                        <input class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Edit@(SSS.ID)" name="Pers[]" />
+                                                        &nbsp تعديل 
+                                                    </label>
+                                                        
+                                                        
+                                                    <label class="checkbox-inline">
+                                                        <input class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Delete@(SSS.ID)" name="Pers[]">
+                                                        &nbsp حذف 
+                                                    </label>
+                                                        
+                                                        
+                                                    <label class="checkbox-inline">
+                                                        <input class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Opt1@(SSS.ID)" name="Pers[]">
+                                                        &nbsp صلاحية كاملة
+                                                    </label>
+                                                        
+                                                    }
+                                                    else
+                                                    {
+                                                    <br />
                                                     <label class="checkbox-inline">
                                                         <input class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="@SSS.ID" name="Pers[]">
                                                         &nbsp @SSS.Title
                                                     </label>
+                                                    <br />
+                                                    }
                                                 }
                                             }
                                                 }
@@ -111,17 +184,84 @@
                                             {
                                                 if (LOUSP.Any(p => p.ID == SSS.ID))
                                                 {
+                                                    if (SSS.MultiPermission == true)
+                                                    {
+                                                    <label>@SSS.Title :</label>
+                                                    <br />
+                                                    <label class="checkbox-inline">
+                                                        <input class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Show@(SSS.ID)" name="Pers[]">
+                                                        &nbsp عرض 
+                                                    </label>
+                                                        if (CurrentUser.UserAccesses.Where(p => p.ScreenID == SSS.ID).FirstOrDefault().CanEdit == true)
+                                                        {
+                                                    <label class="checkbox-inline">
+                                                        <input checked="checked" class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Edit@(SSS.ID)" name="Pers[]" />
+                                                        &nbsp تعديل 
+                                                    </label>
+                                                        }
+                                                        if (CurrentUser.UserAccesses.Where(p => p.ScreenID == SSS.ID).FirstOrDefault().CanDelete == true)
+                                                        {
+                                                    <label class="checkbox-inline">
+                                                        <input checked="checked" class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Delete@(SSS.ID)" name="Pers[]">
+                                                        &nbsp حذف 
+                                                    </label>
+                                                        }
+                                                        if (CurrentUser.UserAccesses.Where(p => p.ScreenID == SSS.ID).FirstOrDefault().Opt1 == true)
+                                                        {
+                                                    <label class="checkbox-inline">
+                                                        <input checked="checked" class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Opt1@(SSS.ID)" name="Pers[]">
+                                                        &nbsp صلاحية كاملة
+                                                    </label>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                    <br />
                                                     <label class="checkbox-inline">
                                                         <input checked="checked" class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="@SSS.ID" name="Pers[]">
                                                         &nbsp @SSS.Title
                                                     </label>
+                                                    <br />
+                                                    }
                                                 }
                                                 else
                                                 {
+                                                    if (SSS.MultiPermission == true)
+                                                    {
+                                                    <label>@SSS.Title :</label>
+                                                    <br />
+                                                    <label class="checkbox-inline">
+                                                        <input class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Show@(SSS.ID)" name="Pers[]">
+                                                        &nbsp عرض 
+                                                    </label>
+                                                        
+                                                    <label class="checkbox-inline">
+                                                        <input class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Edit@(SSS.ID)" name="Pers[]" />
+                                                        &nbsp تعديل 
+                                                    </label>
+                                                        
+                                                        
+                                                    <label class="checkbox-inline">
+                                                        <input class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Delete@(SSS.ID)" name="Pers[]">
+                                                        &nbsp حذف 
+                                                    </label>
+                                                        
+                                                        
+                                                    <label class="checkbox-inline">
+                                                        <input class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="Opt1@(SSS.ID)" name="Pers[]">
+                                                        &nbsp صلاحية كاملة
+                                                    </label>
+                                                        
+                                                    }
+                                                    else
+                                                    {
+                                                    <br />
                                                     <label class="checkbox-inline">
                                                         <input class="parsley-validated parsley-error" parsley-error-container="#CheckBoxErrorContainer" parsley-mincheck="2" parsley-mincheck-message="يجب اختيار صلاحيتان علي لاقل" type="checkbox" id="isTrack@(SSS.ID)" value="@SSS.ID" name="Pers[]">
                                                         &nbsp @SSS.Title
                                                     </label>
+                                                    <br />
+                                                    }
                                                 }
                                             }
                                                 }

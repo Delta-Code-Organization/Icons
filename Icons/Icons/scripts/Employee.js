@@ -1,54 +1,60 @@
 ﻿var ImageInBase64 = "";
 
-//$(document).ready(function () {
+function getExt(filename) {
+    var ext = filename.split('.').pop();
+    if (ext == filename) return "";
+    return ext;
+}
 
-//    $("#Files").change(function (e) {
-//        readImagesFromUploader(e);
-//    });
+$(document).ready(function () {
 
-//    function readImage(file, event) {
-//        ImageInBase64 = event.target.result.replace("data:image/png;base64,", "");
-//        ImageInBase64 = ImageInBase64.replace("data:image/jpeg;base64,", "");
-//        ImageInBase64 = ImageInBase64.replace("data:image/jpg;base64,", "");
-//        ImageInBase64 = ImageInBase64.replace("data:image/gif;base64,", "");
-//        ImageInBase64 = ImageInBase64.replace("data:image/doc;base64,", "");
-//        ImageInBase64 = ImageInBase64.replace("data:image/docx;base64,", "");
-//        ImageInBase64 = ImageInBase64.replace("data:image/txt;base64,", "");
-//        ImageInBase64 = ImageInBase64.replace("data:image/XLK;base64,", "");
-//        ImageInBase64 = ImageInBase64.replace("data:image/XLS;base64,", "");
-//        ImageInBase64 = ImageInBase64.replace("data:image/XLS;base64,", "");
-//        ImageInBase64 = ImageInBase64.replace("data:image/rar;base64,", "");
-//        ImageInBase64 = ImageInBase64.replace("data:image/zip;base64,", "");
-//        alert(ImageInBase64);
-//        $('#Attachment').val(ImageInBase64);
-//    }
+    $("#Attachs").change(function (e) {
+        readImagesFromUploader(e);
+        $('#Ext').val(getExt($('#Attachs').val()));
+        $('#FileName').val($('#Attachs').val());
+    });
 
-//    function readImages(event) {
-//        var files = event.originalEvent.dataTransfer.files;
-//        $.each(files, function (index, file) {
-//            var fileReader = new FileReader();
-//            fileReader.onload = (function (file) {
-//                return function (event) {
-//                    return readImage(file, event);
-//                }
-//            })(file);
-//            fileReader.readAsDataURL(file);
-//        });
-//    }
+    function readImage(file, event) {
+        ImageInBase64 = event.target.result.replace("data:image/png;base64,", "");
+        ImageInBase64 = ImageInBase64.replace("data:image/jpeg;base64,", "");
+        ImageInBase64 = ImageInBase64.replace("data:image/jpg;base64,", "");
+        ImageInBase64 = ImageInBase64.replace("data:image/gif;base64,", "");
+        ImageInBase64 = ImageInBase64.replace("data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,", "");
+        ImageInBase64 = ImageInBase64.replace("data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64", "");
+        ImageInBase64 = ImageInBase64.replace("data:application/pdf;base64,", "");
+        ImageInBase64 = ImageInBase64.replace("data:application/octet-stream;base64,", "");
+        ImageInBase64 = ImageInBase64.replace("data:application/zip;base64,", "");
+        ImageInBase64 = ImageInBase64.replace("data:text/plain;base64,", "");
+        alert(ImageInBase64);
+        $('#Attachment').val(ImageInBase64);
+    }
 
-//    function readImagesFromUploader(event) {
-//        var files = event.target.files;
-//        $.each(files, function (index, file) {
-//            var fileReader = new FileReader();
-//            fileReader.onload = (function (file) {
-//                return function (event) {
-//                    return readImage(file, event);
-//                }
-//            })(file);
-//            fileReader.readAsDataURL(file);
-//        });
-//    }
-//});
+    function readImages(event) {
+        var files = event.originalEvent.dataTransfer.files;
+        $.each(files, function (index, file) {
+            var fileReader = new FileReader();
+            fileReader.onload = (function (file) {
+                return function (event) {
+                    return readImage(file, event);
+                }
+            })(file);
+            fileReader.readAsDataURL(file);
+        });
+    }
+
+    function readImagesFromUploader(event) {
+        var files = event.target.files;
+        $.each(files, function (index, file) {
+            var fileReader = new FileReader();
+            fileReader.onload = (function (file) {
+                return function (event) {
+                    return readImage(file, event);
+                }
+            })(file);
+            fileReader.readAsDataURL(file);
+        });
+    }
+});
 
 $(document).ready(function () {
     $('#CreateEmployee').submit(function (event) {

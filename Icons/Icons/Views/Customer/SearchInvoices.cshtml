@@ -14,7 +14,7 @@
                 <h3 style="text-align: right;">بحث فواتير العملاء</h3>
                 <br />
                 <div class="col-md-12" style="direction: rtl;">
-                    <input type="image" onclick="RefreshSearch()" src="~/content/images/round_delete.png" style="border:1px solid #808080; border-radius:0px 100px 100px 0px; border-left:none; width:32px; height:32px; float:right;" /><input id="DeepSearch" class="form-control" style="width: 200px; height:32px; border:1px solid #808080; border-right:none;" type="text" placeholder="بحث متقدم" />
+                    <input type="image" onclick="RefreshSearch()" src="~/content/images/round_delete.png" style="border: 1px solid #808080; border-radius: 0px 100px 100px 0px; border-left: none; width: 32px; height: 32px; float: right;" /><input id="DeepSearch" class="form-control" style="width: 200px; height: 32px; border: 1px solid #808080; border-right: none;" type="text" placeholder="بحث متقدم" />
                 </div>
                 <br />
             </div>
@@ -69,18 +69,27 @@
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <ul role="menu" class="dropdown-menu">
-                                                <li>
-                                                    <a onclick="Depart(@y.Id)">ترحيل</a>
-                                                </li>
-                                                <li>
-                                                    <a href="@Url.Action("EditInvoice", "Customer", new { id = y.Id })">تعديل</a>
-                                                </li>
+                                                @if ((Session["User"] as User).UserAccesses.Any(p => p.ScreenID == 65 && p.Opt1 == true))
+                                                {
+                                                    <li>
+                                                        <a onclick="Depart(@y.Id)">ترحيل</a>
+                                                    </li>
+                                                }
+                                                @if ((Session["User"] as User).UserAccesses.Any(p => p.ScreenID == 65 && p.CanEdit == true))
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action("EditInvoice", "Customer", new { id = y.Id })">تعديل</a>
+                                                    </li>
+                                                }
                                                 <li>
                                                     <a href="@Url.Action("DisplayInvoice", "Customer", new { id = y.Id })">عرض تفاصيل الفاتورة</a>
                                                 </li>
-                                                <li>
-                                                    <a onclick="DeleteInvoice(@y.Id)">حذف</a>
-                                                </li>
+                                                @if ((Session["User"] as User).UserAccesses.Any(p => p.ScreenID == 65 && p.CanDelete == true))
+                                                {
+                                                    <li>
+                                                        <a onclick="DeleteInvoice(@y.Id)">حذف</a>
+                                                    </li>
+                                                }
                                             </ul>
                                         </div>
                                     </td>

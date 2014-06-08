@@ -95,7 +95,7 @@
     </script>
 </head>
 <body>
-    @{
+    @*@{
         string Cont = ViewContext.RouteData.Values["controller"].ToString();
         string action = ViewContext.RouteData.Values["action"].ToString();
         string CurrentUrl = "/" + Cont + "/" + action;
@@ -103,13 +103,13 @@
         {
             if (CurrentUrl != "/Home/Index")
             {
-                if (!((Session["User"] as User).Screens.Any(p => p.ScreenURL == CurrentUrl)))
+                if (!((Session["User"] as User).UserAccesses.Any(p => p.Screen.ScreenURL == CurrentUrl)))
                 {
                     Response.Redirect(Url.Action("Index", "Home"));
                 }
             }
         }
-    }
+    }*@
     <!-- Fixed navbar -->
     <div id="head-nav" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
@@ -129,7 +129,7 @@
                                 <span>@Uname</span> <b class="caret"></b></a>
                         }
                         <ul class="dropdown-menu">
-                            @if ((Session["User"] as User).Screens.Any(p => p.ScreenURL == "/User/SearchUsers"))
+                            @if ((Session["User"] as User).UserAccesses.Any(p => p.Screen.ScreenURL == "/User/SearchUsers"))
                             {
                                 <li><a href="/User/EditUser/@UID" style="text-align:center;">حسابي</a></li>
                             }
@@ -188,10 +188,10 @@
                                 User User = (User)Session["User"];
                                 List<string> GroupNames = new List<string>();
                                 List<Screen> LOS = new List<Screen>();
-                                foreach (Screen UA in User.Screens)
+                                foreach (UserAccess UA in User.UserAccesses)
                                 {
-                                    LOS.Add(UA);
-                                    string G = UA.GroupName;
+                                    LOS.Add(UA.Screen);
+                                    string G = UA.Screen.GroupName;
                                     GroupNames.Add(G);
                                 }
                                 List<string> DistinctGroupNames = new List<string>();

@@ -4,30 +4,33 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="74ae209529714ef3981402e86770b9f8" Name="Diagram1" ZoomLevel="95">
-        <EntityTypeShape EntityType="MaksoudDBModel.AccountingTree" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.ContractOwner" Width="1.5" PointX="5.25" PointY="17.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.Contract" Width="1.5" PointX="5.25" PointY="30" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.CustomerInvoiceLine" Width="1.5" PointX="10.5" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.CustomerInvoice" Width="1.5" PointX="5.25" PointY="22.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.Customer" Width="1.5" PointX="3" PointY="16.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.Employee" Width="1.5" PointX="5.75" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.EmployeeBenifit" Width="1.5" PointX="8" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.EmployeeImprest" Width="1.5" PointX="8" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.EmployeePenalty" Width="1.5" PointX="8" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.FinancialTransaction" Width="1.5" PointX="6" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.Installment" Width="1.5" PointX="8.25" PointY="17" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.ProductCategory" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.Product" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.Project" Width="1.5" PointX="3" PointY="29.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.ProjectUnit" Width="1.5" PointX="8.25" PointY="23.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.Screen" Width="1.5" PointX="1.5" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.Stock" Width="1.5" PointX="11.25" PointY="21.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.StockTransaction" Width="1.5" PointX="13.5" PointY="16.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.SupplierInvoiceLine" Width="1.5" PointX="13.5" PointY="20" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.SupplierInvoice" Width="1.5" PointX="11.25" PointY="25.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.Supplier" Width="1.5" PointX="3" PointY="34.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MaksoudDBModel.User" Width="1.5" PointX="3.75" PointY="8" IsExpanded="true" />
+      <Diagram DiagramId="9ad8b38be7484b4e8d7f9fb89b31fccc" Name="Diagram1" ZoomLevel="92">
+        <EntityTypeShape EntityType="MaksoudDBModel.AccountingTree" Width="1.5" PointX="0.75" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.ContractOwner" Width="1.5" PointX="5.25" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Contract" Width="1.5" PointX="5.25" PointY="34" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.CustomerInvoiceLine" Width="1.5" PointX="11.25" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.CustomerInvoice" Width="1.5" PointX="5.25" PointY="27" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Customer" Width="1.5" PointX="3" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Employee" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.EmployeeBenifit" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.EmployeeImprest" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.EmployeePenalty" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.FinancialTransaction" Width="1.5" PointX="3" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Installment" Width="1.5" PointX="8.25" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Notification" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.ProductCategory" Width="1.5" PointX="3.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Product" Width="1.5" PointX="6" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Project" Width="1.5" PointX="3" PointY="33.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.ProjectUnit" Width="1.5" PointX="8.25" PointY="27.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Screen" Width="1.5" PointX="6" PointY="42.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Stock" Width="1.5" PointX="11.25" PointY="26" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.StockTransaction" Width="1.5" PointX="13.5" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.SupplierInvoiceLine" Width="1.5" PointX="10.5" PointY="21.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.SupplierInvoice" Width="1.5" PointX="8.25" PointY="31.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Supplier" Width="1.5" PointX="3" PointY="39" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.Table" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.UserAccess" Width="1.5" PointX="8.25" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaksoudDBModel.User" Width="1.5" PointX="6" PointY="38.75" IsExpanded="true" />
         <AssociationConnector Association="MaksoudDBModel.FK_AccountingTree_AccTree" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_CustomerInvoices_AccountingTree" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_Customers_AccountingTree" ManuallyRouted="false" />
@@ -36,6 +39,7 @@
         <AssociationConnector Association="MaksoudDBModel.FK_Products_AccountingTree" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_Projects_AccountingTree" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_ProjectUnits_AccountingTree" ManuallyRouted="false" />
+        <AssociationConnector Association="MaksoudDBModel.FK_SupplierInvoices_AccountingTree" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_Suppliers_ToAccountingTree" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_ContractOwners_Contracts" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_ContractOwners_Customers" ManuallyRouted="false" />
@@ -52,7 +56,6 @@
         <AssociationConnector Association="MaksoudDBModel.FK_EmployeeImprests_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_EmployeePenalties_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_FinancialTransactions_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="MaksoudDBModel.FK_SupplierInvoices_FinancialTransactions" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_Products_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_InvoiceLines_Products" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_Stock_Products" ManuallyRouted="false" />
@@ -60,14 +63,12 @@
         <AssociationConnector Association="MaksoudDBModel.FK_ProjectUnits_Projects" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_Stock_Projects" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_SupplierInvoices_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="MaksoudDBModel.FK_UserAccess_Screens" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_StockTransactions_Stock" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_InvoiceLines_Invoices" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_SupplierInvoices_Suppliers" ManuallyRouted="false" />
         <AssociationConnector Association="MaksoudDBModel.FK_SupplierInvoices_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="MaksoudDBModel.UserAccess" ManuallyRouted="false" />
-        <AssociationConnector Association="MaksoudDBModel.FK_SupplierInvoices_AccountingTree" />
-        <EntityTypeShape EntityType="MaksoudDBModel.Notification" Width="1.5" PointX="9.3678354664555918" PointY="21.117685953675622" />
-        <EntityTypeShape EntityType="MaksoudDBModel.Table" Width="1.5" PointX="2.2939950406057736" PointY="11.244283100238201" />
+        <AssociationConnector Association="MaksoudDBModel.FK_UserAccess_Users" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

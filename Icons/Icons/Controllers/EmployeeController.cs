@@ -42,22 +42,39 @@ namespace Icons.Controllers
         public string CreateEmployee(FormCollection FC)
         {
             Employee E = new Employee();
-            //string File = FC["Attachment"];
-            //if (File != " ")
-            //{
-            //    //if not empty here the steps of saving the image to the folder of knowledgebase on the server 
-            //    Image Img = LoadImage(File);
-            //    string Path;
-            //    using (Bitmap image = new Bitmap(Img))
-            //    {
-            //        //image object properties
-            //        var fileName = Guid.NewGuid() + ".png";
-            //        Path = @"/content/img/knowledgebase/" + fileName;
-            //        string ImagePath = Server.MapPath(Path);
-            //        image.Save(ImagePath, ImageFormat.Png);
-            //    }
-            //    B.ImageURL = Path;
-            //}
+            string File = FC["Attachment"];
+            if (File != " " || File != "")
+            {
+                if (FC["Ext"] == "png" || FC["Ext"] == "jpg" || FC["Ext"] == "jpeg" || FC["Ext"] == "gif")
+                {
+                    Image Img = LoadImage(File);
+                    string Path;
+                    using (Bitmap image = new Bitmap(Img))
+                    {
+                        //image object properties
+                        var fileName = Guid.NewGuid() + ".png";
+                        Path = @"/content/Attachs/" + fileName;
+                        string ImagePath = Server.MapPath(Path);
+                        image.Save(ImagePath, ImageFormat.Png);
+                    }
+                    E.Attach = Path;
+                }
+                else
+                {
+                    var fileName = Guid.NewGuid() + "." + FC["Ext"];
+                    string PathO = @"/content/Attachs/" + fileName;
+                    string FilePath = Server.MapPath(PathO);
+                    byte[] filebytes = Convert.FromBase64String(File);
+                    FileStream fs = new FileStream(FilePath,
+                    FileMode.CreateNew,
+                    FileAccess.Write,
+                    FileShare.None);
+                    fs.Write(filebytes, 0, filebytes.Length);
+                    fs.Close();
+                    E.Attach = PathO;
+                }
+                E.FileName = FC["FileName"];
+            }
             E.ExitDate = Convert.ToDateTime(FC["ExitDate"]);
             E.HoldingAssets = FC["HoldingAssets"];
             E.ExitDeliveredAssets = FC["ExitDeliveredAssets"];
@@ -120,6 +137,39 @@ namespace Icons.Controllers
         public string EditEmployee(FormCollection FC)
         {
             Employee E = new Employee();
+            string File = FC["Attachment"];
+            if (File != " " || File != "")
+            {
+                if (FC["Ext"] == "png" || FC["Ext"] == "jpg" || FC["Ext"] == "jpeg" || FC["Ext"] == "gif")
+                {
+                    Image Img = LoadImage(File);
+                    string Path;
+                    using (Bitmap image = new Bitmap(Img))
+                    {
+                        //image object properties
+                        var fileName = Guid.NewGuid() + ".png";
+                        Path = @"/content/Attachs/" + fileName;
+                        string ImagePath = Server.MapPath(Path);
+                        image.Save(ImagePath, ImageFormat.Png);
+                    }
+                    E.Attach = Path;
+                }
+                else
+                {
+                    var fileName = Guid.NewGuid() + "." + FC["Ext"];
+                    string PathO = @"/content/Attachs/" + fileName;
+                    string FilePath = Server.MapPath(PathO);
+                    byte[] filebytes = Convert.FromBase64String(File);
+                    FileStream fs = new FileStream(FilePath,
+                    FileMode.CreateNew,
+                    FileAccess.Write,
+                    FileShare.None);
+                    fs.Write(filebytes, 0, filebytes.Length);
+                    fs.Close();
+                    E.Attach = PathO;
+                }
+                E.FileName = FC["FileName"];
+            }
             E.ExitDate = Convert.ToDateTime(FC["ExitDate"]);
             E.HoldingAssets = FC["HoldingAssets"];
             E.ExitDeliveredAssets = FC["ExitDeliveredAssets"];
@@ -281,7 +331,7 @@ namespace Icons.Controllers
             return View();
         }
 
-        public string Pay(int id, double Total,DateTime PaymentDate,int ToAccID)
+        public string Pay(int id, double Total, DateTime PaymentDate, int ToAccID)
         {
             if (new Employee { Id = id }.Pay(Total, (Session["User"] as User).ID, PaymentDate, ToAccID).Message == Message.Cannot_pay_salary_at_Wrong_time)
             {

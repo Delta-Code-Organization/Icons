@@ -23,6 +23,21 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">المرفقات</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <input class="form-control" id="Attachs" name="Attachs" type="file" />
+                                        <input value="" id="Attachment" name="Attachment" type="hidden" />
+                                        <input value="" id="Ext" name="Ext" type="hidden" />
+                                        <input value="" id="FileName" name="FileName" type="hidden" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label Arabic" style="text-align: center;">تحميل المرفقات</label>
+                                    <div class="col-sm-6 Arabic">
+                                        <a href="@E.Attach">@E.FileName</a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-3 control-label Arabic" style="text-align: center;">بيانات اخري</label>
                                     <div class="col-sm-6 Arabic">
                                         <textarea id="custnotes" class="form-control">@ViewBag.customerdata.Notes</textarea>

@@ -12,20 +12,16 @@ namespace Icons.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Screen
+    public partial class UserAccess
     {
-        public Screen()
-        {
-            this.UserAccesses = new HashSet<UserAccess>();
-        }
+        public int UserID { get; set; }
+        public int ScreenID { get; set; }
+        public Nullable<bool> CanEdit { get; set; }
+        public Nullable<bool> CanDelete { get; set; }
+        public Nullable<bool> Opt1 { get; set; }
+        public int Id { get; set; }
     
-        public int ID { get; set; }
-        public string ScreenURL { get; set; }
-        public string Title { get; set; }
-        public string GroupName { get; set; }
-        public Nullable<bool> IsMenuItem { get; set; }
-        public Nullable<bool> MultiPermission { get; set; }
-    
-        public virtual ICollection<UserAccess> UserAccesses { get; set; }
+        public virtual Screen Screen { get; set; }
+        public virtual User User { get; set; }
     }
 }

@@ -76,12 +76,116 @@ namespace Icons.Controllers
             A.Status = 1;
             A.Username = name;
             string[] Access = per.Split('#');
-            List<Screen> LOUA = new List<Screen>();
+            //List<Screen> LOUA = new List<Screen>();
+            List<UserAccess> LOUA = new List<UserAccess>();
             foreach (string AP in Access)
             {
-                Screen UA = new Screen();
-                UA.ID = int.Parse(AP);
-                LOUA.Add(UA);
+                if (LOUA.Any(p => p.ScreenID == Convert.ToInt32(AP.Replace("Opt1", "").Replace("Show", "").Replace("Edit", "").Replace("Delete", ""))))
+                {
+                    var UA = LOUA.Where(p => p.ScreenID == Convert.ToInt32(AP.Replace("Opt1", "").Replace("Show", "").Replace("Edit", "").Replace("Delete", ""))).SingleOrDefault();
+                    if (AP.Contains("Opt1"))
+                    {
+                        UA.ScreenID = int.Parse(AP.Replace("Opt1", ""));
+                        UA.CanDelete = true;
+                        UA.CanEdit = true;
+                        UA.Opt1 = true;
+                        LOUA.Add(UA);
+                    }
+                    else if (AP.Contains("Show"))
+                    {
+                        UA.ScreenID = int.Parse(AP.Replace("Show", ""));
+                        foreach (string item in Access.Where(p => p.Contains(UA.ScreenID.ToString())).ToList())
+                        {
+                            if (item.Contains("Opt1"))
+                            {
+                                UA.CanDelete = true;
+                                UA.CanEdit = true;
+                                UA.Opt1 = true;
+                            }
+                            if (item.Contains("Edit"))
+                            {
+                                UA.CanEdit = true;
+                            }
+                            if (item.Contains("Delete"))
+                            {
+                                UA.CanDelete = true;
+                            }
+                        }
+                        LOUA.Add(UA);
+                    }
+                    else
+                    {
+                        if (AP.Contains("Edit"))
+                        {
+                            UA.ScreenID = int.Parse(AP.Replace("Edit", ""));
+                            UA.CanEdit = true;
+                        }
+                        else if (AP.Contains("Delete"))
+                        {
+                            UA.ScreenID = int.Parse(AP.Replace("Delete", ""));
+                            UA.CanDelete = true;
+                        }
+                        else
+                        {
+                            UA.ScreenID = int.Parse(AP);
+                        }
+                        LOUA.Add(UA);
+                    }
+                }
+                else
+                {
+                    if (AP.Contains("Opt1"))
+                    {
+                        UserAccess UA = new UserAccess();
+                        UA.ScreenID = int.Parse(AP.Replace("Opt1", ""));
+                        UA.CanDelete = true;
+                        UA.CanEdit = true;
+                        UA.Opt1 = true;
+                        LOUA.Add(UA);
+                    }
+                    else if (AP.Contains("Show"))
+                    {
+                        UserAccess UA = new UserAccess();
+                        UA.ScreenID = int.Parse(AP.Replace("Show", ""));
+                        foreach (string item in Access.Where(p => p.Contains(UA.ScreenID.ToString())).ToList())
+                        {
+                            if (item.Contains("Opt1"))
+                            {
+                                UA.CanDelete = true;
+                                UA.CanEdit = true;
+                                UA.Opt1 = true;
+                            }
+                            if (item.Contains("Edit"))
+                            {
+                                UA.CanEdit = true;
+                            }
+                            if (item.Contains("Delete"))
+                            {
+                                UA.CanDelete = true;
+                            }
+                        }
+                        LOUA.Add(UA);
+                    }
+                    else
+                    {
+                        UserAccess UA = new UserAccess();
+                        if (AP.Contains("Edit"))
+                        {
+                            UA.ScreenID = int.Parse(AP.Replace("Edit", ""));
+                            UA.CanEdit = true;
+                        }
+                        else if (AP.Contains("Delete"))
+                        {
+                            UA.ScreenID = int.Parse(AP.Replace("Delete", ""));
+                            UA.CanDelete = true;
+                        }
+                        else
+                        {
+                            UA.ScreenID = int.Parse(AP);
+                        }
+                        LOUA.Add(UA);
+                    }
+                }
             }
             Returner R = A.CreateAccount(LOUA);
             if (R.Message == Message.Username_Already_Exists)
@@ -132,7 +236,7 @@ namespace Icons.Controllers
             ViewBag.Groups = GroupNames;
             User U = new User { ID = (int)id }.GetByID().Data as User;
             ViewBag.U = U;
-            ViewBag.UserPer = U.Screens;
+            ViewBag.UserPer = U.UserAccesses;
             TempData["UID"] = (int)id;
             TempData.Keep();
             return View();
@@ -141,12 +245,116 @@ namespace Icons.Controllers
         public string UpdateUser(string name, string pass, string per)
         {
             string[] Access = per.Split('#');
-            List<Screen> LOUA = new List<Screen>();
+            //List<Screen> LOUA = new List<Screen>();
+            List<UserAccess> LOUA = new List<UserAccess>();
             foreach (string AP in Access)
             {
-                Screen UA = new Screen();
-                UA.ID = int.Parse(AP);
-                LOUA.Add(UA);
+                if (LOUA.Any(p => p.ScreenID == Convert.ToInt32(AP.Replace("Opt1", "").Replace("Show", "").Replace("Edit", "").Replace("Delete", ""))))
+                {
+                    var UA = LOUA.Where(p => p.ScreenID == Convert.ToInt32(AP.Replace("Opt1", "").Replace("Show", "").Replace("Edit", "").Replace("Delete", ""))).FirstOrDefault();
+                    if (AP.Contains("Opt1"))
+                    {
+                        UA.ScreenID = int.Parse(AP.Replace("Opt1", ""));
+                        UA.CanDelete = true;
+                        UA.CanEdit = true;
+                        UA.Opt1 = true;
+                        LOUA.Add(UA);
+                    }
+                    else if (AP.Contains("Show"))
+                    {
+                        UA.ScreenID = int.Parse(AP.Replace("Show", ""));
+                        foreach (string item in Access.Where(p => p.Contains(UA.ScreenID.ToString())).ToList())
+                        {
+                            if (item.Contains("Opt1"))
+                            {
+                                UA.CanDelete = true;
+                                UA.CanEdit = true;
+                                UA.Opt1 = true;
+                            }
+                            if (item.Contains("Edit"))
+                            {
+                                UA.CanEdit = true;
+                            }
+                            if (item.Contains("Delete"))
+                            {
+                                UA.CanDelete = true;
+                            }
+                        }
+                        LOUA.Add(UA);
+                    }
+                    else
+                    {
+                        if (AP.Contains("Edit"))
+                        {
+                            UA.ScreenID = int.Parse(AP.Replace("Edit", ""));
+                            UA.CanEdit = true;
+                        }
+                        else if (AP.Contains("Delete"))
+                        {
+                            UA.ScreenID = int.Parse(AP.Replace("Delete", ""));
+                            UA.CanDelete = true;
+                        }
+                        else
+                        {
+                            UA.ScreenID = int.Parse(AP);
+                        }
+                        LOUA.Add(UA);
+                    }
+                }
+                else
+                {
+                    if (AP.Contains("Opt1"))
+                    {
+                        UserAccess UA = new UserAccess();
+                        UA.ScreenID = int.Parse(AP.Replace("Opt1", ""));
+                        UA.CanDelete = true;
+                        UA.CanEdit = true;
+                        UA.Opt1 = true;
+                        LOUA.Add(UA);
+                    }
+                    else if (AP.Contains("Show"))
+                    {
+                        UserAccess UA = new UserAccess();
+                        UA.ScreenID = int.Parse(AP.Replace("Show", ""));
+                        foreach (string item in Access.Where(p => p.Contains(UA.ScreenID.ToString())).ToList())
+                        {
+                            if (item.Contains("Opt1"))
+                            {
+                                UA.CanDelete = true;
+                                UA.CanEdit = true;
+                                UA.Opt1 = true;
+                            }
+                            if (item.Contains("Edit"))
+                            {
+                                UA.CanEdit = true;
+                            }
+                            if (item.Contains("Delete"))
+                            {
+                                UA.CanDelete = true;
+                            }
+                        }
+                        LOUA.Add(UA);
+                    }
+                    else
+                    {
+                        UserAccess UA = new UserAccess();
+                        if (AP.Contains("Edit"))
+                        {
+                            UA.ScreenID = int.Parse(AP.Replace("Edit", ""));
+                            UA.CanEdit = true;
+                        }
+                        else if (AP.Contains("Delete"))
+                        {
+                            UA.ScreenID = int.Parse(AP.Replace("Delete", ""));
+                            UA.CanDelete = true;
+                        }
+                        else
+                        {
+                            UA.ScreenID = int.Parse(AP);
+                        }
+                        LOUA.Add(UA);
+                    }
+                }
             }
             Returner R = new User
             {

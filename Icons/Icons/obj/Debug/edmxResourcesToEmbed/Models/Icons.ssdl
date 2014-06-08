@@ -256,6 +256,8 @@
     <Property Name="Notes" Type="nvarchar(max)" />
     <Property Name="AccountID" Type="int" />
     <Property Name="LastEditBy" Type="int" />
+    <Property Name="Attach" Type="nvarchar(max)" />
+    <Property Name="FileName" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Employee">
     <Key>
@@ -284,6 +286,8 @@
     <Property Name="InsuranceFrom" Type="datetime" />
     <Property Name="InsuranceTo" Type="datetime" />
     <Property Name="Notes" Type="nvarchar(max)" />
+    <Property Name="Attach" Type="nvarchar(max)" />
+    <Property Name="FileName" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="EmployeeBenifits">
     <Key>
@@ -416,6 +420,7 @@
     <Property Name="Title" Type="nvarchar" MaxLength="400" />
     <Property Name="GroupName" Type="nvarchar" MaxLength="800" />
     <Property Name="IsMenuItem" Type="bit" />
+    <Property Name="MultiPermission" Type="bit" />
   </EntityType>
   <EntityType Name="Stock">
     <Key>
@@ -488,11 +493,14 @@
   </EntityType>
   <EntityType Name="UserAccess">
     <Key>
-      <PropertyRef Name="UserID" />
-      <PropertyRef Name="ScreenID" />
+      <PropertyRef Name="Id" />
     </Key>
     <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="ScreenID" Type="int" Nullable="false" />
+    <Property Name="CanEdit" Type="bit" />
+    <Property Name="CanDelete" Type="bit" />
+    <Property Name="Opt1" Type="bit" />
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
   </EntityType>
   <EntityType Name="Users">
     <Key>

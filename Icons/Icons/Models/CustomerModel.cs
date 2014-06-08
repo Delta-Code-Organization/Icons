@@ -38,6 +38,8 @@ namespace Icons.Models
         {
             var update = db.Customers.Where(p => p.ID == this.ID).ToList().SingleOrDefault();
             update.Name = this.Name;
+            update.Attach = this.Attach;
+            update.FileName = this.FileName;
             update.Address = this.Address;
             update.Phone = this.Phone;
             update.BirthDate = this.BirthDate;

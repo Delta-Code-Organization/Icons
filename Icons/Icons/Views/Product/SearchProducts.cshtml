@@ -54,7 +54,7 @@
                                         <td>Null In Database</td>
                                     }
                                     }
-                                    <td class="center" style="text-align:center;">
+                                    <td class="center" style="text-align: center;">
                                         <div class="btn-group">
                                             <button class="btn btn-default btn-xs" type="button">الإجرائات</button>
                                             <button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button">
@@ -62,13 +62,19 @@
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <ul role="menu" class="dropdown-menu">
-                                                <li>
-                                                    <a href="/Product/EditProduct/@y.Id">تعديل</a>
-                                                </li>
-                                                <li class="divider"></li>
-                                                <li>
-                                                    <a onclick="RemoveProduct(@y.Id)">حذف</a>
-                                                </li>
+                                                @if ((Session["User"] as User).UserAccesses.Any(p => p.ScreenID == 52 && p.CanEdit == true))
+                                                {
+                                                    <li>
+                                                        <a href="/Product/EditProduct/@y.Id">تعديل</a>
+                                                    </li>
+                                                }
+                                                @if ((Session["User"] as User).UserAccesses.Any(p => p.ScreenID == 52 && p.CanDelete == true))
+                                                {
+                                                    <li class="divider"></li>
+                                                    <li>
+                                                        <a onclick="RemoveProduct(@y.Id)">حذف</a>
+                                                    </li>
+                                                }
                                             </ul>
                                         </div>
                                     </td>
