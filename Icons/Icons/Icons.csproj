@@ -244,6 +244,9 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserAccess.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -2119,6 +2122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="content\Attachs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

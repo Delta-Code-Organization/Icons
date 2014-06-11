@@ -222,7 +222,8 @@ namespace Icons.Controllers
         {
             Employee E = new Employee { Id = (int)TempData["EmpID"] };
             FinancialTransaction FT = new FinancialTransaction();
-            FT.Amount = Convert.ToDouble(FC["penalty"]);
+            FT.Credit = Convert.ToDouble(FC["penalty"]);
+            FT.Debit = 0;
             FT.FromAccount = Convert.ToInt32(FC["ToAcc"]);
             FT.LastEditBy = (Session["User"] as User).ID;
             FT.Notes = FC["Notes"];
@@ -265,8 +266,9 @@ namespace Icons.Controllers
         {
             Employee E = new Employee { Id = (int)TempData["EmpID"] };
             FinancialTransaction FT = new FinancialTransaction();
-            FT.Amount = Convert.ToDouble(FC["benifit"]);
-            FT.ToAccount = Convert.ToInt32(FC["FromAcc"]);
+            FT.Debit = Convert.ToDouble(FC["benifit"]);
+            FT.Credit = 0;
+            FT.FromAccount = Convert.ToInt32(FC["FromAcc"]);
             FT.LastEditBy = (Session["User"] as User).ID;
             FT.Notes = FC["Notes"];
             E.AddBenifit(FT);
@@ -309,8 +311,9 @@ namespace Icons.Controllers
         {
             Employee E = new Employee { Id = (int)TempData["EmpID"] };
             FinancialTransaction FT = new FinancialTransaction();
-            FT.Amount = Convert.ToDouble(FC["imprest"]);
-            FT.ToAccount = Convert.ToInt32(FC["FromAcc"]);
+            FT.Debit = Convert.ToDouble(FC["imprest"]);
+            FT.Credit = 0;
+            FT.FromAccount = Convert.ToInt32(FC["FromAcc"]);
             FT.LastEditBy = (Session["User"] as User).ID;
             FT.Notes = FC["Notes"];
             E.AddImprest(FT);

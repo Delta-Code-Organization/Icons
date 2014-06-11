@@ -77,6 +77,21 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">الحساب المستلم</label>
+                                        <div class="col-sm-6 Arabic">
+                                            <select class="select2 parsley-validated parsley-error" id="RecAcc" name="RecAcc" parsley-trigger="change" required="" parsley-error-message="يجب اختيار الحساب المستلم">
+                                                <optgroup label="الحسابات">
+                                                    @{
+                                                        foreach (AccountingTree item in ViewBag.A)
+                                                        {
+                                                        <option value="@item.Id">@item.NodeName</option>
+                                                        }
+                                                    }
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-3 control-label Arabic" style="text-align: center;">الباقي</label>
                                         <div class="col-sm-6 Arabic">
                                             <input class="form-control" readonly="" onkeypress="return isNumberKey(event)" id="cremaining" onchange="CalcInstallmentAmount()" name="cremaining" type="text" />

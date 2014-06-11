@@ -323,13 +323,14 @@
     <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="TransactionDate" Type="datetime" />
     <Property Name="FromAccount" Type="int" />
-    <Property Name="ToAccount" Type="int" />
-    <Property Name="Amount" Type="float" />
+    <Property Name="AssociatedAccount" Type="int" />
     <Property Name="Statement" Type="nvarchar(max)" />
     <Property Name="Notes" Type="nvarchar(max)" />
     <Property Name="ReferanceDocumentNumber" Type="int" />
     <Property Name="LastEditBy" Type="int" />
     <Property Name="Confirmed" Type="bit" />
+    <Property Name="Debit" Type="float" />
+    <Property Name="Credit" Type="float" />
   </EntityType>
   <EntityType Name="Installments">
     <Key>
@@ -711,7 +712,7 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="FinancialTransactions">
-        <PropertyRef Name="ToAccount" />
+        <PropertyRef Name="AssociatedAccount" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

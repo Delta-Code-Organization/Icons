@@ -148,16 +148,27 @@ namespace Icons.Controllers
         [HttpPost]
         public string AddFT(int Acc1, int Acc2, double Amount, string State, DateTime Date, string Notes)
         {
-            return new AccountingTree().AddFT(new FinancialTransaction
+            new AccountingTree().AddFT(new FinancialTransaction
             {
                 FromAccount = Acc1,
-                ToAccount = Acc2,
-                Amount = Amount,
+                Debit = Amount,
+                Credit = 0,
                 Statement = State,
                 TransactionDate = Date,
                 Notes = Notes,
                 LastEditBy = (Session["User"] as User).ID
             }).Data.ToString();
+            string Ret = new AccountingTree().AddFT(new FinancialTransaction
+            {
+                FromAccount = Acc2,
+                Credit = Amount,
+                Debit = 0,
+                Statement = State,
+                TransactionDate = Date,
+                Notes = Notes,
+                LastEditBy = (Session["User"] as User).ID
+            }).Data.ToString();
+            return Ret;
         }
 
         public ActionResult SearchFinancialTransactions()
@@ -184,8 +195,8 @@ namespace Icons.Controllers
             {
                 Id = id,
                 FromAccount = Acc1,
-                ToAccount = Acc2,
-                Amount = Amount,
+                Debit = Amount,
+                Credit = 0,
                 Statement = State,
                 TransactionDate = Date,
                 Notes = Notes,

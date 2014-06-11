@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MaksoudDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="MaksoudDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="MaksoudDBModelStoreContainer">
           <EntitySet Name="AccountingTree" EntityType="MaksoudDBModel.Store.AccountingTree" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ContractOwners" EntityType="MaksoudDBModel.Store.ContractOwners" store:Type="Tables" Schema="dbo" />
@@ -328,13 +328,14 @@
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TransactionDate" Type="datetime" />
           <Property Name="FromAccount" Type="int" />
-          <Property Name="ToAccount" Type="int" />
-          <Property Name="Amount" Type="float" />
+          <Property Name="AssociatedAccount" Type="int" />
           <Property Name="Statement" Type="nvarchar(max)" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="ReferanceDocumentNumber" Type="int" />
           <Property Name="LastEditBy" Type="int" />
           <Property Name="Confirmed" Type="bit" />
+          <Property Name="Debit" Type="float" />
+          <Property Name="Credit" Type="float" />
         </EntityType>
         <EntityType Name="Installments">
           <Key>
@@ -716,7 +717,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="FinancialTransactions">
-              <PropertyRef Name="ToAccount" />
+              <PropertyRef Name="AssociatedAccount" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -972,7 +973,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MaksoudDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1256,12 +1258,12 @@
           <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="AccountID" Type="Int32" />
           <Property Name="LastEditBy" Type="Int32" />
+          <Property Name="Attach" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="FileName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_Customers_AccountingTree" FromRole="Customers" ToRole="AccountingTree" />
           <NavigationProperty Name="ContractOwners" Relationship="MaksoudDBModel.FK_ContractOwners_Customers" FromRole="Customers" ToRole="ContractOwners" />
           <NavigationProperty Name="CustomerInvoices" Relationship="MaksoudDBModel.FK_CustomerInvoices_Customers" FromRole="Customers" ToRole="CustomerInvoices" />
           <NavigationProperty Name="Installments" Relationship="MaksoudDBModel.FK_Installments_Customers" FromRole="Customers" ToRole="Installments" />
-          <Property Type="String" Name="Attach" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="FileName" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -1290,11 +1292,11 @@
           <Property Name="InsuranceFrom" Type="DateTime" Precision="3" />
           <Property Name="InsuranceTo" Type="DateTime" Precision="3" />
           <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Attach" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="FileName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="EmployeeBenifits" Relationship="MaksoudDBModel.FK_EmployeeBenifits_Employee" FromRole="Employee" ToRole="EmployeeBenifits" />
           <NavigationProperty Name="EmployeeImprests" Relationship="MaksoudDBModel.FK_EmployeeImprests_Employee" FromRole="Employee" ToRole="EmployeeImprests" />
           <NavigationProperty Name="EmployeePenalties" Relationship="MaksoudDBModel.FK_EmployeePenalties_Employee" FromRole="Employee" ToRole="EmployeePenalties" />
-          <Property Type="String" Name="Attach" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="FileName" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="EmployeeBenifit">
           <Key>
@@ -1333,13 +1335,14 @@
           <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="TransactionDate" Type="DateTime" Precision="3" />
           <Property Name="FromAccount" Type="Int32" />
-          <Property Name="ToAccount" Type="Int32" />
-          <Property Name="Amount" Type="Double" />
+          <Property Name="AssociatedAccount" Type="Int32" />
           <Property Name="Statement" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="ReferanceDocumentNumber" Type="Int32" />
           <Property Name="LastEditBy" Type="Int32" />
           <Property Name="Confirmed" Type="Boolean" />
+          <Property Name="Debit" Type="Double" />
+          <Property Name="Credit" Type="Double" />
           <NavigationProperty Name="AccountingTree" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree" FromRole="FinancialTransactions" ToRole="AccountingTree" />
           <NavigationProperty Name="AccountingTree1" Relationship="MaksoudDBModel.FK_FinancialTransactions_AccTree2" FromRole="FinancialTransactions" ToRole="AccountingTree" />
           <NavigationProperty Name="User" Relationship="MaksoudDBModel.FK_FinancialTransactions_Users" FromRole="FinancialTransactions" ToRole="Users" />
@@ -1546,7 +1549,7 @@
           <Property Name="CanEdit" Type="Boolean" />
           <Property Name="CanDelete" Type="Boolean" />
           <Property Name="Opt1" Type="Boolean" />
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Screen" Relationship="MaksoudDBModel.FK_UserAccess_Screens" FromRole="UserAccess" ToRole="Screens" />
           <NavigationProperty Name="User" Relationship="MaksoudDBModel.FK_UserAccess_Users" FromRole="UserAccess" ToRole="Users" />
         </EntityType>
@@ -1619,7 +1622,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="FinancialTransactions">
-              <PropertyRef Name="ToAccount" />
+              <PropertyRef Name="AssociatedAccount" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2097,8 +2100,6 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="MaksoudDBModel.Customer">
               <MappingFragment StoreEntitySet="Customers">
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="Attach" ColumnName="Attach" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -2107,14 +2108,14 @@
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
                 <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
+                <ScalarProperty Name="Attach" ColumnName="Attach" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="MaksoudDBModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="Attach" ColumnName="Attach" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
@@ -2138,6 +2139,8 @@
                 <ScalarProperty Name="InsuranceFrom" ColumnName="InsuranceFrom" />
                 <ScalarProperty Name="InsuranceTo" ColumnName="InsuranceTo" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Attach" ColumnName="Attach" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2177,13 +2180,14 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
                 <ScalarProperty Name="FromAccount" ColumnName="FromAccount" />
-                <ScalarProperty Name="ToAccount" ColumnName="ToAccount" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="AssociatedAccount" ColumnName="AssociatedAccount" />
                 <ScalarProperty Name="Statement" ColumnName="Statement" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="ReferanceDocumentNumber" ColumnName="ReferanceDocumentNumber" />
                 <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
                 <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+                <ScalarProperty Name="Debit" ColumnName="Debit" />
+                <ScalarProperty Name="Credit" ColumnName="Credit" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

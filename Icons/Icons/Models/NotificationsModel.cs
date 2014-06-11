@@ -38,8 +38,8 @@ namespace Icons.Models
             }
             foreach (Supplier item in db.Suppliers.ToList())
             {
-                double? OnSup = db.FinancialTransactions.Where(p => p.FromAccount == item.AccountingID).Sum(p => p.Amount);
-                double? ToSup = db.FinancialTransactions.Where(p => p.ToAccount == item.AccountingID).Sum(p => p.Amount);
+                double? OnSup = db.FinancialTransactions.Where(p => p.FromAccount == item.AccountingID).Sum(p => p.Credit);
+                double? ToSup = db.FinancialTransactions.Where(p => p.FromAccount == item.AccountingID).Sum(p => p.Debit);
                 if (ToSup > OnSup)
                 {
                     double? Balance = ToSup - OnSup;

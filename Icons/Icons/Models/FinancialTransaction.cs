@@ -17,13 +17,14 @@ namespace Icons.Models
         public int Id { get; set; }
         public Nullable<System.DateTime> TransactionDate { get; set; }
         public Nullable<int> FromAccount { get; set; }
-        public Nullable<int> ToAccount { get; set; }
-        public Nullable<double> Amount { get; set; }
+        public Nullable<int> AssociatedAccount { get; set; }
         public string Statement { get; set; }
         public string Notes { get; set; }
         public Nullable<int> ReferanceDocumentNumber { get; set; }
         public Nullable<int> LastEditBy { get; set; }
         public Nullable<bool> Confirmed { get; set; }
+        public Nullable<double> Debit { get; set; }
+        public Nullable<double> Credit { get; set; }
     
         public virtual AccountingTree AccountingTree { get; set; }
         public virtual AccountingTree AccountingTree1 { get; set; }

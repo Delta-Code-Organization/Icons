@@ -22,6 +22,28 @@ namespace Icons.Models
                 db.SaveChanges();
             }
             new Stock().Purchases(this.Id);
+            FinancialTransaction Ft = new FinancialTransaction();
+            Ft.Confirmed = false;
+            Ft.Debit = this.InvoiceNet;
+            Ft.Credit = 0;
+            Ft.FromAccount = 52;//purchases account
+            Ft.Notes = "";
+            Ft.ReferanceDocumentNumber = this.Id;
+            Ft.Statement = "تسجيل فاتورة شراء للعميل " + this.Supplier.Name;
+            Ft.TransactionDate = DateTime.Now;
+            db.FinancialTransactions.Add(Ft);
+            db.SaveChanges();
+            FinancialTransaction Ft1 = new FinancialTransaction();
+            Ft1.Confirmed = false;
+            Ft1.Debit = this.InvoiceNet;
+            Ft1.Credit = 0;
+            Ft1.FromAccount = this.Supplier.AccountingID;//sales account
+            Ft1.Notes = "";
+            Ft1.ReferanceDocumentNumber = this.Id;
+            Ft1.Statement = "تسجيل فاتورة شراء للعميل " + this.Supplier.Name;
+            Ft1.TransactionDate = DateTime.Now;
+            db.FinancialTransactions.Add(Ft1);
+            db.SaveChanges();
             return new Returner
             {
                 Message = Message.Invoice_Added_Successfully
@@ -62,6 +84,12 @@ namespace Icons.Models
             var InvLines = db.SupplierInvoiceLines.Where(p => p.InvoiceId == ITD.Id).ToList();
             List<SupplierInvoiceLine> LOCIL = new List<SupplierInvoiceLine>();
             LOCIL = InvLines;
+            var FtToDelete = db.FinancialTransactions.Where(p => p.ReferanceDocumentNumber == ITD.Id).ToList();
+            foreach (FinancialTransaction item in FtToDelete)
+            {
+                db.FinancialTransactions.Remove(item);
+                db.SaveChanges();
+            }
             foreach (SupplierInvoiceLine CIL in LOCIL)
             {
                 Stock S = db.Stocks.Single(p => p.ProjectID == ITD.ProjectID && p.ProductID == CIL.ProductId);
@@ -90,15 +118,25 @@ namespace Icons.Models
             ITD.Departed = true;
             db.SaveChanges();
             FinancialTransaction Ft = new FinancialTransaction();
-            Ft.Amount = ITD.InvoiceNet;
+            Ft.Debit = ITD.InvoiceNet;
+            Ft.Credit = 0;
             Ft.FromAccount = ITD.Supplier.AccountingID;
             Ft.LastEditBy = EditBy;
             Ft.Confirmed = false;
             Ft.Notes = "";
             Ft.Statement = "ترحيل فاتورة شراء";
-            Ft.ToAccount = ITD.InvoiceAccount;
             Ft.TransactionDate = DateTime.UtcNow.AddHours(3);
             db.FinancialTransactions.Add(Ft);
+            FinancialTransaction Ft1 = new FinancialTransaction();
+            Ft1.Credit = ITD.InvoiceNet;
+            Ft1.Debit = 0;
+            Ft1.LastEditBy = EditBy;
+            Ft1.Confirmed = false;
+            Ft1.Notes = "";
+            Ft1.Statement = "ترحيل فاتورة شراء";
+            Ft1.FromAccount = ITD.InvoiceAccount;
+            Ft1.TransactionDate = DateTime.UtcNow.AddHours(3);
+            db.FinancialTransactions.Add(Ft1);
             db.SaveChanges();
             return new Returner
             {
@@ -116,7 +154,8 @@ namespace Icons.Models
 
         public Returner Edit(List<SupplierInvoiceLine> LOSIL)
         {
-            var Sup = db.SupplierInvoices.Single(p => p.Id == this.Id);
+            SupplierInvoice Sup = new SupplierInvoice();
+            SupplierInvoice SupTd = new SupplierInvoice { Id = this.Id };
             Sup.Departed = this.Departed;
             Sup.InvoiceAccount = this.InvoiceAccount;
             Sup.InvoiceDate = this.InvoiceDate;
@@ -127,30 +166,32 @@ namespace Icons.Models
             Sup.ProjectID = this.ProjectID;
             Sup.SupplierID = this.SupplierID;
             Sup.SupplierReferenaceNo = this.SupplierReferenaceNo;
-            db.SaveChanges();
-            foreach (SupplierInvoiceLine item in LOSIL)
-            {
-                if (db.SupplierInvoiceLines.Any(p => p.Id == item.Id))
-                {
-                    continue;
-                }
-                else
-                {
-                    item.InvoiceId = this.Id;
-                    db.SupplierInvoiceLines.Add(item);
-                    StockTransaction ST = new StockTransaction();
-                    ST.Date = DateTime.UtcNow.AddHours(3);
-                    ST.ProductID = item.ProductId;
-                    ST.Quantity = item.Qty;
-                    ST.StockID = db.Stocks.Single(p => p.ProductID == item.ProductId && p.ProjectID == Sup.ProjectID).Id;
-                    ST.Type = (int)StockTransactionsTypes.تعديل_فاتورة_شراء;
-                    db.StockTransactions.Add(ST);
-                    var StockToEdit = db.Stocks.Single(p => p.ProductID == item.ProductId && p.ProjectID == Sup.ProjectID);
-                    StockToEdit.Quantity += ST.Quantity;
-                    db.SaveChanges();
-                }
-            }
-            //new Stock().Purchases(this.Id);
+            SupTd.DeleteInvoice();
+            Sup.Add(LOSIL);
+            //db.SaveChanges();
+            //foreach (SupplierInvoiceLine item in LOSIL)
+            //{
+            //    if (db.SupplierInvoiceLines.Any(p => p.Id == item.Id))
+            //    {
+            //        continue;
+            //    }
+            //    else
+            //    {
+            //        item.InvoiceId = this.Id;
+            //        db.SupplierInvoiceLines.Add(item);
+            //        StockTransaction ST = new StockTransaction();
+            //        ST.Date = DateTime.UtcNow.AddHours(3);
+            //        ST.ProductID = item.ProductId;
+            //        ST.Quantity = item.Qty;
+            //        ST.StockID = db.Stocks.Single(p => p.ProductID == item.ProductId && p.ProjectID == Sup.ProjectID).Id;
+            //        ST.Type = (int)StockTransactionsTypes.تعديل_فاتورة_شراء;
+            //        db.StockTransactions.Add(ST);
+            //        var StockToEdit = db.Stocks.Single(p => p.ProductID == item.ProductId && p.ProjectID == Sup.ProjectID);
+            //        StockToEdit.Quantity += ST.Quantity;
+            //        db.SaveChanges();
+            //    }
+            //}
+            ////new Stock().Purchases(this.Id);
             return new Returner
             {
                 Message = Message.Invoice_Added_Successfully

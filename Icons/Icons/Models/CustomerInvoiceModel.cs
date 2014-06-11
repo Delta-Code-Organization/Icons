@@ -22,6 +22,28 @@ namespace Icons.Models
                 db.SaveChanges();
             }
             new Stock().Sells(this.Id);
+            FinancialTransaction Ft = new FinancialTransaction();
+            Ft.Confirmed = false;
+            Ft.Debit = this.InvoiceNet;
+            Ft.Credit = 0;
+            Ft.FromAccount = 42;//sales account
+            Ft.Notes = "";
+            Ft.ReferanceDocumentNumber = this.Id;
+            Ft.Statement = "تسجيل فاتورة بيع للعميل " + this.Customer.Name;
+            Ft.TransactionDate = DateTime.Now;
+            db.FinancialTransactions.Add(Ft);
+            db.SaveChanges();
+            FinancialTransaction Ft1 = new FinancialTransaction();
+            Ft1.Confirmed = false;
+            Ft1.Debit = 0;
+            Ft1.Credit = this.InvoiceNet;
+            Ft1.FromAccount = this.Customer.AccountID;//sales account
+            Ft1.Notes = "";
+            Ft1.ReferanceDocumentNumber = this.Id;
+            Ft1.Statement = "تسجيل فاتورة بيع للعميل " + this.Customer.Name;
+            Ft1.TransactionDate = DateTime.Now;
+            db.FinancialTransactions.Add(Ft1);
+            db.SaveChanges();
             return new Returner
             {
                 Message = Message.Invoice_Added_Successfully
@@ -62,6 +84,12 @@ namespace Icons.Models
             var InvLines = db.CustomerInvoiceLines.Where(p => p.InvoiceId == ITD.Id).ToList();
             List<CustomerInvoiceLine> LOCIL = new List<CustomerInvoiceLine>();
             LOCIL = InvLines;
+            var FtToDelete = db.FinancialTransactions.Where(p => p.ReferanceDocumentNumber == ITD.Id).ToList();
+            foreach (FinancialTransaction item in FtToDelete)
+            {
+                db.FinancialTransactions.Remove(item);
+                db.SaveChanges();
+            }
             foreach (CustomerInvoiceLine CIL in LOCIL)
             {
                 Stock S = db.Stocks.Single(p => p.ProjectID == ITD.ProjectID && p.ProductID == CIL.ProductId);
@@ -90,13 +118,13 @@ namespace Icons.Models
             ITD.Departed = true;
             db.SaveChanges();
             FinancialTransaction Ft = new FinancialTransaction();
-            Ft.Amount = ITD.InvoiceNet;
-            Ft.FromAccount = ITD.InvoiceAccount;
+            Ft.Credit = ITD.InvoiceNet;
+            Ft.Debit = 0;
             Ft.LastEditBy = EditBy;
             Ft.Notes = "";
             Ft.Confirmed = false;
             Ft.Statement = "ترحيل فاتورة بيع";
-            Ft.ToAccount = ITD.Customer.AccountID;
+            Ft.FromAccount = ITD.Customer.AccountID;
             Ft.TransactionDate = DateTime.UtcNow.AddHours(3);
             db.FinancialTransactions.Add(Ft);
             db.SaveChanges();
@@ -116,40 +144,55 @@ namespace Icons.Models
 
         public Returner Edit(List<CustomerInvoiceLine> LOSIL)
         {
-            var Inv = db.CustomerInvoices.Where(p => p.Id == this.Id).SingleOrDefault();
-            Inv.CustomerID = this.CustomerID;
-            Inv.Departed = this.Departed;
-            Inv.InvoiceAccount = this.InvoiceAccount;
-            Inv.InvoiceDate = this.InvoiceDate;
-            Inv.InvoiceDiscount = this.InvoiceDiscount;
-            Inv.InvoiceNet = this.InvoiceNet;
-            Inv.InvoiceTotal = this.InvoiceTotal;
-            Inv.LastEditBy = this.LastEditBy;
-            Inv.ProjectID = this.ProjectID;
-            db.SaveChanges();
-            foreach (CustomerInvoiceLine item in LOSIL)
+            CustomerInvoice CI1 = new CustomerInvoice
             {
-                if (db.CustomerInvoiceLines.Any(p => p.Id == item.Id))
-                {
-                    continue;
-                }
-                else
-                {
-                    item.InvoiceId = this.Id;
-                    db.CustomerInvoiceLines.Add(item);
-                    StockTransaction ST = new StockTransaction();
-                    ST.Date = DateTime.UtcNow.AddHours(3);
-                    ST.ProductID = item.ProductId;
-                    ST.Quantity = -item.Qty;
-                    ST.StockID = db.Stocks.Single(p => p.ProductID == item.ProductId && p.ProjectID == Inv.ProjectID).Id;
-                    ST.Type = (int)StockTransactionsTypes.تعديل_فاتورة_بيع;
-                    db.StockTransactions.Add(ST);
-                    var StockToEdit = db.Stocks.Single(p => p.ProductID == item.ProductId && p.ProjectID == Inv.ProjectID);
-                    StockToEdit.Quantity += ST.Quantity;
-                    db.SaveChanges();
-                }
-            }
-            //new Stock().Sells(this.Id);
+                CustomerID = this.CustomerID,
+                Departed = this.Departed,
+                InvoiceAccount = this.InvoiceAccount,
+                InvoiceDate = this.InvoiceDate,
+                InvoiceDiscount = this.InvoiceDiscount,
+                InvoiceNet = this.InvoiceNet,
+                InvoiceTotal = this.InvoiceTotal,
+                LastEditBy = this.LastEditBy,
+                ProjectID = this.ProjectID,
+            };
+            CustomerInvoice CI = new CustomerInvoice { Id = this.Id };
+            CI.DeleteInvoice();
+            CI1.Add(LOSIL);
+            //var Inv = db.CustomerInvoices.Where(p => p.Id == this.Id).SingleOrDefault();
+            //Inv.CustomerID = this.CustomerID;
+            //Inv.Departed = this.Departed;
+            //Inv.InvoiceAccount = this.InvoiceAccount;
+            //Inv.InvoiceDate = this.InvoiceDate;
+            //Inv.InvoiceDiscount = this.InvoiceDiscount;
+            //Inv.InvoiceNet = this.InvoiceNet;
+            //Inv.InvoiceTotal = this.InvoiceTotal;
+            //Inv.LastEditBy = this.LastEditBy;
+            //Inv.ProjectID = this.ProjectID;
+            //db.SaveChanges();
+            //foreach (CustomerInvoiceLine item in LOSIL)
+            //{
+            //    if (db.CustomerInvoiceLines.Any(p => p.Id == item.Id))
+            //    {
+            //        continue;
+            //    }
+            //    else
+            //    {
+            //        item.InvoiceId = this.Id;
+            //        db.CustomerInvoiceLines.Add(item);
+            //        StockTransaction ST = new StockTransaction();
+            //        ST.Date = DateTime.UtcNow.AddHours(3);
+            //        ST.ProductID = item.ProductId;
+            //        ST.Quantity = -item.Qty;
+            //        ST.StockID = db.Stocks.Single(p => p.ProductID == item.ProductId && p.ProjectID == Inv.ProjectID).Id;
+            //        ST.Type = (int)StockTransactionsTypes.تعديل_فاتورة_بيع;
+            //        db.StockTransactions.Add(ST);
+            //        var StockToEdit = db.Stocks.Single(p => p.ProductID == item.ProductId && p.ProjectID == Inv.ProjectID);
+            //        StockToEdit.Quantity += ST.Quantity;
+            //        db.SaveChanges();
+            //    }
+            //}
+            ////new Stock().Sells(this.Id);
             return new Returner
             {
                 Message = Message.Invoice_Added_Successfully

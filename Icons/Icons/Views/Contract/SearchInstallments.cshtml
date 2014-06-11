@@ -133,6 +133,21 @@
                             <input class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ التعاقد" name="PaymentDate" id="PaymentDate" size="16" type="text" value="" />
                         </div>
                     </div>
+                    <div class="form-group">
+                                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">الحساب المستلم</label>
+                                        <div class="col-sm-6 Arabic">
+                                            <select class="select2 parsley-validated parsley-error" id="RecAcc" name="RecAcc" parsley-trigger="change" required="" parsley-error-message="يجب اختيار الحساب المستلم">
+                                                <optgroup label="الحسابات">
+                                                    @{
+                                                        foreach (AccountingTree item in ViewBag.A)
+                                                        {
+                                                        <option value="@item.Id">@item.NodeName</option>
+                                                        }
+                                                    }
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
                 </div>
                 <div class="modal-footer" style="background-color: #fff; border: none;">
                     <button type="button" class="btn btn-default" data-dismiss="modal">الغاء</button>

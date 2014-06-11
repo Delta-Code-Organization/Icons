@@ -99,15 +99,24 @@ namespace Icons.Models
                 db.StockTransactions.Add(ST);
                 var CurrentProduct = db.Products.Single(p => p.Id == item.ProductId);
                 FinancialTransaction Ft = new FinancialTransaction();
-                Ft.Amount = item.Total;
+                Ft.Debit = item.Total;
+                Ft.Credit = 0;
                 Ft.LastEditBy = EditBy;
                 Ft.Confirmed = false;
                 Ft.Notes = Notes;
                 Ft.Statement = "امر شغل " + " بتاريخ " + Date.ToString("MM/dd/yyyy");
                 Ft.TransactionDate = Date;
                 Ft.FromAccount = CurrentProject.AccountID;
-                Ft.ToAccount = CurrentProduct.AccountID;
                 db.FinancialTransactions.Add(Ft);
+                FinancialTransaction Ft1 = new FinancialTransaction();
+                Ft1.Credit = item.Total;
+                Ft1.LastEditBy = EditBy;
+                Ft1.Confirmed = false;
+                Ft1.Notes = Notes;
+                Ft1.Statement = "امر شغل " + " بتاريخ " + Date.ToString("MM/dd/yyyy");
+                Ft1.TransactionDate = Date;
+                Ft1.FromAccount = CurrentProduct.AccountID;
+                db.FinancialTransactions.Add(Ft1);
             }
             db.SaveChanges();
             return new Returner
@@ -166,8 +175,8 @@ namespace Icons.Models
             }
             else
             {
-                LOFTTT = Acc.FinancialTransactions.Where(p => p.FromAccount == ToAcc || p.ToAccount == ToAcc).ToList();
-                LOFTTT.AddRange(Acc.FinancialTransactions1.Where(p => p.FromAccount == ToAcc || p.ToAccount == ToAcc));
+                LOFTTT = Acc.FinancialTransactions.Where(p => p.FromAccount == ToAcc).ToList();
+                LOFTTT.AddRange(Acc.FinancialTransactions1.Where(p => p.FromAccount == ToAcc));
             }
             if (Acc.AccountingTree1.Count > 0)
             {
@@ -187,11 +196,13 @@ namespace Icons.Models
                              select new
                              {
                                  F.FromAccount,
-                                 F.ToAccount,
+                                 F.AssociatedAccount,
                                  F.Statement,
                                  F.TransactionDate,
                                  F.Notes,
-                                 F.Amount,
+                                 F.Debit,
+                                 F.Credit,
+                                 F.ReferanceDocumentNumber,
                                  AccountingTree = new
                                  {
                                      F.AccountingTree.NodeName

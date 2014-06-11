@@ -181,7 +181,7 @@ namespace Icons.Models
         {
             var Employee = db.Employees.Single(p => p.Id == this.Id);
             FT.Statement = "اضافة جزاء لعميل";
-            FT.ToAccount = Employee.PenaltyAccID;
+            FT.FromAccount = Employee.PenaltyAccID;
             FT.Confirmed = false;
             FT.TransactionDate = DateTime.UtcNow.AddHours(3);
             db.FinancialTransactions.Add(FT);
@@ -221,7 +221,7 @@ namespace Icons.Models
             var E = db.Employees.Single(p => p.Id == this.Id);
             return new Returner
             {
-                Data = db.FinancialTransactions.Where(p => p.ToAccount == E.BenifitAccID).ToList()
+                Data = db.FinancialTransactions.Where(p => p.FromAccount == E.BenifitAccID).ToList()
             };
         }
 
@@ -305,14 +305,24 @@ namespace Icons.Models
                 }
             }
             FinancialTransaction Ft = new FinancialTransaction();
-            Ft.Amount = Total;
+            Ft.Debit = Total;
+            Ft.Credit = 0;
             Ft.FromAccount = E.EmpAccID;
             Ft.LastEditBy = EditBy;
             Ft.Notes = "";
             Ft.Statement = "دفع راتب للموظف " + E.Name;
-            Ft.ToAccount = ToAcc;
             Ft.Confirmed = false;
             Ft.TransactionDate = PaymentDate;
+            db.FinancialTransactions.Add(Ft);
+            FinancialTransaction Ft1 = new FinancialTransaction();
+            Ft1.Credit = Total;
+            Ft1.Debit = 0;
+            Ft1.FromAccount = ToAcc;
+            Ft1.LastEditBy = EditBy;
+            Ft1.Notes = "";
+            Ft1.Statement = "دفع راتب للموظف " + E.Name;
+            Ft1.Confirmed = false;
+            Ft1.TransactionDate = PaymentDate;
             db.FinancialTransactions.Add(Ft);
             db.SaveChanges();
             return new Returner

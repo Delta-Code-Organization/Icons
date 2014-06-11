@@ -16,6 +16,7 @@ namespace Icons.Controllers
         {
             ViewBag.P = new Project().GetAll().Data as List<Project>;
             ViewBag.C = new Customer().GetAllCutomers().Data as List<Customer>;
+            ViewBag.A = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
             return View();
         }
 
@@ -103,12 +104,13 @@ namespace Icons.Controllers
             LOCO = TempData["LOCO"] as List<ContractOwner>;
             ProjectUnit PU = new ProjectUnit { Id = (int)C.UnitID };
             int UO = Convert.ToInt32(FC["iresponsibleid"]);
-            C.CreateContract(LOCO, LOI, PU, UO, (Session["User"] as User).ID);
+            C.CreateContract(LOCO, LOI, PU, UO, (Session["User"] as User).ID, Convert.ToInt32(FC["RecAcc"]));
         }
 
         public ActionResult SearchInstallments()
         {
             ViewBag.S = new Customer().GetAllCutomers().Data as List<Customer>;
+            ViewBag.A = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
             return View();
         }
 
@@ -128,9 +130,9 @@ namespace Icons.Controllers
         }
 
         [HttpPost]
-        public void PayInstallment(int ID, DateTime PaymentDate)
+        public void PayInstallment(int ID, DateTime PaymentDate, int RecAcc)
         {
-            new Contract().PayInstallment(ID, (Session["User"] as User).ID, PaymentDate);
+            new Contract().PayInstallment(ID, (Session["User"] as User).ID, PaymentDate, RecAcc);
         }
 
         

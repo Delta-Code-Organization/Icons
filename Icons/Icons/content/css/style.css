@@ -38,6 +38,7 @@ a {
 a:focus,
 a:hover,
 a:active {
+
   outline: 0 none;
   text-decoration: none;
   color: #3078ef;

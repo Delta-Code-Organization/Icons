@@ -11,7 +11,7 @@ namespace Icons.Models
         MaksoudDBEntities db = new MaksoudDBEntities();
         #endregion
 
-        public Returner CreateContract(List<ContractOwner> LOCO, List<Installment> I, ProjectUnit PU, int OwnerID, int EditBy)
+        public Returner CreateContract(List<ContractOwner> LOCO, List<Installment> I, ProjectUnit PU, int OwnerID, int EditBy, int RecievableAcc)
         {
             db.Contracts.Add(this);
             db.SaveChanges();
@@ -32,39 +32,63 @@ namespace Icons.Models
             var CurrentCustomer = db.Customers.Single(p => p.ID == CustomerIIDD);
             var CurrentProjectUnit = db.ProjectUnits.Single(p => p.Id == CurrentContract.UnitID);
             FinancialTransaction Ft = new FinancialTransaction();
-            Ft.Amount = CurrentContract.Price;
+            Ft.Credit = CurrentContract.Price;
+            Ft.Debit = 0;
             Ft.FromAccount = CurrentCustomer.AccountID;
+            Ft.ReferanceDocumentNumber = CurrentContract.Id;
             Ft.LastEditBy = EditBy;
             Ft.Notes = "";
             Ft.Statement = "عقد بيع " + Enum.GetName(typeof(UnitTypes), CurrentProjectUnit.UnitType) + " للعميل " + CurrentCustomer.Name;
-            Ft.ToAccount = 42;
             Ft.Confirmed = false;
             Ft.TransactionDate = CurrentContract.Date;
             db.FinancialTransactions.Add(Ft);
+            FinancialTransaction Ft6 = new FinancialTransaction();
+            Ft6.Credit = 0;
+            Ft6.Debit = CurrentContract.Price;
+            Ft6.FromAccount = 42;//حساب المبيعات
+            Ft6.ReferanceDocumentNumber = CurrentContract.Id;
+            Ft6.LastEditBy = EditBy;
+            Ft6.Notes = "";
+            Ft6.Statement = "عقد بيع " + Enum.GetName(typeof(UnitTypes), CurrentProjectUnit.UnitType) + " للعميل " + CurrentCustomer.Name;
+            Ft6.Confirmed = false;
+            Ft6.TransactionDate = CurrentContract.Date;
+            db.FinancialTransactions.Add(Ft6);
             FinancialTransaction Ft1 = new FinancialTransaction();
-            Ft1.Amount = CurrentContract.Paid;
-            Ft1.FromAccount = 42;
+            Ft1.Debit = CurrentContract.Paid;
+            Ft1.Credit = 0;
             Ft1.LastEditBy = EditBy;
             Ft1.Confirmed = false;
+            Ft1.ReferanceDocumentNumber = CurrentContract.Id;
             Ft1.Notes = "";
             Ft1.Statement = "دفع مقدم بيع " + Enum.GetName(typeof(UnitTypes), CurrentProjectUnit.UnitType) + " للعميل " + CurrentCustomer.Name;
-            Ft1.ToAccount = CurrentCustomer.AccountID;
+            Ft1.FromAccount = CurrentCustomer.AccountID;
             Ft1.TransactionDate = CurrentContract.Date;
             db.FinancialTransactions.Add(Ft1);
-            foreach (Installment ite in CurrentContract.Installments)
-            {
-                FinancialTransaction Ft2 = new FinancialTransaction();
-                Ft2.Amount = ite.Amount;
-                Ft2.FromAccount = CurrentCustomer.AccountID;
-                Ft2.LastEditBy = EditBy;
-                Ft2.Notes = "";
-                Ft2.Statement = "قسط بيع " + Enum.GetName(typeof(UnitTypes), CurrentProjectUnit.UnitType) + " للعميل " + CurrentCustomer.Name;
-                Ft2.ToAccount = 42;
-                Ft2.Confirmed = false;
-                Ft2.TransactionDate = ite.DueDate;
-                Ft2.ReferanceDocumentNumber = ite.Id;
-                db.FinancialTransactions.Add(Ft2);
-            }
+            FinancialTransaction Ft10 = new FinancialTransaction();
+            Ft10.Debit = 0;
+            Ft10.Credit = CurrentContract.Paid;
+            Ft10.LastEditBy = EditBy;
+            Ft10.Confirmed = false;
+            Ft10.ReferanceDocumentNumber = CurrentContract.Id;
+            Ft10.Notes = "";
+            Ft10.Statement = "دفع مقدم بيع " + Enum.GetName(typeof(UnitTypes), CurrentProjectUnit.UnitType) + " للعميل " + CurrentCustomer.Name;
+            Ft10.FromAccount = RecievableAcc;
+            Ft10.TransactionDate = CurrentContract.Date;
+            db.FinancialTransactions.Add(Ft10);
+            //foreach (Installment ite in CurrentContract.Installments)
+            //{
+            //    FinancialTransaction Ft2 = new FinancialTransaction();
+            //    Ft2.Amount = ite.Amount;
+            //    Ft2.FromAccount = CurrentCustomer.AccountID;
+            //    Ft2.LastEditBy = EditBy;
+            //    Ft2.Notes = "";
+            //    Ft2.Statement = "قسط بيع " + Enum.GetName(typeof(UnitTypes), CurrentProjectUnit.UnitType) + " للعميل " + CurrentCustomer.Name;
+            //    Ft2.ToAccount = 42;
+            //    Ft2.Confirmed = false;
+            //    Ft2.TransactionDate = ite.DueDate;
+            //    Ft2.ReferanceDocumentNumber = ite.Id;
+            //    db.FinancialTransactions.Add(Ft2);
+            //}
             db.SaveChanges();
             var ProjU = db.ProjectUnits.Where(p => p.Id == PU.Id).SingleOrDefault();
             ProjU.Owner = OwnerID;
@@ -166,20 +190,33 @@ namespace Icons.Models
             };
         }
 
-        public Returner PayInstallment(int ID, int EditBy, DateTime PaymentDate)
+        public Returner PayInstallment(int ID, int EditBy, DateTime PaymentDate, int RecievableAcc)
         {
             var Installment = db.Installments.Where(p => p.Id == ID).SingleOrDefault();
             Installment.PaymentDate = PaymentDate;
             db.SaveChanges();
             FinancialTransaction Ft = new FinancialTransaction();
-            Ft.Amount = Installment.Amount;
+            Ft.Credit = Installment.Amount;
+            Ft.Debit = 0;
             Ft.FromAccount = 42;//Installment.Contract.ProjectUnit.AccountingID;
             Ft.LastEditBy = EditBy;
             Ft.Notes = "";
+            Ft.ReferanceDocumentNumber = Installment.Id;
             Ft.Confirmed = false;
             Ft.Statement = "دفع قسط " + Enum.GetName(typeof(UnitTypes), Installment.Contract.ProjectUnit.UnitType) + " من العميل " + Installment.Customer.Name;
-            Ft.ToAccount = Installment.Customer.AccountID;
+            Ft.FromAccount = Installment.Customer.AccountID;
             Ft.TransactionDate = PaymentDate;
+            db.FinancialTransactions.Add(Ft);
+            FinancialTransaction Ft1 = new FinancialTransaction();
+            Ft1.Debit = Installment.Amount;
+            Ft1.Credit = 0;
+            Ft1.FromAccount = RecievableAcc;//Installment.Contract.ProjectUnit.AccountingID;
+            Ft1.ReferanceDocumentNumber = Installment.Id;
+            Ft1.LastEditBy = EditBy;
+            Ft1.Notes = "";
+            Ft1.Confirmed = false;
+            Ft1.Statement = "دفع قسط " + Enum.GetName(typeof(UnitTypes), Installment.Contract.ProjectUnit.UnitType) + " من العميل " + Installment.Customer.Name;
+            Ft1.TransactionDate = PaymentDate;
             db.FinancialTransactions.Add(Ft);
             db.SaveChanges();
             return new Returner
@@ -193,10 +230,22 @@ namespace Icons.Models
             var ITE = db.Installments.Single(p => p.Id == I.Id);
             ITE.DueDate = I.DueDate;
             ITE.Amount = I.Amount;
-            var FTToUpdate = db.FinancialTransactions.Single(p => p.ReferanceDocumentNumber == ITE.Id);
-            FTToUpdate.Amount = ITE.Amount;
-            FTToUpdate.TransactionDate = ITE.DueDate;
-            db.SaveChanges();
+            var FTToUpdate = db.FinancialTransactions.Where(p => p.ReferanceDocumentNumber == ITE.Id).ToList();
+            foreach (FinancialTransaction II in FTToUpdate)
+            {
+                if (II.Debit == 0)
+                {
+                    II.Credit = ITE.Amount;
+                    II.TransactionDate = ITE.DueDate;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    II.Debit = ITE.Amount;
+                    II.TransactionDate = ITE.DueDate;
+                    db.SaveChanges();
+                }
+            }
             return new Returner
             {
                 Message = Message.Installment_Updated_Successfully

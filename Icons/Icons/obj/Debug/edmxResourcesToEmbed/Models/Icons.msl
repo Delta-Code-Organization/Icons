@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="MaksoudDBModelStoreContainer" CdmEntityContainer="MaksoudDBEntities">
+  <EntityContainerMapping StorageEntityContainer="MaksoudDBModelStoreContainer" CdmEntityContainer="MaksoudDBEntities1">
     <EntitySetMapping Name="AccountingTrees">
       <EntityTypeMapping TypeName="MaksoudDBModel.AccountingTree">
         <MappingFragment StoreEntitySet="AccountingTree">
@@ -73,8 +73,6 @@
     <EntitySetMapping Name="Customers">
       <EntityTypeMapping TypeName="MaksoudDBModel.Customer">
         <MappingFragment StoreEntitySet="Customers">
-          <ScalarProperty Name="FileName" ColumnName="FileName" />
-          <ScalarProperty Name="Attach" ColumnName="Attach" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Address" ColumnName="Address" />
@@ -83,14 +81,14 @@
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="AccountID" ColumnName="AccountID" />
           <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
+          <ScalarProperty Name="Attach" ColumnName="Attach" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Employees">
       <EntityTypeMapping TypeName="MaksoudDBModel.Employee">
         <MappingFragment StoreEntitySet="Employee">
-          <ScalarProperty Name="FileName" ColumnName="FileName" />
-          <ScalarProperty Name="Attach" ColumnName="Attach" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
@@ -114,6 +112,8 @@
           <ScalarProperty Name="InsuranceFrom" ColumnName="InsuranceFrom" />
           <ScalarProperty Name="InsuranceTo" ColumnName="InsuranceTo" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Attach" ColumnName="Attach" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -153,13 +153,14 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
           <ScalarProperty Name="FromAccount" ColumnName="FromAccount" />
-          <ScalarProperty Name="ToAccount" ColumnName="ToAccount" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="AssociatedAccount" ColumnName="AssociatedAccount" />
           <ScalarProperty Name="Statement" ColumnName="Statement" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="ReferanceDocumentNumber" ColumnName="ReferanceDocumentNumber" />
           <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
           <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+          <ScalarProperty Name="Debit" ColumnName="Debit" />
+          <ScalarProperty Name="Credit" ColumnName="Credit" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

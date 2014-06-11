@@ -354,11 +354,11 @@ function SetInstallmentData2Edit(id, month2, day2, year2, Amount) {
     $('#AmountPop').val(Amount);
 }
 
-function PayInstallment(id, amount, PaymentDate) {
+function PayInstallment(id, amount, PaymentDate, RecAcc) {
     $.ajax({
         url: '/Contract/PayInstallment',
         type: 'post',
-        data: { 'ID': id, 'PaymentDate': PaymentDate },
+        data: { 'ID': id, 'PaymentDate': PaymentDate, 'RecAcc': RecAcc },
         success: function (data) {
             $('#ThisCont' + id).empty();
             $('#ThisCont' + id).text(amount);
@@ -383,7 +383,8 @@ $(document).ready(function () {
             var PayId = $('#ISTID').val();
             var PayAmount = $('#ISTAmount').val();
             var PaymentDate = $('#PaymentDate').val();
-            PayInstallment(PayId, PayAmount, PaymentDate);
+            var RecAcc = $('#RecAcc').val();
+            PayInstallment(PayId, PayAmount, PaymentDate, RecAcc);
         }
         return false;
     });
