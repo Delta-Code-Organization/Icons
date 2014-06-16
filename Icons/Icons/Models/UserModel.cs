@@ -115,7 +115,8 @@ namespace Icons.Models
                 List<UserAccess> STLO = U.UserAccesses.ToList();
                 foreach (UserAccess item in STLO)
                 {
-                    U.UserAccesses.Remove(item);
+                    db.UserAccesses.Remove(item);
+                    db.SaveChanges();
                 }
                 U.Username = this.Username;
                 db.SaveChanges();

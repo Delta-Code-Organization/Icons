@@ -30,12 +30,12 @@
                             @{
                                 foreach (Employee y in ViewBag.E)
                                 {
-                                    double? Penalty = new MaksoudDBEntities().FinancialTransactions.Where(p => p.ToAccount == y.PenaltyAccID).ToList().Sum(p => p.Amount);
+                                    double? Penalty = new MaksoudDBEntities().FinancialTransactions.Where(p => p.FromAccount == y.PenaltyAccID).ToList().Sum(p => p.Credit);
                                     if (Penalty == null)
                                     {
                                         Penalty = 0;
                                     }
-                                    double? Benifit = new MaksoudDBEntities().FinancialTransactions.Where(p => p.FromAccount == y.BenifitAccID).ToList().Sum(p => p.Amount);
+                                    double? Benifit = new MaksoudDBEntities().FinancialTransactions.Where(p => p.FromAccount == y.BenifitAccID).ToList().Sum(p => p.Debit);
                                     if (Benifit == null)
                                     {
                                         Benifit = 0;

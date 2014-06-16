@@ -345,5 +345,18 @@ namespace Icons.Controllers
                 return "true";
             }
         }
+
+        public ActionResult PayrollSearch()
+        {
+            string[] SalaryTypes = Enum.GetNames(typeof(SalaryType));
+            ViewBag.S = SalaryTypes;
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult PayrollFilter(int Period)
+        {
+            return new Employee { SalaryType = Period }.PayrollSearch().DataInJSON;
+        }
     }
 }

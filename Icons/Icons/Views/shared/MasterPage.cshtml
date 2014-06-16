@@ -129,6 +129,7 @@
                                 <span>@Uname</span> <b class="caret"></b></a>
                         }
                         <ul class="dropdown-menu">
+                            
                             @if ((Session["User"] as User).UserAccesses.Any(p => p.Screen.ScreenURL == "/User/SearchUsers"))
                             {
                                 <li><a href="/User/EditUser/@UID" style="text-align:center;">حسابي</a></li>

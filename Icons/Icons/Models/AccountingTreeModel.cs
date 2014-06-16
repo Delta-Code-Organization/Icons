@@ -230,5 +230,26 @@ namespace Icons.Models
                 Message = Message.Financial_Transaction_Saved_Successfully
             };
         }
+
+        public Returner FilterReport(int Acc, DateTime From, DateTime To)
+        {
+            var ResForNum = db.FinancialTransactions.Where(p => p.FromAccount == Acc).ToList();
+            var Res = db.FinancialTransactions.Where(p => p.FromAccount == Acc && (p.TransactionDate >= From && p.TransactionDate <= To)).ToList();
+            var ResInJSON = (from F in Res
+                             select new
+                             {
+                                 F.Credit,
+                                 F.Debit,
+                                 F.Statement,
+                                 F.TransactionDate,
+                                 DebitSum = ResForNum.Sum(p => p.Debit),
+                                 CreditSum = ResForNum.Sum(p => p.Credit),
+                             }).ToList();
+            return new Returner
+            {
+                Data = Res,
+                DataInJSON = ResInJSON.ToJSON()
+            };
+        }
     }
 }

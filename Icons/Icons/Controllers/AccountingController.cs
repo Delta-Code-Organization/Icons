@@ -216,5 +216,17 @@ namespace Icons.Controllers
         {
             new FinancialTransaction { Id = _ID }.Confirm();
         }
+
+        public ActionResult FTReport()
+        {
+            ViewBag.Acc = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult SearchReportData(FormCollection FC)
+        {
+            return new AccountingTree().FilterReport(Convert.ToInt32(FC["Acc"]), Convert.ToDateTime(FC["From"]), Convert.ToDateTime(FC["To"])).DataInJSON;
+        }
     }
 }

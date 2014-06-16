@@ -4445,3 +4445,11 @@ button::-moz-focus-inner {
     display: none;
   }
 }
+
+.MyCustomFontSize {
+    font-size:20px;
+}
+
+.BoldWeight {
+    font-weight:bold;
+}

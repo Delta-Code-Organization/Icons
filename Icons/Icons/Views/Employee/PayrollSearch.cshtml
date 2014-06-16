@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "PayrollSearch";
+    Layout = "~/Views/shared/MasterPage.cshtml";
+}
+
+<script src="~/scripts/Employee.js"></script>
+
+<div class="row">
+    <div class="col-md-9" style="padding: 0; padding-left: 15px;">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">المرتبات</h3>
+            </div>
+            <div class="content">
+                <div class="block-flat no-padding">
+                    <div class="content">
+                        <table class="no-border blue" style="direction: rtl;">
+                            <thead class="no-border">
+                                <tr>
+                                    <th style="width: 70%; text-align: center;">اسم الموظف</th>
+                                    <th style="width: 30%; text-align: center;">الراتب</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-x" id="TblToAppend">
+                            </tbody>
+                        </table>
+                        <br /><br />
+                        <button id="TBtn" class="btn btn-primary disabled Arabic" type="button">ترحيل المرتبات</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3" style="padding: 0;">
+        <div class="block-flat">
+            <div class="header">
+                <h3 class="ArabicAlign">البحث</h3>
+            </div>
+            <div class="content">
+                <form class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" id="PayrollSearchForm" action="#" style="border-radius: 0px;">
+                    <div class="form-group">
+                        <label class="Arabic">مدة القبض</label>
+                        <select class="select2" name="Period" id="Period">
+                            @{
+                                int count = 1;
+                                foreach (string item in ViewBag.S)
+                                {
+                                    if (item != "يومي")
+                                    {
+                                <option value="@count">@item</option>
+                                    }
+                                    count++;
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary Arabic" type="submit">بحث</button>
+                        <button class="btn btn-default Arabic">الغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

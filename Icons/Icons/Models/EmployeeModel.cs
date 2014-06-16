@@ -162,6 +162,24 @@ namespace Icons.Models
             };
         }
 
+        public Returner PayrollSearch()
+        {
+            var res = db.Employees.Where(p => p.SalaryType == this.SalaryType).ToList();
+            var resInJson = (from E in res
+                             select new
+                             {
+                                 E.Name,
+                                 E.BasicSalary,
+                                 Pens = new MaksoudDBEntities().FinancialTransactions.Where(p => p.FromAccount == E.PenaltyAccID).ToList().Sum(p => p.Credit),
+                                 Benfs = new MaksoudDBEntities().FinancialTransactions.Where(p => p.FromAccount == E.BenifitAccID).ToList().Sum(p => p.Debit)
+                             }).ToList();
+            return new Returner
+            {
+                Data = res,
+                DataInJSON = resInJson.ToJSON()
+            };
+        }
+
         public Returner AddBenifit(FinancialTransaction FT)
         {
             var Employee = db.Employees.Single(p => p.Id == this.Id);
