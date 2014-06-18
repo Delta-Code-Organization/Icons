@@ -1,16 +1,16 @@
 ﻿@{
-    ViewBag.Title = "FTReport";
+    ViewBag.Title = "CustomerReport";
     Layout = "~/Views/shared/MasterPage.cshtml";
 }
 
 @using Icons.Models;
 
-<script src="~/scripts/Reports.js"></script>
+<script src="~/scripts/CustomerReports.js"></script>
 
 <div class="row">
     <div class="col-md-9" style="padding: 0; padding-left: 15px;">
         <div style="background-color: #fff; padding: 10px;" id="DivToPrint">
-            <h3 class="" style="text-align: right; font-size: 25px;" id="RTitle">كشف حساب</h3>
+            <h3 class="" style="text-align: right; font-size: 25px;" id="RTitle">كشف حساب العملاء</h3>
             <div style="direction: rtl; padding-right: 30px;">
                 <div style="direction: rtl;">
                     <label class="ArabicAlign MyCustomFontSize BoldWeight">من :</label><label id="FromLabel"></label>&nbsp &nbsp &nbsp
@@ -44,7 +44,7 @@
                 <h3 class="ArabicAlign">البحث</h3>
             </div>
             <div class="content">
-                <form class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" id="SearchReport" action="#" style="border-radius: 0px;">
+                <form class="form-horizontal group-border-dashed" novalidate="" parsley-validate="" id="SearchCustomerReport" action="#" style="border-radius: 0px;">
                     <div class="form-group">
                         <label class="Arabic">الحساب</label>
                         <select class="select2" name="Acc" id="Acc" onchange="RefreshReportTitle()">

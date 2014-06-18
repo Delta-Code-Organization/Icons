@@ -38,6 +38,7 @@ namespace Icons.Models
         public DbSet<FinancialTransaction> FinancialTransactions { get; set; }
         public DbSet<Installment> Installments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Payroll> Payrolls { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Project> Projects { get; set; }

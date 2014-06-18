@@ -3,6 +3,8 @@
     Layout = "~/Views/shared/MasterPage.cshtml";
 }
 
+@using Icons.Models;
+
 <script src="~/scripts/Employee.js"></script>
 
 <div class="row">
@@ -19,13 +21,12 @@
                                 <tr>
                                     <th style="width: 70%; text-align: center;">اسم الموظف</th>
                                     <th style="width: 30%; text-align: center;">الراتب</th>
+                                    <th style="width:25%; text-align:center;">دفع الراتب</th>
                                 </tr>
                             </thead>
                             <tbody class="no-border-x" id="TblToAppend">
                             </tbody>
                         </table>
-                        <br /><br />
-                        <button id="TBtn" class="btn btn-primary disabled Arabic" type="button">ترحيل المرتبات</button>
                     </div>
                 </div>
             </div>
@@ -64,3 +65,52 @@
         </div>
     </div>
 </div>
+
+<div aria-hidden="true" style="display: none;" class="modal fade" id="mod-info" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 900px;">
+            <form class="form-horizontal group-border-dashed" id="PaySalary" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+                <div class="modal-header">
+                    <button type="button" class="close" id="ClosePopBtn" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">تاريخ الدفع</label>
+                        <div class="col-sm-6 Arabic">
+                            <input style="direction: ltr;" data-mask="datetime" id="PaymentDate" name="PaymentDate" class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ الدفع" size="16" value="" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" value="" id="id" />
+                        <input type="hidden" value="" id="Total" />
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">الحساب</label>
+                        <div class="col-sm-6 Arabic">
+                            <select class="select2" id="ToAccID" name="ToAccID">
+                                <optgroup label="الحسابات">
+                                    @{
+                                        foreach (AccountingTree item in ViewBag.AllAcc)
+                                        {
+                                        <option value="@item.Id">@item.NodeName</option>
+                                        }
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="background-color: #fff; border: none;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">الغاء</button>
+                    <button type="submit" class="btn btn-primary">دفع</button>
+                </div>
+                <div class="resultmsg" style="text-align: center; color: blue;">
+                    <label id="result1"></label>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<input type="hidden" id="id" value=""/>
+<input type="hidden" id="Total" value=""/>

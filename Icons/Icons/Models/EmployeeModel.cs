@@ -165,19 +165,78 @@ namespace Icons.Models
         public Returner PayrollSearch()
         {
             var res = db.Employees.Where(p => p.SalaryType == this.SalaryType).ToList();
-            var resInJson = (from E in res
-                             select new
-                             {
-                                 E.Name,
-                                 E.BasicSalary,
-                                 Pens = new MaksoudDBEntities().FinancialTransactions.Where(p => p.FromAccount == E.PenaltyAccID).ToList().Sum(p => p.Credit),
-                                 Benfs = new MaksoudDBEntities().FinancialTransactions.Where(p => p.FromAccount == E.BenifitAccID).ToList().Sum(p => p.Debit)
-                             }).ToList();
-            return new Returner
+            if (this.SalaryType == 1)
             {
-                Data = res,
-                DataInJSON = resInJson.ToJSON()
-            };
+                DateTime Dt = DateTime.Now.AddDays(-1);
+                var resInJson = (from E in res
+                                 select new
+                                 {
+                                     E.Id,
+                                     E.Name,
+                                     E.BasicSalary,
+                                     Pens = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Penality).ToList().Sum(p => p.Amount),
+                                     Benfs = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Benifit).ToList().Sum(p => p.Amount),
+                                 }).ToList();
+                return new Returner
+                {
+                    Data = res,
+                    DataInJSON = resInJson.ToJSON()
+                };
+            }
+            else if (this.SalaryType == 2)
+            {
+                DateTime Dt = DateTime.Now.AddDays(-15);
+                var resInJson = (from E in res
+                                 select new
+                                 {
+                                     E.Id,
+                                     E.Name,
+                                     E.BasicSalary,
+                                     Pens = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Penality).ToList().Sum(p => p.Amount),
+                                     Benfs = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Benifit).ToList().Sum(p => p.Amount),
+                                 }).ToList();
+                return new Returner
+                {
+                    Data = res,
+                    DataInJSON = resInJson.ToJSON()
+                };
+            }
+            else if (this.SalaryType == 3)
+            {
+                DateTime Dt = DateTime.Now.AddMonths(-1);
+                var resInJson = (from E in res
+                                 select new
+                                 {
+                                     E.Id,
+                                     E.Name,
+                                     E.BasicSalary,
+                                     Pens = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Penality).ToList().Sum(p => p.Amount),
+                                     Benfs = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Benifit).ToList().Sum(p => p.Amount),
+                                 }).ToList();
+                return new Returner
+                {
+                    Data = res,
+                    DataInJSON = resInJson.ToJSON()
+                };
+            }
+            else
+            {
+                DateTime Dt = DateTime.Now.AddDays(-7);
+                var resInJson = (from E in res
+                                 select new
+                                 {
+                                     E.Id,
+                                     E.Name,
+                                     E.BasicSalary,
+                                     Pens = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Penality).ToList().Sum(p => p.Amount),
+                                     Benfs = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Benifit).ToList().Sum(p => p.Amount),
+                                 }).ToList();
+                return new Returner
+                {
+                    Data = res,
+                    DataInJSON = resInJson.ToJSON()
+                };
+            }
         }
 
         public Returner AddBenifit(FinancialTransaction FT)
@@ -188,6 +247,13 @@ namespace Icons.Models
             FT.Confirmed = false;
             FT.TransactionDate = DateTime.UtcNow.AddHours(3);
             db.FinancialTransactions.Add(FT);
+            db.SaveChanges();
+            Payroll PR = new Payroll();
+            PR.Amount = FT.Debit;
+            PR.Date = DateTime.Now;
+            PR.EmpID = Employee.Id;
+            PR.Type = (int)PayrollTypes.Benifit;
+            db.Payrolls.Add(PR);
             db.SaveChanges();
             return new Returner
             {
@@ -203,6 +269,13 @@ namespace Icons.Models
             FT.Confirmed = false;
             FT.TransactionDate = DateTime.UtcNow.AddHours(3);
             db.FinancialTransactions.Add(FT);
+            db.SaveChanges();
+            Payroll PR = new Payroll();
+            PR.Amount = FT.Credit;
+            PR.Date = DateTime.Now;
+            PR.EmpID = Employee.Id;
+            PR.Type = (int)PayrollTypes.Penality;
+            db.Payrolls.Add(PR);
             db.SaveChanges();
             return new Returner
             {
@@ -288,13 +361,13 @@ namespace Icons.Models
         public Returner Pay(double Total, int EditBy, DateTime PaymentDate, int ToAcc)
         {
             var E = db.Employees.Single(p => p.Id == this.Id);
-            var lastTransaction = db.FinancialTransactions.Where(p => p.FromAccount == E.EmpAccID).OrderByDescending(p => p.TransactionDate).FirstOrDefault();
+            var lastTransaction = db.Payrolls.Where(p => p.EmpID == E.Id).OrderByDescending(p => p.Date).FirstOrDefault();
             if (lastTransaction != null)
             {
                 switch (E.SalaryType)
                 {
                     case 1:
-                        if (PaymentDate < ((DateTime)lastTransaction.TransactionDate).AddHours(24))
+                        if (PaymentDate < ((DateTime)lastTransaction.Date).AddHours(24))
                         {
                             return new Returner
                             {
@@ -303,7 +376,7 @@ namespace Icons.Models
                         }
                         break;
                     case 2:
-                        if (PaymentDate < ((DateTime)lastTransaction.TransactionDate).AddDays(15))
+                        if (PaymentDate < ((DateTime)lastTransaction.Date).AddDays(15))
                         {
                             return new Returner
                             {
@@ -312,7 +385,16 @@ namespace Icons.Models
                         }
                         break;
                     case 3:
-                        if (PaymentDate < ((DateTime)lastTransaction.TransactionDate).AddDays(30))
+                        if (PaymentDate < ((DateTime)lastTransaction.Date).AddDays(30))
+                        {
+                            return new Returner
+                            {
+                                Message = Message.Cannot_pay_salary_at_Wrong_time
+                            };
+                        }
+                        break;
+                    case 4:
+                        if (PaymentDate < ((DateTime)lastTransaction.Date).AddDays(7))
                         {
                             return new Returner
                             {
@@ -322,6 +404,13 @@ namespace Icons.Models
                         break;
                 }
             }
+            Payroll PR = new Payroll();
+            PR.Amount = Total;
+            PR.Date = PaymentDate;
+            PR.EmpID = E.Id;
+            PR.Type = (int)PayrollTypes.Salary;
+            db.Payrolls.Add(PR);
+            db.SaveChanges();
             FinancialTransaction Ft = new FinancialTransaction();
             Ft.Debit = Total;
             Ft.Credit = 0;

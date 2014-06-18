@@ -138,5 +138,21 @@ namespace Icons.Models
                 Data = ProdPrice
             };
         }
+
+        public Returner GetByCat()
+        {
+            var Prods = db.Products.Where(p => p.Category == this.Category).ToList();
+            var ProdsInJson = (from P in Prods
+                               select new
+                               {
+                                   P.ProductName,
+                                   P.Id
+                               }).ToList();
+            return new Returner
+            {
+                Data = Prods,
+                DataInJSON = ProdsInJson.ToJSON()
+            };
+        }
     }
 }

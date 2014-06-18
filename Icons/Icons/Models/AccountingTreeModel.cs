@@ -97,6 +97,7 @@ namespace Icons.Models
                 ST.Quantity = -item.Qty;
                 ST.Type = (int)StockTransactionsTypes.امر_عمل;
                 db.StockTransactions.Add(ST);
+                db.SaveChanges();
                 var CurrentProduct = db.Products.Single(p => p.Id == item.ProductId);
                 FinancialTransaction Ft = new FinancialTransaction();
                 Ft.Debit = item.Total;
@@ -107,6 +108,7 @@ namespace Icons.Models
                 Ft.Statement = "امر شغل " + " بتاريخ " + Date.ToString("MM/dd/yyyy");
                 Ft.TransactionDate = Date;
                 Ft.FromAccount = CurrentProject.AccountID;
+                Ft.ReferanceDocumentNumber = ST.Id;
                 db.FinancialTransactions.Add(Ft);
                 FinancialTransaction Ft1 = new FinancialTransaction();
                 Ft1.Credit = item.Total;
@@ -231,6 +233,36 @@ namespace Icons.Models
             };
         }
 
+        public Returner GetCustomersAccounts()
+        {
+            var Customers = db.Customers.ToList();
+            List<AccountingTree> LOAT = new List<AccountingTree>();
+            foreach (Customer item in Customers)
+            {
+                var AT = db.AccountingTrees.Where(p => p.Id == item.AccountID).SingleOrDefault();
+                LOAT.Add(AT);
+            }
+            return new Returner
+            {
+                Data = LOAT
+            };
+        }
+
+        public Returner GetSuppliersAccounts()
+        {
+            var Suppliers = db.Suppliers.ToList();
+            List<AccountingTree> LOAT = new List<AccountingTree>();
+            foreach (Supplier item in Suppliers)
+            {
+                var AT = db.AccountingTrees.Where(p => p.Id == item.AccountingID).SingleOrDefault();
+                LOAT.Add(AT);
+            }
+            return new Returner
+            {
+                Data = LOAT
+            };
+        }
+
         public Returner FilterReport(int Acc, DateTime From, DateTime To)
         {
             var ResForNum = db.FinancialTransactions.Where(p => p.FromAccount == Acc).ToList();
@@ -249,6 +281,305 @@ namespace Icons.Models
             {
                 Data = Res,
                 DataInJSON = ResInJSON.ToJSON()
+            };
+        }
+
+        public Returner GetItemCard(int Cat, int Prod, int Proj, DateTime From, DateTime To)
+        {
+            if (Prod == 0 && Proj == 0)
+            {
+                if (Cat == 0)
+                {
+                    var Res = db.StockTransactions.Where(p => p.Date >= From && p.Date <= To).ToList();
+                    var ResInJSON = (from F in Res
+                                     select new
+                                     {
+                                         F.Quantity,
+                                         F.Date,
+                                         F.Id,
+                                         F.Type,
+                                         Product = new
+                                         {
+                                             F.Product.ProductName
+                                         }
+                                     }).ToList();
+                    return new Returner
+                    {
+                        Data = Res,
+                        DataInJSON = ResInJSON.ToJSON()
+                    };
+                }
+                else
+                {
+                    var Res = db.StockTransactions.Where(p => p.Product.ProductCategory.Id == Cat && p.Date >= From && p.Date <= To).ToList();
+                    var ResInJSON = (from F in Res
+                                     select new
+                                     {
+                                         F.Quantity,
+                                         F.Date,
+                                         F.Id,
+                                         F.Type,
+                                         Product = new
+                                         {
+                                             F.Product.ProductName
+                                         }
+                                     }).ToList();
+                    return new Returner
+                    {
+                        Data = Res,
+                        DataInJSON = ResInJSON.ToJSON()
+                    };
+                }
+            }
+            else if (Prod == 0 && Proj != 0)
+            {
+                if (Cat == 0)
+                {
+                    var Res = db.StockTransactions.Where(p => p.Stock.ProjectID == Proj && p.Date >= From && p.Date <= To).ToList();
+                    var ResInJSON = (from F in Res
+                                     select new
+                                     {
+                                         F.Quantity,
+                                         F.Date,
+                                         F.Id,
+                                         F.Type,
+                                         Product = new
+                                         {
+                                             F.Product.ProductName
+                                         }
+                                     }).ToList();
+                    return new Returner
+                    {
+                        Data = Res,
+                        DataInJSON = ResInJSON.ToJSON()
+                    };
+                }
+                else
+                {
+                    var Res = db.StockTransactions.Where(p => p.Product.Category == Cat && p.Stock.ProjectID == Proj && p.Date >= From && p.Date <= To).ToList();
+                    var ResInJSON = (from F in Res
+                                     select new
+                                     {
+                                         F.Quantity,
+                                         F.Date,
+                                         F.Id,
+                                         F.Type,
+                                         Product = new
+                                         {
+                                             F.Product.ProductName
+                                         }
+                                     }).ToList();
+                    return new Returner
+                    {
+                        Data = Res,
+                        DataInJSON = ResInJSON.ToJSON()
+                    };
+                }
+            }
+            else if (Prod != 0 && Proj == 0)
+            {
+                var Res = db.StockTransactions.Where(p => p.Stock.ProductID == Prod && p.Date >= From && p.Date <= To).ToList();
+                var ResInJSON = (from F in Res
+                                 select new
+                                 {
+                                     F.Quantity,
+                                     F.Date,
+                                     F.Id,
+                                     F.Type,
+                                     Product = new
+                                     {
+                                         F.Product.ProductName
+                                     }
+                                 }).ToList();
+                return new Returner
+                {
+                    Data = Res,
+                    DataInJSON = ResInJSON.ToJSON()
+                };
+            }
+            else
+            {
+                var Res = db.StockTransactions.Where(p => p.Stock.ProductID == Prod && p.Stock.ProjectID == Proj && p.Date >= From && p.Date <= To).ToList();
+                var ResInJSON = (from F in Res
+                                 select new
+                                 {
+                                     F.Quantity,
+                                     F.Date,
+                                     F.Id,
+                                     F.Type,
+                                     Product = new
+                                     {
+                                         F.Product.ProductName
+                                     }
+                                 }).ToList();
+                return new Returner
+                {
+                    Data = Res,
+                    DataInJSON = ResInJSON.ToJSON()
+                };
+            }
+        }
+
+        public Returner CalInventory(int Cat, int Prod, int Proj)
+        {
+            if (Prod == 0 && Proj == 0)
+            {
+                if (Cat == 0)
+                {
+                    var Res = db.Stocks.ToList();
+                    var ResInJSON = (from F in Res
+                                     select new
+                                     {
+                                         F.Quantity,
+                                         Project = new
+                                         {
+                                             F.Project.ProjectName
+                                         },
+                                         Product = new
+                                         {
+                                             F.Product.ProductName
+                                         }
+                                     }).ToList();
+                    return new Returner
+                    {
+                        Data = Res,
+                        DataInJSON = ResInJSON.ToJSON()
+                    };
+                }
+                else
+                {
+                    var Res = db.Stocks.Where(p => p.Product.ProductCategory.Id == Cat).ToList();
+                    var ResInJSON = (from F in Res
+                                     select new
+                                     {
+                                         F.Quantity,
+                                         Project = new
+                                         {
+                                             F.Project.ProjectName
+                                         },
+                                         Product = new
+                                         {
+                                             F.Product.ProductName
+                                         }
+                                     }).ToList();
+                    return new Returner
+                    {
+                        Data = Res,
+                        DataInJSON = ResInJSON.ToJSON()
+                    };
+                }
+            }
+            else if (Prod == 0 && Proj != 0)
+            {
+                if (Cat == 0)
+                {
+                    var Res = db.Stocks.Where(p => p.ProjectID == Proj).ToList();
+                    var ResInJSON = (from F in Res
+                                     select new
+                                     {
+                                         F.Quantity,
+                                         Project = new
+                                         {
+                                             F.Project.ProjectName
+                                         },
+                                         Product = new
+                                         {
+                                             F.Product.ProductName
+                                         }
+                                     }).ToList();
+                    return new Returner
+                    {
+                        Data = Res,
+                        DataInJSON = ResInJSON.ToJSON()
+                    };
+                }
+                else
+                {
+                    var Res = db.Stocks.Where(p => p.Product.Category == Cat && p.ProjectID == Proj).ToList();
+                    var ResInJSON = (from F in Res
+                                     select new
+                                     {
+                                         F.Quantity,
+                                         Project = new
+                                         {
+                                             F.Project.ProjectName
+                                         },
+                                         Product = new
+                                         {
+                                             F.Product.ProductName
+                                         }
+                                     }).ToList();
+                    return new Returner
+                    {
+                        Data = Res,
+                        DataInJSON = ResInJSON.ToJSON()
+                    };
+                }
+            }
+            else if (Prod != 0 && Proj == 0)
+            {
+                var Res = db.Stocks.Where(p => p.ProductID == Prod).ToList();
+                var ResInJSON = (from F in Res
+                                 select new
+                                 {
+                                     F.Quantity,
+                                     Project = new
+                                     {
+                                         F.Project.ProjectName
+                                     },
+                                     Product = new
+                                     {
+                                         F.Product.ProductName
+                                     }
+                                 }).ToList();
+                return new Returner
+                {
+                    Data = Res,
+                    DataInJSON = ResInJSON.ToJSON()
+                };
+            }
+            else
+            {
+                var Res = db.Stocks.Where(p => p.ProductID == Prod && p.ProjectID == Proj).ToList();
+                var ResInJSON = (from F in Res
+                                 select new
+                                 {
+                                     F.Quantity,
+                                     Project = new
+                                     {
+                                         F.Project.ProjectName
+                                     },
+                                     Product = new
+                                     {
+                                         F.Product.ProductName
+                                     }
+                                 }).ToList();
+                return new Returner
+                {
+                    Data = Res,
+                    DataInJSON = ResInJSON.ToJSON()
+                };
+            }
+        }
+
+        public Returner WorkOrderReport(int Proj, DateTime From, DateTime To)
+        {
+            var Rep = db.StockTransactions.Where(p => p.Stock.ProjectID == Proj && p.Date >= From && p.Date <= To && p.Type == (int)StockTransactionsTypes.امر_عمل).ToList();
+            var RepInJSON = (from S in Rep
+                             select new
+                             {
+                                 S.Date,
+                                 S.Quantity,
+                                 Product = new
+                                 {
+                                     S.Product.ProductName
+                                 },
+                                 Price = db.FinancialTransactions.Where(p => p.ReferanceDocumentNumber == S.Id).FirstOrDefault().Debit
+                             }).ToList();
+            return new Returner
+            {
+                Data = Rep,
+                DataInJSON = RepInJSON.ToJSON()
             };
         }
     }

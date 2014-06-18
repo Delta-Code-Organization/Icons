@@ -19,6 +19,7 @@ namespace Icons.Models
             this.EmployeeBenifits = new HashSet<EmployeeBenifit>();
             this.EmployeeImprests = new HashSet<EmployeeImprest>();
             this.EmployeePenalties = new HashSet<EmployeePenalty>();
+            this.Payrolls = new HashSet<Payroll>();
         }
     
         public int Id { get; set; }
@@ -50,5 +51,6 @@ namespace Icons.Models
         public virtual ICollection<EmployeeBenifit> EmployeeBenifits { get; set; }
         public virtual ICollection<EmployeeImprest> EmployeeImprests { get; set; }
         public virtual ICollection<EmployeePenalty> EmployeePenalties { get; set; }
+        public virtual ICollection<Payroll> Payrolls { get; set; }
     }
 }

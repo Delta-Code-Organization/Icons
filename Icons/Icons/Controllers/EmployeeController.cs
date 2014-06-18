@@ -348,6 +348,7 @@ namespace Icons.Controllers
 
         public ActionResult PayrollSearch()
         {
+            ViewBag.AllAcc = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
             string[] SalaryTypes = Enum.GetNames(typeof(SalaryType));
             ViewBag.S = SalaryTypes;
             return View();

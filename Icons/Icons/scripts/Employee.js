@@ -114,7 +114,6 @@ $(document).ready(function () {
     $('#PayrollSearchForm').submit(function (event) {
         if ($(this).parsley('validate')) {
             var Period = $('#Period').val();
-            alert(Period);
             var data = { 'Period': Period };
             $.ajax({
                 type: 'post',
@@ -122,13 +121,20 @@ $(document).ready(function () {
                 data: data,
                 success: function (data) {
                     $('#TblToAppend').empty();
-                    $.each(data,function(index,emp){
+                    $.each(data, function (index, emp) {
                         var Penality = emp.Pens;
                         var Benifits = emp.Benfs;
                         var TotalSalary = emp.BasicSalary - Penality + Benifits;
                         $('#TblToAppend').append('<tr>'
 										+ '<td style="width:70%;text-align:right;">' + emp.Name + '</td>'
 										+ '<td style="width:30%;text-align:center;">' + TotalSalary + '</td>'
+                        + '<td class="center" style="text-align: center;">'
+                                        + '<div class="btn-group">'
+                                            + '<a data-toggle="modal" data-target="#mod-info" onclick="SetHiddenFields(' + emp.Id + ',' + TotalSalary + ')">'
+                                                + '<button class="btn btn-success" type="button">دفع الراتب</button>'
+                                            + '</a>'
+                                        + '</div>'
+                                    + '</td>'
 									+ '</tr>');
                     });
                     $('#TBtn').removeClass('disabled');
@@ -142,46 +148,46 @@ $(document).ready(function () {
         return false;
     });
 
-$('#PaySalary').submit(function (event) {
-    if ($(this).parsley('validate')) {
-        var EmpID = $('#id').val();
-        var Total = $('#Total').val();
-        var ToAccID = $('#ToAccID').val();
-        var PaymentDate = $('#PaymentDate').val();
-        var data = { 'id': EmpID, 'Total': Total, 'PaymentDate': PaymentDate, 'ToAccID': ToAccID };
-        $.gritter.removeAll();
-        $.ajax({
-            type: 'post',
-            url: '/Employee/Pay',
-            data: data,
-            success: function (data) {
-                if (data == "true") {
-                    $.gritter.add({
-                        title: '! نجاح العملية',
-                        text: ". تم دفع راتب الموظف بنجاح",
-                        image: '/content/images/user-icon.png',
-                        class_name: 'clean',
-                        time: '3000'
-                    });
+    $('#PaySalary').submit(function (event) {
+        if ($(this).parsley('validate')) {
+            var EmpID = $('#id').val();
+            var Total = $('#Total').val();
+            var ToAccID = $('#ToAccID').val();
+            var PaymentDate = $('#PaymentDate').val();
+            var data = { 'id': EmpID, 'Total': Total, 'PaymentDate': PaymentDate, 'ToAccID': ToAccID };
+            $.gritter.removeAll();
+            $.ajax({
+                type: 'post',
+                url: '/Employee/Pay',
+                data: data,
+                success: function (data) {
+                    if (data == "true") {
+                        $.gritter.add({
+                            title: '! نجاح العملية',
+                            text: ". تم دفع راتب الموظف بنجاح",
+                            image: '/content/images/user-icon.png',
+                            class_name: 'clean',
+                            time: '3000'
+                        });
+                    }
+                    else {
+                        $.gritter.add({
+                            title: '! فشل العملية',
+                            text: ". لا يمكن دفع راتب الموظف قبل معادة",
+                            image: '/content/images/user-icon.png',
+                            class_name: 'clean',
+                            time: '3000'
+                        });
+                    }
+                },
+                error: function (data) {
+                    alert(data.responseText);
                 }
-                else {
-                    $.gritter.add({
-                        title: '! فشل العملية',
-                        text: ". لا يمكن دفع راتب الموظف قبل معادة",
-                        image: '/content/images/user-icon.png',
-                        class_name: 'clean',
-                        time: '3000'
-                    });
-                }
-            },
-            error: function (data) {
-                alert(data.responseText);
-            }
-        });
+            });
+            return false;
+        }
         return false;
-    }
-    return false;
-});
+    });
 });
 
 function Remove(id) {
@@ -200,8 +206,7 @@ function Remove(id) {
     }
 }
 
-function SetHiddenFields(id,Total)
-{
+function SetHiddenFields(id, Total) {
     $('#id').val(id);
     $('#Total').val(Total);
 }

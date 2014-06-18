@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="MaksoudDBModelStoreContainer" CdmEntityContainer="MaksoudDBEntities1">
+  <EntityContainerMapping StorageEntityContainer="MaksoudDBModelStoreContainer" CdmEntityContainer="MaksoudDBEntities">
     <EntitySetMapping Name="AccountingTrees">
       <EntityTypeMapping TypeName="MaksoudDBModel.AccountingTree">
         <MappingFragment StoreEntitySet="AccountingTree">
@@ -185,6 +185,17 @@
           <ScalarProperty Name="Text" ColumnName="Text" />
           <ScalarProperty Name="RedirectURL" ColumnName="RedirectURL" />
           <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Payrolls">
+      <EntityTypeMapping TypeName="MaksoudDBModel.Payroll">
+        <MappingFragment StoreEntitySet="Payroll">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

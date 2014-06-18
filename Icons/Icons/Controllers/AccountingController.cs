@@ -223,10 +223,68 @@ namespace Icons.Controllers
             return View();
         }
 
+        public ActionResult CustomerReport()
+        {
+            ViewBag.Acc = new AccountingTree().GetCustomersAccounts().Data as List<AccountingTree>;
+            return View();
+        }
+
+        public ActionResult SupplierReport()
+        {
+            ViewBag.Acc = new AccountingTree().GetSuppliersAccounts().Data as List<AccountingTree>;
+            return View();
+        }
+
+        public ActionResult ItemCard()
+        {
+            ViewBag.Cat = new ProductCategory().GetAll().Data as List<ProductCategory>;
+            ViewBag.Prod = new Product().GetAll().Data as List<Product>;
+            ViewBag.Proj = new Project().GetAll().Data as List<Project>;
+            return View();
+        }
+
+        public ActionResult Inventory()
+        {
+            ViewBag.Cat = new ProductCategory().GetAll().Data as List<ProductCategory>;
+            ViewBag.Prod = new Product().GetAll().Data as List<Product>;
+            ViewBag.Proj = new Project().GetAll().Data as List<Project>;
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult InventoryData(FormCollection FC)
+        {
+            return new AccountingTree().CalInventory(Convert.ToInt32(FC["Cat"]), Convert.ToInt32(FC["Prod"]), Convert.ToInt32(FC["Proj"])).DataInJSON;
+        }
+
+        [HttpPost]
+        public JsonResult ItemCardData(FormCollection FC)
+        {
+            return new AccountingTree().GetItemCard(Convert.ToInt32(FC["Cat"]), Convert.ToInt32(FC["Prod"]), Convert.ToInt32(FC["Proj"]), Convert.ToDateTime(FC["From"]), Convert.ToDateTime(FC["To"])).DataInJSON;
+        }
+
         [HttpPost]
         public JsonResult SearchReportData(FormCollection FC)
         {
             return new AccountingTree().FilterReport(Convert.ToInt32(FC["Acc"]), Convert.ToDateTime(FC["From"]), Convert.ToDateTime(FC["To"])).DataInJSON;
+        }
+
+        [HttpPost]
+        public JsonResult GetProdsByCats(int Cat)
+        {
+            return new Product { Category = Cat }.GetByCat().DataInJSON;
+        }
+
+        public ActionResult ReportWorkOrder()
+        {
+            ViewBag.Proj = new Project().GetAll().Data as List<Project>;
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult GetWorkOrderReport(FormCollection FC)
+        {
+            return new AccountingTree().WorkOrderReport(Convert.ToInt32(FC["Proj"]), Convert.ToDateTime(FC["From"]), Convert.ToDateTime(FC["To"])).DataInJSON;
         }
     }
 }
