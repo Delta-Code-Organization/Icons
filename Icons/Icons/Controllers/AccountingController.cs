@@ -286,5 +286,16 @@ namespace Icons.Controllers
         {
             return new AccountingTree().WorkOrderReport(Convert.ToInt32(FC["Proj"]), Convert.ToDateTime(FC["From"]), Convert.ToDateTime(FC["To"])).DataInJSON;
         }
+
+        public ActionResult PayrollReport()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult GetPayrollReport(FormCollection FC)
+        {
+            return new AccountingTree().PayrollReport(Convert.ToDateTime(FC["From"]), Convert.ToDateTime(FC["To"])).DataInJSON;
+        }
     }
 }

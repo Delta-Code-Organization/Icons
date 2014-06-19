@@ -90,19 +90,19 @@
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <ul role="menu" class="dropdown-menu">
-                                                @if ((Session["User"] as User).UserAccesses.Any(p => p.ScreenID == 70 && p.CanEdit == true))
+                                                @if ((Session["User"] as User).UserAccesses.Any(p => (p.ScreenID == 70 && p.CanEdit == true) || (p.ScreenID == 70 && p.Opt1 == true)))
                                                 {
                                                     <li>
                                                         <a href="/Accounting/EditFinancialTransactions/@y.Id">تعديل</a>
                                                     </li>
                                                 }
-                                                @if ((Session["User"] as User).UserAccesses.Any(p => p.ScreenID == 70 && p.Opt1 == true))
+                                                @if ((Session["User"] as User).UserAccesses.Any(p => (p.ScreenID == 70 && p.Opt1 == true) || (p.ScreenID == 70 && p.Opt1 == true)))
                                                 {
                                                     <li>
                                                         <a href="javascript:ConfirmFT(@y.Id)">تأكيد</a>
                                                     </li>
                                                 }
-                                                @if ((Session["User"] as User).UserAccesses.Any(p => p.ScreenID == 70 && p.CanDelete == true))
+                                                @if ((Session["User"] as User).UserAccesses.Any(p => (p.ScreenID == 70 && p.CanDelete == true) || (p.ScreenID == 70 && p.Opt1 == true)))
                                                 {
                                                     <li>
                                                         <a href="javascript:DeleteFT(@y.Id)">حذف</a>

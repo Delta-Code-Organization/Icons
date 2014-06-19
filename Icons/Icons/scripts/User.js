@@ -159,3 +159,56 @@ function EnableBtns()
 {
     $('#LoginBtnSubmit').prop('disabled', false);
 }
+
+$(document).ready(function () {
+    $("input[type=checkbox]").change(function () {
+        var ScreenID = $(this).attr('id');
+        ScreenID = ScreenID.replace('isTrack', '');
+        if (this.checked) {
+            if ($(this).val() == "Opt1" + ScreenID) {
+                $(':input[value="Show' + ScreenID + '"]').prop('checked', false);
+                $(':input[value="Edit' + ScreenID + '"]').prop('checked', false);
+                $(':input[value="Delete' + ScreenID + '"]').prop('checked', false);
+            }
+            if ($(this).val() == "Show" + ScreenID && $(':input[value="Opt1' + ScreenID + '"]').is(":checked")) {
+                $(':input[value="Show' + ScreenID + '"]').prop('checked', false);
+                $(':input[value="Edit' + ScreenID + '"]').prop('checked', false);
+                $(':input[value="Delete' + ScreenID + '"]').prop('checked', false);
+            }
+            if ($(this).val() == "Edit" + ScreenID && $(':input[value="Opt1' + ScreenID + '"]').is(":checked")) {
+                $(':input[value="Show' + ScreenID + '"]').prop('checked', false);
+                $(':input[value="Edit' + ScreenID + '"]').prop('checked', false);
+                $(':input[value="Delete' + ScreenID + '"]').prop('checked', false);
+            }
+            if ($(this).val() == "Delete" + ScreenID && $(':input[value="Opt1' + ScreenID + '"]').is(":checked")) {
+                $(':input[value="Show' + ScreenID + '"]').prop('checked', false);
+                $(':input[value="Edit' + ScreenID + '"]').prop('checked', false);
+                $(':input[value="Delete' + ScreenID + '"]').prop('checked', false);
+            }
+            if ($(this).val() == "Edit" + ScreenID && $(':input[value="Delete' + ScreenID + '"]').is(":checked")) {
+                $(':input[value="Opt1' + ScreenID + '"]').prop('checked', true);
+                $(':input[value="Edit' + ScreenID + '"]').prop('checked', false);
+                $(':input[value="Delete' + ScreenID + '"]').prop('checked', false);
+                $(':input[value="Show' + ScreenID + '"]').prop('checked', false);
+            }
+            if ($(this).val() == "Delete" + ScreenID && $(':input[value="Edit' + ScreenID + '"]').is(":checked")) {
+                $(':input[value="Opt1' + ScreenID + '"]').prop('checked', true);
+                $(':input[value="Edit' + ScreenID + '"]').prop('checked', false);
+                $(':input[value="Delete' + ScreenID + '"]').prop('checked', false);
+                $(':input[value="Show' + ScreenID + '"]').prop('checked', false);
+            }
+            if ($(this).val() == "Delete" + ScreenID && $(':input[value="Show' + ScreenID + '"]').is(":checked")) {
+                $(':input[value="Show' + ScreenID + '"]').prop('checked', false);
+            }
+            if ($(this).val() == "Edit" + ScreenID && $(':input[value="Show' + ScreenID + '"]').is(":checked")) {
+                $(':input[value="Show' + ScreenID + '"]').prop('checked', false);
+            }
+            if ($(this).val() == "Show" + ScreenID && $(':input[value="Edit' + ScreenID + '"]').is(":checked")) {
+                $(':input[value="Show' + ScreenID + '"]').prop('checked', false);
+            }
+            if ($(this).val() == "Show" + ScreenID && $(':input[value="Delete' + ScreenID + '"]').is(":checked")) {
+                $(':input[value="Show' + ScreenID + '"]').prop('checked', false);
+            }
+        }
+    });
+});

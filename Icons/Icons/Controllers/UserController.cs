@@ -86,8 +86,6 @@ namespace Icons.Controllers
                     if (AP.Contains("Opt1"))
                     {
                         UA.ScreenID = int.Parse(AP.Replace("Opt1", ""));
-                        UA.CanDelete = true;
-                        UA.CanEdit = true;
                         UA.Opt1 = true;
                         LOUA.Add(UA);
                     }
@@ -98,8 +96,6 @@ namespace Icons.Controllers
                         {
                             if (item.Contains("Opt1"))
                             {
-                                UA.CanDelete = true;
-                                UA.CanEdit = true;
                                 UA.Opt1 = true;
                             }
                             if (item.Contains("Edit"))
@@ -138,8 +134,6 @@ namespace Icons.Controllers
                     {
                         UserAccess UA = new UserAccess();
                         UA.ScreenID = int.Parse(AP.Replace("Opt1", ""));
-                        UA.CanDelete = true;
-                        UA.CanEdit = true;
                         UA.Opt1 = true;
                         LOUA.Add(UA);
                     }
@@ -151,8 +145,6 @@ namespace Icons.Controllers
                         {
                             if (item.Contains("Opt1"))
                             {
-                                UA.CanDelete = true;
-                                UA.CanEdit = true;
                                 UA.Opt1 = true;
                             }
                             if (item.Contains("Edit"))
@@ -255,8 +247,6 @@ namespace Icons.Controllers
                     if (AP.Contains("Opt1"))
                     {
                         UA.ScreenID = int.Parse(AP.Replace("Opt1", ""));
-                        UA.CanDelete = true;
-                        UA.CanEdit = true;
                         UA.Opt1 = true;
                         LOUA.Add(UA);
                     }
@@ -267,8 +257,6 @@ namespace Icons.Controllers
                         {
                             if (item.Contains("Opt1"))
                             {
-                                UA.CanDelete = true;
-                                UA.CanEdit = true;
                                 UA.Opt1 = true;
                             }
                             if (item.Contains("Edit"))
@@ -307,8 +295,6 @@ namespace Icons.Controllers
                     {
                         UserAccess UA = new UserAccess();
                         UA.ScreenID = int.Parse(AP.Replace("Opt1", ""));
-                        UA.CanDelete = true;
-                        UA.CanEdit = true;
                         UA.Opt1 = true;
                         LOUA.Add(UA);
                     }
@@ -320,8 +306,6 @@ namespace Icons.Controllers
                         {
                             if (item.Contains("Opt1"))
                             {
-                                UA.CanDelete = true;
-                                UA.CanEdit = true;
                                 UA.Opt1 = true;
                             }
                             if (item.Contains("Edit"))

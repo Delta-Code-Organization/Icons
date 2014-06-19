@@ -60,13 +60,13 @@
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <ul role="menu" class="dropdown-menu">
-                                                @if ((Session["User"] as User).UserAccesses.Any(p => p.ScreenID == 11 && p.CanEdit == true))
+                                                @if ((Session["User"] as User).UserAccesses.Any(p => (p.ScreenID == 11 && p.CanEdit == true) || (p.ScreenID == 60 && p.Opt1 == true)))
                                                 {
                                                     <li>
                                                         <a href="/Supplier/EditSupplier/@y.ID">تعديل</a>
                                                     </li>
                                                 }
-                                                @if ((Session["User"] as User).UserAccesses.Any(p => p.ScreenID == 11 && p.CanDelete == true))
+                                                @if ((Session["User"] as User).UserAccesses.Any(p => (p.ScreenID == 11 && p.CanDelete == true) || (p.ScreenID == 60 && p.Opt1 == true)))
                                                 {
                                                     <li class="divider"></li>
                                                     <li>

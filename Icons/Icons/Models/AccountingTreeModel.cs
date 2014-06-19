@@ -582,5 +582,28 @@ namespace Icons.Models
                 DataInJSON = RepInJSON.ToJSON()
             };
         }
+
+        public Returner PayrollReport(DateTime From, DateTime To)
+        {
+            var Rep = db.Payrolls.Where(p => p.Date >= From && p.Date <= To).ToList();
+            var RepInJSON = (from P in Rep
+                             select new
+                             {
+                                 P.Amount,
+                                 P.Date,
+                                 P.Id,
+                                 P.Type,
+                                 Employee = new
+                                 {
+                                     P.Employee.Name,
+                                     P.Employee.BasicSalary
+                                 }
+                             }).ToList();
+            return new Returner
+            {
+                Data = Rep,
+                DataInJSON = RepInJSON.ToJSON()
+            };
+        }
     }
 }

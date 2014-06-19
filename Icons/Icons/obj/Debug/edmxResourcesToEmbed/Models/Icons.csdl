@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MaksoudDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityContainer Name="MaksoudDBEntities1" p1:LazyLoadingEnabled="true">
+  <EntityContainer Name="MaksoudDBEntities" p1:LazyLoadingEnabled="true">
     <EntitySet Name="AccountingTrees" EntityType="MaksoudDBModel.AccountingTree" />
     <EntitySet Name="ContractOwners" EntityType="MaksoudDBModel.ContractOwner" />
     <EntitySet Name="Contracts" EntityType="MaksoudDBModel.Contract" />
@@ -14,6 +14,7 @@
     <EntitySet Name="FinancialTransactions" EntityType="MaksoudDBModel.FinancialTransaction" />
     <EntitySet Name="Installments" EntityType="MaksoudDBModel.Installment" />
     <EntitySet Name="Notifications" EntityType="MaksoudDBModel.Notification" />
+    <EntitySet Name="Payrolls" EntityType="MaksoudDBModel.Payroll" />
     <EntitySet Name="ProductCategories" EntityType="MaksoudDBModel.ProductCategory" />
     <EntitySet Name="Products" EntityType="MaksoudDBModel.Product" />
     <EntitySet Name="Projects" EntityType="MaksoudDBModel.Project" />
@@ -122,6 +123,10 @@
     <AssociationSet Name="FK_EmployeePenalties_Employee" Association="MaksoudDBModel.FK_EmployeePenalties_Employee">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="EmployeePenalties" EntitySet="EmployeePenalties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Table_Employee" Association="MaksoudDBModel.FK_Table_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Payroll" EntitySet="Payrolls" />
     </AssociationSet>
     <AssociationSet Name="FK_FinancialTransactions_Users" Association="MaksoudDBModel.FK_FinancialTransactions_Users">
       <End Role="Users" EntitySet="Users" />
@@ -319,6 +324,7 @@
     <NavigationProperty Name="EmployeeBenifits" Relationship="MaksoudDBModel.FK_EmployeeBenifits_Employee" FromRole="Employee" ToRole="EmployeeBenifits" />
     <NavigationProperty Name="EmployeeImprests" Relationship="MaksoudDBModel.FK_EmployeeImprests_Employee" FromRole="Employee" ToRole="EmployeeImprests" />
     <NavigationProperty Name="EmployeePenalties" Relationship="MaksoudDBModel.FK_EmployeePenalties_Employee" FromRole="Employee" ToRole="EmployeePenalties" />
+    <NavigationProperty Name="Payrolls" Relationship="MaksoudDBModel.FK_Table_Employee" FromRole="Employee" ToRole="Payroll" />
   </EntityType>
   <EntityType Name="EmployeeBenifit">
     <Key>
@@ -392,6 +398,17 @@
     <Property Name="Text" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="RedirectURL" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Status" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Payroll">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="EmpID" Type="Int32" />
+    <Property Name="Type" Type="Int32" />
+    <Property Name="Amount" Type="Double" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Employee" Relationship="MaksoudDBModel.FK_Table_Employee" FromRole="Payroll" ToRole="Employee" />
   </EntityType>
   <EntityType Name="ProductCategory">
     <Key>
@@ -872,6 +889,18 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="EmployeePenalties">
+        <PropertyRef Name="EmpID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Table_Employee">
+    <End Role="Employee" Type="MaksoudDBModel.Employee" Multiplicity="0..1" />
+    <End Role="Payroll" Type="MaksoudDBModel.Payroll" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Payroll">
         <PropertyRef Name="EmpID" />
       </Dependent>
     </ReferentialConstraint>
