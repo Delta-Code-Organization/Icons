@@ -125,10 +125,17 @@ $(document).ready(function () {
                         var Penality = emp.Pens;
                         var Benifits = emp.Benfs;
                         var TotalSalary = emp.BasicSalary - Penality + Benifits;
+                        var milli = emp.Date.replace(/\/Date\((-?\d+)\)\//, '$1');
+                        var FtDate = new Date(parseInt(milli));
+                        FtDate = FtDate.toDateString();
                         $('#TblToAppend').append('<tr>'
-										+ '<td style="width:70%;text-align:right;">' + emp.Name + '</td>'
-										+ '<td style="width:30%;text-align:center;">' + TotalSalary + '</td>'
-                        + '<td class="center" style="text-align: center;">'
+										+ '<td style="width:14.2%;text-align:right;">' + emp.Name + '</td>'
+                                        + '<td style="width:14.2%;text-align:center;">' + emp.BasicSalary + '</td>'
+                                        + '<td style="width:14.2%;text-align:right;">' + Penality + '</td>'
+                                        + '<td style="width:14.2%;text-align:right;">' + Benifits + '</td>'
+                                        + '<td style="width:14.2%;text-align:right;">' + TotalSalary + '</td>'
+                                        + '<td style="width:14.2%;text-align:right;">' + FtDate + '</td>'
+                        + '<td class="center" style="text-align: center; width:14.2%;">'
                                         + '<div class="btn-group">'
                                             + '<a data-toggle="modal" data-target="#mod-info" onclick="SetHiddenFields(' + emp.Id + ',' + TotalSalary + ')">'
                                                 + '<button class="btn btn-success" type="button">دفع الراتب</button>'
@@ -209,4 +216,9 @@ function Remove(id) {
 function SetHiddenFields(id, Total) {
     $('#id').val(id);
     $('#Total').val(Total);
+}
+
+function convertDate(inputFormat) {
+    var d = new Date(inputFormat);
+    return [d.getDate(), d.getMonth() + 1, d.getFullYear()].join('/');
 }

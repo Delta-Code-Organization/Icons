@@ -28,6 +28,35 @@
         return false;
     });
 
+    $('#AddEmployement').submit(function (event) {
+        if ($(this).parsley('validate')) {
+            $.ajax({
+                url: '/Accounting/AddEmployementFT',
+                type: 'post',
+                data: $(this).serialize(),
+                success: function (data) {
+                    $.gritter.add({
+                        title: '! نجاح العملية',
+                        text: ". تم اضافة المعاملة المالية بنجاح برقم (" + data + ")",
+                        image: '/content/images/user-icon.png',
+                        class_name: 'clean',
+                        time: '120000'
+                    });
+                    $('#State').val("");
+                    $('#Amount').val("");
+                    $('#Date').val("");
+                    $('#Notes').val("");
+                    $('#Notes').text("");
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            });
+            return false;
+        }
+        return false;
+    });
+
     $('#EditFT').submit(function (event) {
         if ($(this).parsley('validate')) {
             $.ajax({

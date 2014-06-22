@@ -145,6 +145,52 @@ namespace Icons.Controllers
             return View();
         }
 
+        public ActionResult ContractorFT()
+        {
+            ViewBag.S = new Supplier().GetAll().Data as List<Supplier>;
+            ViewBag.P = new AccountingTree().GetProjectsAccounts().Data as List<AccountingTree>;
+            return View();
+        }
+
+        public ActionResult EmployementFT()
+        {
+            ViewBag.Accs = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
+            return View();
+        }
+
+        public ActionResult CustomerServicesFT()
+        {
+            ViewBag.C = new AccountingTree().GetCustomersAccounts().Data as List<AccountingTree>;
+            ViewBag.Accs = new AccountingTree().GetAllAccounts().Data as List<AccountingTree>;
+            return View();
+        }
+
+        [HttpPost]
+        public string AddEmployementFT(int Acc1, double Amount, string State, DateTime Date, string Notes)
+        {
+            new AccountingTree().AddFT(new FinancialTransaction
+            {
+                FromAccount = Acc1,
+                Debit = Amount,
+                Credit = 0,
+                Statement = State,
+                TransactionDate = Date,
+                Notes = Notes,
+                LastEditBy = (Session["User"] as User).ID
+            }).Data.ToString();
+            string Ret = new AccountingTree().AddFT(new FinancialTransaction
+            {
+                FromAccount = 51,
+                Credit = Amount,
+                Debit = 0,
+                Statement = State,
+                TransactionDate = Date,
+                Notes = Notes,
+                LastEditBy = (Session["User"] as User).ID
+            }).Data.ToString();
+            return Ret;
+        }
+
         [HttpPost]
         public string AddFT(int Acc1, int Acc2, double Amount, string State, DateTime Date, string Notes)
         {
@@ -289,13 +335,27 @@ namespace Icons.Controllers
 
         public ActionResult PayrollReport()
         {
+            string[] SalaryTypes = Enum.GetNames(typeof(SalaryType));
+            ViewBag.S = SalaryTypes;
             return View();
         }
 
         [HttpPost]
         public JsonResult GetPayrollReport(FormCollection FC)
         {
-            return new AccountingTree().PayrollReport(Convert.ToDateTime(FC["From"]), Convert.ToDateTime(FC["To"])).DataInJSON;
+            return new AccountingTree().PayrollReport(Convert.ToInt32(FC["SalaryType"]), Convert.ToDateTime(FC["From"]), Convert.ToDateTime(FC["To"])).DataInJSON;
+        }
+
+        public ActionResult PayslipReport()
+        {
+            ViewBag.Emps = new Employee().GetAll().Data as List<Employee>;
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult PayslipFilter(FormCollection FC)
+        {
+            return new AccountingTree().PayslipReport(Convert.ToInt32(FC["Employee"]), Convert.ToDateTime(FC["From"]), Convert.ToDateTime(FC["To"])).DataInJSON;
         }
     }
 }

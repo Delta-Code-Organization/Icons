@@ -172,10 +172,11 @@ namespace Icons.Models
                                  select new
                                  {
                                      E.Id,
+                                     Date = (DateTime?)(Convert.ToDateTime(new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt).OrderByDescending(p => p.Date).FirstOrDefault().Date).AddDays(1)),
                                      E.Name,
                                      E.BasicSalary,
-                                     Pens = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Penality).ToList().Sum(p => p.Amount),
-                                     Benfs = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Benifit).ToList().Sum(p => p.Amount),
+                                     Pens = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Date <= DateTime.Now && p.Type == (int)PayrollTypes.Penality).ToList().Sum(p => p.Amount),
+                                     Benfs = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Date <= DateTime.Now && p.Type == (int)PayrollTypes.Benifit).ToList().Sum(p => p.Amount),
                                  }).ToList();
                 return new Returner
                 {
@@ -191,9 +192,10 @@ namespace Icons.Models
                                  {
                                      E.Id,
                                      E.Name,
+                                     Date = (DateTime?)(Convert.ToDateTime(new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt).OrderByDescending(p => p.Date).FirstOrDefault().Date).AddDays(15)),
                                      E.BasicSalary,
-                                     Pens = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Penality).ToList().Sum(p => p.Amount),
-                                     Benfs = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Benifit).ToList().Sum(p => p.Amount),
+                                     Pens = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Date <= DateTime.Now && p.Type == (int)PayrollTypes.Penality).ToList().Sum(p => p.Amount),
+                                     Benfs = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Date <= DateTime.Now && p.Type == (int)PayrollTypes.Benifit).ToList().Sum(p => p.Amount),
                                  }).ToList();
                 return new Returner
                 {
@@ -209,9 +211,10 @@ namespace Icons.Models
                                  {
                                      E.Id,
                                      E.Name,
+                                     Date = (DateTime?)(Convert.ToDateTime(new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt).OrderByDescending(p => p.Date).FirstOrDefault().Date).AddMonths(1)),
                                      E.BasicSalary,
-                                     Pens = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Penality).ToList().Sum(p => p.Amount),
-                                     Benfs = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Benifit).ToList().Sum(p => p.Amount),
+                                     Pens = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Date <= DateTime.Now && p.Type == (int)PayrollTypes.Penality).ToList().Sum(p => p.Amount),
+                                     Benfs = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Date <= DateTime.Now && p.Type == (int)PayrollTypes.Benifit).ToList().Sum(p => p.Amount),
                                  }).ToList();
                 return new Returner
                 {
@@ -227,9 +230,10 @@ namespace Icons.Models
                                  {
                                      E.Id,
                                      E.Name,
+                                     Date = (DateTime?)(Convert.ToDateTime(new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt).OrderByDescending(p => p.Date).FirstOrDefault().Date).AddDays(7)),
                                      E.BasicSalary,
-                                     Pens = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Penality).ToList().Sum(p => p.Amount),
-                                     Benfs = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Type == (int)PayrollTypes.Benifit).ToList().Sum(p => p.Amount),
+                                     Pens = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Date <= DateTime.Now && p.Type == (int)PayrollTypes.Penality).ToList().Sum(p => p.Amount),
+                                     Benfs = new MaksoudDBEntities().Payrolls.Where(p => p.EmpID == E.Id && p.Date >= Dt && p.Date <= DateTime.Now && p.Type == (int)PayrollTypes.Benifit).ToList().Sum(p => p.Amount),
                                  }).ToList();
                 return new Returner
                 {

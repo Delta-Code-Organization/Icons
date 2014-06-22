@@ -6,8 +6,10 @@
 function RefreshReportTitle() {
     var From = $('#From').val();
     var To = $('#To').val();
+    var EmpName = $("#Employee option:selected").text();
     $('#FromLabel').text(From);
     $('#ToLabel').text(To);
+    $('#EmployeeNameLabel').text(EmpName);
 }
 
 function GetTypeName(T) {
@@ -21,14 +23,28 @@ function GetTypeName(T) {
     }
 }
 
+function GetSalaryType(T)
+{
+    switch (T) {
+        case 1:
+            return "يومي";
+        case 2:
+            return "نصف شهري";
+        case 3:
+            return "شهري";
+        case 4:
+            return "اسبوعي";
+    }
+}
+
 $(document).ready(function () {
     RefreshReportTitle();
 
-    $('#ReportPayroll').submit(function (event) {
+    $('#ReportPayslip').submit(function (event) {
         if ($(this).parsley('validate')) {
             $.ajax({
                 type: 'post',
-                url: '/Accounting/GetPayrollReport',
+                url: '/Accounting/PayslipFilter',
                 data: $(this).serialize(),
                 success: function (data) {
                     RefreshReportTitle();
@@ -38,13 +54,14 @@ $(document).ready(function () {
                         var FtDate = new Date(parseInt(milli));
                         FtDate = FtDate.toDateString();
                         var TTT = GetTypeName(F.Type);
+                        alert(F.Employee.SalaryType);
+                        var SalaType = GetSalaryType(F.Employee.SalaryType);
+                        $('#SalaryTypeLabel').text(SalaType);
+                        $('#BasicSalaryLabel').text(F.Employee.BasicSalary);
                         $('#TblToAppend').append('<tr>'
-										+ '<td style="border: 1px solid #000;width:16.6%;text-align:center;">' + F.Employee.Name + '</td>'
-                                        + '<td style="border: 1px solid #000;width:16.6%;text-align:center;">' + F.Employee.BasicSalary + '</td>'
-                                        + '<td style="border: 1px solid #000;width:16.6%;text-align:center;">' + F.Pens + '</td>'
-										+ '<td style="border: 1px solid #000;width:16.6%;text-align:center;">' + F.Benis + '</td>'
-                                        + '<td style="border: 1px solid #000;width:16.6%;text-align:center;">' + F.Amount + '</td>'
-                                        + '<td style="border: 1px solid #000;width:16.6%;text-align:center;">' + FtDate + '</td>'
+										+ '<td style="border: 1px solid #000;width:33%;text-align:center;">' + FtDate + '</td>'
+                                        + '<td style="border: 1px solid #000;width:33%;text-align:center;">' + TTT + '</td>'
+                                        + '<td style="border: 1px solid #000;width:33%;text-align:center;">' + F.Amount + '</td>'
 									+ '</tr>');
                     });
                 },

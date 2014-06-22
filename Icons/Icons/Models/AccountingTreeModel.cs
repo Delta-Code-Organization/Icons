@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
+using System.Data;
 
 namespace Icons.Models
 {
@@ -256,6 +258,22 @@ namespace Icons.Models
             {
                 var AT = db.AccountingTrees.Where(p => p.Id == item.AccountingID).SingleOrDefault();
                 LOAT.Add(AT);
+            }
+            return new Returner
+            {
+                Data = LOAT
+            };
+        }
+
+        public Returner GetProjectsAccounts()
+        {
+            var Allproj = db.Projects.ToList();
+            List<AccountingTree> LOAT = new List<AccountingTree>();
+            var ProjectsUnderConstracting = db.AccountingTrees.Where(p => p.KeyAccountID == (int)KeyAccounts.Projects).SingleOrDefault();
+            LOAT.Add(ProjectsUnderConstracting);
+            foreach (Project item in Allproj)
+            {
+                LOAT.Add(item.AccountingTree);
             }
             return new Returner
             {
@@ -583,27 +601,136 @@ namespace Icons.Models
             };
         }
 
-        public Returner PayrollReport(DateTime From, DateTime To)
+        public Returner PayrollReport(int SalaryType, DateTime From, DateTime To)
         {
-            var Rep = db.Payrolls.Where(p => p.Date >= From && p.Date <= To).ToList();
-            var RepInJSON = (from P in Rep
+            var Rep = db.Payrolls.Where(p => p.Date >= From && p.Date <= To && p.Type == 3).ToList();
+            DateTime Larger;
+            List<CustomPayroll> LOCPR = new List<CustomPayroll>();
+            foreach (Payroll PPP in Rep)
+            {
+                if (SalaryType == 2)
+                {
+                    Larger = PPP.Date.Value.AddDays(-15);
+                }
+                else if (SalaryType == 3)
+                {
+                    Larger = PPP.Date.Value.AddMonths(-1);
+                }
+                else
+                {
+                    Larger = PPP.Date.Value.AddDays(-7);
+                }
+                CustomPayroll CPR = new CustomPayroll();
+                CPR.Id = Convert.ToInt32(PPP.EmpID);
+                CPR.Date = PPP.Date;
+                CPR.Pens = db.Payrolls.Where(p => p.Type == 2 && p.Date <= PPP.Date && p.Date >= Larger).ToList().Sum(p => p.Amount);
+                CPR.Benis = db.Payrolls.Where(p => p.Type == 1 && p.Date <= PPP.Date && p.Date >= Larger).ToList().Sum(p => p.Amount);
+                LOCPR.Add(CPR);
+            }
+            if (SalaryType == 2)
+            {
+                var RepInJSON = (from P in Rep
+                                 select new
+                                 {
+                                     P.Amount,
+                                     P.Date,
+                                     P.Id,
+                                     Pens = LOCPR.Where(p => p.Id == P.EmpID && p.Date == P.Date).SingleOrDefault().Pens,
+                                     Benis = LOCPR.Where(p => p.Id == P.EmpID && p.Date == P.Date).SingleOrDefault().Benis,
+                                     P.Type,
+                                     Employee = new
+                                     {
+                                         P.Employee.Name,
+                                         P.Employee.BasicSalary
+                                     }
+                                 }).ToList();
+                return new Returner
+                {
+                    Data = Rep,
+                    DataInJSON = RepInJSON.ToJSON()
+                };
+            }
+            else if (SalaryType == 3)
+            {
+                var RepInJSON = (from P in Rep
+                                 select new
+                                 {
+                                     P.Amount,
+                                     P.Date,
+                                     P.Id,
+                                     Pens = LOCPR.Where(p => p.Id == P.EmpID && p.Date == P.Date).SingleOrDefault().Pens,
+                                     Benis = LOCPR.Where(p => p.Id == P.EmpID && p.Date == P.Date).SingleOrDefault().Benis,
+                                     P.Type,
+                                     Employee = new
+                                     {
+                                         P.Employee.Name,
+                                         P.Employee.BasicSalary
+                                     }
+                                 }).ToList();
+                return new Returner
+                {
+                    Data = Rep,
+                    DataInJSON = RepInJSON.ToJSON()
+                };
+            }
+            else
+            {
+                var RepInJSON = (from P in Rep
+                                 select new
+                                 {
+                                     P.Amount,
+                                     P.Date,
+                                     P.Id,
+                                     Pens = LOCPR.Where(p => p.Id == P.EmpID && p.Date == P.Date).SingleOrDefault().Pens,
+                                     Benis = LOCPR.Where(p => p.Id == P.EmpID && p.Date == P.Date).SingleOrDefault().Benis,
+                                     P.Type,
+                                     Employee = new
+                                     {
+                                         P.Employee.Name,
+                                         P.Employee.BasicSalary
+                                     }
+                                 }).ToList();
+                return new Returner
+                {
+                    Data = Rep,
+                    DataInJSON = RepInJSON.ToJSON()
+                };
+            }
+        }
+
+        public Returner PayslipReport(int EmployeeID, DateTime From, DateTime To)
+        {
+            var Res = db.Payrolls.Where(p => p.EmpID == EmployeeID && p.Date >= From && p.Date <= To).ToList();
+            var ResInJson = (from P in Res
                              select new
                              {
                                  P.Amount,
                                  P.Date,
-                                 P.Id,
                                  P.Type,
                                  Employee = new
                                  {
-                                     P.Employee.Name,
-                                     P.Employee.BasicSalary
+                                     P.Employee.BasicSalary,
+                                     P.Employee.SalaryType
                                  }
                              }).ToList();
             return new Returner
             {
-                Data = Rep,
-                DataInJSON = RepInJSON.ToJSON()
+                Data = Res,
+                DataInJSON = ResInJson.ToJSON()
             };
         }
+
+
+
+
+
+    }
+
+    public class CustomPayroll
+    {
+        public int Id { get; set; }
+        public DateTime? Date { get; set; }
+        public double? Pens { get; set; }
+        public double? Benis { get; set; }
     }
 }
