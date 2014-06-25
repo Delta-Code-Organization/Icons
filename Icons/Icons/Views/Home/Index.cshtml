@@ -3,6 +3,8 @@
     Layout = "~/Views/shared/MasterPage.cshtml";
 }
 
+@using Icons.Models;
+
 <script type="text/javascript">
     $(document).ready(function () {
         App.dashBoard();
@@ -13,8 +15,8 @@
     <div class="stats_bar">
         <div class="butpro butstyle" data-step="2" data-intro="<strong>Beautiful Elements</strong> <br/> If you are looking for a different UI, this is for you!.">
             <div class="sub">
-                <h2>CLIENTS</h2>
-                <span id="total_clientes">170</span>
+                <h2>عدد العملاء</h2>
+                <span id="total_clientes">@ViewBag.CustomerNo</span>
             </div>
             <div class="stat">
                 <span class="spk1">
@@ -22,40 +24,73 @@
                 </span>
             </div>
         </div>
+
         <div class="butpro butstyle">
-            <div class="sub">
-                <h2>Sales</h2>
-                <span>$951,611</span>
+            <div class="btn-group" style="width: 100%; height: 100%; border: none; box-shadow: none;">
+                <button type="button" style="width: 100%; height: 100%; border: none; box-shadow: none;" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    اجمالي المبيعات                 
+                    <br />
+                    <p id="AddTotalSalesHere">@ViewBag.TotalSales</p>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    @{
+                        <li><a href="javascript:GetSalesByProj(0)">الكل</a></li>
+                        foreach (Project item in ViewBag.AllProj)
+                        {
+                        <li><a href="javascript:GetSalesByProj(@item.Id)">@item.ProjectName</a></li>
+                        }
+                    }
+                </ul>
             </div>
-            <div class="stat"><span class="up">13,5%</span></div>
         </div>
+
         <div class="butpro butstyle">
-            <div class="sub">
-                <h2>VISITS</h2>
-                <span>125</span>
+            <div class="btn-group" style="width: 100%; height: 100%; border: none; box-shadow: none;">
+                <button type="button" style="width: 100%; height: 100%; border: none; box-shadow: none;" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    اجمالي التكاليف      
+                    <br />
+                    <p id="AddTotalCostsHere">@ViewBag.TotalCosts</p>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    @{
+                        <li><a href="javascript:GetCostsByProj(0)">الكل</a></li>
+                        foreach (Project item in ViewBag.AllProj)
+                        {
+                        <li><a href="javascript:GetCostsByProj(@item.Id)">@item.ProjectName</a></li>
+                        }
+                    }
+                </ul>
             </div>
-            <div class="stat"><span class="down">20,7%</span></div>
         </div>
+
+
+        @*<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <div class="butpro butstyle">
+                <div class="sub">
+                    <h2>اجمالي التكاليف</h2>
+                    <span>@ViewBag.TotalCosts</span>
+                </div>
+                <div class="stat"><span class="down">20,7%</span></div>
+            </div>
+        </a>
+        <ul class="dropdown-menu" style="position:absolute; top:30px; left:100px;">
+            <li><a href="#">Print receipt</a></li>
+            <li><a href="#">Send invoice to...</a></li>
+            <li><a href="#">Payment</a></li>
+        </ul>*@
         <div class="butpro butstyle">
             <div class="sub">
-                <h2>NEW USERS</h2>
-                <span>18</span>
+                <h2>الاقساط الغير مدفوعة</h2>
+                <span>@ViewBag.PendingInstallments</span>
             </div>
             <div class="stat"><span class="equal">0%</span></div>
         </div>
         <div class="butpro butstyle">
             <div class="sub">
-                <h2>AVERAGE</h2>
-                <span>3%</span>
+                <h2>رصيد الموردين</h2>
+                <span>@ViewBag.SupplierDue</span>
             </div>
             <div class="stat"><span class="spk2"></span></div>
-        </div>
-        <div class="butpro butstyle">
-            <div class="sub">
-                <h2>Downloads</h2>
-                <span>184</span>
-            </div>
-            <div class="stat"><span class="spk3"></span></div>
         </div>
 
     </div>
@@ -63,7 +98,7 @@
         <div class="col-sm-6 col-md-6">
             <div class="block">
                 <div class="header no-border">
-                    <h2>Sales</h2>
+                    <h2 style="text-align:right;">المبيعات</h2>
                 </div>
                 <div class="content blue-chart" data-step="3" data-intro="<strong>Unique Styled Plugins</strong> <br/> We put love in every detail to give a great user experience!.">
                     <div id="site_statistics" style="height: 180px;">
@@ -72,28 +107,8 @@
                 <div class="content">
                     <div class="stat-data">
                         <div class="stat-blue">
-                            <h2>1,254</h2>
-                            <span>Total Sales</span>
-                        </div>
-                    </div>
-                    <div class="stat-data">
-                        <div class="stat-number">
-                            <div>
-                                <h2>83</h2>
-                            </div>
-                            <div>
-                                Total hits<br />
-                                <span>(Daily)</span>
-                            </div>
-                        </div>
-                        <div class="stat-number">
-                            <div>
-                                <h2>57</h2>
-                            </div>
-                            <div>
-                                Views<br />
-                                <span>(Daily)</span>
-                            </div>
+                            <h2>@ViewBag.TotalSales</h2>
+                            <span>اجمالي المبيعات</span>
                         </div>
                     </div>
                     <div class="clear"></div>
@@ -104,54 +119,18 @@
         <div class="col-sm-6 col-md-6">
             <div class="block">
                 <div class="header no-border">
-                    <h2>Monitor</h2>
+                    <h2 style="text-align:right;">الاقساط</h2>
                 </div>
                 <div class="content red-chart">
                     <div id="site_statistics2" style="height: 152px;"></div>
                 </div>
                 <div class="content no-padding">
-                    <table class="red">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th class="right"><span>25%</span>C.P.U</th>
-                                <th class="right"><span>29%</span>Memory</th>
-                                <th class="right"><span>16%</span>Disc</th>
-                            </tr>
-                        </thead>
-                        <tbody class="no-border-x">
-                            <tr>
-                                <td style="width: 40%;"><i class="fa fa-sitemap"></i>Server load</td>
-                                <td class="text-right">0,2%</td>
-                                <td class="text-right">13,2 MB</td>
-                                <td class="text-right">0,1 MB/s</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa fa-tasks"></i>Apps</td>
-                                <td class="text-right">0,2%</td>
-                                <td class="text-right">13,2 MB</td>
-                                <td class="text-right">0,1 MB/s</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa fa-signal"></i>Process</td>
-                                <td class="text-right">0,2%</td>
-                                <td class="text-right">13,2 MB</td>
-                                <td class="text-right">0,1 MB/s</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa fa-bolt"></i>Wamp Server</td>
-                                <td class="text-right">0,2%</td>
-                                <td class="text-right">13,2 MB</td>
-                                <td class="text-right">0,1 MB/s</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row dash-cols">
+    <div class="row dash-cols RowToRemove">
         <div class="col-sm-6 col-md-6">
             <div class="block">
                 <div class="header">
@@ -221,7 +200,7 @@
         </div>
     </div>
 
-    <div class="row dash-cols">
+    <div class="row dash-cols RowToRemove">
         <div class="col-sm-6 col-md-6">
             <div class="widget-block  white-box calendar-box">
                 <div class="col-md-6 blue-box calendar no-padding">
@@ -421,7 +400,7 @@
     </div>
 
 
-    <div class="row dash-cols">
+    <div class="row dash-cols RowToRemove">
         <div class="col-sm-6 col-md-6 col-lg-4">
             <div class="widget-block">
                 <div class="white-box padding">
@@ -466,7 +445,7 @@
         </div>
     </div>
 
-    <div class="row dash-cols">
+    <div class="row dash-cols RowToRemove">
         <div class="col-sm-6 col-md-6 col-lg-4">
             <div class="block">
                 <div class="header">
@@ -520,3 +499,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('.RowToRemove').remove();
+    });
+</script>

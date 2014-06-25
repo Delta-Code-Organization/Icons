@@ -48,7 +48,7 @@ namespace Icons.Models
         public Returner Remove()
         {
             var P = db.Projects.Where(p => p.Id == this.Id).SingleOrDefault();
-            if (db.Stocks.Any(p=>p.ProjectID == P.Id && p.Quantity > 0))
+            if (db.Stocks.Any(p => p.ProjectID == P.Id && p.Quantity > 0))
             {
                 return new Returner
                 {
@@ -122,6 +122,89 @@ namespace Icons.Models
                 Data = ProjUnits,
                 DataInJSON = ProjUnitsInJSON.ToJSON()
             };
+        }
+
+        public Returner TotalSales(int ProjID)
+        {
+            if (ProjID == 0)
+            {
+                var ParentID = db.AccountingTrees.SingleOrDefault(p => p.KeyAccountID == (int)KeyAccounts.Sales).Id;
+                var TotalSales = db.FinancialTransactions.Where(p => p.FromAccount == ParentID).ToList().Sum(p => p.Debit);
+                return new Returner
+                {
+                    Data = TotalSales
+                };
+            }
+            else
+            {
+                var ProjContratcs = db.Projects.Where(p => p.Id == ProjID).SingleOrDefault().Contracts.ToList();
+                List<FinancialTransaction> LOFT = new List<FinancialTransaction>();
+                foreach (Contract item in ProjContratcs)
+                {
+                    var Ft = db.FinancialTransactions.Where(p => p.FromAccount == 42 && p.ReferanceDocumentNumber == item.Id).ToList().FirstOrDefault();
+                    if (Ft != null)
+                    {
+                        LOFT.Add(Ft);
+                    }
+                }
+                var TotalSales = LOFT.Sum(p => p.Debit);
+                return new Returner
+                {
+                    Data = TotalSales
+                };
+            }
+        }
+
+        public Returner TotalCosts(int ProjID)
+        {
+
+            if (ProjID == 0)
+            {
+                //39 is the id of projects under constarction
+                var TotalSales = db.FinancialTransactions.Where(p => p.FromAccount == 39).ToList().Sum(p => p.Debit);
+                return new Returner
+                {
+                    Data = TotalSales
+                };
+            }
+            else
+            {
+                var ProjContratcs = db.Projects.Where(p => p.Id == ProjID).SingleOrDefault().Contracts.ToList();
+                List<FinancialTransaction> LOFT = new List<FinancialTransaction>();
+                foreach (Contract item in ProjContratcs)
+                {
+                    var Ft = db.FinancialTransactions.Where(p => p.FromAccount == 39 && p.ReferanceDocumentNumber == item.Id).ToList().FirstOrDefault();
+                    if (Ft != null)
+                    {
+                        LOFT.Add(Ft);
+                    }
+                }
+                var TotalSales = LOFT.Sum(p => p.Debit);
+                return new Returner
+                {
+                    Data = TotalSales
+                };
+            }
+        }
+
+        public Returner PendingInstallment(int ProjID)
+        {
+            if (ProjID == 0)
+            {
+                var PenInstallments = db.Installments.Where(p => p.PaymentDate == null).ToList().Sum(p => p.Amount);
+                return new Returner
+                {
+                    Data = PenInstallments
+                };
+            }
+            else
+            {
+                var PenInstallments = db.Installments.Where(p => p.PaymentDate == null && p.Contract.ProjectID == ProjID).ToList().Sum(p => p.Amount);
+                return new Returner
+                {
+                    Data = PenInstallments
+                };
+            }
         }
     }
 }

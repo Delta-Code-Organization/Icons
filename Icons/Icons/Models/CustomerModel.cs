@@ -84,6 +84,14 @@ namespace Icons.Models
             };
         }
 
+        public Returner GetCustomerNumbers()
+        {
+            return new Returner
+            {
+                Data = db.Customers.ToList().Count
+            };
+        }
+
         #region PrivateMethods
         public int AddCustomerNode()
         {

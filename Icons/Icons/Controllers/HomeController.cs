@@ -14,8 +14,48 @@ namespace Icons.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.CustomerNo = Convert.ToInt32(new Customer().GetCustomerNumbers().Data);
+            ViewBag.TotalSales = Convert.ToDouble(new Project().TotalSales(0).Data);
+            ViewBag.TotalCosts = Convert.ToDouble(new Project().TotalCosts(0).Data);
+            ViewBag.PendingInstallments = Convert.ToDouble(new Project().PendingInstallment(0).Data);
+            ViewBag.AllProj = new Project().GetAll().Data as List<Project>;
+            ViewBag.SupplierDue = Convert.ToDouble(new Supplier().GetSupplierDue().Data);
+            Session["PI"] = new AccountingTree().GetPaidInstallmentsFtToSave().Data;
+            Session["AI"] = new AccountingTree().GetAllInstallmentsFtToSave().Data;
+            Session["TS"] = new AccountingTree().GetTotalSalesFtToSave().Data;
             return View();
         }
+
+        [HttpPost]
+        public double GetCostsByProj(int ID) 
+        {
+            return Convert.ToDouble(new Project().TotalCosts(ID).Data);
+        }
+
+        [HttpPost]
+        public double GetSalesByProj(int ID)
+        {
+            return Convert.ToDouble(new Project().TotalSales(ID).Data);
+        }
+
+        [HttpPost]
+        public JsonResult GetFlotData()
+        {
+            return new AccountingTree().GetSalesFlotData((Session["TS"]) as List<FinancialTransaction>).DataInJSON;
+        }
+
+        [HttpPost]
+        public JsonResult GetAllInsFlotData()
+        {
+            return new AccountingTree().GetAllInstallmentsFlotData((Session["AI"]) as List<Installment>).DataInJSON;
+        }
+
+        [HttpPost]
+        public JsonResult GetPaidInsFlotData()
+        {
+            return new AccountingTree().GetAPaidInstallmentsFlotData((Session["PI"]) as List<FinancialTransaction>).DataInJSON;
+        }
+
         public ActionResult ShowError()
         {
             String Error = Session["LastError"].ToString();

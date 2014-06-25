@@ -1,4 +1,40 @@
-﻿var App = function () {
+﻿function GetCostsByProj(ID) {
+    $.ajax({
+        url: '/Home/GetCostsByProj',
+        type: 'post',
+        data: { 'ID': ID },
+        async: false,
+        traditional: true,
+        success: function (Ddata) {
+            $('#AddTotalCostsHere').text(Ddata);
+        },
+        error: function (Ddata) { alert(Ddata.responseText); }
+    });
+}
+
+function GetSalesByProj(ID) {
+    $.ajax({
+        url: '/Home/GetSalesByProj',
+        type: 'post',
+        data: { 'ID': ID },
+        async: false,
+        traditional: true,
+        success: function (Ddata) {
+            $('#AddTotalSalesHere').text(Ddata);
+        },
+        error: function (Ddata) { alert(Ddata.responseText); }
+    });
+}
+
+function splitArray(array, part) {
+    var tmp = [];
+    for (var i = 0; i < array.length; i += part) {
+        tmp.push(array.slice(i, i + part));
+    }
+    return tmp;
+}
+
+var App = function () {
 
     var config = {//Basic Config
         tooltip: true,
@@ -17,9 +53,6 @@
 
     /*DASHBOARD*/
     var dashboard = function () {
-        var skycons = new Skycons({ "color": "#FFFFFF" });
-        skycons.add($("#sun-icon")[0], Skycons.PARTLY_CLOUDY_DAY);
-        skycons.play();
 
 
         /*Sparklines*/
@@ -189,12 +222,60 @@
                 }
             });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            var dataForSalesFlot2 = [[1, 5000], [2, 12000], [3, 7350 + 1000], [4, 6200], [5, 1000], [6, 9000], [7, 15000], [8, 2000], [9, 3280], [10, 4872], [11, 9300], [12, 1455]];
+            var dataForSalesFlot3 = [[1, 3000], [2, 10000], [3, 6350 + 1000], [4, 6200], [5, 1000], [6, 9000], [7, 15000], [8, 2000], [9, 3280], [10, 4872], [11, 9300], [12, 1455]];
+
+            $.ajax({
+                url: '/Home/GetPaidInsFlotData',
+                type: 'post',
+                data: {},
+                async: false,
+                traditional: true,
+                success: function (Ddata) {
+                    var OneDArray = Ddata;
+                    dataForSalesFlot3 = splitArray(OneDArray, 2);
+                },
+                error: function (Ddata) { alert(Ddata.responseText); }
+            });
+
+            $.ajax({
+                url: '/Home/GetAllInsFlotData',
+                type: 'post',
+                data: {},
+                async: false,
+                traditional: true,
+                success: function (Ddata) {
+                    var OneDArray = Ddata;
+                    dataForSalesFlot2 = splitArray(OneDArray, 2);
+                },
+                error: function (Ddata) { alert(Ddata.responseText); }
+            });
+
+
             var plot_statistics2 = $.plot($("#site_statistics2"), [{
-                data: pageviews,
-                label: "Unique Visits"
+                data: dataForSalesFlot2,
+                label: "Total installments"
             }, {
-                data: visitors,
-                label: "Page Views"
+                data: dataForSalesFlot3,
+                label: "Paid installments"
             }
             ], {
                 series: {
@@ -233,6 +314,67 @@
                 },
                 yaxis: {
                     ticks: 6,
+                    tickDecimals: 0
+                }
+            });
+
+            var dataForSalesFlot = [[1, 5000], [2, 12000], [3, 7350], [4, 6200], [5, 1000], [6, 9000], [7, 15000], [8, 2000], [9, 3280], [10, 4872], [11, 9300], [12, 1455]];
+
+            $.ajax({
+                url: '/Home/GetFlotData',
+                type: 'post',
+                data: {},
+                async: false,
+                traditional: true,
+                success: function (Ddata) {
+                    var OneDArray = Ddata;
+                    dataForSalesFlot = splitArray(OneDArray, 2);
+                },
+                error: function (Ddata) { alert(Ddata.responseText); }
+            });
+
+            $.plot($("#site_statistics"), [{
+                data: dataForSalesFlot,
+                label: "Sales"
+            }
+            ], {
+                series: {
+                    lines: {
+                        show: true,
+                        lineWidth: 2,
+                        fill: true,
+                        fillColor: {
+                            colors: [{
+                                opacity: 0.25
+                            }, {
+                                opacity: 0.25
+                            }
+                            ]
+                        }
+                    },
+                    points: {
+                        show: true
+                    },
+                    shadowSize: 2
+                },
+                legend: {
+                    show: false
+                },
+                grid: {
+                    labelMargin: 10,
+                    axisMargin: 500,
+                    hoverable: true,
+                    clickable: true,
+                    tickColor: "rgba(0,0,0,0.15)",
+                    borderWidth: 0
+                },
+                colors: ["#50ACFE", "#4A8CF7", "#52e136"],
+                xaxis: {
+                    ticks: 11,
+                    tickDecimals: 0
+                },
+                yaxis: {
+                    ticks: 5,
                     tickDecimals: 0
                 }
             });
@@ -783,54 +925,56 @@
             $('#site_statistics_loading').hide();
             $('#site_statistics_content').show();
 
-            var plot_statistics = $.plot($("#site_statistics"), [{
-                data: pageviews,
-                label: "Sales"
-            }
-            ], {
-                series: {
-                    lines: {
-                        show: true,
-                        lineWidth: 2,
-                        fill: true,
-                        fillColor: {
-                            colors: [{
-                                opacity: 0.25
-                            }, {
-                                opacity: 0.25
-                            }
-                            ]
-                        }
-                    },
-                    points: {
-                        show: true
-                    },
-                    shadowSize: 2
-                },
-                legend: {
-                    show: false
-                },
-                grid: {
-                    labelMargin: 10,
-                    axisMargin: 500,
-                    hoverable: true,
-                    clickable: true,
-                    tickColor: "rgba(0,0,0,0.15)",
-                    borderWidth: 0
-                },
-                colors: ["#50ACFE", "#4A8CF7", "#52e136"],
-                xaxis: {
-                    ticks: 11,
-                    tickDecimals: 0
-                },
-                yaxis: {
-                    ticks: 5,
-                    tickDecimals: 0
-                }
-            });
+            //var plot_statistics = $.plot($("#site_statistics"), [{
+            //    data: pageviews,
+            //    label: "Sales"
+            //}
+            //], {
+            //    series: {
+            //        lines: {
+            //            show: true,
+            //            lineWidth: 2,
+            //            fill: true,
+            //            fillColor: {
+            //                colors: [{
+            //                    opacity: 0.25
+            //                }, {
+            //                    opacity: 0.25
+            //                }
+            //                ]
+            //            }
+            //        },
+            //        points: {
+            //            show: true
+            //        },
+            //        shadowSize: 2
+            //    },
+            //    legend: {
+            //        show: false
+            //    },
+            //    grid: {
+            //        labelMargin: 10,
+            //        axisMargin: 500,
+            //        hoverable: true,
+            //        clickable: true,
+            //        tickColor: "rgba(0,0,0,0.15)",
+            //        borderWidth: 0
+            //    },
+            //    colors: ["#50ACFE", "#4A8CF7", "#52e136"],
+            //    xaxis: {
+            //        ticks: 11,
+            //        tickDecimals: 0
+            //    },
+            //    yaxis: {
+            //        ticks: 5,
+            //        tickDecimals: 0
+            //    }
+            //});
+
+            var datatos2 = [[1,5],[2,5],[3,5]];
 
             var plot_statistics2 = $.plot($("#site_statistics2"), [{
-                data: pageviews,
+                data: datatos2,
                 label: "Unique Visits"
             }
             ], {
@@ -1188,9 +1332,7 @@
 
     /*Widgets*/
     var widgets = function () {
-        var skycons = new Skycons({ "color": "#FFFFFF" });
-        skycons.add($("#sun-icon")[0], Skycons.PARTLY_CLOUDY_DAY);
-        skycons.play();
+        
 
     };//End of widgets
 
@@ -1617,17 +1759,17 @@
             }
 
             /*Bind plugins on hidden elements*/
-            if (config.hiddenElements) {
-                /*Dropdown shown event*/
-                $('.dropdown').on('shown.bs.dropdown', function () {
-                    $(".nscroller").nanoScroller();
-                });
+            //if (config.hiddenElements) {
+            //    /*Dropdown shown event*/
+            //    $('.dropdown').on('shown.bs.dropdown', function () {
+            //        $(".nscroller").nanoScroller();
+            //    });
 
-                /*Tabs refresh hidden elements*/
-                $('.nav-tabs').on('shown.bs.tab', function (e) {
-                    $(".nscroller").nanoScroller();
-                });
-            }
+            //    /*Tabs refresh hidden elements*/
+            //    $('.nav-tabs').on('shown.bs.tab', function (e) {
+            //        $(".nscroller").nanoScroller();
+            //    });
+            //}
 
         },
 

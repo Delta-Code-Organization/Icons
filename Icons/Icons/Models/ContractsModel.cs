@@ -198,13 +198,12 @@ namespace Icons.Models
             FinancialTransaction Ft = new FinancialTransaction();
             Ft.Credit = Installment.Amount;
             Ft.Debit = 0;
-            Ft.FromAccount = 42;//Installment.Contract.ProjectUnit.AccountingID;
+            Ft.FromAccount = Installment.Customer.AccountID;
             Ft.LastEditBy = EditBy;
             Ft.Notes = "";
             Ft.ReferanceDocumentNumber = Installment.Id;
             Ft.Confirmed = false;
             Ft.Statement = "دفع قسط " + Enum.GetName(typeof(UnitTypes), Installment.Contract.ProjectUnit.UnitType) + " من العميل " + Installment.Customer.Name;
-            Ft.FromAccount = Installment.Customer.AccountID;
             Ft.TransactionDate = PaymentDate;
             db.FinancialTransactions.Add(Ft);
             FinancialTransaction Ft1 = new FinancialTransaction();

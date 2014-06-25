@@ -18,6 +18,7 @@ namespace Icons.Models
         Banks = 9,
         Categories = 10,
         Benifits = 11,
-        Others = 12
+        Others = 12,
+        ProjectsUnderConstraction = 13
     }
 }

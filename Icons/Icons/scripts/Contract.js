@@ -271,8 +271,6 @@ $(document).ready(function () {
                         $.each(Con.Installments, function (inde, Ins) {
                             CusName = Ins.Customer.Name
                         });
-                        alert(CusName);
-                        alert(UnitType);
                         $('#accordion3').append('<div class="panel panel-default">'
                         + '<div class="panel-heading">'
                             + '<h4 class="panel-title">'

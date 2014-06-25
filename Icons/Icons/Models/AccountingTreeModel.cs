@@ -720,17 +720,183 @@ namespace Icons.Models
             };
         }
 
+        public Returner GetSalesByMonth(int I, List<FinancialTransaction> TotalSales)
+        {
+            DateTime Start = new DateTime(DateTime.Now.Year, I, 1);
+            DateTime End;
+            if (I == 12)
+            {
+                End = new DateTime(DateTime.Now.Year, I, 31);
+            }
+            else
+            {
+                End = new DateTime(DateTime.Now.Year, (I + 1), 1);
+            }
+            double? Val = TotalSales.Where(p => p.TransactionDate >= Start && p.TransactionDate <= End).ToList().Sum(p => p.Debit);
+            return new Returner
+            {
+                Data = Val != null ? Val : 0
+            };
+        }
 
+        public Returner GetAllInstallmentsByMonth(int I, List<Installment> AllIns)
+        {
+            DateTime Start = new DateTime(DateTime.Now.Year, I, 1);
+            DateTime End;
+            if (I == 12)
+            {
+                End = new DateTime(DateTime.Now.Year, I, 31);
+            }
+            else
+            {
+                End = new DateTime(DateTime.Now.Year, (I + 1), 1);
+            }
+            double? Val = AllIns.Where(p => p.DueDate >= Start && p.DueDate <= End).ToList().Sum(p => p.Amount);
+            return new Returner
+            {
+                Data = Val != null ? Val : 0
+            };
+        }
 
+        public Returner GetTotalSalesFtToSave()
+        {
+            var ParentID = db.AccountingTrees.SingleOrDefault(p => p.KeyAccountID == (int)KeyAccounts.Sales).Id;
+            var TotalSales = db.FinancialTransactions.Where(p => p.AccountingTree.Id == ParentID).ToList();
+            return new Returner
+            {
+                Data = TotalSales
+            };
+        }
 
+        public Returner GetPaidInstallmentsFtToSave()
+        {
+            var allInstallments = db.Installments.Where(p => p.Customer.ID == 1055).ToList();
+            List<FinancialTransaction> LOFT = new List<FinancialTransaction>();
+            foreach (Installment item in allInstallments)
+            {
+                var Ft = db.FinancialTransactions.Where(p => p.FromAccount == item.Customer.AccountID && p.ReferanceDocumentNumber == item.Id).ToList();
+                LOFT.AddRange(Ft);
+            }
+            return new Returner
+            {
+                Data = LOFT
+            };
+        }
 
-    }
+        public Returner GetAllInstallmentsFtToSave()
+        {
+            var AllIns = db.Installments.ToList();
+            return new Returner
+            {
+                Data = AllIns
+            };
+        }
 
-    public class CustomPayroll
-    {
-        public int Id { get; set; }
-        public DateTime? Date { get; set; }
-        public double? Pens { get; set; }
-        public double? Benis { get; set; }
+        public Returner GetPaidInstallmentsByMonth(int I, List<FinancialTransaction> LOFT)
+        {
+            DateTime Start = new DateTime(DateTime.Now.Year, I, 1);
+            DateTime End;
+            if (I == 12)
+            {
+                End = new DateTime(DateTime.Now.Year, I, 31);
+            }
+            else
+            {
+                End = new DateTime(DateTime.Now.Year, (I + 1), 1);
+            }
+            var ToGetFrom = LOFT.Where(p => p.TransactionDate >= Start && p.TransactionDate <= End).ToList();
+            if (ToGetFrom.Count > 0)
+	        {
+                double? Val = ToGetFrom.Sum(p => p.Credit);
+                return new Returner
+                {
+                    Data = Val != null ? Val : 0
+                };
+            }
+            else
+            {
+                return new Returner
+                {
+                    Data = 0
+                };
+            }
+        }
+
+        public Returner GetSalesFlotData(List<FinancialTransaction> LOFT)
+        {
+            double[,] FlotData = new double[,]
+            { 
+                {1,Convert.ToDouble(GetSalesByMonth(1,LOFT).Data)},
+                {2,Convert.ToDouble(GetSalesByMonth(2,LOFT).Data)},
+                {3,Convert.ToDouble(GetSalesByMonth(3,LOFT).Data)},
+                {4,Convert.ToDouble(GetSalesByMonth(4,LOFT).Data)},
+                {5,Convert.ToDouble(GetSalesByMonth(5,LOFT).Data)},
+                {6,Convert.ToDouble(GetSalesByMonth(6,LOFT).Data)},
+                {7,Convert.ToDouble(GetSalesByMonth(7,LOFT).Data)},
+                {8,Convert.ToDouble(GetSalesByMonth(8,LOFT).Data)},
+                {9,Convert.ToDouble(GetSalesByMonth(9,LOFT).Data)},
+                {10,Convert.ToDouble(GetSalesByMonth(10,LOFT).Data)},
+                {11,Convert.ToDouble(GetSalesByMonth(11,LOFT).Data)},
+                {12,Convert.ToDouble(GetSalesByMonth(12,LOFT).Data)}
+            };
+            return new Returner
+            {
+                DataInJSON = FlotData.ToJSON()
+            };
+        }
+
+        public Returner GetAllInstallmentsFlotData(List<Installment> AllIns)
+        {
+            double[,] FlotData = new double[,] 
+            { 
+                {1,Convert.ToDouble(GetAllInstallmentsByMonth(1,AllIns).Data)},
+                {2,Convert.ToDouble(GetAllInstallmentsByMonth(2,AllIns).Data)},
+                {3,Convert.ToDouble(GetAllInstallmentsByMonth(3,AllIns).Data)},
+                {4,Convert.ToDouble(GetAllInstallmentsByMonth(4,AllIns).Data)},
+                {5,Convert.ToDouble(GetAllInstallmentsByMonth(5,AllIns).Data)},
+                {6,Convert.ToDouble(GetAllInstallmentsByMonth(6,AllIns).Data)},
+                {7,Convert.ToDouble(GetAllInstallmentsByMonth(7,AllIns).Data)},
+                {8,Convert.ToDouble(GetAllInstallmentsByMonth(8,AllIns).Data)},
+                {9,Convert.ToDouble(GetAllInstallmentsByMonth(9,AllIns).Data)},
+                {10,Convert.ToDouble(GetAllInstallmentsByMonth(10,AllIns).Data)},
+                {11,Convert.ToDouble(GetAllInstallmentsByMonth(11,AllIns).Data)},
+                {12,Convert.ToDouble(GetAllInstallmentsByMonth(12,AllIns).Data)}
+            };
+            return new Returner
+            {
+                DataInJSON = FlotData.ToJSON()
+            };
+        }
+
+        public Returner GetAPaidInstallmentsFlotData(List<FinancialTransaction> LOFT)
+        {
+            double[,] FlotData = new double[,]
+            {
+                {1,Convert.ToDouble(GetPaidInstallmentsByMonth(1,LOFT).Data)},
+                {2,Convert.ToDouble(GetPaidInstallmentsByMonth(2,LOFT).Data)},
+                {3,Convert.ToDouble(GetPaidInstallmentsByMonth(3,LOFT).Data)},
+                {4,Convert.ToDouble(GetPaidInstallmentsByMonth(4,LOFT).Data)},
+                {5,Convert.ToDouble(GetPaidInstallmentsByMonth(5,LOFT).Data)},
+                {6,Convert.ToDouble(GetPaidInstallmentsByMonth(6,LOFT).Data)},
+                {7,Convert.ToDouble(GetPaidInstallmentsByMonth(7,LOFT).Data)},
+                {8,Convert.ToDouble(GetPaidInstallmentsByMonth(8,LOFT).Data)},
+                {9,Convert.ToDouble(GetPaidInstallmentsByMonth(9,LOFT).Data)},
+                {10,Convert.ToDouble(GetPaidInstallmentsByMonth(10,LOFT).Data)},
+                {11,Convert.ToDouble(GetPaidInstallmentsByMonth(11,LOFT).Data)},
+                {12,Convert.ToDouble(GetPaidInstallmentsByMonth(12,LOFT).Data)}
+            };
+            return new Returner
+            {
+                DataInJSON = FlotData.ToJSON()
+            };
+        }
+
+        public class CustomPayroll
+        {
+            public int Id { get; set; }
+            public DateTime? Date { get; set; }
+            public double? Pens { get; set; }
+            public double? Benis { get; set; }
+        }
     }
 }

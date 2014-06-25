@@ -98,5 +98,24 @@ namespace Icons.Models
                 Message = Message.Supplier_updated_successfully
             };
         }
+
+        public Returner GetSupplierDue()
+        {
+            List<FinancialTransaction> LOFT = new List<FinancialTransaction>();
+            var Sup = db.Suppliers.ToList();
+            foreach (Supplier item in Sup)
+            {
+                if (item.AccountingID != null)
+                {
+                    var Ft = db.FinancialTransactions.Where(p => p.FromAccount == item.AccountingID).ToList();
+                    LOFT.AddRange(Ft);
+                }
+            }
+            var TotalSupplierDue = (LOFT.Sum(p => p.Credit)) - (LOFT.Sum(p => p.Debit));
+            return new Returner
+            {
+                Data = TotalSupplierDue
+            };
+        }
     }
 }
