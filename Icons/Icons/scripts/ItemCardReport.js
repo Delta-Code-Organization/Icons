@@ -44,6 +44,7 @@ $(document).ready(function () {
 
     $('#ItemCardReport').submit(function (event) {
         if ($(this).parsley('validate')) {
+            $('#CLoader').css('display', 'block');
             $.ajax({
                 type: 'post',
                 url: '/Accounting/ItemCardData',
@@ -64,6 +65,7 @@ $(document).ready(function () {
                                         + '<td style="border: 1px solid #000;width:20%;text-align:center;">' + Type + '</td>'
 									+ '</tr>');
                     });
+                    $('#CLoader').css('display', 'none');
                 },
                 error: function (data) {
                     alert(data.responseText);
@@ -99,6 +101,9 @@ function LoadProdsByCats() {
         type: 'post',
         data: { 'Cat': $('#Cat').val() },
         success: function (data) {
+            if (data != null) {
+                $('#Prod').append('<option selected="selected" value="0">الكل</option>');
+            }
             $.each(data, function (index, p) {
                 $('#Prod').append('<option value="' + p.Id + '">' + p.ProductName + '</option>');
             });

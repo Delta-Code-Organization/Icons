@@ -25,7 +25,6 @@ $(document).ready(function () {
         ImageInBase64 = ImageInBase64.replace("data:application/octet-stream;base64,", "");
         ImageInBase64 = ImageInBase64.replace("data:application/zip;base64,", "");
         ImageInBase64 = ImageInBase64.replace("data:text/plain;base64,", "");
-        alert(ImageInBase64);
         $('#Attachment').val(ImageInBase64);
     }
 

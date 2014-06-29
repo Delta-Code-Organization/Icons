@@ -42,6 +42,7 @@ $(document).ready(function () {
 
     $('#ReportPayslip').submit(function (event) {
         if ($(this).parsley('validate')) {
+            $('#CLoader').css('display', 'block');
             $.ajax({
                 type: 'post',
                 url: '/Accounting/PayslipFilter',
@@ -64,6 +65,7 @@ $(document).ready(function () {
                                         + '<td style="border: 1px solid #000;width:33%;text-align:center;">' + F.Amount + '</td>'
 									+ '</tr>');
                     });
+                    $('#CLoader').css('display', 'block');
                 },
                 error: function (data) {
                     alert(data.responseText);

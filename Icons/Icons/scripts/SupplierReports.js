@@ -21,6 +21,7 @@ $(document).ready(function () {
 
     $('#SearchSupplierReport').submit(function (event) {
         if ($(this).parsley('validate')) {
+            $('#CLoader').css('display', 'block');
             $.ajax({
                 type: 'post',
                 url: '/Accounting/SearchReportData',
@@ -45,6 +46,7 @@ $(document).ready(function () {
                     $('#CreditLabel').text(CreditLabel);
                     $('#DebitLabel').text(DebitLabel);
                     $('#BalanceLabel').text(BalanceLabel);
+                    $('#CLoader').css('display', 'block');
                 },
                 error: function (data) {
                     alert(data.responseText);

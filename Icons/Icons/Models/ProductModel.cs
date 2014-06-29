@@ -141,18 +141,36 @@ namespace Icons.Models
 
         public Returner GetByCat()
         {
-            var Prods = db.Products.Where(p => p.Category == this.Category).ToList();
-            var ProdsInJson = (from P in Prods
-                               select new
-                               {
-                                   P.ProductName,
-                                   P.Id
-                               }).ToList();
-            return new Returner
+            if (this.Category == 0)
             {
-                Data = Prods,
-                DataInJSON = ProdsInJson.ToJSON()
-            };
+                var Prods = db.Products.ToList();
+                var ProdsInJson = (from P in Prods
+                                   select new
+                                   {
+                                       P.ProductName,
+                                       P.Id
+                                   }).ToList();
+                return new Returner
+                {
+                    Data = Prods,
+                    DataInJSON = ProdsInJson.ToJSON()
+                };
+            }
+            else
+            {
+                var Prods = db.Products.Where(p => p.Category == this.Category).ToList();
+                var ProdsInJson = (from P in Prods
+                                   select new
+                                   {
+                                       P.ProductName,
+                                       P.Id
+                                   }).ToList();
+                return new Returner
+                {
+                    Data = Prods,
+                    DataInJSON = ProdsInJson.ToJSON()
+                };
+            }
         }
     }
 }

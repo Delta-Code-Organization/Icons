@@ -17,6 +17,7 @@ $(document).ready(function () {
 
     $('#ReportWorkOrder').submit(function (event) {
         if ($(this).parsley('validate')) {
+            $('#CLoader').css('display', 'block');
             $.ajax({
                 type: 'post',
                 url: '/Accounting/GetWorkOrderReport',
@@ -38,6 +39,7 @@ $(document).ready(function () {
                                         + '<td style="border: 1px solid #000;width:25%;text-align:center;">' + FtDate + '</td>'
 									+ '</tr>');
                     });
+                    $('#CLoader').css('display', 'block');
                 },
                 error: function (data) {
                     alert(data.responseText);

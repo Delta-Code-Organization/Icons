@@ -26,6 +26,7 @@ $(document).ready(function () {
 
     $('#ReportPayroll').submit(function (event) {
         if ($(this).parsley('validate')) {
+            $('#CLoader').css('display', 'block');
             $.ajax({
                 type: 'post',
                 url: '/Accounting/GetPayrollReport',
@@ -47,6 +48,7 @@ $(document).ready(function () {
                                         + '<td style="border: 1px solid #000;width:16.6%;text-align:center;">' + FtDate + '</td>'
 									+ '</tr>');
                     });
+                    $('#CLoader').css('display', 'block');
                 },
                 error: function (data) {
                     alert(data.responseText);
