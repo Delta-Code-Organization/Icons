@@ -365,7 +365,7 @@ namespace Icons.Models
         public Returner Pay(double Total, int EditBy, DateTime PaymentDate, int ToAcc)
         {
             var E = db.Employees.Single(p => p.Id == this.Id);
-            var lastTransaction = db.Payrolls.Where(p => p.EmpID == E.Id).OrderByDescending(p => p.Date).FirstOrDefault();
+            var lastTransaction = db.Payrolls.Where(p => p.EmpID == E.Id && p.Type == (int)PayrollTypes.Salary).OrderByDescending(p => p.Date).FirstOrDefault();
             if (lastTransaction != null)
             {
                 switch (E.SalaryType)

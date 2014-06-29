@@ -46,7 +46,7 @@ $(document).ready(function () {
                     $('#CreditLabel').text(CreditLabel);
                     $('#DebitLabel').text(DebitLabel);
                     $('#BalanceLabel').text(BalanceLabel);
-                    $('#CLoader').css('display', 'block');
+                    $('#CLoader').css('display', 'none');
                 },
                 error: function (data) {
                     alert(data.responseText);

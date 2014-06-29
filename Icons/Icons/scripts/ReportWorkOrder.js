@@ -39,7 +39,7 @@ $(document).ready(function () {
                                         + '<td style="border: 1px solid #000;width:25%;text-align:center;">' + FtDate + '</td>'
 									+ '</tr>');
                     });
-                    $('#CLoader').css('display', 'block');
+                    $('#CLoader').css('display', 'none');
                 },
                 error: function (data) {
                     alert(data.responseText);

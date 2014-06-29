@@ -55,7 +55,6 @@ $(document).ready(function () {
                         var FtDate = new Date(parseInt(milli));
                         FtDate = FtDate.toDateString();
                         var TTT = GetTypeName(F.Type);
-                        alert(F.Employee.SalaryType);
                         var SalaType = GetSalaryType(F.Employee.SalaryType);
                         $('#SalaryTypeLabel').text(SalaType);
                         $('#BasicSalaryLabel').text(F.Employee.BasicSalary);
@@ -65,7 +64,7 @@ $(document).ready(function () {
                                         + '<td style="border: 1px solid #000;width:33%;text-align:center;">' + F.Amount + '</td>'
 									+ '</tr>');
                     });
-                    $('#CLoader').css('display', 'block');
+                    $('#CLoader').css('display', 'none');
                 },
                 error: function (data) {
                     alert(data.responseText);

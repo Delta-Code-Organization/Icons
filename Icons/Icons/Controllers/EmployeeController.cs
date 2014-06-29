@@ -28,7 +28,6 @@ namespace Icons.Controllers
             //data:image/gif;base64,
             //this image is a single pixel (black)
             byte[] bytes = Convert.FromBase64String(Base64);
-            byte[] bbbbb = new byte[900000000000];
             Image image;
             using (MemoryStream ms = new MemoryStream(bytes))
             {

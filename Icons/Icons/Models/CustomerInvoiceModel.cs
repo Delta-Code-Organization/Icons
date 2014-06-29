@@ -22,6 +22,7 @@ namespace Icons.Models
                 db.SaveChanges();
             }
             new Stock().Sells(this.Id);
+            var Cussss = db.Customers.Single(p => p.ID == this.CustomerID);
             FinancialTransaction Ft = new FinancialTransaction();
             Ft.Confirmed = false;
             Ft.Debit = this.InvoiceNet;
@@ -29,7 +30,7 @@ namespace Icons.Models
             Ft.FromAccount = 42;//sales account
             Ft.Notes = "";
             Ft.ReferanceDocumentNumber = this.Id;
-            Ft.Statement = "تسجيل فاتورة بيع للعميل " + this.Customer.Name;
+            Ft.Statement = "تسجيل فاتورة بيع للعميل " + Cussss.Name;
             Ft.TransactionDate = DateTime.Now;
             db.FinancialTransactions.Add(Ft);
             db.SaveChanges();
@@ -37,10 +38,10 @@ namespace Icons.Models
             Ft1.Confirmed = false;
             Ft1.Debit = 0;
             Ft1.Credit = this.InvoiceNet;
-            Ft1.FromAccount = this.Customer.AccountID;//sales account
+            Ft1.FromAccount = Cussss.AccountID;//sales account
             Ft1.Notes = "";
             Ft1.ReferanceDocumentNumber = this.Id;
-            Ft1.Statement = "تسجيل فاتورة بيع للعميل " + this.Customer.Name;
+            Ft1.Statement = "تسجيل فاتورة بيع للعميل " + Cussss.Name;
             Ft1.TransactionDate = DateTime.Now;
             db.FinancialTransactions.Add(Ft1);
             db.SaveChanges();
