@@ -118,6 +118,7 @@ $(document).ready(function () {
     $('#WorkOrderForm').submit(function (event) {
         if ($(this).parsley('validate')) {
             $.gritter.removeAll();
+            $('#CLoader').css('display', 'block');
             var InvoiceLines = "";
             var IDate = $('#Date').val();
             var IAcc = $('#Acc').val();
@@ -160,6 +161,7 @@ $(document).ready(function () {
                     alert(data.responseText);
                 }
             });
+            $('#CLoader').css('display', 'none');
             return false;
         }
         return false;

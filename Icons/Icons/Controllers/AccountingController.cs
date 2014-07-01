@@ -223,6 +223,13 @@ namespace Icons.Controllers
             return View();
         }
 
+        public ActionResult UnconfirmedFinancialTransactions()
+        {
+            List<FinancialTransaction> LO = Session["UnConfirmedFt"] as List<FinancialTransaction>;
+            ViewBag.LOFT = Session["UnConfirmedFt"] as List<FinancialTransaction>;
+            return View();
+        }
+
         public ActionResult EditFinancialTransactions(int id)
         {
             TempData["FTID"] = id;

@@ -1,4 +1,8 @@
-﻿function convertDate(inputFormat) {
+﻿var TotalPens = 0;
+var TotalBenis = 0;
+var TotalSals = 0;
+
+function convertDate(inputFormat) {
     var d = new Date(inputFormat);
     return [d.getDate(), d.getMonth() + 1, d.getFullYear()].join('/');
 }
@@ -35,6 +39,9 @@ $(document).ready(function () {
                     RefreshReportTitle();
                     $('#TblToAppend').empty();
                     $.each(data, function (index, F) {
+                        TotalBenis += parseInt(F.Benis);
+                        TotalPens += parseInt(F.Pens);
+                        TotalSals += parseInt(F.Amount);
                         var milli = F.Date.replace(/\/Date\((-?\d+)\)\//, '$1');
                         var FtDate = new Date(parseInt(milli));
                         FtDate = FtDate.toDateString();
@@ -49,6 +56,9 @@ $(document).ready(function () {
 									+ '</tr>');
                     });
                     $('#CLoader').css('display', 'none');
+                    $('#TotalBenisLabel').text(TotalBenis);
+                    $('#TotalPensLabel').text(TotalPens);
+                    $('#TotalSalsLabel').text(TotalSals);
                 },
                 error: function (data) {
                     alert(data.responseText);

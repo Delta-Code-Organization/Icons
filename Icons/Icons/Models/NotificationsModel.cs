@@ -11,10 +11,16 @@ namespace Icons.Models
         MaksoudDBEntities db = new MaksoudDBEntities();
         #endregion
 
-        public List<Notification> GetNotifications()
+        public List<Notification> GetNotifications(out List<FinancialTransaction> ListOfFtIds)
         {
             List<Notification> LON = new List<Notification>();
-            int FtCount = db.FinancialTransactions.Where(p => p.Confirmed == false).ToList().Count;
+            var LOFTTO = db.FinancialTransactions.Where(p => p.Confirmed == false).ToList();
+            int FtCount = LOFTTO.Count;
+            List<FinancialTransaction> FTIDs = new List<FinancialTransaction>();
+            foreach (FinancialTransaction Ft in LOFTTO)
+            {
+                FTIDs.Add(Ft);
+            }
             if (FtCount != 0)
             {
                 Notification N = new Notification();
@@ -51,6 +57,7 @@ namespace Icons.Models
                     LON.Add(Not);
                 }
             }
+            ListOfFtIds = FTIDs;
             return LON;
         }
     }

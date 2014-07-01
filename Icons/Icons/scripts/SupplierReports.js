@@ -9,7 +9,7 @@ function convertDate(inputFormat) {
 
 function RefreshReportTitle() {
     var AccName = $("#Acc option:selected").text();
-    $('#RTitle').text('كشف حساب المورد ' + AccName);
+    $('#RTitle').text('كشف حساب ' + AccName);
     var From = $('#From').val();
     var To = $('#To').val();
     $('#FromLabel').text(From);

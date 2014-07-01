@@ -19,7 +19,9 @@ namespace Icons.Controllers
                 var LOS = db.Screens.ToList();
                 Session["AllScreens"] = LOS;
             }
-            List<Notification> LON = new Notification().GetNotifications();
+            List<FinancialTransaction> LOFtIds = new List<FinancialTransaction>();
+            List<Notification> LON = new Notification().GetNotifications(out LOFtIds);
+            Session["UnConfirmedFt"] = LOFtIds;
             Session["Notification"] = LON;
             Session["NotificationCount"] = LON.Count;
             return View();

@@ -1,6 +1,8 @@
 ﻿$(document).ready(function () {
     $('#AddFT').submit(function (event) {
         if ($(this).parsley('validate')) {
+            $('#CLoader').css('display', 'block');
+            alert("Loader Shown");
             $.ajax({
                 url: '/Accounting/AddFT',
                 type: 'post',
@@ -23,6 +25,7 @@
                     alert(data.responseText);
                 }
             });
+            $('#CLoader').css('display', 'none');
             return false;
         }
         return false;
@@ -30,6 +33,7 @@
 
     $('#AddEmployement').submit(function (event) {
         if ($(this).parsley('validate')) {
+            $('#CLoader').css('display', 'block');
             $.ajax({
                 url: '/Accounting/AddEmployementFT',
                 type: 'post',
@@ -52,6 +56,7 @@
                     alert(data.responseText);
                 }
             });
+            $('#CLoader').css('display', 'none');
             return false;
         }
         return false;
@@ -59,6 +64,7 @@
 
     $('#EditFT').submit(function (event) {
         if ($(this).parsley('validate')) {
+            $('#CLoader').css('display', 'block');
             $.ajax({
                 url: '/Accounting/EditFT',
                 type: 'post',
@@ -81,6 +87,7 @@
                     alert(data.responseText);
                 }
             });
+            $('#CLoader').css('display', 'none');
             return false;
         }
         return false;
