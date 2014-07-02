@@ -197,3 +197,40 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+
+
+
+<div aria-hidden="true" style="display: none;" class="modal fade" id="mod-Add" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 900px;">
+            <form class="form-horizontal group-border-dashed" id="AddCurrentInstallment" novalidate="" parsley-validate="" action="#" style="border-radius: 0px;">
+                <div class="modal-header">
+                    <button type="button" class="close" id="ClosePopBtn3" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">تاريخ الاستحقاق</label>
+                        <div class="col-sm-6 Arabic">
+                            <input class="form-control datetime parsley-validated parsley-error" parsley-trigger="change" required="" parsley-required-message="يجب ادخال تاريخ الاستحقاق" name="DueDatePop" id="DueDatePop" size="16" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label Arabic" style="text-align: center;">القيمة</label>
+                        <div class="col-sm-6 Arabic">
+                            <input class="form-control parsley-validated parsley-error" onkeypress="return isNumberKey(event)" parsley-trigger="change" required="" parsley-required-message="يجب ادخال القيمة" name="AmountPop" id="AmountPop" size="16" type="text" value="" />
+                        </div>
+                    </div>
+                    <input type="hidden" name="ConID" value="" id="ConID" />
+                    <input type="hidden" name="CusID" value="" id="CusID" />
+                </div>
+                <div class="modal-footer" style="background-color: #fff; border: none;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">الغاء</button>
+                    <button type="submit" class="btn btn-primary">اضافة</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

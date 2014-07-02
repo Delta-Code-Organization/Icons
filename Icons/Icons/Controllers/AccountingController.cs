@@ -364,5 +364,18 @@ namespace Icons.Controllers
         {
             return new AccountingTree().PayslipReport(Convert.ToInt32(FC["Employee"]), Convert.ToDateTime(FC["From"]), Convert.ToDateTime(FC["To"])).DataInJSON;
         }
+
+        public ActionResult InstallmentsReport()
+        {
+            ViewBag.Proj = new Project().GetAll().Data as List<Project>;
+            ViewBag.Cus = new Customer().GetAllCutomers().Data as List<Customer>;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetInstallmentsReportData(FormCollection FC)
+        {
+            return new Contract().InstallmentsReport(Convert.ToDateTime(FC["From"]), Convert.ToDateTime(FC["To"]), Convert.ToInt32(FC["Cus"]), Convert.ToInt32(FC["Status"]), Convert.ToInt32(FC["Proj"])).DataInJSON;
+        }
     }
 }

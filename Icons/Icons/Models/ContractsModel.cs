@@ -164,29 +164,138 @@ namespace Icons.Models
                                            C.ProjectUnit.UnitType
                                        }
                                    }).ToList();
-        //    var ResultInJSON = (from I in LONC
-        //                        select new
-        //                        {
-        //                            I.AccountID,
-        //                            I.Address,
-        //                            I.BirthDate,
-        //                            I.ID,
-        //                            I.Name,
-        //                            Installments = new List<object>((from III in I.Installments
-        //                                                             select new
-        //                                                             {
-        //                                                                 III.Amount,
-        //                                                                 III.ContractID,
-        //                                                                 III.DueDate,
-        //                                                                 III.Id,
-        //                                                                 III.PaymentDate,
-        //                                                                 III.ResponsibleID
-        //                                                             }).Cast<object>().ToList()).Cast<object>().ToList()
-        //                        }).ToList();
+            //    var ResultInJSON = (from I in LONC
+            //                        select new
+            //                        {
+            //                            I.AccountID,
+            //                            I.Address,
+            //                            I.BirthDate,
+            //                            I.ID,
+            //                            I.Name,
+            //                            Installments = new List<object>((from III in I.Installments
+            //                                                             select new
+            //                                                             {
+            //                                                                 III.Amount,
+            //                                                                 III.ContractID,
+            //                                                                 III.DueDate,
+            //                                                                 III.Id,
+            //                                                                 III.PaymentDate,
+            //                                                                 III.ResponsibleID
+            //                                                             }).Cast<object>().ToList()).Cast<object>().ToList()
+            //                        }).ToList();
             return new Returner
             {
                 Data = LOContracts,
                 DataInJSON = ContractsInJSON.ToJSON()
+            };
+        }
+
+        public Returner InstallmentsReport(DateTime From, DateTime To, int Cus, int Status, int ProjID)
+        {
+            List<Installment> LOI = new List<Installment>();
+            if (Cus == 0)
+            {
+                if (ProjID == 0)
+                {
+                    if (Status == 0)
+                    {
+                        var I = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To).ToList();
+                        LOI.AddRange(I);
+                    }
+                    else if (Status == 1)
+                    {
+                        var I = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To && p.PaymentDate != null).ToList();
+                        LOI.AddRange(I);
+                    }
+                    else
+                    {
+                        var I = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To && p.PaymentDate == null).ToList();
+                        LOI.AddRange(I);
+                    }
+                }
+                else
+                {
+                    if (Status == 0)
+                    {
+                        var I = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To && p.Contract.ProjectID == ProjID).ToList();
+                        LOI.AddRange(I);
+                    }
+                    else if (Status == 1)
+                    {
+                        var I = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To && p.PaymentDate != null && p.Contract.ProjectID == ProjID).ToList();
+                        LOI.AddRange(I);
+                    }
+                    else
+                    {
+                        var I = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To && p.PaymentDate == null && p.Contract.ProjectID == ProjID).ToList();
+                        LOI.AddRange(I);
+                    }
+                }
+            }
+            else
+            {
+                if (ProjID == 0)
+                {
+                    if (Status == 0)
+                    {
+                        var I = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To && p.ResponsibleID == Cus).ToList();
+                        LOI.AddRange(I);
+                    }
+                    else if (Status == 1)
+                    {
+                        var I = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To && p.PaymentDate != null && p.ResponsibleID == Cus).ToList();
+                        LOI.AddRange(I);
+                    }
+                    else
+                    {
+                        var I = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To && p.PaymentDate == null && p.ResponsibleID == Cus).ToList();
+                        LOI.AddRange(I);
+                    }
+                }
+                else
+                {
+                    if (Status == 0)
+                    {
+                        var I = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To && p.ResponsibleID == Cus && p.Contract.ProjectID == ProjID).ToList();
+                        LOI.AddRange(I);
+                    }
+                    else if (Status == 1)
+                    {
+                        var I = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To && p.PaymentDate != null && p.ResponsibleID == Cus && p.Contract.ProjectID == ProjID).ToList();
+                        LOI.AddRange(I);
+                    }
+                    else
+                    {
+                        var I = db.Installments.Where(p => p.DueDate >= From && p.DueDate <= To && p.PaymentDate == null && p.ResponsibleID == Cus && p.Contract.ProjectID == ProjID).ToList();
+                        LOI.AddRange(I);
+                    }
+                }
+            }
+            var LOIInJSON = (from I in LOI
+                             select new
+                             {
+                                 I.Amount,
+                                 I.DueDate,
+                                 I.Id,
+                                 I.LastEditBy,
+                                 I.PaymentDate,
+                                 Project = new
+                                 {
+                                     I.Contract.Project.ProjectName
+                                 },
+                                 ProjectUnit = new
+                                 {
+                                     Name = Enum.GetName(typeof(UnitTypes), I.Contract.ProjectUnit.UnitType)
+                                 },
+                                 Customer = new
+                                 {
+                                     I.Customer.Name
+                                 }
+                             }).ToList();
+            return new Returner
+            {
+                Data = LOI,
+                DataInJSON = LOIInJSON.ToJSON()
             };
         }
 
@@ -229,20 +338,24 @@ namespace Icons.Models
             var ITE = db.Installments.Single(p => p.Id == I.Id);
             ITE.DueDate = I.DueDate;
             ITE.Amount = I.Amount;
-            var FTToUpdate = db.FinancialTransactions.Where(p => p.ReferanceDocumentNumber == ITE.Id).ToList();
-            foreach (FinancialTransaction II in FTToUpdate)
+            db.SaveChanges();
+            if (ITE.PaymentDate != null)
             {
-                if (II.Debit == 0)
+                var FTToUpdate = db.FinancialTransactions.Where(p => p.ReferanceDocumentNumber == ITE.Id).ToList();
+                foreach (FinancialTransaction II in FTToUpdate)
                 {
-                    II.Credit = ITE.Amount;
-                    II.TransactionDate = ITE.DueDate;
-                    db.SaveChanges();
-                }
-                else
-                {
-                    II.Debit = ITE.Amount;
-                    II.TransactionDate = ITE.DueDate;
-                    db.SaveChanges();
+                    if (II.Debit == 0)
+                    {
+                        II.Credit = ITE.Amount;
+                        II.TransactionDate = ITE.DueDate;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        II.Debit = ITE.Amount;
+                        II.TransactionDate = ITE.DueDate;
+                        db.SaveChanges();
+                    }
                 }
             }
             return new Returner
@@ -250,5 +363,12 @@ namespace Icons.Models
                 Message = Message.Installment_Updated_Successfully
             };
         }
+
+        public void AddInstallment(Installment I)
+        {
+            db.Installments.Add(I);
+            db.SaveChanges();
+        }
+
     }
 }

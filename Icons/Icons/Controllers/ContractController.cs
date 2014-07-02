@@ -147,5 +147,19 @@ namespace Icons.Controllers
             I.LastEditBy = (Session["User"] as User).ID;
             new Contract().EditInstallment(I);
         }
+
+        [HttpPost]
+        public void AddInstallment(FormCollection FC)
+        {
+            int ConID = Convert.ToInt32(FC["ConID"]);
+            int CusID = Convert.ToInt32(FC["CusID"]);
+            Installment I = new Installment();
+            I.Amount = Convert.ToDouble(FC["AmountPop"]);
+            I.ContractID = ConID;
+            I.DueDate = Convert.ToDateTime(FC["DueDatePop"]);
+            I.LastEditBy = (Session["User"] as User).ID;
+            I.ResponsibleID = CusID;
+            new Contract().AddInstallment(I);
+        }
     }
 }

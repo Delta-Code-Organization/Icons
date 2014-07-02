@@ -268,15 +268,20 @@ $(document).ready(function () {
                         var Tot = 0;
                         var CusName = "";
                         var UnitType = GetUnitType(Con.ProjectUnit.UnitType);
+                        var RespFor;
                         $.each(Con.Installments, function (inde, Ins) {
-                            CusName = Ins.Customer.Name
+                            CusName = Ins.Customer.Name;
+                            RespFor = Ins.ResponsibleID;
                         });
                         $('#accordion3').append('<div class="panel panel-default">'
                         + '<div class="panel-heading">'
-                            + '<h4 class="panel-title">'
+                            + '<h4 class="panel-title" style="margin-bottom:20px;">'
                                 + '<a data-toggle="collapse" data-parent="#accordion3" href="#TheCounter' + index + '">'
                                     + '<i class="fa fa-angle-left"></i>&nbsp عقد بيع ' + UnitType + ' للعميل ' + CusName + ' في ' + Con.Project.ProjectName
                                 + '</a>'
+                                + '<button style="margin-top:10px; float:left;padding-bottom:10px;" class="btn btn-primary" data-target="#mod-Add" data-toggle="modal" type="button" onclick="SetInstallmentData2Add(' + Con.Id + ',' + RespFor + ')">'
+                                + 'اضافة'
+                                + '</button>'
                             + '</h4>'
                         + '</div>'
                         + '<div id="TheCounter' + index + '" class="panel-collapse collapse">'
@@ -352,6 +357,11 @@ function SetInstallmentData2Edit(id, month2, day2, year2, Amount) {
     $('#AmountPop').val(Amount);
 }
 
+function SetInstallmentData2Add(ConID, CusID) {
+    $('#ConID').val(ConID);
+    $('#CusID').val(CusID);
+}
+
 function PayInstallment(id, amount, PaymentDate, RecAcc) {
     $.ajax({
         url: '/Contract/PayInstallment',
@@ -404,6 +414,34 @@ $(document).ready(function () {
                         time: '4000'
                     });
                     $('#ClosePopBtn2').click();
+                    location.reload();
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            });
+        }
+        return false;
+    });
+});
+
+
+$(document).ready(function () {
+    $('#AddCurrentInstallment').submit(function (event) {
+        if ($(this).parsley('validate')) {
+            $.ajax({
+                url: '/Contract/AddInstallment',
+                type: 'post',
+                data: $(this).serialize(),
+                success: function (data) {
+                    $.gritter.add({
+                        title: '! نجاح العملية',
+                        text: ". تم اضافة القسط بنجاح",
+                        image: '/content/images/user-icon.png',
+                        class_name: 'clean',
+                        time: '4000'
+                    });
+                    $('#ClosePopBtn3').click();
                     location.reload();
                 },
                 error: function (data) {

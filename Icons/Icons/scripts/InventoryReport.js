@@ -116,6 +116,8 @@ $(document).ready(function () {
                 .split(tmpColDelim).join(colDelim) + '"',
 
             // Data URI
+            blob = new Blob([csv], { type: 'text/csv' }); //new way
+            var csvUrl = URL.createObjectURL(blob);
             csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
         $(this)
             .attr({
@@ -128,9 +130,25 @@ $(document).ready(function () {
     // This must be a hyperlink
     $(".export").on('click', function (event) {
         // CSV
-        exportTableToCSV.apply(this, [$('#dvData>table'), 'export.csv']);
-
+        //exportTableToCSV.apply(this, [$('#dvData>table'), 'export.csv']);
+        downloadInnerHtml('InventoryReport', 'tbltoex', 'application/xls');
         // IF CSV, don't do event.preventDefault() or return false
         // We actually need this to be a typical hyperlink
     });
 });
+
+
+function downloadInnerHtml(filename, elId, mimeType) {
+    var elHtml = '<table border="1">' + document.getElementById(elId).innerHTML + '</table>';
+    var link = document.createElement('a');
+    mimeType = mimeType || 'application/xls';
+
+    var blob = new Blob([elHtml], { type: mimeType });
+    var url = URL.createObjectURL(blob);
+    link.href = url;
+
+    link.setAttribute('download', filename);
+    link.innerHTML = "Export to CSV";
+    document.body.appendChild(link);
+    link.click();
+}
