@@ -191,6 +191,10 @@
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\NotificationsModel.cs" />
+    <Compile Include="Models\Payroll.cs">
+      <DependentUpon>Icons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PayrollTypes.cs" />
     <Compile Include="Models\Product.cs">
       <DependentUpon>Icons.tt</DependentUpon>
     </Compile>
@@ -2094,20 +2098,29 @@
     <Content Include="scripts\Contract.js" />
     <Content Include="scripts\Customer.js" />
     <Content Include="scripts\CustomerInvoice.js" />
+    <Content Include="scripts\CustomerReports.js" />
     <Content Include="scripts\EditCustomer.js" />
     <Content Include="scripts\EditCustomerInvoice.js" />
     <Content Include="scripts\EditSupplierInvoice.js" />
     <Content Include="scripts\Employee.js" />
     <Content Include="scripts\FinancialTransaction.js" />
     <Content Include="scripts\Imprest.js" />
+    <Content Include="scripts\InstallmentsReports.js" />
+    <Content Include="scripts\InventoryReport.js" />
+    <Content Include="scripts\ItemCardReport.js" />
     <Content Include="scripts\Penalty.js" />
     <Content Include="scripts\Product.js" />
     <Content Include="scripts\Project.js" />
+    <Content Include="scripts\ReportPayroll.js" />
+    <Content Include="scripts\ReportPayslip.js" />
+    <Content Include="scripts\Reports.js" />
+    <Content Include="scripts\ReportWorkOrder.js" />
     <Content Include="scripts\SearchInvoices.js" />
     <Content Include="scripts\Statements.js" />
     <Content Include="scripts\Supplier.js" />
     <Content Include="scripts\SupplierInvoice.js" />
     <Content Include="scripts\SupplierInvoiceSearch.js" />
+    <Content Include="scripts\SupplierReports.js" />
     <Content Include="scripts\User.js" />
     <Content Include="scripts\WorkOrder.js" />
     <Content Include="scripts\WorkOrderReport.js" />
@@ -2585,6 +2598,20 @@
     <Content Include="Views\Home\GeneralSearch.cshtml" />
     <Content Include="Views\Accounting\SearchFinancialTransactions.cshtml" />
     <Content Include="Views\Accounting\EditFinancialTransactions.cshtml" />
+    <Content Include="Views\Employee\PayrollSearch.cshtml" />
+    <Content Include="Views\Accounting\FTReport.cshtml" />
+    <Content Include="Views\Accounting\CustomerReport.cshtml" />
+    <Content Include="Views\Accounting\SupplierReport.cshtml" />
+    <Content Include="Views\Accounting\ItemCard.cshtml" />
+    <Content Include="Views\Accounting\Inventory.cshtml" />
+    <Content Include="Views\Accounting\ReportWorkOrder.cshtml" />
+    <Content Include="Views\Accounting\PayrollReport.cshtml" />
+    <Content Include="Views\Accounting\PayslipReport.cshtml" />
+    <Content Include="Views\Accounting\ContractorFT.cshtml" />
+    <Content Include="Views\Accounting\EmployementFT.cshtml" />
+    <Content Include="Views\Accounting\CustomerServicesFT.cshtml" />
+    <Content Include="Views\Accounting\UnconfirmedFinancialTransactions.cshtml" />
+    <Content Include="Views\Accounting\InstallmentsReport.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
