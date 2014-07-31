@@ -847,7 +847,7 @@ namespace Icons.Models
 
         public Returner GetAllInstallmentsFlotData(List<Installment> AllIns)
         {
-            double[,] FlotData = new double[,] 
+            double[,] FlotData = new double[,]
             { 
                 {1,Convert.ToDouble(GetAllInstallmentsByMonth(1,AllIns).Data)},
                 {2,Convert.ToDouble(GetAllInstallmentsByMonth(2,AllIns).Data)},

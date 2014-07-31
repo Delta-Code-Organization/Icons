@@ -310,11 +310,13 @@
                                             <table style="direction: rtl;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 16.6%; text-align: center;">من حساب</th>
-                                                        <th style="width: 16.6%; text-align: center;">الي حساب</th>
-                                                        <th style="width: 16.6%; text-align: center;">قيمة</th>
-                                                        <th style="width: 16.6%; text-align: center;">بيان</th>
-                                                        <th style="width: 16.6%; text-align: center;">تاريخ</th>
+                                                        <th style="text-align: center;">الرقم</th>
+                                                        <th style="text-align: center;">الحساب</th>
+                                                        <th style="text-align: center;">مدين</th>
+                                                        <th style="text-align: center;">دائن</th>
+                                                        <th style="text-align: center;">بيان</th>
+                                                        <th style="text-align: center;">تاريخ</th>
+                                                        <th style="text-align: center;">اخر تعديل بواسطة</th>
                                                         <th style="width: 16.6%; text-align: center;"></th>
                                                     </tr>
                                                 </thead>
@@ -323,11 +325,24 @@
                                                         foreach (FinancialTransaction item in LOFT)
                                                         {
                                                         <tr id="DetailRow">
-                                                            <td style="width: 16.6%; text-align: center;">@item.AccountingTree.NodeName</td>
-                                                            <td style="width: 16.6%; text-align: center;">@item.AccountingTree1.NodeName</td>
-                                                            <td style="width: 16.6%; text-align: center;">@item.Amount</td>
-                                                            <td style="width: 16.6%; text-align: center;">@item.Statement</td>
-                                                            <td style="width: 16.6%; text-align: center;">@item.TransactionDate</td>
+                                                            <td>@item.Id</td>
+                                                            <td>@item.AccountingTree.NodeName</td>
+                                                            <td>@item.Debit</td>
+                                                            <td>@item.Credit</td>
+                                                            <td class="center">@item.Statement</td>
+                                                            <td class="center">@item.TransactionDate</td>
+                                                            @{
+                                                            MaksoudDBEntities db = new MaksoudDBEntities();
+                                                            if (item.LastEditBy != null)
+                                                            {
+                                                                var LastU = db.Users.Single(p => p.ID == item.LastEditBy);
+                                                                <td>@LastU.Username</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>Null In Database</td>
+                                                            }
+                                                            }
                                                             <td style="width: 16.6%; text-align: center;">
                                                                 <div class="btn-group">
                                                                     <button class="btn btn-default btn-xs" type="button">Actions</button>
