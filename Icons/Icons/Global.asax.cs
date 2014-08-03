@@ -28,5 +28,10 @@ namespace Icons
             Response.Redirect("~/Home/ShowError/");
             ctx.ClearError();
         }
+
+        protected void Session_Start(object sender, EventArgs e)
+        {
+            Session.Timeout = 60;
+        }
     }
 }

@@ -73,7 +73,7 @@
 
     <script type="text/javascript">
         function NotiShown() {
-            $('.bubble').slideToggle(0);
+            $('.bubble').hide(0);
             $.ajax({
                 url: '/User/UpdateNotificationCount',
                 type: 'post',

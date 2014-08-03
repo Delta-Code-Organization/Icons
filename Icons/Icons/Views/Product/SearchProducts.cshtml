@@ -90,10 +90,6 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function () {
-        App.init();
-        App.dataTables();
-    });
 
     @*var functions = $('<div class="btn-group"><button class="btn btn-default btn-xs" type="button">Actions</button><button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul role="menu" class="dropdown-menu"><li><a href="/Customer/EditCustomer?_ID=@ViewBag.allcustomers.ID">Edit</a></li><li><a href="#">Copy</a></li><li><a href="#">Details</a></li><li class="divider"></li><li><a href="#">Remove</a></li></ul></div>');
     $("#datatable tbody tr td:last-child").each(function () {
@@ -102,6 +98,7 @@
     });*@
 
     $(document).ready(function () {
+        App.dataTables();
         /* Formating function for row details */
         function fnFormatDetails(oTable, nTr) {
             var aData = oTable.fnGetData(nTr);
