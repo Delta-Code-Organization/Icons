@@ -42,7 +42,7 @@ namespace Icons.Controllers
         {
             Employee E = new Employee();
             string File = FC["Attachment"];
-            if (File != " " || File != "")
+            if (File != " " && File != "")
             {
                 if (FC["Ext"] == "png" || FC["Ext"] == "jpg" || FC["Ext"] == "jpeg" || FC["Ext"] == "gif")
                 {
