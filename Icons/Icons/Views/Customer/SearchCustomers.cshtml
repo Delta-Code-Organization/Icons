@@ -57,7 +57,7 @@
                                                 @if ((Session["User"] as User).UserAccesses.Any(p => (p.ScreenID == 58 && p.CanEdit == true) || (p.ScreenID == 58 && p.Opt1 == true)))
                                                 {
                                                     <li>
-                                                        <a href="/Customer/EditCustomer?_ID=@y.ID">تعديل</a>
+                                                        <a href="/Customer/EditCustomer/@y.ID">تعديل</a>
                                                     </li>
                                                 }
                                                 @if ((Session["User"] as User).UserAccesses.Any(p => (p.ScreenID == 58 && p.CanDelete == true) || (p.ScreenID == 58 && p.Opt1 == true)))

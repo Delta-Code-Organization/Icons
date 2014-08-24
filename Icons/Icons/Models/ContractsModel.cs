@@ -305,8 +305,8 @@ namespace Icons.Models
             Installment.PaymentDate = PaymentDate;
             db.SaveChanges();
             FinancialTransaction Ft = new FinancialTransaction();
-            Ft.Credit = Installment.Amount;
-            Ft.Debit = 0;
+            Ft.Credit = 0;
+            Ft.Debit = Installment.Amount;
             Ft.FromAccount = Installment.Customer.AccountID;
             Ft.LastEditBy = EditBy;
             Ft.Notes = "";
@@ -316,8 +316,8 @@ namespace Icons.Models
             Ft.TransactionDate = PaymentDate;
             db.FinancialTransactions.Add(Ft);
             FinancialTransaction Ft1 = new FinancialTransaction();
-            Ft1.Debit = Installment.Amount;
-            Ft1.Credit = 0;
+            Ft1.Debit = 0;
+            Ft1.Credit = Installment.Amount;
             Ft1.FromAccount = RecievableAcc;//Installment.Contract.ProjectUnit.AccountingID;
             Ft1.ReferanceDocumentNumber = Installment.Id;
             Ft1.LastEditBy = EditBy;

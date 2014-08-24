@@ -25,8 +25,8 @@ namespace Icons.Models
             var Cussss = db.Customers.Single(p => p.ID == this.CustomerID);
             FinancialTransaction Ft = new FinancialTransaction();
             Ft.Confirmed = false;
-            Ft.Debit = this.InvoiceNet;
-            Ft.Credit = 0;
+            Ft.Debit = 0;
+            Ft.Credit = this.InvoiceNet;
             Ft.FromAccount = 42;//sales account
             Ft.Notes = "";
             Ft.ReferanceDocumentNumber = this.Id;
@@ -36,9 +36,9 @@ namespace Icons.Models
             db.SaveChanges();
             FinancialTransaction Ft1 = new FinancialTransaction();
             Ft1.Confirmed = false;
-            Ft1.Debit = 0;
-            Ft1.Credit = this.InvoiceNet;
-            Ft1.FromAccount = Cussss.AccountID;//sales account
+            Ft1.Debit = this.InvoiceNet;
+            Ft1.Credit = 0;
+            Ft1.FromAccount = Cussss.AccountID;//Customer account
             Ft1.Notes = "";
             Ft1.ReferanceDocumentNumber = this.Id;
             Ft1.Statement = "تسجيل فاتورة بيع للعميل " + Cussss.Name;

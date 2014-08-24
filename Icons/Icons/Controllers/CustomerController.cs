@@ -27,11 +27,11 @@ namespace Icons.Controllers
             return View();
         }
 
-        public ActionResult EditCustomer(int _ID)
+        public ActionResult EditCustomer(int id)
         {
             Customer cust = new Customer();
-            cust.ID = _ID;
-            TempData["customerID"] = _ID;
+            cust.ID = id;
+            TempData["customerID"] = id;
             TempData.Keep();
             ViewBag.customerdata = cust.GetCustomerData().Data;
             //TempData["gender"] = Enum.GetName(typeof(Gender), ViewBag.customerdata.Gender);
